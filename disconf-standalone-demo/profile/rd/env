@@ -1,0 +1,8 @@
+
+BUNDLE_JAR_NAME=disconf-standalone-demo.jar
+
+export JAVA_OPTS="$JAVA_OPTS -server -Xms1024m -Xmx1024m -Xmn448m -Xss256K -XX:MaxPermSize=128m -XX:ReservedCodeCacheSize=64m"
+export JAVA_OPTS="$JAVA_OPTS -XX:+UseParallelGC -XX:+UseParallelOldGC -XX:ParallelGCThreads=2"
+export JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCDetails -XX:+PrintGCTimeStamps"
+export JAVA_OPTS="$JAVA_OPTS -Dlogback.configurationFile=file:logback.xml"
+
