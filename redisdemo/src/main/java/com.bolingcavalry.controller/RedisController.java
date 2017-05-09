@@ -33,7 +33,7 @@ public class RedisController {
 		model.addAttribute("serviceSource", map.get("TOMCAT_SERVER_ID"));
 	}
 
-	@RequestMapping("/strSet")
+	@RequestMapping("/strset")
 	public String set(HttpServletRequest request, Model model) {
 		String key = request.getParameter("key");
 		String value = request.getParameter("value");
@@ -41,30 +41,11 @@ public class RedisController {
 		model.addAttribute("key", key);
 		model.addAttribute("value", value);
 		addCommon(model);
-		return "strSet";
+		return "set_success";
 	}
 
-	@RequestMapping("/setGet")
-	public String get(HttpServletRequest request, Model model) {
-		String key = request.getParameter("key");
-		String value = redisService.setGet(key);
-		model.addAttribute("key", key);
-		model.addAttribute("value", value);
-		addCommon(model);
-		return "setGet";
-	}
-
-	@RequestMapping("/check")
-	public String check(HttpServletRequest request, Model model) {
-		String key = request.getParameter("key");
-		model.addAttribute("key", key);
-		model.addAttribute("exists", redisService.exists(key) ? "存在" : "不存在");
-		addCommon(model);
-		return "check";
-	}
-
-	@RequestMapping("/listappend")
-	public String listappend(HttpServletRequest request, Model model) {
+	@RequestMapping("/append_to_list")
+	public String append_to_list(HttpServletRequest request, Model model) {
 		String key = request.getParameter("key");
 		String value = request.getParameter("value");
 
@@ -72,25 +53,90 @@ public class RedisController {
 
 		model.addAttribute("key", key);
 		model.addAttribute("value", value);
+
 		addCommon(model);
 
-		return "listappend";
+		return "listappend_success";
+	}
+
+	@RequestMapping("/get_list_by_key")
+	public String get_list_by_key(HttpServletRequest request, Model model) {
+		String key = request.getParameter("key");
+
+
+		String rlt;
+
+		//判断key在redis中是否存在
+		if(redisService.exists(key)){
+			rlt = "list_get_all_success";
+
+			List<String> list = redisService.listGetAll(key);
+
+			if(!list.isEmpty()) {
+				model.addAttribute("value", list.get(0));
+			}
+			model.addAttribute("list", list);
+		}else{
+			rlt = "check";
+
+			model.addAttribute("exists", "不存在");
+		}
+
+
+		model.addAttribute("key", key);
+		addCommon(model);
+
+		return rlt;
+	}
+
+	@RequestMapping("/strget")
+	public String get(HttpServletRequest request, Model model) {
+		String key = request.getParameter("key");
+
+		String rlt;
+
+		//判断key在redis中是否存在
+		if(redisService.exists(key)){
+			rlt = "simple_get_success";
+			String value = redisService.setGet(key);
+
+			model.addAttribute("value", value);
+		}else{
+			rlt = "check";
+			model.addAttribute("exists", "不存在");
+		}
+
+		model.addAttribute("key", key);
+
+		addCommon(model);
+		return rlt;
+	}
+
+	//start of entry
+
+	@RequestMapping("/simpleset")
+	public String simpleset(HttpServletRequest request, Model model) {
+		addCommon(model);
+		return "simple_set";
+	}
+
+	@RequestMapping("/simpleget")
+	public String simpleget(HttpServletRequest request, Model model) {
+		addCommon(model);
+		return "simple_get";
+	}
+
+	@RequestMapping("/listappend")
+	public String listappend(HttpServletRequest request, Model model) {
+		addCommon(model);
+		return "list_append";
 	}
 
 	@RequestMapping("/listgetall")
 	public String listgetall(HttpServletRequest request, Model model) {
-		String key = request.getParameter("key");
-
-		List<String> list = redisService.listGetAll(key);
-
-		model.addAttribute("key", key);
-
-		if(!list.isEmpty()) {
-			model.addAttribute("value", list.get(0));
-		}
-		model.addAttribute("list", list);
 		addCommon(model);
-
-		return "listgetall";
+		return "list_get_all";
 	}
+
+	//end of entry
 }

@@ -17,7 +17,7 @@ public class RedisPool {
     /**
      * redis服务器ip
      */
-    private final static String ADDR = "127.0.0.1";
+    private final static String ADDR = "redishost";
 
     /**
      * redis服务器端口
@@ -87,7 +87,7 @@ public class RedisPool {
      * 获取Jedis实例
      * @return
      */
-    public synchronized Jedis getJedis(){
+    public Jedis getJedis(){
         try {
             if(null!=jedisPool){
                 Jedis jedis = jedisPool.getResource();
