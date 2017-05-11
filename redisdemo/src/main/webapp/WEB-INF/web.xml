@@ -3,10 +3,10 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
-	<!-- Spring和mybatis的配置文件 -->
+	<!-- Spring的配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring-mybatis.xml</param-value>
+		<param-value>classpath:spring-extends.xml</param-value>
 	</context-param>
 
 	<!-- 编码过滤器 -->
@@ -47,7 +47,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>SpringMVC</servlet-name>
-		<!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
