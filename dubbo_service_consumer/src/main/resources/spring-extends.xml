@@ -12,18 +12,15 @@
 	<!-- 自动扫描 -->
 	<context:component-scan base-package="com.bolingcavalry" />
 
-	<dubbo:application name="dubbo_service_provider" />
-	<!-- 本机 伪集群 测试 -->
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="dubbo_service_consumer" />
+	<!-- 使用multicast广播注册中心暴露发现服务地址 -->
 	<!--
-    <dubbo:registry  protocol="zookeeper"  address="192.9.145.19:2181,192.9.145.19:2182,192.9.145.19:2183"  />
-    -->
+	<dubbo:registry  protocol="zookeeper"  address="192.9.145.19:2181,192.9.145.19:2182,192.9.145.19:2183" />
+	-->
 	<dubbo:registry address="zookeeper://zkhost:2181" />
-	<dubbo:protocol name="dubbo" port="20880" />
-	<dubbo:service interface="com.bolingcavalry.service.CalculateService"
-				   ref="calculateService" />
-	<dubbo:service interface="com.bolingcavalry.service.PlatformService"
-				   ref="platformService" />
-	<!-- 和本地bean一样实现服务 -->
-	<bean id="calculateService" class="com.bolingcavalry.service.impl.CalculateServiceImpl" />
-	<bean id="platformService" class="com.bolingcavalry.service.impl.PlatformServiceImpl" />
+	<!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
+	<dubbo:reference id="calculateService" interface="com.bolingcavalry.service.CalculateService" />
+	<dubbo:reference id="platformService" interface="com.bolingcavalry.service.PlatformService" />
+
 </beans>
