@@ -36,6 +36,7 @@ public class AppTest
         assertTrue( true );
     }
 
+    /*
     public void testdoExecute(){
         App app = new App();
         app.doExecute();
@@ -48,18 +49,17 @@ public class AppTest
         assertTrue( true );
     }
 
-    public void testdoChain(){
+    public void testdoFromChain(){
         App app = new App();
-        app.doChain();
+        app.doFromChain();
         assertTrue( true );
     }
 
-    public void testdoSchedule(){
+    public void testdoJustChain(){
         App app = new App();
-        app.doSchedule();
+        app.doJustChain();
         assertTrue( true );
     }
-
 
     public void testdoMap(){
         App app = new App();
@@ -70,6 +70,13 @@ public class AppTest
     public void testdoFlatMap(){
         App app = new App();
         app.doFlatMap();
+        assertTrue( true );
+    }
+    */
+
+    public void testdoSchedule(){
+        App app = new App();
+        app.doSchedule();
         assertTrue( true );
     }
 }
