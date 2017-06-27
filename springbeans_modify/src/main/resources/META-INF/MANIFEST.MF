@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Created-By: 1.8.0-ea (Oracle Corporation)
+Implementation-Title: spring-beans
+Implementation-Version: 4.0.2.RELEASE
+
