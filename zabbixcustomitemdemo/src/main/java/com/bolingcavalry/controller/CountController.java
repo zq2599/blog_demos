@@ -14,12 +14,39 @@ import java.util.Random;
 @Controller
 public class CountController {
 
-	private static final int MAX = 300;
-	private static final int MIN = 0;
+
+	@RequestMapping("/num")
+	@ResponseBody
+	public int num(String model) {
+		if("a".equals(model)) {
+			return 666;
+		}else{
+			return 333;
+		}
+	}
+
 
 	@RequestMapping("/count")
 	@ResponseBody
-	public int count() {
-		return 1000 + new Random().nextInt(MAX)%(MAX-MIN+1);
+	public String count(String model, String type) {
+		int base;
+		int max;
+		int min;
+
+		if("a".equals(model)){
+			base = 50000;
+		}else{
+			base =10000;
+		}
+
+		if("0".equals(type)){
+			max = 9000;
+			min = 1000;
+		}else{
+			max = 1000;
+			min = 0;
+		}
+
+		return String.valueOf(base + new Random().nextInt(max)%(max-min+1));
 	}
 }
