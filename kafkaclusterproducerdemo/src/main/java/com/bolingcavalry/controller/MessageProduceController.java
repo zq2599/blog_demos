@@ -66,7 +66,7 @@ public class MessageProduceController {
         String content = get(request, "content");
         String numStr = get(request, "num");
 
-        logger.info("start simple, topic [{}], content [{}]");
+        logger.info("start simple, topic [{}], content [{}]", topic, content);
         if(!StringUtils.isEmpty(numStr)){
             int num = Integer.valueOf(numStr);
 
@@ -77,8 +77,22 @@ public class MessageProduceController {
             messageService.sendSimpleMsg(topic, content);
         }
 
-        logger.info("end simple, topic [{}], content [{}]");
+        logger.info("end simple, topic [{}], content [{}]", topic, content);
 
         return String.format("success [%s], topic [%s], content [%s]", tag(), topic, content);
+    }
+
+    @RequestMapping("/keymessage")
+    @ResponseBody
+    public String keymessage(HttpServletRequest request, Model model) {
+        String topic = get(request, "topic");
+        String content = get(request, "content");
+        String keyStr = get(request, "key");
+
+        logger.info("start simple, topic [{}], key [{}], content [{}]", topic, keyStr, content);
+        messageService.sendKeyMsg(topic, keyStr, content);
+        logger.info("end simple, topic [{}], key [{}], content [{}]", topic, keyStr, content);
+
+        return String.format("success [%s], topic [%s], key [%s], content [%s]", tag(), topic, keyStr, content);
     }
 }

@@ -10,7 +10,19 @@ package com.bolingcavalry.service;
 public interface MessageService {
     /**
      * 发送一个普通的消息
+     * @param topic
      * @param message
      */
-    void sendSimpleMsg(String message);
+    void sendSimpleMsg(String topic, String message);
+
+    /**
+     * 发送一个带key的消息，这样就能指定partition了
+     * @param topic
+     * @param key
+     * @param message
+     */
+    void sendKeyMsg(String topic, String key, String message);
+
+
+
 }
