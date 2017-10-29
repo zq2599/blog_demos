@@ -1,5 +1,7 @@
 package com.bolingcavalry.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.bolingcavalry.bean.SimpleMessage;
 import com.bolingcavalry.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author willzhao
@@ -27,6 +30,14 @@ public class MessageProduceController {
     protected static final Logger logger = LoggerFactory.getLogger(MessageProduceController.class);
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    private static String TOMCAT_ID = null;
+
+    static{
+        Map<String, String> map = System.getenv();
+        TOMCAT_ID = map.get("TOMCAT_SERVER_ID");
+        TOMCAT_ID = "tomcat_producer2";
+    }
 
     @Autowired
     MessageService messageService;
@@ -89,9 +100,15 @@ public class MessageProduceController {
         String content = get(request, "content");
         String keyStr = get(request, "key");
 
-        logger.info("start simple, topic [{}], key [{}], content [{}]", topic, keyStr, content);
-        messageService.sendKeyMsg(topic, keyStr, content);
-        logger.info("end simple, topic [{}], key [{}], content [{}]", topic, keyStr, content);
+        SimpleMessage simpleMessage = new SimpleMessage();
+        simpleMessage.setContent(content);
+        simpleMessage.setFrom(TOMCAT_ID);
+
+        String message = JSON.toJSONString(simpleMessage);
+
+        logger.info("start simple, topic [{}], key [{}], message [{}]", topic, keyStr, message);
+        messageService.sendKeyMsg(topic, keyStr, message);
+        logger.info("end simple, topic [{}], key [{}], message [{}]", topic, keyStr, message);
 
         return String.format("success [%s], topic [%s], key [%s], content [%s]", tag(), topic, keyStr, content);
     }
