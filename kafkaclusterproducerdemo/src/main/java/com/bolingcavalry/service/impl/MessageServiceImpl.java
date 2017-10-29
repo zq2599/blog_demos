@@ -26,8 +26,8 @@ public class MessageServiceImpl implements MessageService{
         try {
             Properties props = new Properties();
             props.put("serializer.class", "kafka.serializer.StringEncoder");
-            props.put("zk.connect", "broker1:2181,broker2:2181,broker3:2181");
-            props.put("metadata.broker.list", "broker1:9092,broker2:9092,broker3:9092");
+            props.put("zk.connect", "hostb1:2181,hostb1:2181,hostb1:2181");
+            props.put("metadata.broker.list", "hostb1:9092,hostb1:9092,hostb1:9092");
             props.put("partitioner.class","com.bolingcavalry.service.BusinessPartition");
             producer = new kafka.javaapi.producer.Producer<String, String>(new ProducerConfig(props));
         } catch (Exception e) {

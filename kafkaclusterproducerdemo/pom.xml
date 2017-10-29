@@ -119,6 +119,12 @@
       <version>1.2.39</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.5</version>
+    </dependency>
+
     <!--kafka-->
     <dependency>
       <groupId>org.apache.kafka</groupId>
