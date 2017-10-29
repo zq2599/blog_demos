@@ -36,7 +36,6 @@ public class MessageProduceController {
     static{
         Map<String, String> map = System.getenv();
         TOMCAT_ID = map.get("TOMCAT_SERVER_ID");
-        TOMCAT_ID = "tomcat_producer2";
     }
 
     @Autowired

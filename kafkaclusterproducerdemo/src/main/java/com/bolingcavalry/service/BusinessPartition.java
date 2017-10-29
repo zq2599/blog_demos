@@ -18,7 +18,7 @@ public class BusinessPartition implements Partitioner {
      * @param props
      */
     public BusinessPartition(VerifiableProperties props) {
-        //注意 ：
+        super();
     }
 
     public int partition(Object o, int i) {

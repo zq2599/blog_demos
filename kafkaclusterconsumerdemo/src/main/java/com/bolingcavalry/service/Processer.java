@@ -27,7 +27,6 @@ public class Processer implements Runnable {
     static{
         Map<String, String> map = System.getenv();
         TOMCAT_ID = map.get("TOMCAT_SERVER_ID");
-        TOMCAT_ID = "tomcat_consumer1";
     }
 
     public Processer(KafkaStream<String, String> stream, int threadNumber) {
@@ -55,6 +54,6 @@ public class Processer implements Runnable {
                     value.message());
         }
         // 3. 表示当前线程执行完成
-        System.out.println("Shutdown Thread:" + this.threadNumber);
+        logger.info("Shutdown Thread:" + this.threadNumber);
     }
 }

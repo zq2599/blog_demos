@@ -163,7 +163,7 @@
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
         <configuration>
-          <url>http://localhost:19017/manager/text</url>
+          <url>http://localhost:19019/manager/text</url>
           <server>tomcat7</server>
           <path>/${project.artifactId}</path>
           <update>true</update>
