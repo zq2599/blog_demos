@@ -125,6 +125,13 @@
       <version>3.5</version>
     </dependency>
 
+    <!--gson-->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>${project.artifactId}</finalName>
@@ -150,7 +157,7 @@
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
         <configuration>
-          <url>http://localhost:8082/manager/text</url>
+          <url>http://localhost:8081/manager/text</url>
           <server>tomcat7</server>
           <path>/${project.artifactId}</path>
           <update>true</update>

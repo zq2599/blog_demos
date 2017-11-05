@@ -2,7 +2,9 @@ package com.bolingcavalry.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.bolingcavalry.bean.SimpleMessage;
+import com.bolingcavalry.bean.Student;
 import com.bolingcavalry.service.MessageService;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +91,25 @@ public class MessageProduceController {
         String content = get(request, "content");
         logger.info("start dotrace, content [{}]", content);
         return String.format("trace response from %s [%s]", TOMCAT_ID, tag());
+    }
+
+    @RequestMapping("/tracegson")
+    @ResponseBody
+    public String tracegson(HttpServletRequest request, Model model) {
+        String name = get(request, "name");
+        String age = get(request, "age");
+
+        Student student = new Student();
+        student.setName(name);
+        student.setAge(Integer.valueOf(age));
+
+        Gson gson = new Gson();
+
+        String parseStr = gson.toJson(student, Student.class);
+
+        logger.info("gson str [{}]", parseStr);
+
+        return String.format("gson str : %s [%s]", parseStr, tag());
     }
 
 }
