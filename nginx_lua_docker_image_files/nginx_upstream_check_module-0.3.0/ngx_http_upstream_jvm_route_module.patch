@@ -1,0 +1,80 @@
+diff --git a/ngx_http_upstream_jvm_route_module.c b/ngx_http_upstream_jvm_route_module.c
+index 770cfa5..e8e079b 100644
+--- a/ngx_http_upstream_jvm_route_module.c
++++ b/ngx_http_upstream_jvm_route_module.c
+@@ -13,6 +13,10 @@
+ #include <ngx_core.h>
+ #include <ngx_http.h>
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++#include "ngx_http_upstream_check_module.h"
++#endif
++
+ 
+ #define SHM_NAME_LEN 256
+ 
+@@ -73,6 +77,9 @@ typedef struct {
+     time_t                          fail_timeout;
+     ngx_uint_t                      down;          /* unsigned  down:1; */
+     ngx_str_t                       srun_id;
++#if (NGX_HTTP_UPSTREAM_CHECK)
++    ngx_uint_t                      check_index;
++#endif
+ 
+ #if (NGX_HTTP_SSL)
+     ngx_ssl_session_t              *ssl_session;   /* local to a process */
+@@ -380,6 +387,15 @@ ngx_http_upstream_init_jvm_route_rr(ngx_conf_t *cf,
+                 peers->peer[n].fail_timeout = server[i].fail_timeout;
+                 peers->peer[n].down = server[i].down;
+                 peers->peer[n].weight = server[i].down ? 0 : server[i].weight;
++#if (NGX_HTTP_UPSTREAM_CHECK)
++                if (!server[i].down) {
++                    peers->peer[n].check_index =
++                        ngx_http_upstream_check_add_peer(cf, us, &server[i].addrs[j]);
++                }
++                else {
++                    peers->peer[n].check_index = (ngx_uint_t) NGX_ERROR;
++                }
++#endif
+ 
+                 n++;
+             }
+@@ -433,6 +449,15 @@ ngx_http_upstream_init_jvm_route_rr(ngx_conf_t *cf,
+                 backup->peer[n].max_busy = server[i].max_busy;
+                 backup->peer[n].fail_timeout = server[i].fail_timeout;
+                 backup->peer[n].down = server[i].down;
++#if (NGX_HTTP_UPSTREAM_CHECK)
++                if (!server[i].down) {
++                    peers->peer[n].check_index =
++                        ngx_http_upstream_check_add_peer(cf, us, &server[i].addrs[j]);
++                }
++                else {
++                    peers->peer[n].check_index = (ngx_uint_t) NGX_ERROR;
++                }
++#endif
+ 
+                 n++;
+             }
+@@ -490,6 +515,9 @@ ngx_http_upstream_init_jvm_route_rr(ngx_conf_t *cf,
+         peers->peer[i].max_fails = 1;
+         peers->peer[i].max_busy = 0;
+         peers->peer[i].fail_timeout = 10;
++#if (NGX_HTTP_UPSTREAM_CHECK)
++        peers->peer[i].check_index = (ngx_uint_t) NGX_ERROR;
++#endif
+     }
+ 
+     us->peer.data = peers;
+@@ -773,6 +801,12 @@ ngx_http_upstream_jvm_route_try_peer( ngx_http_upstream_jvm_route_peer_data_t *j
+         return NGX_BUSY;
+     }
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++    if (ngx_http_upstream_check_peer_down(peer->check_index)) {
++        return NGX_BUSY;
++    }
++#endif
++
+     if (!peer->down) {
+         if (peer->max_fails == 0 || peer->shared->fails < peer->max_fails) {
+             return NGX_OK;

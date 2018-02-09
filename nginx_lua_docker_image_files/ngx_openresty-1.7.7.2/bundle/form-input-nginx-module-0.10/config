@@ -1,0 +1,13 @@
+if echo $HTTP_MODULES | grep " ndk_http_module" > /dev/null; then
+    echo "found ngx_devel_kit for ngx_form_input; looks good."
+else
+    echo "error: ngx_devel_kit is required to build ngx_form_input; please put it before ngx_form_input." 1>&2
+    exit 1
+fi
+
+ngx_addon_name=ngx_http_form_input_module
+HTTP_AUX_FILTER_MODULES="$HTTP_AUX_FILTER_MODULES ngx_http_form_input_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/src/ngx_http_form_input_module.c"
+NGX_ADDON_DEPS="$NGX_ADDON_DEPS $ngx_addon_dir/src/ddebug.h"
+CFLAGS="$CFLAGS -DNDK_SET_VAR"
+

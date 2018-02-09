@@ -1,0 +1,25 @@
+v0.1.0 - 5 July 2011
+* now we require at least libdrizzle 1.0, which supports official mysql 5.5+ and is much more stable under load. thanks Taylor Weibley for pushing this. We no longer require patching libdrizzle any more.
+
+* fixed a compilation issue on Mac OS X: we should include drizzle.h prior to nginx headers, or we will not get the "bool" type properly installed on Mac OS X.
+
+* fixed the spots that trigger -Wunused-but-set-variable by gcc 4.6.
+
+* fixed the duplicate last chunk issue: we should not set the last_buf flag ourselves in drizzle_output.c because ngx_http_upstream already sends a last buf for us.
+
+* ported over Maxim Dounin's patch for ngx_http_upstream_keepalive connection pool fixes: we should have discarded stale read events for cached tcp connections in the pool.
+
+* implemented the new drizzle_status directive to provide connection pool status monitoring capability.
+
+* fixed a minor bug in the connection pool: we should resume the "name", "sockaddr", and "socklen" fields for the connection from the pool such that we can get more detailed error log messages with the "upstream: drizzle://ip.add.re.ss:port" bit.
+
+* implemented the $drizzle_thread_id variable which is automatically set when mysql/drizzle times out.
+
+* now we use the 2-clause bsd license.
+
+* report an error message when upstream name not found for drizzle_pass.
+
+* now we implemented the charset option for the "drizzle_server" diredctive which causes ngx_drizzle send "set names xxx" automatcially for every connection to that drizzle server.
+
+* added a lot of more documentation.
+

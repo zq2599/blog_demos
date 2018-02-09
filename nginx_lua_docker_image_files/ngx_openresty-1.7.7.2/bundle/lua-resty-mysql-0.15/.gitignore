@@ -1,0 +1,9 @@
+*.swp
+*.swo
+*~
+go
+t/servroot/
+reindex
+tags
+*.t_
+src/

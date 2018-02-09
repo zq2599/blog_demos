@@ -1,0 +1,20 @@
+if echo $HTTP_MODULES | grep " ndk_http_module" > /dev/null; then
+    echo "found ngx_devel_kit for ngx_set_misc; looks good."
+else
+    echo "error: ngx_devel_kit is required to build ngx_set_misc; please put it before ngx_set_misc." 1>&2
+    exit 1
+fi
+
+ngx_addon_name=ngx_http_set_misc_module
+HTTP_AUX_FILTER_MODULES="$HTTP_AUX_FILTER_MODULES ngx_http_set_misc_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/src/ngx_http_set_base32.c $ngx_addon_dir/src/ngx_http_set_default_value.c $ngx_addon_dir/src/ngx_http_set_hashed_upstream.c $ngx_addon_dir/src/ngx_http_set_quote_sql.c $ngx_addon_dir/src/ngx_http_set_quote_json.c $ngx_addon_dir/src/ngx_http_set_unescape_uri.c $ngx_addon_dir/src/ngx_http_set_misc_module.c $ngx_addon_dir/src/ngx_http_set_escape_uri.c $ngx_addon_dir/src/ngx_http_set_hash.c $ngx_addon_dir/src/ngx_http_set_local_today.c $ngx_addon_dir/src/ngx_http_set_hex.c $ngx_addon_dir/src/ngx_http_set_base64.c $ngx_addon_dir/src/ngx_http_set_random.c $ngx_addon_dir/src/ngx_http_set_secure_random.c $ngx_addon_dir/src/ngx_http_set_rotate.c"
+NGX_ADDON_DEPS="$NGX_ADDON_DEPS $ngx_addon_dir/src/ddebug.h $ngx_addon_dir/src/ngx_http_set_default_value.h $ngx_addon_dir/src/ngx_http_set_hashed_upstream.h $ngx_addon_dir/src/ngx_http_set_quote_sql.h $ngx_addon_dir/src/ngx_http_set_quote_json.h $ngx_addon_dir/src/ngx_http_set_unescape_uri.h $ngx_addon_dir/src/ngx_http_set_escape_uri.h $ngx_addon_dir/src/ngx_http_set_hash.h $ngx_addon_dir/src/ngx_http_set_local_today.h $ngx_addon_dir/src/ngx_http_set_hex.h $ngx_addon_dir/src/ngx_http_set_base64.h $ngx_addon_dir/src/ngx_http_set_random.h $ngx_addon_dir/src/ngx_http_set_rotate.h $ngx_addon_dir/src/ngx_http_set_secure_random.h $ngx_addon_dir/src/ngx_http_set_misc_module.h"
+
+if [ $USE_OPENSSL = YES -o $MAIL_SSL = YES ]; then
+    NGX_ADDON_DEPS="$NGX_ADDON_DEPS $ngx_addon_dir/src/ngx_http_set_hmac.h"
+    NGX_ADDON_SRCS="$NGX_ADDON_SRCS  $ngx_addon_dir/src/ngx_http_set_hmac.c"
+fi
+CFLAGS="$CFLAGS -DNDK_SET_VAR -DNDK_UPSTREAM_LIST"
+USE_SHA1=YES
+USE_MD5=YES
+

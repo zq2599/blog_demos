@@ -1,0 +1,21 @@
+if [ "$HTTP_PROXY" = "YES" ]; then
+    have=NGX_HTTP_PROXY . auto/have
+fi
+
+if [ "$HTTP_FASTCGI" = "YES" ]; then
+    have=NGX_HTTP_FASTCGI . auto/have
+fi
+
+if [ "$HTTP_SCGI" = "YES" ]; then
+    have=NGX_HTTP_SCGI . auto/have
+fi
+
+if [ "$HTTP_UWSGI" = "YES" ]; then
+    have=NGX_HTTP_UWSGI . auto/have
+fi
+
+ngx_addon_name=ngx_http_cache_purge_module
+HTTP_MODULES="$HTTP_MODULES ngx_http_cache_purge_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ngx_cache_purge_module.c"
+
+have=NGX_CACHE_PURGE_MODULE . auto/have

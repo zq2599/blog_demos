@@ -1,0 +1,7 @@
+ngx_addon_name=ngx_coolkit_module
+
+HTTP_MODULES="$HTTP_MODULES ngx_coolkit_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/src/ngx_coolkit_handlers.c $ngx_addon_dir/src/ngx_coolkit_module.c $ngx_addon_dir/src/ngx_coolkit_variables.c"
+NGX_ADDON_DEPS="$NGX_ADDON_DEPS $ngx_addon_dir/src/ngx_coolkit_handlers.h $ngx_addon_dir/src/ngx_coolkit_module.h $ngx_addon_dir/src/ngx_coolkit_variables.h"
+
+have=NGX_COOLKIT_MODULE . auto/have

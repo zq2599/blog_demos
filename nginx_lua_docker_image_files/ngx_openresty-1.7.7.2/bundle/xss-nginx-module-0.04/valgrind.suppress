@@ -1,0 +1,107 @@
+{
+<insert_a_suppression_name_here>
+Memcheck:Leak
+fun:malloc
+fun:ngx_alloc
+fun:(below main)
+}
+{
+<insert_a_suppression_name_here>
+Memcheck:Addr4
+fun:ngx_init_cycle
+fun:ngx_master_process_cycle
+fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:ngx_calloc
+   fun:ngx_event_process_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr4
+   fun:lj_str_new
+   fun:lua_setfield
+   fun:ngx_http_lua_cache_store_code
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:ngx_alloc
+   fun:ngx_event_process_init
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   epoll_ctl(event)
+   fun:epoll_ctl
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:ngx_conf_flush_files
+}
+{
+   nginx-core-process-init
+   Memcheck:Leak
+   fun:malloc
+   fun:ngx_alloc
+   fun:ngx_event_process_init
+}
+{
+   nginx-core-crc32-init
+   Memcheck:Leak
+   fun:malloc
+   fun:ngx_alloc
+   fun:ngx_crc32_table_init
+   fun:main
+}
+{
+   palloc_large_for_init_request
+   Memcheck:Leak
+   fun:malloc
+   fun:ngx_alloc
+   fun:ngx_palloc_large
+   fun:ngx_palloc
+   fun:ngx_pcalloc
+   fun:ngx_http_init_request
+   fun:ngx_epoll_process_events
+   fun:ngx_process_events_and_timers
+}
+{
+   palloc_large_for_create_temp_buf
+   Memcheck:Leak
+   fun:malloc
+   fun:ngx_alloc
+   fun:ngx_palloc_large
+   fun:ngx_palloc
+   fun:ngx_create_temp_buf
+   fun:ngx_http_init_request
+   fun:ngx_epoll_process_events
+   fun:ngx_process_events_and_timers
+}
+{
+   accept_create_pool
+   Memcheck:Leak
+   fun:memalign
+   fun:posix_memalign
+   fun:ngx_memalign
+   fun:ngx_create_pool
+   fun:ngx_event_accept
+   fun:ngx_epoll_process_events
+   fun:ngx_process_events_and_timers
+}
+{
+   create_pool_for_init_req
+   Memcheck:Leak
+   fun:memalign
+   fun:posix_memalign
+   fun:ngx_memalign
+   fun:ngx_create_pool
+   fun:ngx_http_init_request
+   fun:ngx_epoll_process_events
+   fun:ngx_process_events_and_timers
+}

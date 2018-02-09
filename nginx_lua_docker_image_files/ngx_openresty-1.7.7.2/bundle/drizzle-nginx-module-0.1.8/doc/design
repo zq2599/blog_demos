@@ -1,0 +1,16 @@
+main request to location "/drizzle" (handled by mod_drizzle)
+	-> mod_drizzle content handler (is main request)
+		-> emit subrequest to location "/drizzle"
+		-> return NGX_DONE
+	-> mod_drizzle content handler (is subrequest)
+		-> connect db (through libdrizzle), get db connection fd
+		-> wrap db connection fd into a ngx_event, reg rd/wr event handler
+		-> return NGX_DONE
+	-> i/o event occured on db connection
+		-> rd/wr event handler called, call mod_drizzle content handler using subrequest struct
+			-> mod_drizzle content handler called (is subrequest)
+				-> continue libdrizzle state machine
+				-> generate response header and body if done,
+					then unreg db connection events,
+					and call ngx_http_finalize_request to release self
+				-> return NGX_OK

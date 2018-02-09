@@ -1,0 +1,182 @@
+Name
+    array-var-nginx-module - Add support for array variables to
+        nginx config files
+
+    *This module is not distributed with the Nginx source.* See the
+    installation instructions.
+
+Status
+    This module is still under development, just
+    as Marcus Clyne's NDK.
+
+Synopsis
+
+    location /foo {
+        array_split ',' $arg_files to=$array;
+
+        # use the set_quote_sql_str directive in the ngx_set_misc
+        # module to map to each element in the array $array:
+        array_map_op set_quote_sql_str $array;
+
+        array_map "name = $array_it" $array;
+
+        array_join ' or ' $array to=$sql_condition;
+
+        echo "select * from files where $sql_condition";
+    }
+
+Description
+
+Directives
+    array_split
+
+    array_map
+
+    array_map_op
+
+    array_join
+
+Installation
+    If you are using the ngx_openresty bundle, then this module is bundled
+    and enabled by default.
+
+    If you prefer installing this module with your own Nginx source
+    code tarball, then follow the following steps:
+
+    1. Grab the nginx source code from nginx.net (<http://nginx.net/>), for
+        example, the version 1.4.2 (see nginx compatibility),
+
+    2. Grab the NDK module from GitHub:
+        http://github.com/simpl/ngx_devel_kit
+
+    3. and then build the source with this module:
+
+        wget 'http://sysoev.ru/nginx/nginx-1.4.2.tar.gz'
+        tar -xzvf nginx-1.4.2.tar.gz
+        cd nginx-1.4.2/
+
+        # Here we assume you would install you nginx under /opt/nginx/.
+        ./configure --prefix=/opt/nginx \
+            --add-module=/path/to/ngx_devel_kit \
+            --add-module=/path/to/array-var-nginx-module
+
+        make -j2
+        make install
+
+    Download the latest version of the release tarball of this module from
+    array-var-nginx-module file list
+    (<http://github.com/agentzh/array-var-nginx-module/tags>).
+
+Compatibility
+    The following versions of Nginx should work with this module:
+
+    *   1.4.x (last tested: 1.4.2)
+
+    *   1.2.x (last tested: 1.2.9)
+
+    *   1.1.x (last tested: 1.1.5)
+
+    *   1.0.x (last tested: 1.0.8)
+
+    *   0.9.x (last tested: 0.9.4)
+
+    *   0.8.x (last tested: 0.8.54)
+
+    *   0.7.x >= 0.7.44 (last tested: 0.7.68)
+
+    Earlier versions of Nginx like 0.6.x and 0.5.x will *not* work.
+
+    If you find that any particular version of Nginx above 0.7.44 does not
+    work with this module, please consider reporting a bug.
+
+Report Bugs
+    Although a lot of effort has been put into testing and code tuning,
+    there must be some serious bugs lurking somewhere in this module. So
+    whenever you are bitten by any quirks, please don't hesitate to
+
+    1.  send a bug report or even patches to <agentzh@gmail.com>,
+
+    2.  or create a ticket on the issue tracking interface
+        (<http://github.com/agentzh/array-var-nginx-module/issues>)
+        provided by GitHub.
+
+Source Repository
+    Available on github at agentzh/array-var-nginx-module
+    (<http://github.com/agentzh/array-var-nginx-module>).
+
+ChangeLog
+
+Test Suite
+    This module comes with a Perl-driven test suite. The test cases
+    (<http://github.com/agentzh/array-var-nginx-module/tree/master/test/t
+    />) are declarative
+    (<http://github.com/agentzh/array-var-nginx-module/blob/master/test/t
+    /sanity.t>) too. Thanks to the Test::Base
+    (<http://search.cpan.org/perldoc?Test::Base>) module in the Perl world.
+
+    To run it on your side:
+
+        $ cd test
+        $ PATH=/path/to/your/nginx-with-array-var-module:$PATH prove -r t
+
+    You need to terminate any Nginx processes before running the test suite
+    if you have changed the Nginx server binary.
+
+    At the moment, LWP::UserAgent
+    (<http://search.cpan.org/perldoc?LWP::UserAgent>) is used by the test
+    scaffold
+    (<http://github.com/agentzh/array-var-nginx-module/blob/master/test/l
+    ib/Test/Nginx/LWP.pm>) for simplicity.
+
+    Because a single nginx server (by default, "localhost:1984") is used
+    across all the test scripts (".t" files), it's meaningless to run the
+    test suite in parallel by specifying "-jN" when invoking the "prove"
+    utility.
+
+    Some parts of the test suite requires modules rewrite, and echo
+    to be enabled as well when building Nginx.
+
+TODO
+
+Getting involved
+    You'll be very welcomed to submit patches to the author or just ask for
+    a commit bit to the source repository on GitHub.
+
+Author
+    Yichun "agentzh" Zhang (章亦春) *<agentzh@gmail.com>*, CloudFlare Inc.
+
+Copyright & License
+    Copyright (c) 2009-2013, Yichun Zhang (agentzh) <agentzh@gmail.com>, CloudFlare Inc.
+
+    This module is licensed under the terms of the BSD license.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are
+    met:
+
+    *   Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+    *   Redistributions in binary form must reproduce the above copyright
+        notice, this list of conditions and the following disclaimer in the
+        documentation and/or other materials provided with the distribution.
+
+    *   Neither the name of the Taobao Inc. nor the names of its
+        contributors may be used to endorse or promote products derived from
+        this software without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+    IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+    TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+    TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+See Also
+    NDK: http://github.com/simpl/ngx_devel_kit
+

@@ -1,0 +1,13 @@
+if echo $HTTP_MODULES | grep " ndk_http_module" > /dev/null; then
+    echo "found ngx_devel_kit for ngx_array_var; looks good."
+else
+    echo "error: ngx_devel_kit is required to build ngx_array_var; please put it before ngx_array_var." 1>&2
+    exit 1
+fi
+
+ngx_addon_name=ngx_http_array_var_module
+HTTP_AUX_FILTER_MODULES="$HTTP_AUX_FILTER_MODULES ngx_http_array_var_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/src/ngx_http_array_var_module.c $ngx_addon_dir/src/ngx_http_array_var_util.c"
+NGX_ADDON_DEPS="$NGX_ADDON_DEPS $ngx_addon_dir/src/ddebug.h $ngx_addon_dir/src/ngx_http_array_var_util.h"
+CFLAGS="$CFLAGS -DNDK_SET_VAR"
+

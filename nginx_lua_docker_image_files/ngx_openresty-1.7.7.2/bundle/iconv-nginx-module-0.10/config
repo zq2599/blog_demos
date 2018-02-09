@@ -1,0 +1,92 @@
+if echo $HTTP_MODULES | grep " ndk_http_module" > /dev/null; then
+    echo "found ngx_devel_kit for ngx_iconv; looks good."
+else
+    echo "error: ngx_devel_kit is required to build ngx_iconv; please put it before ngx_iconv." 1>&2
+    exit 1
+fi
+
+ngx_feature_name=
+ngx_feature_run=no
+ngx_feature_incs="#include <iconv.h>"
+ngx_feature_test='iconv_t cd =  iconv_open("utf-8","gbk");
+iconv_close(cd);'
+
+if [ -n "$LIBICONV_INC" -o -n "$LIBICONV_LIB" ]; then
+    ngx_feature="libiconv in directories specified by LIBICONV_INC ($LIBICONV_INC) and LIBICONV_LIB ($LIBICONV_LIB)"
+    ngx_feature_path="$LIBICONV_INC"
+    . auto/feature
+
+    if [ $ngx_found = no ]; then
+        # test also with -liconv
+        if [ $NGX_RPATH = YES ]; then
+            ngx_feature_libs="-R$LIBICONV_LIB -L$LIBICONV_LIB -liconv"
+        else
+            ngx_feature_libs="-L$LIBICONV_LIB -liconv"
+        fi
+        . auto/feature
+    fi
+else
+    # auto-discovery
+    ngx_feature="libiconv"
+    ngx_feature_path=
+    ngx_feature_libs=
+    . auto/feature
+
+    if [ $ngx_found = no ]; then
+        # test also with -liconv
+        ngx_feature_libs="-liconv"
+        . auto/feature
+    fi
+
+    if [ $ngx_found = no ]; then
+        ngx_feature="libiconv in /usr/local/"
+        ngx_feature_path="/usr/local/include"
+        if [ $NGX_RPATH = YES ]; then
+            ngx_feature_libs="-R/usr/local/lib -L/usr/local/lib -liconv"
+        else
+            ngx_feature_libs="-L/usr/local/lib -liconv"
+        fi
+        . auto/feature
+    fi
+
+    if [ $ngx_found = no ]; then
+        # NetBSD
+        ngx_feature="libiconv in /usr/pkg/"
+        ngx_feature_path="/usr/pkg/include/"
+        if [ $NGX_RPATH = YES ]; then
+            ngx_feature_libs="-R/usr/pkg/lib -L/usr/pkg/lib -liconv"
+        else
+            ngx_feature_libs="-L/usr/pkg/lib -liconv"
+        fi
+        . auto/feature
+    fi
+
+    if [ $ngx_found = no ]; then
+        # MacPorts
+        ngx_feature="libiconv in /opt/local/"
+        ngx_feature_path="/opt/local/include/"
+        if [ $NGX_RPATH = YES ]; then
+            ngx_feature_libs="-R/opt/local/lib -L/opt/local/lib -liconv"
+        else
+            ngx_feature_libs="-L/opt/local/lib -liconv"
+        fi
+        . auto/feature
+    fi
+fi
+
+if [ $ngx_found = yes ]; then
+    CORE_INCS="$CORE_INCS $ngx_feature_path"
+    CORE_LIBS="$CORE_LIBS $ngx_feature_libs"
+else
+ cat << END
+ $0: error: the ngx_iconv addon requires the iconv library.
+END
+ exit 1
+fi
+
+ngx_addon_name=ngx_http_iconv_module
+
+HTTP_AUX_FILTER_MODULES="$HTTP_AUX_FILTER_MODULES ngx_http_iconv_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/src/ngx_http_iconv_module.c"
+NGX_ADDON_DEPS="$NGX_ADDON_DEPS $ngx_addon_dir/src/ddebug.h"
+CFLAGS="$CFLAGS -DNDK_SET_VAR"

@@ -1,0 +1,5 @@
+ngx_addon_name=ngx_http_memc_module
+HTTP_MODULES="$HTTP_MODULES ngx_http_memc_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/src/ngx_http_memc_module.c $ngx_addon_dir/src/ngx_http_memc_request.c $ngx_addon_dir/src/ngx_http_memc_response.c $ngx_addon_dir/src/ngx_http_memc_util.c $ngx_addon_dir/src/ngx_http_memc_handler.c"
+NGX_ADDON_DEPS="$NGX_ADDON_DEPS $ngx_addon_dir/src/ddebug.h $ngx_addon_dir/src/ngx_http_memc_module.h $ngx_addon_dir/src/ngx_http_memc_request.h $ngx_addon_dir/src/ngx_http_memc_response.h $ngx_addon_dir/src/ngx_http_memc_util.h $ngx_addon_dir/src/ngx_http_memc_handler.h"
+
