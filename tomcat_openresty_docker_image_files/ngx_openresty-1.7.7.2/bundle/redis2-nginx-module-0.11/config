@@ -1,0 +1,5 @@
+ngx_addon_name=ngx_http_redis2_module
+HTTP_MODULES="$HTTP_MODULES ngx_http_redis2_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/src/ngx_http_redis2_module.c $ngx_addon_dir/src/ngx_http_redis2_handler.c $ngx_addon_dir/src/ngx_http_redis2_reply.c $ngx_addon_dir/src/ngx_http_redis2_util.c"
+NGX_ADDON_DEPS="$NGX_ADDON_DEPS $ngx_addon_dir/src/ddebug.h $ngx_addon_dir/src/ngx_http_redis2_module.h $ngx_addon_dir/src/ngx_http_redis2_handler.h $ngx_addon_dir/src/ngx_http_redis2_reply.h $ngx_addon_dir/src/ngx_http_redis2_util.h"
+

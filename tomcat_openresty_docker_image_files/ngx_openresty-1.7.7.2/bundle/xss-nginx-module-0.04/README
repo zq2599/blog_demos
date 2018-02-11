@@ -1,0 +1,186 @@
+Name
+    xss-nginx-module - Native cross-site scripting support in nginx
+
+Synopsis
+
+   # accessing /foo?callback=process gives the response
+   # body "process(...);" (without quotes) where "..."
+   # is the original response body of the /foo location.
+   server {
+        location /foo {
+            # your content handler goes here...
+
+            xss_get on;
+            xss_callback_arg 'callback';
+            xss_input_types 'application/json'; # default
+            xss_output_type 'application/x-javascript'; # default
+        }
+        ...
+    }
+
+Description
+    This module adds cross-site AJAX support to nginx. Currently only
+    cross-site GET is supported. But cross-site POST will be added
+    in the future.
+
+    The cross-site GET is currently implemented as JSONP
+    (or "JSON with padding"). See <http://en.wikipedia.org/wiki/JSON#JSONP >
+    for more details.
+
+Directives
+    * xss_get on | off
+        Syntax: xss_get on | off
+        Default: xss_get off
+        Context: main, http, location, if location
+
+        Enable JSONP support for GET requests.
+
+    * xss_callback_arg
+        Syntax: xss_callback_arg <name>
+        Default: none
+        Context: main, http, location, if location
+
+        Specify the JavaScript callback function name
+        used in the responses.
+
+        For example,
+
+            location /foo {
+                xss_get on;
+                xss_callback_arg c;
+                ...
+            }
+
+        then
+
+            GET /foo?c=blah
+
+        returns
+
+            blah(...);
+
+    * xss_override_status
+        Syntax: xss_override_status on | off
+        Default: xss_check_status on
+        Context: main, http, location, if location
+
+        Whether to override 30x, 40x and 50x status to 200
+        when the response is actually being processed.
+
+    * xss_check_status
+        Syntax: xss_check_status on | off
+        Default: xss_check_status on
+        Context: main, http, location, if location
+
+        By default, ngx_xss only process responses with the status code
+        200 or 201.
+
+    * xss_input_types
+        Syntax: xss_input_types [mime-type]...
+        Default: xss_input_types application/json
+        Context: main, http, location, if location
+
+        Only processes the responses of the specified MIME types.
+
+        Example:
+            xss_input_types application/json text/plain;
+
+Limitations
+    *   ngx_xss will not work with ngx_echo's subrequest interfaces, due to the underlying
+        limitations imposed by subrequests' "postponed chain" mechanism in the nginx core.
+        The standard ngx_addition module also falls into this category.  You're recommended,
+        however, to use ngx_lua as the content handler to issue subrequests *and* ngx_xss
+        to do JSONP, because ngx_lua's ngx.location.capture() interface does not utilize the
+        "postponed chain" mechanism, thus getting out of this limitation. We're taking this
+        approach in production and it works great.
+
+Trouble Shooting
+    Use the "info" error log level (or lower) to get more
+    diagnostics when things go wrong.
+
+Installation
+    Grab the nginx source code from nginx.net (<http://nginx.net/>), for
+    example, the version 1.4.3 (see nginx compatibility), and then build
+    the source with this module:
+
+        $ wget 'http://nginx.org/download/nginx-1.4.3.tar.gz'
+        $ tar -xzvf nginx-1.4.3.tar.gz
+        $ cd nginx-1.4.3/
+
+        # Here we assume you would install you nginx under /opt/nginx/.
+        $ ./configure --prefix=/opt/nginx \
+            --add-module=/path/to/xss-nginx-module
+
+        $ make -j2
+        $ make install
+
+    Download the latest version of the release tarball of this module from
+    xss-nginx-module file list
+    (<http://github.com/agentzh/xss-nginx-module/tags>).
+
+Compatibility
+    The following versions of Nginx should work with this module:
+
+    *   1.4.x (last tested: 1.4.3)
+
+    *   1.2.x (last tested: 1.2.9)
+
+    *   1.0.x (last tested: 1.0.10)
+
+    *   0.9.x (last tested: 0.9.4)
+
+    *   0.8.x (last tested: 0.8.54)
+
+    *   0.7.x >= 0.7.30 (last tested: 0.7.67)
+
+    Earlier versions of Nginx like 0.6.x and 0.5.x will *not* work.
+
+    If you find that any particular version of Nginx above 0.7.30 does not
+    work with this module, please consider reporting a bug.
+
+TODO
+    *   add cross-site POST support.
+
+Known Issues
+
+See Also
+
+    * Introduction to JSONP ( http://en.wikipedia.org/wiki/JSONP )
+    * ngx_drizzle ( http://github.com/chaoslawful/drizzle-nginx-module )
+
+Author
+    agentzh (章亦春) <agentzh at gmail dot com>
+
+Copyright & License
+    The implementation of the builtin connection pool has borrowed
+    a lot of code from Maxim Dounin's upstream_keepalive module.
+    This part of code is copyrighted by Maxim Dounin.
+
+    This module is licenced under the BSD license.
+
+    Copyright (C) 2009-2011 by Zhang "agentzh" Yichun (章亦春) <agentzh@gmail.com>.
+
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
+    are met:
+
+        * Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+        * Redistributions in binary form must reproduce the above copyright
+        notice, this list of conditions and the following disclaimer in the
+        documentation and/or other materials provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+    A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+    TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

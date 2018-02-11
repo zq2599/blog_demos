@@ -1,0 +1,216 @@
+ngx_feature_name=
+ngx_feature_run=no
+ngx_feature_incs="#include <libpq-fe.h>"
+ngx_feature_test="(void) PQconndefaults();"
+
+if [ -n "$LIBPQ_INC" -o -n "$LIBPQ_LIB" ]; then
+    # specified by LIBPQ_INC and LIBPQ_LIB
+    ngx_feature="libpq library in directories specified by LIBPQ_INC ($LIBPQ_INC) and LIBPQ_LIB ($LIBPQ_LIB)"
+    ngx_feature_path="$LIBPQ_INC"
+    if [ $NGX_RPATH = YES ]; then
+        ngx_feature_libs="-R$LIBPQ_LIB -L$LIBPQ_LIB -lpq"
+    else
+        ngx_feature_libs="-L$LIBPQ_LIB -lpq"
+    fi
+    . auto/feature
+else
+    if [ -z "$PG_CONFIG" ]; then
+        PG_CONFIG=pg_config
+    fi
+
+    if type $PG_CONFIG >/dev/null 2>&1; then
+        # based on information from pg_config
+        ngx_feature="libpq library (via $PG_CONFIG)"
+        ngx_feature_path="`$PG_CONFIG --includedir`"
+        if [ $NGX_RPATH = YES ]; then
+            ngx_feature_libs="-R`$PG_CONFIG --libdir` -L`$PG_CONFIG --libdir` -lpq"
+        else
+            ngx_feature_libs="-L`$PG_CONFIG --libdir` -lpq"
+        fi
+        . auto/feature
+    fi
+
+    # auto-discovery
+    if [ $ngx_found = no ]; then
+        # system-wide
+        ngx_feature="libpq library"
+        ngx_feature_path=
+        ngx_feature_libs="-lpq"
+        . auto/feature
+    fi
+
+    if [ $ngx_found = no ]; then
+        # Debian
+        ngx_feature="libpq library in /usr/../postgresql/"
+        ngx_feature_path="/usr/include/postgresql"
+        . auto/feature
+    fi
+
+    if [ $ngx_found = no ]; then
+        # FreeBSD
+        ngx_feature="libpq library in /usr/local/"
+        ngx_feature_path="/usr/local/include"
+        if [ $NGX_RPATH = YES ]; then
+            ngx_feature_libs="-R/usr/local/lib -L/usr/local/lib -lpq"
+        else
+            ngx_feature_libs="-L/usr/local/lib -lpq"
+        fi
+        . auto/feature
+    fi
+
+    if [ $ngx_found = no ]; then
+        # OpenBSD
+        ngx_feature="libpq library in /usr/local/../postgresql/"
+        ngx_feature_path="/usr/local/include/postgresql"
+        if [ $NGX_RPATH = YES ]; then
+            ngx_feature_libs="-R/usr/local/lib -L/usr/local/lib -lpq"
+        else
+            ngx_feature_libs="-L/usr/local/lib -lpq"
+        fi
+        . auto/feature
+    fi
+
+    if [ $ngx_found = no ]; then
+        # NetBSD
+        ngx_feature="libpq library in /usr/pkg/"
+        ngx_feature_path="/usr/pkg/include"
+        if [ $NGX_RPATH = YES ]; then
+            ngx_feature_libs="-R/usr/pkg/lib -L/usr/pkg/lib -lpq"
+        else
+            ngx_feature_libs="-L/usr/pkg/lib -lpq"
+        fi
+        . auto/feature
+    fi
+
+    if [ $ngx_found = no ]; then
+        # MacPorts
+        ngx_feature="libpq library in /opt/local/"
+        ngx_feature_path="/opt/local/include"
+        if [ $NGX_RPATH = YES ]; then
+            ngx_feature_libs="-R/opt/local/lib -L/opt/local/lib -lpq"
+        else
+            ngx_feature_libs="-L/opt/local/lib -lpq"
+        fi
+        . auto/feature
+    fi
+fi
+
+if [ $ngx_found = no ]; then
+   cat << END
+ $0: error: ngx_postgres addon was unable to find the libpq library.
+END
+   exit 1
+fi
+
+ngx_version=`grep nginx_version src/core/nginx.h | sed -e 's/^.* \(.*\)$/\1/'`
+
+if [ -z "$ngx_version" ]; then
+   cat << END
+ $0: error: ngx_postgres addon was unable to detect version of nginx.
+END
+   exit 1
+fi
+
+# work-around for versions of nginx older than nginx-0.9.0
+if [ $ngx_version -ge 9000 ]; then
+    ngx_feature_name="NGX_POSTGRES_LIBRARY_VERSION"
+    ngx_feature_run=value
+else
+    ngx_feature_name="NGX_POSTGRES_LIBRARY_VERSION_DETECTED"
+    ngx_feature_run=no
+fi
+
+lib_version=90100
+ngx_feature="libpq library version 9.1"
+ngx_feature_test="printf(\"%d\", PQlibVersion())"
+. auto/feature
+
+if [ $ngx_found = no ]; then
+    lib_version=90000
+    ngx_feature="libpq library version 9.0"
+    ngx_feature_test="(void) PQescapeLiteral(NULL, NULL, 0);
+                      printf(\"$lib_version\")"
+    . auto/feature
+fi
+
+if [ $ngx_found = no ]; then
+    lib_version=80400
+    ngx_feature="libpq library version 8.4"
+    ngx_feature_test="PQinitOpenSSL(0, 0);
+                      printf(\"$lib_version\")"
+    . auto/feature
+fi
+
+if [ $ngx_found = no ]; then
+    lib_version=80300
+    ngx_feature="libpq library version 8.3"
+    ngx_feature_test="(void) PQconnectionNeedsPassword(NULL);
+                      printf(\"$lib_version\")"
+    . auto/feature
+fi
+
+if [ $ngx_found = no ]; then
+    lib_version=80200
+    ngx_feature="libpq library version 8.2"
+    ngx_feature_test="(void) PQsendDescribePortal(NULL, NULL);
+                      printf(\"$lib_version\")"
+    . auto/feature
+fi
+
+if [ $ngx_found = no ]; then
+    lib_version=80104
+    ngx_feature="libpq library version 8.1.4"
+    ngx_feature_test="(void) PQescapeByteaConn(NULL, NULL, 0, 0);
+                      (void) PQregisterThreadLock(NULL);
+                      printf(\"$lib_version\")"
+    . auto/feature
+fi
+
+if [ $ngx_found = no ]; then
+    lib_version=80100
+    ngx_feature="libpq library version 8.1.0"
+    ngx_feature_test="(void) PQregisterThreadLock(NULL);
+                      printf(\"$lib_version\")"
+    . auto/feature
+fi
+
+if [ $ngx_found = no ]; then
+    lib_version=80008
+    ngx_feature="libpq library version 8.0.8"
+    ngx_feature_test="(void) PQescapeByteaConn(NULL, NULL, 0, 0);
+                      (void) PQcancel(NULL, NULL, 0);
+                      printf(\"$lib_version\")"
+    . auto/feature
+fi
+
+if [ $ngx_found = no ]; then
+    lib_version=80000
+    ngx_feature="libpq library version 8.0.0"
+    ngx_feature_test="(void) PQcancel(NULL, NULL, 0);
+                      printf(\"$lib_version\")"
+    . auto/feature
+fi
+
+if [ $ngx_found = no ]; then
+   cat << END
+ $0: error: ngx_postgres addon was unable to detect version of the libpq library.
+END
+   exit 1
+fi
+
+# work-around for versions of nginx older than nginx-0.9.0
+if [ $ngx_version -lt 9000 ]; then
+    have=NGX_POSTGRES_LIBRARY_VERSION value=$lib_version . auto/define
+fi
+
+ngx_addon_name=ngx_postgres
+
+HTTP_MODULES="$HTTP_MODULES ngx_postgres_module"
+
+CORE_INCS="$CORE_INCS $ngx_feature_path"
+CORE_LIBS="$CORE_LIBS $ngx_feature_libs"
+
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/src/ngx_postgres_escape.c $ngx_addon_dir/src/ngx_postgres_handler.c $ngx_addon_dir/src/ngx_postgres_keepalive.c $ngx_addon_dir/src/ngx_postgres_module.c $ngx_addon_dir/src/ngx_postgres_output.c $ngx_addon_dir/src/ngx_postgres_processor.c $ngx_addon_dir/src/ngx_postgres_rewrite.c $ngx_addon_dir/src/ngx_postgres_upstream.c $ngx_addon_dir/src/ngx_postgres_util.c $ngx_addon_dir/src/ngx_postgres_variable.c"
+NGX_ADDON_DEPS="$NGX_ADDON_DEPS $ngx_addon_dir/src/ngx_postgres_escape.h $ngx_addon_dir/src/ngx_postgres_handler.h $ngx_addon_dir/src/ngx_postgres_keepalive.h $ngx_addon_dir/src/ngx_postgres_module.h $ngx_addon_dir/src/ngx_postgres_output.h $ngx_addon_dir/src/ngx_postgres_processor.h $ngx_addon_dir/src/ngx_postgres_rewrite.h $ngx_addon_dir/src/ngx_postgres_upstream.h $ngx_addon_dir/src/ngx_postgres_util.h $ngx_addon_dir/src/ngx_postgres_variable.h $ngx_addon_dir/src/ngx_postgres_ddebug.h $ngx_addon_dir/src/resty_dbd_stream.h"
+
+have=NGX_POSTGRES_MODULE . auto/have

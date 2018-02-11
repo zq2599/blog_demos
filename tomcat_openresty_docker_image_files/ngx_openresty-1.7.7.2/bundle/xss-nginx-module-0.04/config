@@ -1,0 +1,5 @@
+ngx_addon_name=ngx_http_xss_filter_module
+HTTP_AUX_FILTER_MODULES="$HTTP_AUX_FILTER_MODULES ngx_http_xss_filter_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/src/ngx_http_xss_filter_module.c $ngx_addon_dir/src/ngx_http_xss_util.c"
+NGX_ADDON_DEPS="$NGX_ADDON_DEPS $ngx_addon_dir/src/ddebug.h $ngx_addon_dir/src/ngx_http_xss_filter_module.h $ngx_addon_dir/src/ngx_http_xss_util.h"
+

@@ -1,0 +1,13 @@
+*.swp
+*.so
+*.lo
+*~
+reindex
+test_case.lua
+tags
+*.html
+*.o
+*.tar.gz
+*.zip
+*.mobi
+genmobi.sh

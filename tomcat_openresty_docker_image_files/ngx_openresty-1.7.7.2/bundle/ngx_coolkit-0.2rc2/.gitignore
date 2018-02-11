@@ -1,0 +1,10 @@
+.svn
+t/servroot/
+*~
+*.swp
+work/
+buildroot/
+util/
+reindex
+go
+build1*

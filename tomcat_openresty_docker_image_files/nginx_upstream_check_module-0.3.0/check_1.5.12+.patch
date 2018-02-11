@@ -1,0 +1,198 @@
+diff --git a/src/http/modules/ngx_http_upstream_ip_hash_module.c b/src/http/modules/ngx_http_upstream_ip_hash_module.c
+index 041883f..b1bc7d0 100644
+--- a/src/http/modules/ngx_http_upstream_ip_hash_module.c
++++ b/src/http/modules/ngx_http_upstream_ip_hash_module.c
+@@ -9,6 +9,10 @@
+ #include <ngx_core.h>
+ #include <ngx_http.h>
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++#include "ngx_http_upstream_check_module.h"
++#endif
++
+ 
+ typedef struct {
+     /* the round robin data must be first */
+@@ -212,6 +216,15 @@ ngx_http_upstream_get_ip_hash_peer(ngx_peer_connection_t *pc, void *data)
+             goto next_try;
+         }
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++        ngx_log_debug1(NGX_LOG_DEBUG_HTTP, pc->log, 0,
++            "get ip_hash peer, check_index: %ui",
++             peer->check_index);
++        if (ngx_http_upstream_check_peer_down(peer->check_index)) {
++            goto next_try;
++        }
++#endif
++
+         if (peer->max_fails
+             && peer->fails >= peer->max_fails
+             && now - peer->checked <= peer->fail_timeout)
+diff --git a/src/http/modules/ngx_http_upstream_least_conn_module.c b/src/http/modules/ngx_http_upstream_least_conn_module.c
+index dbef95d..dc9b518 100644
+--- a/src/http/modules/ngx_http_upstream_least_conn_module.c
++++ b/src/http/modules/ngx_http_upstream_least_conn_module.c
+@@ -9,6 +9,10 @@
+ #include <ngx_core.h>
+ #include <ngx_http.h>
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++#include "ngx_http_upstream_check_module.h"
++#endif
++
+ 
+ typedef struct {
+     ngx_uint_t                        *conns;
+@@ -203,6 +207,16 @@ ngx_http_upstream_get_least_conn_peer(ngx_peer_connection_t *pc, void *data)
+             continue;
+         }
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++        ngx_log_debug1(NGX_LOG_DEBUG_HTTP, pc->log, 0,
++                "get least_conn peer, check_index: %ui",
++                peer->check_index);
++
++        if (ngx_http_upstream_check_peer_down(peer->check_index)) {
++            continue;
++        }
++#endif
++
+         if (peer->max_fails
+             && peer->fails >= peer->max_fails
+             && now - peer->checked <= peer->fail_timeout)
+@@ -256,6 +270,16 @@ ngx_http_upstream_get_least_conn_peer(ngx_peer_connection_t *pc, void *data)
+                 continue;
+             }
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++            ngx_log_debug1(NGX_LOG_DEBUG_HTTP, pc->log, 0,
++                    "get least_conn peer, check_index: %ui",
++                    peer->check_index);
++
++            if (ngx_http_upstream_check_peer_down(peer->check_index)) {
++                continue;
++            }
++#endif
++
+             if (lcp->conns[i] * best->weight != lcp->conns[p] * peer->weight) {
+                 continue;
+             }
+diff --git a/src/http/ngx_http_upstream_round_robin.c b/src/http/ngx_http_upstream_round_robin.c
+index 85ff558..2fe9bb6 100644
+--- a/src/http/ngx_http_upstream_round_robin.c
++++ b/src/http/ngx_http_upstream_round_robin.c
+@@ -9,6 +9,9 @@
+ #include <ngx_core.h>
+ #include <ngx_http.h>
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++#include "ngx_http_upstream_check_module.h"
++#endif
+ 
+ static ngx_http_upstream_rr_peer_t *ngx_http_upstream_get_peer(
+     ngx_http_upstream_rr_peer_data_t *rrp);
+@@ -85,6 +88,14 @@ ngx_http_upstream_init_round_robin(ngx_conf_t *cf,
+                 peers->peer[n].max_fails = server[i].max_fails;
+                 peers->peer[n].fail_timeout = server[i].fail_timeout;
+                 peers->peer[n].down = server[i].down;
++#if (NGX_HTTP_UPSTREAM_CHECK)
++                if (!server[i].down) {
++                    peers->peer[n].check_index =
++                        ngx_http_upstream_check_add_peer(cf, us, &server[i].addrs[j]);
++                } else {
++                    peers->peer[n].check_index = (ngx_uint_t) NGX_ERROR;
++                }
++#endif
+                 n++;
+             }
+         }
+@@ -139,6 +150,17 @@ ngx_http_upstream_init_round_robin(ngx_conf_t *cf,
+                 backup->peer[n].max_fails = server[i].max_fails;
+                 backup->peer[n].fail_timeout = server[i].fail_timeout;
+                 backup->peer[n].down = server[i].down;
++
++#if (NGX_HTTP_UPSTREAM_CHECK)
++                if (!server[i].down) {
++                    backup->peer[n].check_index =
++                        ngx_http_upstream_check_add_peer(cf, us, &server[i].addrs[j]);
++                }
++                else {
++                    backup->peer[n].check_index = (ngx_uint_t) NGX_ERROR;
++                }
++#endif
++
+                 n++;
+             }
+         }
+@@ -196,6 +218,9 @@ ngx_http_upstream_init_round_robin(ngx_conf_t *cf,
+         peers->peer[i].current_weight = 0;
+         peers->peer[i].max_fails = 1;
+         peers->peer[i].fail_timeout = 10;
++#if (NGX_HTTP_UPSTREAM_CHECK)
++        peers->peer[i].check_index = (ngx_uint_t) NGX_ERROR;
++#endif
+     }
+ 
+     us->peer.data = peers;
+@@ -302,6 +327,9 @@ ngx_http_upstream_create_round_robin_peer(ngx_http_request_t *r,
+         peers->peer[0].current_weight = 0;
+         peers->peer[0].max_fails = 1;
+         peers->peer[0].fail_timeout = 10;
++#if (NGX_HTTP_UPSTREAM_CHECK)
++        peers->peer[0].check_index = (ngx_uint_t) NGX_ERROR;
++#endif
+ 
+     } else {
+ 
+@@ -342,6 +370,9 @@ ngx_http_upstream_create_round_robin_peer(ngx_http_request_t *r,
+             peers->peer[i].current_weight = 0;
+             peers->peer[i].max_fails = 1;
+             peers->peer[i].fail_timeout = 10;
++#if (NGX_HTTP_UPSTREAM_CHECK)
++            peers->peer[i].check_index = (ngx_uint_t) NGX_ERROR;
++#endif
+         }
+     }
+ 
+@@ -399,6 +430,12 @@ ngx_http_upstream_get_round_robin_peer(ngx_peer_connection_t *pc, void *data)
+             goto failed;
+         }
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++        if (ngx_http_upstream_check_peer_down(peer->check_index)) {
++            goto failed;
++        }
++#endif
++
+     } else {
+ 
+         /* there are several peers */
+@@ -498,6 +535,12 @@ ngx_http_upstream_get_peer(ngx_http_upstream_rr_peer_data_t *rrp)
+             continue;
+         }
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++        if (ngx_http_upstream_check_peer_down(peer->check_index)) {
++            continue;
++        }
++#endif
++
+         if (peer->max_fails
+             && peer->fails >= peer->max_fails
+             && now - peer->checked <= peer->fail_timeout)
+diff --git a/src/http/ngx_http_upstream_round_robin.h b/src/http/ngx_http_upstream_round_robin.h
+index ea90ab9..a6fb33f 100644
+--- a/src/http/ngx_http_upstream_round_robin.h
++++ b/src/http/ngx_http_upstream_round_robin.h
+@@ -30,6 +30,10 @@ typedef struct {
+     ngx_uint_t                      max_fails;
+     time_t                          fail_timeout;
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++    ngx_uint_t                      check_index;
++#endif
++
+     ngx_uint_t                      down;          /* unsigned  down:1; */
+ 
+ #if (NGX_HTTP_SSL)

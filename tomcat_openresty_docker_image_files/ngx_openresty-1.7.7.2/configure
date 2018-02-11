@@ -1,0 +1,1154 @@
+#!/usr/bin/env perl
+
+use 5.006;
+use strict;
+use warnings;
+
+use File::Spec;
+
+sub shell ($@);
+sub env ($$);
+sub cd ($);
+sub auto_complete ($);
+sub usage ($);
+sub trim ($);
+
+my (@make_cmds, @make_install_cmds);
+
+my $root_dir = `pwd`;
+chomp $root_dir;
+
+my $OS = $^O;
+
+my $ngx_dir;
+
+if (-f 'Makefile') {
+    unlink 'Makefile' or die "ERROR: failed to remove existing Makefile: $!\n";
+}
+
+for my $opt (@ARGV) {
+    if ($opt =~ /^--platform=(.*)/) {
+        $OS = $1;
+        undef $opt;
+    }
+}
+
+my ($platform, $on_solaris);
+
+if ($OS =~ /solaris|sunos/i) {
+    $platform = 'solaris';
+    $on_solaris = $platform;
+
+} elsif ($OS eq 'linux') {
+    $platform = $OS;
+
+} elsif ($OS eq 'MSWin32') {
+    die "MS Windows not supported. Abort.\n";
+
+} elsif ($OS =~ /^(?:MacOS|darwin|rhapsody)$/) {
+    $platform = 'macosx';
+
+} elsif ($OS eq 'freebsd') {
+    $platform = $OS;
+
+} elsif ($OS =~ /^(?:openbsd|netbsd|dragonfly)$/) {
+    $platform = 'bsd';
+
+} else {
+    $platform = 'posix';
+}
+
+my @modules = (
+    [ndk => 'ngx_devel_kit'],
+    [http_iconv => 'iconv-nginx-module', 'disabled'],
+    [http_echo => 'echo-nginx-module'],
+    [http_xss => 'xss-nginx-module'],
+    [http_coolkit => 'ngx_coolkit'],
+    [http_set_misc => 'set-misc-nginx-module'],
+    [http_form_input => 'form-input-nginx-module'],
+    [http_encrypted_session => 'encrypted-session-nginx-module'],
+    [http_drizzle => 'drizzle-nginx-module', 'disabled'],
+    [http_postgres => 'ngx_postgres', 'disabled'],
+    [http_srcache => 'srcache-nginx-module'],
+    [http_lua => 'ngx_lua'],
+    [http_lua_upstream => 'ngx_lua_upstream'],
+    [http_headers_more => 'headers-more-nginx-module'],
+    [http_array_var => 'array-var-nginx-module'],
+    [http_memc => 'memc-nginx-module'],
+    [http_redis2 => 'redis2-nginx-module'],
+    [http_redis => 'redis-nginx-module'],
+    #[http_upstream_keepalive => 'upstream-keepalive-nginx-module'],
+    #[http_auth_request => 'auth-request-nginx-module'],
+    [http_rds_json => 'rds-json-nginx-module'],
+    [http_rds_csv => 'rds-csv-nginx-module'],
+);
+
+my $without_resty_mods_regex;
+{
+    my $s = '^--without-('
+        . join('|',
+            map { $_->[0] }
+                grep { @$_ == 2 && $_->[0] =~ /^http_/ }
+                @modules
+          )
+        . ')_module$';
+
+    #warn "without regex: $s";
+
+    $without_resty_mods_regex = qr/$s/;
+}
+
+my $with_resty_mods_regex;
+{
+    my $s = '^--with-('
+        . join('|',
+            map { $_->[0] }
+                grep { @$_ == 3 && $_->[0] =~ /^http_/ }
+                @modules
+          )
+        . ')_module$';
+
+    #warn "with regex: $s";
+
+    $with_resty_mods_regex = qr/$s/;
+}
+
+my $prefix = '/usr/local/openresty';
+my %resty_opts;
+my $dry_run;
+my @ngx_rpaths;
+my $cc;
+my $cores;
+my $luajit_xcflags = '';
+
+my (@ngx_opts, @ngx_cc_opts, @ngx_ld_opts);
+
+# use -O2 to compile everything by default (which can be overridden
+# by the user's own --with-cc-opt=OPTS option):
+push @ngx_cc_opts, "-O2";
+
+for my $opt (@ARGV) {
+    next unless defined $opt;
+
+    if ($opt =~ /^-j(\d+)/) {
+        $cores = $1;
+        next;
+    }
+
+    if ($opt =~ /^--with-cc=(.+)/) {
+        $cc = $1;
+        push @ngx_opts, "'$opt'";
+        next;
+    }
+
+    if ($opt eq '--dry-run') {
+        $dry_run = 1;
+        next;
+    }
+
+    if ($opt =~ /^--with-make=(.*)/) {
+        $resty_opts{make} = $1;
+        next;
+    }
+
+    if ($opt =~ /^--prefix=(.*)/) {
+        $prefix = $1;
+
+    } elsif ($opt eq '--without-lua51') {
+        undef $resty_opts{lua};
+
+    } elsif ($opt eq '--with-lua51') {
+        $resty_opts{lua} = 1;
+
+    } elsif ($opt =~ /^--with-lua51=(.*)/) {
+        $resty_opts{lua_path} = $1;
+
+    } elsif ($opt eq '--without-lua_cjson') {
+        $resty_opts{no_lua_cjson} = 1;
+
+    } elsif ($opt eq '--without-lua_redis_parser') {
+        $resty_opts{no_lua_redis_parser} = 1;
+
+    } elsif ($opt eq '--without-lua_resty_memcached') {
+        $resty_opts{no_lua_resty_memcached} = 1;
+
+    } elsif ($opt eq '--without-lua_resty_redis') {
+        $resty_opts{no_lua_resty_redis} = 1;
+
+    } elsif ($opt eq '--without-lua_resty_dns') {
+        $resty_opts{no_lua_resty_dns} = 1;
+
+    } elsif ($opt eq '--without-lua_resty_mysql') {
+        $resty_opts{no_lua_resty_mysql} = 1;
+
+    } elsif ($opt eq '--without-lua_resty_upload') {
+        $resty_opts{no_lua_resty_upload} = 1;
+
+    } elsif ($opt eq '--without-lua_resty_string') {
+        $resty_opts{no_lua_resty_string} = 1;
+
+    } elsif ($opt eq '--without-lua_resty_websocket') {
+        $resty_opts{no_lua_resty_websocket} = 1;
+
+    } elsif ($opt eq '--without-lua_resty_lock') {
+        $resty_opts{no_lua_resty_lock} = 1;
+
+    } elsif ($opt eq '--without-lua_resty_lrucache') {
+        $resty_opts{no_lua_resty_lrucache} = 1;
+
+    } elsif ($opt eq '--without-lua_resty_core') {
+        $resty_opts{no_lua_resty_core} = 1;
+
+    } elsif ($opt eq '--without-lua_resty_upstream_healthcheck') {
+        $resty_opts{no_lua_resty_upstream_healthcheck} = 1;
+
+    } elsif ($opt eq '--without-lua_rds_parser') {
+        $resty_opts{no_lua_rds_parser} = 1;
+
+    } elsif ($opt eq '--with-debug') {
+        $resty_opts{debug} = 1;
+
+    } elsif ($opt eq '--help') {
+        usage 0;
+
+    } elsif ($opt =~ /^--with-cc-opt=(.*)/) {
+        push @ngx_cc_opts, $1;
+
+    } elsif ($opt =~ /^--with-ld-opt=(.*)/) {
+        push @ngx_ld_opts, $1;
+
+    } elsif ($opt =~ $without_resty_mods_regex) {
+        #die "no_$1\n";
+        $resty_opts{"no_$1"} = 1;
+
+    } elsif ($opt eq '--without-ngx_devel_kit_module') {
+        $resty_opts{no_ndk} = 1;
+
+    } elsif ($opt =~ $with_resty_mods_regex) {
+        $resty_opts{"$1"} = 1;
+
+    } elsif ($opt eq '--with-luajit') {
+        $resty_opts{luajit} = 1;
+
+    } elsif ($opt =~ /^--with-luajit=(.*)/) {
+        $resty_opts{luajit_path} = $1;
+
+    } elsif ($opt =~ /^--with-luajit-xcflags=(.*)/) {
+        $luajit_xcflags .= " $1";
+
+    } elsif ($opt =~ /^--with-libdrizzle=(.*)/) {
+        $resty_opts{libdrizzle} = $1;
+
+    } elsif ($opt =~ /^--with-libpq=(.*)/) {
+        $resty_opts{libpq} = $1;
+        if ($resty_opts{pg_config}) {
+            die "--with-libpq is not allowed when ",
+                "--with-pg_config is already specified.\n";
+        }
+
+    } elsif ($opt =~ /^--with-pg_config=(.*)/) {
+        $resty_opts{pg_config} = $1;
+        if ($resty_opts{libpq}) {
+            die "--with-pg_config is not allowed when ",
+                "--with-libpq is already specified.\n";
+        }
+
+    } elsif ($opt eq '--with-no-pool-patch') {
+        $resty_opts{no_pool} = 1;
+
+    } elsif ($opt eq '--with-http_ssl_module') {
+        $resty_opts{http_ssl} = 1;
+        push @ngx_opts, $opt;
+
+    } elsif ($opt eq '--without-http_ssl_module') {
+        $resty_opts{no_http_ssl} = 1;
+
+    } elsif ($opt =~ /^--add-module=(.*)/) {
+
+        my $mod_path = File::Spec->rel2abs($1);
+        push @ngx_opts, "--add-module=$mod_path";
+
+    } elsif ($opt =~ /^--with-(openssl|pcre|zlib|libatomic|md5|sha1)=(.*)/) {
+
+        my $path = File::Spec->rel2abs($2);
+        push @ngx_opts, "--with-$1=$path";
+
+    } elsif ($opt =~ /^--\w.*/) {
+        push @ngx_opts, $opt;
+
+    } else {
+        die "Invalid option $opt\n";
+    }
+}
+
+print "platform: $platform ($OS)\n";
+
+my $ngx_prefix = "$prefix/nginx";
+
+my $postamble = '';
+
+my $resty_opts = build_resty_opts(\%resty_opts);
+
+if (@ngx_rpaths) {
+    unshift @ngx_ld_opts, "-Wl,-rpath," . join(":", @ngx_rpaths);
+}
+
+my $ld_opts = '';
+if (@ngx_ld_opts) {
+    $ld_opts = " \\\n  --with-ld-opt='@ngx_ld_opts'";
+}
+
+my $cmd = "sh ./configure --prefix=$ngx_prefix"
+    . $resty_opts
+    . $ld_opts
+    . (@ngx_opts ? " \\\n  @ngx_opts" : "");
+    ;
+
+shell $cmd, $dry_run;
+
+push @make_cmds, "cd $root_dir/build/$ngx_dir && "
+    . "\$(MAKE)";
+
+push @make_install_cmds, "cd $root_dir/build/$ngx_dir && "
+    . "\$(MAKE) install DESTDIR=\$(DESTDIR)";
+
+cd '../..'; # to the root
+#die "pwd: " .. `pwd`;
+
+gen_makefile();
+
+if ($postamble) {
+    print $postamble;
+}
+
+sub env ($$) {
+    my ($name, $val) = @_;
+    print "export $name='$val'\n";
+    $ENV{$name} = $val;
+}
+
+sub shell ($@) {
+    my ($cmd, $dry_run) = @_;
+
+    print "$cmd\n";
+
+    unless ($dry_run) {
+        system($cmd) == 0 or
+            die "ERROR: failed to run command: ", trim($cmd), "\n";
+    }
+}
+
+sub trim ($) {
+    my $cmd = shift;
+    $cmd =~ s/\n.*/.../s;
+    $cmd;
+}
+
+sub auto_complete ($) {
+    my $name = shift;
+    my @dirs = glob "$name-[0-9]*" or
+        die "No source directory found for $name\n";
+
+    if (@dirs > 1) {
+        die "More than one hits for $name: @dirs\n";
+    }
+
+    return $dirs[0];
+}
+
+sub cd ($) {
+    my $dir = shift;
+    print("cd $dir\n");
+    chdir $dir or die "failed to cd $dir: $!\n";
+}
+
+sub build_resty_opts {
+    my $opts = shift;
+
+    my $make;
+
+    if ($opts->{make}) {
+        $make = $opts->{make};
+        if (! can_run($make)) {
+            die "make utility $make cannot be run.\n";
+        }
+
+    } else {
+        if (can_run("gmake")) {
+            $make = 'gmake';
+
+        } else {
+            # no gmake found
+
+            if ($platform =~ /bsd/i) {
+                die "error: I cannot find \"gmake\" (Gnu make) in your PATH ".
+                    "envirnonment. You can also specify your make by the ".
+                    "--with-make=PATH option\n";
+            }
+
+            if (can_run("make")) {
+                $make = "make";
+
+            } else {
+                die "No gmake nor make found in PATH.\n";
+            }
+        }
+    }
+
+    $postamble .= <<"_END_";
+Type the following commands to build and install:
+    $make
+    $make install
+_END_
+
+    if ($opts->{no_ndk}) {
+        for my $name (qw(lua set_misc iconv lz_session form_input array_var)) {
+            if (! $opts->{"no_http_$name"}) {
+                warn "WARNING: ngx_http_${name}_module is automatically disabled ",
+                    "because ngx_devel_kit_module is disabled.\n";
+                $opts->{"no_http_$name"} = 1;
+            }
+        }
+    }
+
+    if (!$opts->{lua}
+        && !$opts->{lua_path}
+        && !$opts->{no_http_lua}
+        && !$opts->{no_http_lua_upstream}
+        && !$opts->{luajit_path})
+    {
+        $opts->{luajit} = 1;
+    }
+
+    if ($opts->{luajit} && $opts->{luajit_path}) {
+        die "--with-luajit and --with-luajit=DIR are mutually exclusive.\n";
+    }
+
+    if ($opts->{no_http_ssl} && $opts->{http_ssl}) {
+        die "--with-http_ssl_module conflicts with --without-http_ssl_module.\n";
+    }
+
+    if (! $opts->{no_http_ssl} && ! $opts->{http_ssl}) {
+        $opts->{http_ssl} = 1;
+        push @ngx_opts, '--with-http_ssl_module';
+    }
+
+    if (! $opts->{http_drizzle} && $opts->{libdrizzle}) {
+        die "The http_drizzle_module is not enabled while --with-libdrizzle is specified.\n";
+    }
+
+    if (! $opts->{http_postgres} && $opts->{libpq}) {
+        die "The http_postgres_module is not enabled while --with-libpq is specified.\n";
+    }
+
+    if (! $opts->{http_postgres} && $opts->{pg_config}) {
+        die "The http_postgres_module is not enabled while --with-pg_config is specified.\n";
+    }
+
+    if ($platform eq 'linux' && $opts->{luajit} && ! can_run("ldconfig")) {
+        die "you need to have ldconfig in your PATH env when enabling luajit.\n";
+    }
+
+    my $opts_line = '';
+
+    if ($opts->{debug}) {
+        unshift @ngx_cc_opts, '-DNGX_LUA_USE_ASSERT', '-DNGX_LUA_ABORT_AT_PANIC';
+        $opts_line .= " \\\n  --with-debug";
+
+    } else {
+        #unshift @ngx_cc_opts, '-O2';
+    }
+
+    if (-d 'build') {
+        system("rm -rf build") == 0 or
+            die "failed to remove directory build/.\n";
+    }
+
+    if (-e 'build') {
+        die "file or directory \"build\" already exists. please remove it first.\n";
+    }
+    shell "cp -rp bundle/ build";
+
+    cd 'build';
+
+    # build 3rd-party C libraries if required
+
+    if ($opts->{no_pool}) {
+        if (! can_run("patch")) {
+            die "no \"patch\" utility found in your PATH environment.\n";
+        }
+
+        shell "patch -p0 < nginx-no_pool.patch";
+    }
+
+    if (my $drizzle_prefix = $opts->{libdrizzle}) {
+        my $drizzle_lib = "$drizzle_prefix/lib";
+        env LIBDRIZZLE_LIB => $drizzle_lib;
+        env LIBDRIZZLE_INC => "$drizzle_prefix/include/libdrizzle-1.0";
+        push @ngx_rpaths, $drizzle_lib;
+    }
+
+    if (my $pg_prefix = $opts->{libpq}) {
+        my $pg_lib = "$pg_prefix/lib";
+        env LIBPQ_LIB => $pg_lib;
+        env LIBPQ_INC => "$pg_prefix/include";
+        push @ngx_rpaths, $pg_lib;
+    }
+
+    if (my $pg_config = $opts->{pg_config}) {
+        if (!can_run($pg_config)) {
+            die "pg_config is not runnable.\n";
+        }
+
+        my $cmd = "$pg_config --libdir";
+        my $pg_lib = `$cmd`;
+        chomp $pg_lib;
+        if (!defined $pg_lib) {
+            die "Failed to run command $cmd\n";
+        }
+
+        $cmd = "$pg_config --includedir";
+        my $pg_inc = `$cmd`;
+        chomp $pg_inc;
+        if (!defined $pg_inc) {
+            die "Failed to run command $cmd\n";
+        }
+
+        env LIBPQ_LIB => $pg_lib;
+        env LIBPQ_INC => $pg_inc;
+        push @ngx_rpaths, $pg_lib;
+    }
+
+    if ($opts->{luajit_path}) {
+        my $luajit_prefix = $opts->{luajit_path};
+
+        my $lib = "$luajit_prefix/lib";
+        my $inc = "$luajit_prefix/include/luajit-2.1";
+
+        env LUAJIT_LIB => $lib;
+        env LUAJIT_INC => $inc;
+
+        unshift @ngx_ld_opts, "-L$lib";
+        unshift @ngx_cc_opts, "-I$inc";
+
+        push @ngx_rpaths, "$luajit_prefix/lib";
+
+    } elsif ($opts->{luajit}) {
+        my $luajit_src = auto_complete 'LuaJIT';
+        my $luajit_prefix = "$prefix/luajit";
+        my $luajit_root = File::Spec->rel2abs("luajit-root");
+
+        if (-d $luajit_root) {
+            shell "rm -rf $luajit_root";
+        }
+
+        mkdir $luajit_root or
+            die "create create directory luajit-root: $!\n";
+
+        cd $luajit_src;
+
+        my $extra_opts = ' TARGET_STRIP=@: CCDEBUG=-g';
+
+        if ($opts->{debug}) {
+            $luajit_xcflags .= " -DLUA_USE_APICHECK -DLUA_USE_ASSERT";
+            $luajit_xcflags =~ s/^ +//;
+            $extra_opts .= qq{ Q= XCFLAGS='$luajit_xcflags'};
+
+        } else {
+            if ($luajit_xcflags) {
+                $luajit_xcflags =~ s/^ +//;
+                $extra_opts .= qq{ XCFLAGS='$luajit_xcflags'};
+            }
+        }
+
+        #if ($platform =~ /bsd/i) {
+        #$extra_opts .= ' CFLAGS=-I..';
+        #}
+
+        if ($on_solaris) {
+            $extra_opts .= " INSTALL_X='$root_dir/build/install -m 0755' " .
+                    "INSTALL_F='$root_dir/build/install -m 0644'";
+        }
+
+        if (defined $cc) {
+            $extra_opts .= " CC='$cc'";
+
+        } else {
+            $extra_opts .= " CC=cc";
+        }
+
+        if (defined $cores) {
+            shell "${make} -j$cores$extra_opts PREFIX=$luajit_prefix", $dry_run;
+        } else {
+            shell "${make}$extra_opts PREFIX=$luajit_prefix", $dry_run;
+        }
+
+        shell "${make} install$extra_opts PREFIX=$luajit_prefix DESTDIR=$luajit_root", $dry_run;
+
+        push @make_cmds, "cd $root_dir/build/$luajit_src && "
+            . "\$(MAKE)$extra_opts PREFIX=$luajit_prefix";
+
+        push @make_install_cmds, "cd $root_dir/build/$luajit_src && "
+            . "\$(MAKE) install$extra_opts PREFIX=$luajit_prefix DESTDIR=\$(DESTDIR)";
+
+        my $lib = "$luajit_root$luajit_prefix/lib";
+        my $inc = "$luajit_root$luajit_prefix/include/luajit-2.1";
+
+        env LUAJIT_LIB => $lib;
+        env LUAJIT_INC => $inc;
+
+        unshift @ngx_ld_opts, "-L$lib";
+        unshift @ngx_cc_opts, "-I$inc";
+
+        push @ngx_rpaths, "$luajit_prefix/lib";
+
+        cd '..';
+
+    } elsif ($opts->{lua_path}) {
+        my $lua_prefix = $opts->{lua_path};
+        env LUA_LIB => "$lua_prefix/lib";
+        env LUA_INC => "$lua_prefix/include";
+
+        push @ngx_rpaths, "$lua_prefix/lib";
+
+    } elsif ($opts->{lua}) {
+        # build stdandard lua
+
+        my $lua_src = auto_complete 'lua';
+
+        if (!defined $lua_src) {
+            die "No lua5 found";
+        }
+
+        my $lua_prefix = "$prefix/lua";
+        my $lua_root = File::Spec->rel2abs("lua-root");
+
+        if (-d $lua_root) {
+            shell "rm -rf $lua_root";
+        }
+
+        mkdir $lua_root or
+            die "create create directory lua-root: $!\n";
+
+        cd $lua_src;
+
+        my $extra_opts = '';
+        if (defined $cc) {
+            $extra_opts .= " CC='$cc'";
+        }
+
+        if (defined $cores) {
+            shell "${make} -j$cores$extra_opts $platform", $dry_run;
+        } else {
+            shell "${make}$extra_opts $platform", $dry_run;
+        }
+
+        shell "${make} install$extra_opts INSTALL_TOP=$lua_root$lua_prefix", $dry_run;
+
+        env LUA_LIB => "$lua_root$lua_prefix/lib";
+        env LUA_INC => "$lua_root$lua_prefix/include";
+
+        push @make_cmds, "cd $root_dir/build/$lua_src && \$(MAKE)$extra_opts $platform";
+
+        push @make_install_cmds, "cd $root_dir/build/$lua_src && "
+            . "\$(MAKE) install$extra_opts INSTALL_TOP=\$(DESTDIR)$lua_prefix";
+
+        cd '..';
+    }
+
+    if ($opts->{lua} || $opts->{lua_path}
+        || $opts->{luajit} || $opts->{luajit_path})
+    {
+        # build lua modules
+
+        my $lualib_prefix = "$prefix/lualib";
+
+        my $ngx_lua_dir = auto_complete 'ngx_lua';
+
+        open my $in, ">>$ngx_lua_dir/config" or
+            die "Cannot open $ngx_lua_dir/config for appending: $!\n";
+
+        print $in <<"_EOC_";
+
+ngx_lua_dquote='"'
+CFLAGS="\$CFLAGS -DLUA_DEFAULT_PATH='\$ngx_lua_dquote$lualib_prefix/?.lua;$lualib_prefix/?/init.lua\$ngx_lua_dquote'"
+CFLAGS="\$CFLAGS -DLUA_DEFAULT_CPATH='\$ngx_lua_dquote$lualib_prefix/?.so\$ngx_lua_dquote'"
+_EOC_
+
+        close $in;
+
+        unless ($opts->{no_lua_cjson}) {
+            my $dir = auto_complete 'lua-cjson';
+            if (!defined $dir) {
+                die "No lua-cjson found";
+            }
+
+            my $lua_inc;
+            if ($opts->{luajit} || $opts->{luajit_path}) {
+                $lua_inc = $ENV{LUAJIT_INC};
+
+            } else {
+                $lua_inc = $ENV{LUA_INC};
+            }
+
+            my $extra_opts = " DESTDIR=\$(DESTDIR) LUA_INCLUDE_DIR=$lua_inc " .
+                "LUA_CMODULE_DIR=$lualib_prefix LUA_MODULE_DIR=$lualib_prefix";
+
+            if ($on_solaris) {
+                #$extra_opts .= " INSTALL=$root_dir/build/install";
+                if ($opts->{debug}) {
+                    $extra_opts .= " CJSON_CFLAGS=\"-g -O -fpic -DUSE_INTERNAL_ISINF\"";
+
+                } else {
+                    $extra_opts .= " CJSON_CFLAGS=\"-g -fpic -DUSE_INTERNAL_ISINF\"";
+                }
+
+            } else {
+                if ($opts->{debug}) {
+                    $extra_opts .= " CJSON_CFLAGS=\"-g -O -fpic\"";
+                } else {
+                    $extra_opts .= " CJSON_CFLAGS=\"-g -fpic\"";
+                }
+            }
+
+            if ($platform eq 'macosx') {
+                $extra_opts .= " CJSON_LDFLAGS='-bundle -undefined dynamic_lookup'";
+            }
+
+            if (defined $cc) {
+                $extra_opts .= " CC='$cc'";
+            } else {
+                $extra_opts .= " CC=cc";
+            }
+
+            push @make_cmds, "cd $root_dir/build/$dir && ".
+                "\$(MAKE)$extra_opts";
+
+            push @make_install_cmds, "cd $root_dir/build/$dir && " .
+                "\$(MAKE) install$extra_opts";
+        }
+
+        unless ($opts->{no_lua_redis_parser}) {
+            my $dir = auto_complete 'lua-redis-parser';
+            if (!defined $dir) {
+                die "No lua-redis-parser found";
+            }
+
+            my $lua_inc;
+            if ($opts->{luajit} || $opts->{luajit_path}) {
+                $lua_inc = $ENV{LUAJIT_INC};
+
+            } else {
+                $lua_inc = $ENV{LUA_INC};
+            }
+
+            my $extra_opts = " DESTDIR=\$(DESTDIR) LUA_INCLUDE_DIR=$lua_inc " .
+                "LUA_LIB_DIR=$lualib_prefix";
+
+            if ($on_solaris) {
+                $extra_opts .= " INSTALL=$root_dir/build/install";
+                if ($opts->{debug}) {
+                    $extra_opts .= " CFLAGS=\"-g -O -Wall\"";
+
+                }
+
+            } else {
+                if ($opts->{debug}) {
+                    $extra_opts .= " CFLAGS=\"-g -O -Wall\"";
+                }
+            }
+
+            if ($platform eq 'macosx') {
+                $extra_opts .= " LDFLAGS='-bundle -undefined dynamic_lookup'";
+            }
+
+            if (defined $cc) {
+                $extra_opts .= " CC='$cc'";
+            } else {
+                $extra_opts .= " CC=cc";
+            }
+
+            push @make_cmds, "cd $root_dir/build/$dir && ".
+                "\$(MAKE)$extra_opts";
+
+            push @make_install_cmds, "cd $root_dir/build/$dir && " .
+                "\$(MAKE) install$extra_opts";
+        }
+
+        unless ($opts->{no_lua_rds_parser}) {
+            my $dir = auto_complete 'lua-rds-parser';
+            if (!defined $dir) {
+                die "No lua-rds-parser found";
+            }
+
+            my $lua_inc;
+            if ($opts->{luajit} || $opts->{luajit_path}) {
+                $lua_inc = $ENV{LUAJIT_INC};
+
+            } else {
+                $lua_inc = $ENV{LUA_INC};
+            }
+
+            my $extra_opts = " DESTDIR=\$(DESTDIR) LUA_INCLUDE_DIR=$lua_inc " .
+                "LUA_LIB_DIR=$lualib_prefix";
+
+            if ($on_solaris) {
+                $extra_opts .= " INSTALL=$root_dir/build/install";
+                if ($opts->{debug}) {
+                    $extra_opts .= " CFLAGS=\"-g -O -Wall\"";
+
+                }
+
+            } else {
+                if ($opts->{debug}) {
+                    $extra_opts .= " CFLAGS=\"-g -O -Wall\"";
+                }
+            }
+
+            if ($platform eq 'macosx') {
+                $extra_opts .= " LDFLAGS='-bundle -undefined dynamic_lookup'";
+            }
+
+            if (defined $cc) {
+                $extra_opts .= " CC='$cc'";
+            } else {
+                $extra_opts .= " CC=cc";
+            }
+
+            push @make_cmds, "cd $root_dir/build/$dir && ".
+                "\$(MAKE)$extra_opts";
+
+            push @make_install_cmds, "cd $root_dir/build/$dir && " .
+                "\$(MAKE) install$extra_opts";
+        }
+
+        for my $key (qw(dns memcached redis mysql string upload websocket
+                        lock lrucache core upstream_healthcheck))
+        {
+            unless ($opts->{"no_lua_resty_$key"}) {
+                (my $key2 = $key) =~ s/_/-/g;
+                my $name = "lua-resty-$key2";
+                my $dir = auto_complete $name;
+                if (!defined $dir) {
+                    die "No $name found";
+                }
+
+                my $extra_opts = " DESTDIR=\$(DESTDIR) LUA_LIB_DIR=$lualib_prefix"
+                    ." INSTALL=$root_dir/build/install";
+
+                push @make_install_cmds, "cd $root_dir/build/$dir && " .
+                    "\$(MAKE) install$extra_opts";
+            }
+        }
+    }
+
+    # configure resty-cli:
+
+    my $resty_cli_dir = auto_complete 'resty-cli';
+    push @make_install_cmds, "cd $root_dir/build/$resty_cli_dir && "
+         . "$root_dir/build/install resty \$(DESTDIR)/$prefix/bin/";
+
+    # prepare nginx configure line
+
+    $ngx_dir = auto_complete "nginx";
+
+    if (@ngx_cc_opts) {
+        $opts_line .= " \\\n  --with-cc-opt='@ngx_cc_opts'";
+    }
+
+    cd $ngx_dir;
+
+    for my $mod (@modules) {
+        my ($name, $prefix, $attr) = @$mod;
+
+        if ($attr && $attr eq 'disabled') {
+            next if not $opts->{"$name"};
+
+        } else {
+            next if $opts->{"no_$name"};
+        }
+
+        my $dir = auto_complete "../$prefix";
+
+        $opts_line .= " \\\n  --add-module=$dir";
+    }
+
+    return $opts_line;
+}
+
+sub usage ($) {
+    my $retval = shift;
+    my $msg = <<'_EOC_';
+  --help                             this message
+
+  --prefix=PATH                      set the installation prefix (default to /usr/local/openresty).
+
+  --with-debug                       enable the debugging logging and also enable -O0 -g for the C compiler.
+                                     this not only affects nginx, but also other components.
+  --with-dtrace-probes               enable dtrace USDT probes
+  --with-dtrace=PATH                 set dtrace utility pathname
+
+  --with-no-pool-patch               enable the no-pool patch for debugging memory issues.
+
+  -jN                                pass -jN option to make while building the bundled
+                                     Lua 5.1 interpreter or LuaJIT 2.1.
+
+_EOC_
+
+    my $opt_max_len = length "  --without-ngx_devel_kit_module     ";
+
+    #warn "opt max len: $opt_max_len";
+
+    my $with_resty_opts = '';
+
+    for my $mod (@modules) {
+        my $name = $mod->[0];
+        if ($name =~ /^http_/) {
+            if (@$mod == 2) {
+                my $opt = "  --without-${name}_module";
+                $msg .= $opt;
+
+                my $n = $opt_max_len - length $opt;
+
+                if ($n > 0) {
+                    $msg .= " " x $n;
+
+                } else {
+                    $msg .= "\n" . (" " x $opt_max_len);
+                }
+
+                $msg .= "disable ngx_${name}_module\n";
+
+            } else {
+                my $opt = "  --with-${name}_module";
+                $with_resty_opts .= $opt;
+
+                my $n = $opt_max_len - length $opt;
+
+                if ($n > 0) {
+                    $with_resty_opts .= " " x $n;
+
+                } else {
+                    $with_resty_opts .= "\n" . (" " x $opt_max_len);
+                }
+
+                $with_resty_opts .= "enable ngx_${name}_module\n";
+            }
+        }
+    }
+
+    $msg .= <<'_EOC_';
+  --without-ngx_devel_kit_module     disable ngx_devel_kit_module
+  --without-http_ssl_module          disable ngx_http_ssl_module
+
+_EOC_
+
+    $msg .= $with_resty_opts;
+
+    $msg .= <<'_EOC_';
+
+  --without-lua_cjson                disable the lua-cjson library
+  --without-lua_redis_parser         disable the lua-redis-parser library
+  --without-lua_rds_parser           disable the lua-rds-parser library
+  --without-lua_resty_dns            disable the lua-resty-dns library
+  --without-lua_resty_memcached      disable the lua-resty-memcached library
+  --without-lua_resty_redis          disable the lua-resty-redis library
+  --without-lua_resty_mysql          disable the lua-resty-mysql library
+  --without-lua_resty_upload         disable the lua-resty-upload library
+  --without-lua_resty_upstream_healthcheck
+                                     disable the lua-resty-upstream-healthcheck library
+  --without-lua_resty_string         disable the lua-resty-string library
+  --without-lua_resty_websocket      disable the lua-resty-websocket library
+  --without-lua_resty_lock           disable the lua-resty-lock library
+  --without-lua_resty_lrucache       disable the lua-resty-lrucache library
+  --without-lua_resty_core           disable the lua-resty-core library
+
+  --with-lua51                       enable and build the bundled standard Lua 5.1 interpreter
+  --without-lua51                    disable the bundled standard Lua 5.1 interpreter
+  --with-lua51=DIR                   specify the external installation of Lua 5.1 by DIR
+  --with-luajit                      enable and build the bundled LuaJIT 2.1 (the default)
+  --with-luajit=DIR                  use the external LuaJIT 2.1 installation specified by DIR
+  --with-luajit-xcflags=FLAGS        Specify extra C compiler flags for LuaJIT 2.1
+  --with-libdrizzle=DIR              specify the libdrizzle 1.0 (or drizzle) installation prefix
+  --with-libpq=DIR                   specify the libpq (or postgresql) installation prefix
+  --with-pg_config=PATH              specify the path of the pg_config utility
+
+Options directly inherited from nginx
+
+  --sbin-path=PATH                   set nginx binary pathname
+  --conf-path=PATH                   set nginx.conf pathname
+  --error-log-path=PATH              set error log pathname
+  --pid-path=PATH                    set nginx.pid pathname
+  --lock-path=PATH                   set nginx.lock pathname
+  --tapset-prefix=PATH               set systemtap tapset directory prefix
+  --stap-nginx-path=PATH             set stap-nginx pathname
+
+  --user=USER                        set non-privileged user for
+                                     worker processes
+  --group=GROUP                      set non-privileged group for
+                                     worker processes
+
+  --builddir=DIR                     set the build directory
+
+  --with-rtsig_module                enable rtsig module
+  --with-select_module               enable select module
+  --without-select_module            disable select module
+  --with-poll_module                 enable poll module
+  --without-poll_module              disable poll module
+
+  --with-file-aio                    enable file aio support
+  --with-ipv6                        enable ipv6 support
+
+  --with-http_realip_module          enable ngx_http_realip_module
+  --with-http_addition_module        enable ngx_http_addition_module
+  --with-http_xslt_module            enable ngx_http_xslt_module
+  --with-http_image_filter_module    enable ngx_http_image_filter_module
+  --with-http_geoip_module           enable ngx_http_geoip_module
+  --with-http_sub_module             enable ngx_http_sub_module
+  --with-http_dav_module             enable ngx_http_dav_module
+  --with-http_flv_module             enable ngx_http_flv_module
+  --with-http_gzip_static_module     enable ngx_http_gzip_static_module
+  --with-http_auth_request_module    enable ngx_http_auth_request_module
+  --with-http_random_index_module    enable ngx_http_random_index_module
+  --with-http_secure_link_module     enable ngx_http_secure_link_module
+  --with-http_degradation_module     enable ngx_http_degradation_module
+  --with-http_stub_status_module     enable ngx_http_stub_status_module
+
+  --without-http_charset_module      disable ngx_http_charset_module
+  --without-http_gzip_module         disable ngx_http_gzip_module
+  --without-http_ssi_module          disable ngx_http_ssi_module
+  --without-http_userid_module       disable ngx_http_userid_module
+  --without-http_access_module       disable ngx_http_access_module
+  --without-http_auth_basic_module   disable ngx_http_auth_basic_module
+  --without-http_autoindex_module    disable ngx_http_autoindex_module
+  --without-http_geo_module          disable ngx_http_geo_module
+  --without-http_map_module          disable ngx_http_map_module
+  --without-http_split_clients_module disable ngx_http_split_clients_module
+  --without-http_referer_module      disable ngx_http_referer_module
+  --without-http_rewrite_module      disable ngx_http_rewrite_module
+  --without-http_proxy_module        disable ngx_http_proxy_module
+  --without-http_fastcgi_module      disable ngx_http_fastcgi_module
+  --without-http_uwsgi_module        disable ngx_http_uwsgi_module
+  --without-http_scgi_module         disable ngx_http_scgi_module
+  --without-http_memcached_module    disable ngx_http_memcached_module
+  --without-http_limit_zone_module   disable ngx_http_limit_zone_module
+  --without-http_limit_req_module    disable ngx_http_limit_req_module
+  --without-http_empty_gif_module    disable ngx_http_empty_gif_module
+  --without-http_browser_module      disable ngx_http_browser_module
+  --without-http_upstream_ip_hash_module
+                                     disable ngx_http_upstream_ip_hash_module
+
+  --with-http_perl_module            enable ngx_http_perl_module
+  --with-perl_modules_path=PATH      set path to the perl modules
+  --with-perl=PATH                   set path to the perl binary
+
+  --http-log-path=PATH               set path to the http access log
+  --http-client-body-temp-path=PATH  set path to the http client request body
+                                     temporary files
+  --http-proxy-temp-path=PATH        set path to the http proxy temporary files
+  --http-fastcgi-temp-path=PATH      set path to the http fastcgi temporary
+                                     files
+  --http-uwsgi-temp-path=PATH        set path to the http uwsgi temporary files
+  --http-scgi-temp-path=PATH         set path to the http scgi temporary files
+
+  --without-http                     disable HTTP server
+  --without-http-cache               disable HTTP cache
+
+  --with-mail                        enable POP3/IMAP4/SMTP proxy module
+  --with-mail_ssl_module             enable ngx_mail_ssl_module
+  --without-mail_pop3_module         disable ngx_mail_pop3_module
+  --without-mail_imap_module         disable ngx_mail_imap_module
+  --without-mail_smtp_module         disable ngx_mail_smtp_module
+
+  --with-google_perftools_module     enable ngx_google_perftools_module
+  --with-cpp_test_module             enable ngx_cpp_test_module
+
+  --add-module=PATH                  enable an external module
+
+  --with-cc=PATH                     set path to C compiler
+  --with-cpp=PATH                    set path to C preprocessor
+  --with-cc-opt=OPTIONS              set additional options for C compiler
+  --with-ld-opt=OPTIONS              set additional options for linker
+  --with-cpu-opt=CPU                 build for specified CPU, the valid values:
+                                     pentium, pentiumpro, pentium3, pentium4,
+                                     athlon, opteron, sparc32, sparc64, ppc64
+
+  --with-make=PATH                   specify the default make utility to be used
+
+  --without-pcre                     disable PCRE library usage
+  --with-pcre                        force PCRE library usage
+  --with-pcre=DIR                    set path to PCRE library sources
+  --with-pcre-opt=OPTIONS            set additional make options for PCRE
+  --with-pcre-conf-opt=OPTIONS       set additional configure options for PCRE
+  --with-pcre-jit                    build PCRE with JIT compilation support
+
+  --with-md5=DIR                     set path to md5 library sources
+  --with-md5-opt=OPTIONS             set additional options for md5 building
+  --with-md5-asm                     use md5 assembler sources
+
+  --with-sha1=DIR                    set path to sha1 library sources
+  --with-sha1-opt=OPTIONS            set additional options for sha1 building
+  --with-sha1-asm                    use sha1 assembler sources
+
+  --with-zlib=DIR                    set path to zlib library sources
+  --with-zlib-opt=OPTIONS            set additional options for zlib building
+  --with-zlib-asm=CPU                use zlib assembler sources optimized
+                                     for specified CPU, the valid values:
+                                     pentium, pentiumpro
+
+  --with-libatomic                   force libatomic_ops library usage
+  --with-libatomic=DIR               set path to libatomic_ops library sources
+
+  --with-openssl=DIR                 set path to OpenSSL library sources
+  --with-openssl-opt=OPTIONS         set additional options for OpenSSL building
+
+  --dry-run                          dry running the configure, for testing only
+  --platform=PLATFORM                forcibly specify a platform name, for testing only
+_EOC_
+
+    if ($retval == 0) {
+        print $msg;
+        exit 0;
+    }
+
+    warn $msg;
+    exit $retval;
+}
+
+sub gen_makefile {
+    open my $out, ">Makefile" or
+        die "Cannot open Makefile for writing: $!\n";
+
+    print $out ".PHONY: all install clean\n\n";
+
+        print $out "all:\n\t" . join("\n\t", @make_cmds) . "\n\n";
+
+    print $out "install: all\n\t" . join("\n\t", @make_install_cmds) . "\n\n";
+
+    print $out "clean:\n\trm -rf build\n";
+
+    close $out;
+}
+
+# check if we can run some command
+sub can_run {
+    my ($cmd) = @_;
+
+    #warn "can run: @_\n";
+    my $_cmd = $cmd;
+    return $_cmd if -x $_cmd;
+
+    return undef if $_cmd =~ m{[\\/]};
+
+    # FIXME: this is a hack; MSWin32 is not supported anyway
+    my $path_sep = ':';
+
+    for my $dir ((split /$path_sep/, $ENV{PATH}), '.') {
+        next if $dir eq '';
+        my $abs = File::Spec->catfile($dir, $_[0]);
+        return $abs if -x $abs;
+    }
+
+    return undef;
+}
+

@@ -1,0 +1,124 @@
+Name
+    form-input-nginx-module
+
+Description
+    This is a nginx module that reads HTTP POST and PUT request body encoded
+    in "application/x-www-form-urlencoded", and parse the arguments in
+    request body into nginx variables.
+
+    This module depends on the ngx_devel_kit (NDK) module.
+
+Installation
+        Get the nginx source code from nginx.net ( http://nginx.net/ ).
+        Get the ngx_devel_kit source code from (http://github.com/simpl/ngx_devel_kit)
+        Unpack the source code and build nginx with this module.
+
+        $ wget 'http://nginx.org/download/nginx-1.7.4.tar.gz'
+        $ tar -xzvf nginx-1.7.4.tar.gz
+        $ cd nginx-1.7.4/
+
+        $ git-clone http://github.com/simpl/ngx_devel_kit.git
+        $ git-clone http://github.com/calio/form-input-nginx-module.git
+
+        $ ./configure --add-module=/somepath/form-input-nginx-module --add-module=/somepath/ngx_devel_kit
+        $ make -j2
+        $ make install
+
+Usage
+        set_form_input $variable;
+        set_form_input $variable argument;
+
+        set_form_input_multi $variable;
+        set_form_input_multi $variable argument;
+
+    example:
+
+        #nginx.conf
+
+        location /foo {
+            # ensure client_max_body_size == client_body_buffer_size
+            client_max_body_size 100k;
+            client_body_buffer_size 100k;
+
+            set_form_input $data;    # read "data" field into $data
+            set_form_input $foo foo; # read "foo" field into $foo
+        }
+
+        location /bar {
+            # ensure client_max_body_size == client_body_buffer_size
+            client_max_body_size 1m;
+            client_body_buffer_size 1m;
+
+            set_form_input_multi $data; # read all "data" field into $data
+            set_form_input_multi $foo data; # read all "data" field into $foo
+
+            array_join ' ' $data; # now $data is an string
+            array_join ' ' $foo;  # now $foo is an string
+        }
+
+Limitations
+    *   ngx_form_input will discard request bodies that are buffered
+        to disk files. When the client_max_body_size setting is larger than
+        client_body_buffer_size, request bodies that are larger
+        than client_body_buffer_size (but no larger than
+        client_max_body_size) will be buffered to disk files.
+        So it's important to ensure these two config settings take
+        the same values to avoid confustion.
+
+Compatibility
+    The following versions of Nginx should work with this module:
+
+    *   1.7.x (last tested: 1.7.4)
+
+    *   1.5.x (last tested: 1.5.12)
+
+    *   1.4.x (last tested: 1.4.6)
+
+    *   1.1.x (last tested: 1.1.5)
+
+    *   1.0.x (last tested: 1.0.8)
+
+    *   0.9.x (last tested: 0.9.4)
+
+    *   0.8.x >= 0.8.54
+
+Copyright & License
+    Copyright (c) 2010, 2011, Jiale "calio" Zhi <vipcalio@gmail.com>.
+
+    Copyright (c) 2010-2014, Yichun "agentzh" Zhang <agentzh@gmail.com>, CloudFlare Inc.
+
+    This module is licensed under the terms of the BSD license.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are
+    met:
+
+    *   Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+    *   Redistributions in binary form must reproduce the above copyright
+        notice, this list of conditions and the following disclaimer in the
+        documentation and/or other materials provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+    IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+    TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+    TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Changelog
+    Changes with form-input-module v0.0.2
+
+      *) support set_form_input_multi
+      *) support PUT method
+
+    Changes with form-input-module v0.0.1
+
+      *) support set_form_input
+

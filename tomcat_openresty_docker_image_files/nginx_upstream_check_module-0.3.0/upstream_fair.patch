@@ -1,0 +1,91 @@
+diff --git a/ngx_http_upstream_fair_module.c b/ngx_http_upstream_fair_module.c
+index a4419ca..af80bba 100644
+--- a/ngx_http_upstream_fair_module.c
++++ b/ngx_http_upstream_fair_module.c
+@@ -9,6 +9,10 @@
+ #include <ngx_core.h>
+ #include <ngx_http.h>
+
++#if (NGX_HTTP_UPSTREAM_CHECK)
++#include "ngx_http_upstream_check_module.h"
++#endif
++
+ typedef struct {
+     ngx_uint_t                          nreq;
+     ngx_uint_t                          total_req;
+@@ -42,6 +42,10 @@ typedef struct {
+     ngx_uint_t                          max_fails;
+     time_t                              fail_timeout;
+ 
++#if (NGX_HTTP_UPSTREAM_CHECK)
++    ngx_uint_t                          check_index;
++#endif
++
+     time_t                              accessed;
+     ngx_uint_t                          down:1;
+ 
+@@ -474,6 +478,15 @@ ngx_http_upstream_init_fair_rr(ngx_conf_t *cf, ngx_http_upstream_srv_conf_t *us)
+                 peers->peer[n].fail_timeout = server[i].fail_timeout;
+                 peers->peer[n].down = server[i].down;
+                 peers->peer[n].weight = server[i].down ? 0 : server[i].weight;
++#if (NGX_HTTP_UPSTREAM_CHECK)
++                if (!server[i].down) {
++                    peers->peer[n].check_index =
++                        ngx_http_upstream_check_add_peer(cf, us, &server[i].addrs[j]);
++                }
++                else {
++                    peers->peer[n].check_index = (ngx_uint_t) NGX_ERROR;
++                }
++#endif
+                 n++;
+             }
+         }
+@@ -524,6 +537,15 @@ ngx_http_upstream_init_fair_rr(ngx_conf_t *cf, ngx_http_upstream_srv_conf_t *us)
+                 backup->peer[n].max_fails = server[i].max_fails;
+                 backup->peer[n].fail_timeout = server[i].fail_timeout;
+                 backup->peer[n].down = server[i].down;
++#if (NGX_HTTP_UPSTREAM_CHECK)
++                if (!server[i].down) {
++                    backup->peer[n].check_index =
++                        ngx_http_upstream_check_add_peer(cf, us, &server[i].addrs[j]);
++                }
++                else {
++                    backup->peer[n].check_index = (ngx_uint_t) NGX_ERROR;
++                }
++#endif
+                 n++;
+             }
+         }
+@@ -580,6 +602,9 @@ ngx_http_upstream_init_fair_rr(ngx_conf_t *cf, ngx_http_upstream_srv_conf_t *us)
+         peers->peer[i].weight = 1;
+         peers->peer[i].max_fails = 1;
+         peers->peer[i].fail_timeout = 10;
++#if (NGX_HTTP_UPSTREAM_CHECK)
++        peers->peer[i].check_index = (ngx_uint_t) NGX_ERROR;
++#endif
+     }
+ 
+     us->peer.data = peers;
+@@ -723,6 +748,12 @@ ngx_http_upstream_fair_try_peer(ngx_peer_connection_t *pc,
+     peer = &fp->peers->peer[peer_id];
+ 
+     if (!peer->down) {
++#if (NGX_HTTP_UPSTREAM_CHECK)
++        ngx_log_debug1(NGX_LOG_DEBUG_HTTP, pc->log, 0,
++                       "[upstream_fair] get fair peer, check_index: %ui",
++                       peer->check_index);
++        if (!ngx_http_upstream_check_peer_down(peer->check_index)) {
++#endif
+         if (peer->max_fails == 0 || peer->shared->fails < peer->max_fails) {
+             return NGX_OK;
+         }
+@@ -733,6 +764,9 @@ ngx_http_upstream_fair_try_peer(ngx_peer_connection_t *pc,
+             peer->shared->fails = 0;
+             return NGX_OK;
+         }
++#if (NGX_HTTP_UPSTREAM_CHECK)
++        }
++#endif
+     }
+ 
+     return NGX_BUSY;

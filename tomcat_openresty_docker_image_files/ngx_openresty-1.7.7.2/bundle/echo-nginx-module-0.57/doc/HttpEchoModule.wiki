@@ -1,0 +1,1558 @@
+﻿= Name =
+
+'''ngx_echo''' - Brings "echo", "sleep", "time", "exec" and more shell-style goodies to Nginx config file.
+
+''This module is not distributed with the Nginx source.'' See [[#Installation|the installation instructions]].
+
+= Status =
+
+This module is production ready.
+
+= Version =
+
+This document describes ngx_echo [https://github.com/agentzh/echo-nginx-module/tags v0.57] released on 21 November 2014.
+
+= Synopsis =
+
+<geshi lang="nginx">
+  location /hello {
+    echo "hello, world!";
+  }
+</geshi>
+
+<geshi lang="nginx">
+  location /hello {
+    echo -n "hello, ";
+    echo "world!";
+  }
+</geshi>
+
+<geshi lang="nginx">
+  location /timed_hello {
+    echo_reset_timer;
+    echo hello world;
+    echo "'hello world' takes about $echo_timer_elapsed sec.";
+    echo hiya igor;
+    echo "'hiya igor' takes about $echo_timer_elapsed sec.";
+  }
+</geshi>
+
+<geshi lang="nginx">
+  location /echo_with_sleep {
+    echo hello;
+    echo_flush;  # ensure the client can see previous output immediately
+    echo_sleep   2.5;  # in sec
+    echo world;
+  }
+</geshi>
+
+<geshi lang="nginx">
+  # in the following example, accessing /echo yields
+  #   hello
+  #   world
+  #   blah
+  #   hiya
+  #   igor
+  location /echo {
+      echo_before_body hello;
+      echo_before_body world;
+      proxy_pass $scheme://127.0.0.1:$server_port$request_uri/more;
+      echo_after_body hiya;
+      echo_after_body igor;
+  }
+  location /echo/more {
+      echo blah;
+  }
+</geshi>
+
+<geshi lang="nginx">
+  # the output of /main might be
+  #   hello
+  #   world
+  #   took 0.000 sec for total.
+  # and the whole request would take about 2 sec to complete.
+  location /main {
+      echo_reset_timer;
+       
+      # subrequests in parallel
+      echo_location_async /sub1;
+      echo_location_async /sub2;
+       
+      echo "took $echo_timer_elapsed sec for total.";
+  }
+  location /sub1 {
+      echo_sleep 2;
+      echo hello;
+  }
+  location /sub2 {
+      echo_sleep 1;
+      echo world;
+  }
+</geshi>
+
+<geshi lang="nginx">
+  # the output of /main might be
+  #   hello
+  #   world
+  #   took 3.003 sec for total.
+  # and the whole request would take about 3 sec to complete.
+  location /main {
+      echo_reset_timer;
+      
+      # subrequests in series (chained by CPS)
+      echo_location /sub1;
+      echo_location /sub2;
+      
+      echo "took $echo_timer_elapsed sec for total.";
+  }
+  location /sub1 {
+      echo_sleep 2;
+      echo hello;
+  }
+  location /sub2 {
+      echo_sleep 1;
+      echo world;
+  }
+</geshi>
+
+<geshi lang="nginx">
+  # Accessing /dup gives
+  #   ------ END ------
+  location /dup {
+    echo_duplicate 3 "--";
+    echo_duplicate 1 " END ";
+    echo_duplicate 3 "--";
+    echo;
+  }
+</geshi>
+
+<geshi lang="nginx">
+  # /bighello will generate 1000,000,000 hello's.
+  location /bighello {
+    echo_duplicate 1000_000_000 'hello';
+  }
+</geshi>
+
+<geshi lang="nginx">
+  # echo back the client request
+  location /echoback {
+    echo_duplicate 1 $echo_client_request_headers;
+    echo "\r";
+    
+    echo_read_request_body;
+    
+    echo_request_body;
+  }
+</geshi>
+
+<geshi lang="nginx">
+  # GET /multi will yields
+  #   querystring: foo=Foo
+  #   method: POST
+  #   body: hi
+  #   content length: 2
+  #   ///
+  #   querystring: bar=Bar
+  #   method: PUT
+  #   body: hello
+  #   content length: 5
+  #   ///
+  location /multi {
+      echo_subrequest_async POST '/sub' -q 'foo=Foo' -b 'hi';
+      echo_subrequest_async PUT '/sub' -q 'bar=Bar' -b 'hello';
+  }
+  location /sub {
+      echo "querystring: $query_string";
+      echo "method: $echo_request_method";
+      echo "body: $echo_request_body";
+      echo "content length: $http_content_length";
+      echo '///';
+  }
+</geshi>
+
+<geshi lang="nginx">
+  # GET /merge?/foo.js&/bar/blah.js&/yui/baz.js will merge the .js resources together
+  location /merge {
+      default_type 'text/javascript';
+      echo_foreach_split '&' $query_string;
+          echo "/* JS File $echo_it */";
+          echo_location_async $echo_it;
+          echo;
+      echo_end;
+  }
+</geshi>
+
+<geshi lang="nginx">
+  # accessing /if?val=abc yields the "hit" output
+  # while /if?val=bcd yields "miss":
+  location ^~ /if {
+      set $res miss;
+      if ($arg_val ~* '^a') {
+          set $res hit;
+          echo $res;
+      }
+      echo $res;
+  }
+</geshi>
+
+= Description =
+
+This module wraps lots of Nginx internal APIs for streaming input and output, parallel/sequential subrequests, timers and sleeping, as well as various meta data accessing.
+
+Basically it provides various utilities that help testing and debugging of other modules by trivially emulating different kinds of faked subrequest locations.
+
+People will also find it useful in real-world applications that need to
+
+# serve static contents directly from memory (loading from the Nginx config file).
+# wrap the upstream response with custom header and footer (kinda like the [[HttpAdditionModule|addition module]] but with contents read directly from the config file and Nginx variables).
+# merge contents of various "Nginx locations" (i.e., subrequests) together in a single main request (using [[#echo_location|echo_location]] and its friends).
+
+This is a special dual-role module that can ''lazily'' serve as a content handler or register itself as an output filter only upon demand. By default, this module does not do anything at all.
+
+Technially, this module has also demonstrated the following techniques that might be helpful for module writers:
+
+# Issue parallel subreqeusts directly from content handler.
+# Issue chained subrequests directly from content handler, by passing continuation along the subrequest chain.
+# Issue subrequests with all HTTP 1.1 methods and even an optional faked HTTP request body.
+# Interact with the Nginx event model directly from content handler using custom events and timers, and resume the content handler back if necessary.
+# Dual-role module that can (lazily) serve as a content handler or an output filter or both.
+# Nginx config file variable creation and interpolation.
+# Streaming output control using output_chain, flush and its friends.
+# Read client request body from the content handler, and returns back (asynchronously) to the content handler after completion.
+# Use Perl-based declarative [[#Test Suite|test suite]] to drive the development of Nginx C modules.
+
+= Content Handler Directives =
+
+Use of the following directives register this module to the current Nginx location as a content handler. If you want to use another module, like the [[HttpProxyModule|standard proxy module]], as the content handler, use the [[#Filter Directives|filter directives]] provided by this module.
+
+All the content handler directives can be mixed together in a single Nginx location and they're supposed to run sequentially just as in the Bash scripting language.
+
+Every content handler directive supports variable interpolation in its arguments (if any).
+
+The MIME type set by the [[HttpCoreModule#default_type|standard default_type directive]] is respected by this module, as in:
+
+<geshi lang="nginx">
+  location /hello {
+    default_type text/plain;
+    echo hello;
+  }
+</geshi>
+
+Then on the client side:
+
+<geshi lang="bash">
+  $ curl -I 'http://localhost/echo'
+  HTTP/1.1 200 OK
+  Server: nginx/0.8.20
+  Date: Sat, 17 Oct 2009 03:40:19 GMT
+  Content-Type: text/plain
+  Connection: keep-alive
+</geshi>
+
+Since the [[#v0.22|v0.22]] release, all of the directives are allowed in the [[HttpRewriteModule|rewrite module]]'s [[HttpRewriteModule#if|if]] directive block, for instance:
+
+<geshi lang="nginx">
+    location ^~ /if {
+        set $res miss;
+        if ($arg_val ~* '^a') {
+            set $res hit;
+            echo $res;
+        }
+        echo $res;
+    }
+</geshi>
+
+== echo ==
+'''syntax:''' ''echo [options] <string>...''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Sends arguments joined by spaces, along with a trailing newline, out to the client.
+
+Note that the data might be buffered by Nginx's underlying buffer. To force the output data flushed immediately, use the [[#echo_flush|echo_flush]] command just after <code>echo</code>, as in
+
+<geshi lang="nginx">
+   echo hello world;
+   echo_flush;
+</geshi>
+
+When no argument is specified, ''echo'' emits the trailing newline alone, just like the ''echo'' command in shell.
+
+Variables may appear in the arguments. An example is
+
+<geshi lang="nginx">
+   echo The current request uri is $request_uri;
+</geshi>
+
+where [[HttpCoreModule#$request_uri|$request_uri]] is a variable exposed by the [[HttpCoreModule]].
+
+This command can be used multiple times in a single location configuration, as in
+
+<geshi lang="nginx">
+    location /echo {
+        echo hello;
+        echo world;
+    }
+</geshi>
+
+The output on the client side looks like this
+
+<geshi lang="bash">
+    $ curl 'http://localhost/echo'
+    hello
+    world
+</geshi>
+
+Special characters like newlines (<code>\n</code>) and tabs (<code>\t</code>) can be escaped using C-style escaping sequences. But a notable exception is the dollar sign (<code>$</code>). As of Nginx 0.8.20, there's still no clean way to esacpe this characters. (A work-around might be to use a <code>$echo_dollor</code> variable that is always evaluated to the constant <code>$</code> character. This feature will possibly be introduced in a future version of this module.)
+
+As of the echo [[#v0.28|v0.28]] release, one can suppress the trailing newline character in the output by using the <code>-n</code> option, as in
+
+<geshi lang="nginx">
+    location /echo {
+        echo -n "hello, ";
+        echo "world";
+    }
+</geshi>
+
+Accessing <code>/echo</code> gives
+
+<geshi lang="bash">
+    $ curl 'http://localhost/echo'
+    hello, world
+</geshi>
+
+Leading <code>-n</code> in variable values won't take effect and will be emitted literally, as in
+
+<geshi lang="nginx">
+    location /echo {
+        set $opt -n;
+        echo $opt "hello,";
+        echo "world";
+    }
+</geshi>
+
+This gives the following output
+
+<geshi lang="bash">
+    $ curl 'http://localhost/echo'
+    -n hello,
+    world
+</geshi>
+
+One can output leading <code>-n</code> literals and other options using the special <code>--</code> option like this
+
+<geshi lang="nginx">
+    location /echo {
+        echo -- -n is an option;
+    }
+</geshi>
+
+which yields
+
+<geshi lang="bash">
+    $ curl 'http://localhost/echo'
+    -n is an option
+</geshi>
+
+== echo_duplicate ==
+'''syntax:''' ''echo_duplicate <count> <string>''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Outputs duplication of a string indicated by the second argument, using the times specified in the first argument.
+
+For instance,
+
+<geshi lang="nginx">
+  location /dup {
+      echo_duplicate 3 "abc";
+  }
+</geshi>
+
+will lead to an output of <code>"abcabcabc"</code>.
+
+Underscores are allowed in the count number, just like in Perl. For example, to emit 1000,000,000 instances of <code>"hello, world"</code>:
+
+<geshi lang="nginx">
+  location /many_hellos {
+      echo_duplicate 1000_000_000 "hello, world";
+  }
+</geshi>
+
+The <code>count</code> argument could be zero, but not negative. The second <code>string</code> argument could be an empty string ("") likewise.
+
+Unlike the [[#echo|echo]] directive, no trailing newline is appended to the result. So it's possible to "abuse" this directive as a no-trailing-newline version of [[#echo|echo]] by using "count" 1, as in
+
+<geshi lang="nginx">
+  location /echo_art {
+      echo_duplicate 2 '---';
+      echo_duplicate 1 ' END ';  # we don't want a trailing newline here
+      echo_duplicate 2 '---';
+      echo;  # we want a trailing newline here...
+  }
+</geshi>
+
+You get
+
+<geshi lang="bash">
+  ------ END ------
+</geshi>
+
+This directive was first introduced in [[#v0.11|version 0.11]].
+
+== echo_flush ==
+'''syntax:''' ''echo_flush''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Forces the data potentially buffered by underlying Nginx output filters to send immediately to the client side via socket.
+
+Note that techically the command just emits a ngx_buf_t object with <code>flush</code> slot set to 1, so certain weird third-party output filter module could still block it before it reaches Nginx's (last) write filter.
+
+This directive does not take any argument.
+
+Consider the following example:
+
+<geshi lang="nginx">
+  location /flush {
+     echo hello;
+     
+     echo_flush;
+     
+     echo_sleep 1;
+     echo world;
+  }
+</geshi>
+
+Then on the client side, using curl to access <code>/flush</code>, you'll see the "hello" line immediately, but only after 1 second, the last "world" line. Without calling <code>echo_flush</code> in the example above, you'll most likely see no output until 1 second is elapsed due to the internal buffering of Nginx.
+
+This directive will fail to flush the output buffer in case of subrequests get involved. Consider the following example:
+
+<geshi lang="nginx">
+  location /main {
+      echo_location_async /sub;
+      echo hello;
+      echo_flush;
+  }
+  location /sub {
+      echo_sleep 1;
+  }
+</geshi>
+
+Then the client won't see "hello" appear even if <code>echo_flush</code> has been executed before the subrequest to <code>/sub</code> has actually started executing. The outputs of <code>/main</code> that are sent ''after'' [[#echo_location_async|echo_location_async]] will be postponed and buffered firmly.
+
+This does ''not'' apply to outputs sent before the subrequest initiated. For a modified version of the example given above:
+
+<geshi lang="nginx">
+  location /main {
+      echo hello;
+      echo_flush;
+      echo_location_async /sub;
+  }
+  location /sub {
+      echo_sleep 1;
+  }
+</geshi>
+
+The client will immediately see "hello" before <code>/sub</code> enters sleeping.
+
+See also [[#echo|echo]], [[#echo_sleep|echo_sleep]], and [[#echo_location_async|echo_location_async]].
+
+== echo_sleep ==
+'''syntax:''' ''echo_sleep <seconds>''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Sleeps for the time period specified by the argument, which is in seconds.
+
+This operation is non-blocking on server side, so unlike the [[#echo_blocking_sleep|echo_blocking_sleep]] directive, it won't block the whole Nginx worker process.
+
+The period might takes three digits after the decimal point and must be greater than 0.001.
+
+An example is
+
+<geshi lang="nginx">
+   location /echo_after_sleep {
+       echo_sleep 1.234;
+       echo resumed!;
+   }
+</geshi>
+
+Behind the scene, it sets up a per-request "sleep" ngx_event_t object, and adds a timer using that custom event to the Nginx event model and just waits for a timeout on that event. Because the "sleep" event is per-request, this directive can work in parallel subrequests.
+
+== echo_blocking_sleep ==
+'''syntax:''' ''echo_blocking_sleep <seconds>''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+This is a blocking version of the [[#echo_sleep|echo_sleep]] directive.
+
+See the documentation of [[#echo_sleep|echo_sleep]] for more detail.
+
+Behind the curtain, it calls the ngx_msleep macro provided by the Nginx core which maps to usleep on POSIX-compliant systems.
+
+Note that this directive will block the current Nginx worker process completely while being executed, so never use it in production environment.
+
+== echo_reset_timer ==
+'''syntax:''' ''echo_reset_timer''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Reset the timer begin time to ''now'', i.e., the time when this command is executed during request.
+
+The timer begin time is default to the starting time of the current request and can be overridden by this directive, potentially multiple times in a single location. For example:
+
+<geshi lang="nginx">
+  location /timed_sleep {
+      echo_sleep 0.03;
+      echo "$echo_timer_elapsed sec elapsed.";
+      
+      echo_reset_timer;
+      
+      echo_sleep 0.02;
+      echo "$echo_timer_elapsed sec elapsed.";
+  }
+</geshi>
+
+The output on the client side might be
+
+<geshi lang="bash">
+    $ curl 'http://localhost/timed_sleep'
+    0.032 sec elapsed.
+    0.020 sec elapsed.
+</geshi>
+
+The actual figures you get on your side may vary a bit due to your system's current activities.
+
+Invocation of this directive will force the underlying Nginx timer to get updated to the current system time (regardless the timer resolution specified elsewhere in the config file). Furthermore, references of the [[#$echo_timer_elapsed|$echo_timer_elapsed]] variable will also trigger timer update forcibly.
+
+See also [[#echo_sleep|echo_sleep]] and [[#$echo_timer_elapsed|$echo_timer_elapsed]].
+
+== echo_read_request_body ==
+'''syntax:''' ''echo_read_request_body''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Explicitly reads request body so that the [[HttpCoreModule#$request_body|$request_body]] variable will always have non-empty values (unless the body is so big that it has been saved by Nginx to a local temporary file).
+
+Note that this might not be the original client request body because the current request might be a subrequest with a "artificial" body specified by its parent.
+
+This directive does not generate any output itself, just like [[#echo_sleep|echo_sleep]].
+
+Here's an example for echo'ing back the original HTTP client request (both headers and body are included):
+
+<geshi lang="nginx">
+  location /echoback {
+    echo_duplicate 1 $echo_client_request_headers;
+    echo "\r";
+    echo_read_request_body;
+    echo $request_body;
+  }
+</geshi>
+
+The content of <code>/echoback</code> looks like this on my side (I was using Perl's LWP utility to access this location on the server):
+
+<geshi lang="bash">
+  $ (echo hello; echo world) | lwp-request -m POST 'http://localhost/echoback'
+  POST /echoback HTTP/1.1
+  TE: deflate,gzip;q=0.3
+  Connection: TE, close
+  Host: localhost
+  User-Agent: lwp-request/5.818 libwww-perl/5.820
+  Content-Length: 12
+  Content-Type: application/x-www-form-urlencoded
+  
+  hello
+  world
+</geshi>
+
+Because <code>/echoback</code> is the main request, [[HttpCoreModule#$request_body|$request_body]] holds the original client request body.
+
+Before Nginx 0.7.56, it makes no sense to use this directive because [[HttpCoreModule#$request_body|$request_body]] was first introduced in Nginx 0.7.58.
+
+This directive itself was first introduced in the echo module's [[#v0.14|v0.14 release]].
+
+== echo_location_async ==
+'''syntax:''' ''echo_location_async <location> [<url_args>]''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Issue GET subrequest to the location specified (first argument) with optional url arguments specified in the second argument.
+
+As of Nginx 0.8.20, the <code>location</code> argument does ''not'' support named location, due to a limitation in the <code>ngx_http_subrequest</code> function. The same is true for its brother, the [[#echo_location|echo_location]] directive.
+
+A very simple example is
+
+<geshi lang="nginx">
+    location /main {
+        echo_location_async /sub;
+        echo world;
+    }
+    location /sub {
+        echo hello;
+    }
+</geshi>
+
+Accessing <code>/main</code> gets
+
+<geshi lang="bash">
+  hello
+  world
+</geshi>
+
+Calling multiple locations in parallel is also possible:
+
+<geshi lang="nginx">
+    location /main {
+        echo_reset_timer;
+        echo_location_async /sub1;
+        echo_location_async /sub2;
+        echo "took $echo_timer_elapsed sec for total.";
+    }
+    location /sub1 {
+        echo_sleep 2; # sleeps 2 sec
+        echo hello;
+    }
+    location /sub2 {
+        echo_sleep 1; # sleeps 1 sec
+        echo world;
+    }
+</geshi>
+
+Accessing <code>/main</code> yields
+
+<geshi lang="bash">
+  $ time curl 'http://localhost/main'
+  hello
+  world
+  took 0.000 sec for total.
+  
+  real  0m2.006s
+  user  0m0.000s
+  sys   0m0.004s
+</geshi>
+
+You can see that the main handler <code>/main</code> does ''not'' wait the subrequests <code>/sub1</code> and <code>/sub2</code> to complete and quickly goes on, hence the "0.000 sec" timing result. The whole request, however takes approximately 2 sec in total to complete because <code>/sub1</code> and <code>/sub2</code> run in parallel (or "concurrently" to be more accurate).
+
+If you use [[#echo_blocking_sleep|echo_blocking_sleep]] in the previous example instead, then you'll get the same output, but with 3 sec total response time, because "blocking sleep" blocks the whole Nginx worker process.
+
+Locations can also take an optional querystring argument, for instance
+
+<geshi lang="nginx">
+    location /main {
+        echo_location_async /sub 'foo=Foo&bar=Bar';
+    }
+    location /sub {
+        echo $arg_foo $arg_bar;
+    }
+</geshi>
+
+Accessing <code>/main</code> yields
+
+<geshi lang="bash">
+  $ curl 'http://localhost/main'
+  Foo Bar
+</geshi>
+
+Querystrings is ''not'' allowed to be concatenated onto the <code>location</code> argument with "?" directly, for example, <code>/sub?foo=Foo&bar=Bar</code> is an invalid location, and shouldn't be fed as the first argument to this directive.
+
+Technically speaking, this directive is an example that Nginx content handler issues one or more subrequests directly. AFAIK, the [https://connectical.com/projects/ngx-fancyindex/wiki fancyindex module] also does such kind of things ;)
+
+Nginx named locations like <code>@foo</code> is ''not'' supported here.
+
+This directive is logically equivalent to the GET version of [[#echo_subrequest_async|echo_subrequest_async]]. For example,
+
+<geshi lang="nginx">
+  echo_location_async /foo 'bar=Bar';
+</geshi>
+
+is logically equivalent to
+
+<geshi lang="nginx">
+  echo_subrequest_async GET /foo -q 'bar=Bar';
+</geshi>
+
+But calling this directive is slightly faster than calling [[#echo_subrequest_async|echo_subrequest_async]] using <code>GET</code> because we don't have to parse the HTTP method names like <code>GET</code> and options like <code>-q</code>.
+
+There is a known issue with this directive when disabling the standard [[HttpSsiModule|standard SSI module]]. See [[#Known Issues|Known Issues]] for more details.
+
+This directive is first introduced in [[#v0.09|version 0.09]] of this module and requires at least Nginx 0.7.46.
+
+== echo_location ==
+'''syntax:''' ''echo_location <location> [<url_args>]''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Just like the [[#echo_location_async|echo_location_async]] directive, but <code>echo_location</code> issues subrequests ''in series'' rather than in parallel. That is, the content handler directives following this directive won't be executed until the subrequest issued by this directive completes.
+
+The final response body is almost always equivalent to the case when [[#echo_location_async|echo_location_async]] is used instead, only if timing variables is used in the outputs.
+
+Consider the following example:
+
+<geshi lang="nginx">
+    location /main {
+        echo_reset_timer;
+        echo_location /sub1;
+        echo_location /sub2;
+        echo "took $echo_timer_elapsed sec for total.";
+    }
+    location /sub1 {
+        echo_sleep 2;
+        echo hello;
+    }
+    location /sub2 {
+        echo_sleep 1;
+        echo world;
+    }
+</geshi>
+
+The location <code>/main</code> above will take for total 3 sec to complete (compared to 2 sec if [[#echo_location_async|echo_location_async]] is used instead here). Here's the result in action on my machine:
+
+<geshi lang="bash">
+  $ curl 'http://localhost/main'
+  hello
+  world
+  took 3.003 sec for total.
+  
+  real  0m3.027s
+  user  0m0.020s
+  sys   0m0.004s
+</geshi>
+
+This directive is logically equivalent to the GET version of [[#echo_subrequest|echo_subrequest]]. For example,
+
+<geshi lang="nginx">
+  echo_location /foo 'bar=Bar';
+</geshi>
+
+is logically equivalent to
+
+<geshi lang="nginx">
+  echo_subrequest GET /foo -q 'bar=Bar';
+</geshi>
+
+But calling this directive is slightly faster than calling [[#echo_subrequest|echo_subrequest]] using <code>GET</code> because we don't have to parse the HTTP method names like <code>GET</code> and options like <code>-q</code>.
+
+Behind the scene, it creates an <code>ngx_http_post_subrequest_t</code> object as a ''continuation'' and passes it into the <code>ngx_http_subrequest</code> function call. Nginx will later reopen this "continuation" in the subrequest's <code>ngx_http_finalize_request</code> function call. We resumes the execution of the parent-request's content handler and starts to run the next directive (command) if any.
+
+Nginx named locations like <code>@foo</code> is ''not'' supported here.
+
+This directive was first introduced in the [[#v0.12|release v0.12]].
+
+See also [[#echo_location_async|echo_location_async]] for more details about the meaning of the arguments.
+
+== echo_subrequest_async ==
+'''syntax:''' ''echo_subrequest_async <HTTP_method> <location> [-q <url_args>] [-b <request_body>] [-f <request_body_path>]''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Initiate an asynchronous subrequest using HTTP method, an optional url arguments (or querystring) and an optional request body which can be defined as a string or as a path to a file which contains the body.
+
+This directive is very much like a generalized version of the [[#echo_location_async|echo_location_async]] directive.
+
+Here's a small example demonstrating its usage:
+
+<geshi lang="nginx">
+    location /multi {
+        # body defined as string
+        echo_subrequest_async POST '/sub' -q 'foo=Foo' -b 'hi';
+        # body defined as path to a file, relative to nginx prefix path if not absolute
+        echo_subrequest_async PUT '/sub' -q 'bar=Bar' -f '/tmp/hello.txt';
+    }
+    location /sub {
+        echo "querystring: $query_string";
+        echo "method: $echo_request_method";
+        echo "body: $echo_request_body";
+        echo "content length: $http_content_length";
+        echo '///';
+    }
+</geshi>
+
+Then on the client side:
+
+<geshi lang="bash">
+  $ echo -n hello > /tmp/hello.txt
+  $ curl 'http://localhost/multi'
+  querystring: foo=Foo
+  method: POST
+  body: hi
+  content length: 2
+  ///
+  querystring: bar=Bar
+  method: PUT
+  body: hello
+  content length: 5
+  ///
+</geshi>
+
+Here's more funny example using the standard [[#HttpProxyModule|proxy module]] to handle the subrequest:
+
+<geshi lang="nginx">
+    location /main {
+        echo_subrequest_async POST /sub -b 'hello, world';
+    }
+    location /sub {
+        proxy_pass $scheme://127.0.0.1:$server_port/proxied;
+    }
+    location /proxied {
+        echo "method: $echo_request_method.";
+        
+        # we need to read body explicitly here...or $echo_request_body
+        #   will evaluate to empty ("")
+        echo_read_request_body;
+        
+        echo "body: $echo_request_body.";
+    }
+</geshi>
+
+Then on the client side, we can see that
+
+<geshi lang="bash">
+  $ curl 'http://localhost/main'
+  method: POST.
+  body: hello, world.
+</geshi>
+
+Nginx named locations like <code>@foo</code> is ''not'' supported here.
+
+This directive takes several options:
+
+<geshi lang="text">
+    -q <url_args>        Specify the URL arguments (or URL querystring) for the subrequest.
+
+    -f <path>            Specify the path for the file whose content will be serve as the
+                         subrequest's request body.
+
+    -b <data>            Specify the request body data
+</geshi>
+
+This directive was first introduced in the [[#v0.15|release v0.15]].
+
+The <code>-f</code> option to define a file path for the body was introduced in the [[#v0.35|release v0.35]].
+
+See also the [[#echo_subrequest|echo_subrequest]] and [[#echo_location_async|echo_location_async]] directives.
+
+There is a known issue with this directive when disabling the standard [[HttpSsiModule|standard SSI module]]. See [[#Known Issues|Known Issues]] for more details.
+
+== echo_subrequest ==
+'''syntax:''' ''echo_subrequest <HTTP_method> <location> [-q <url_args>] [-b <request_body>] [-f <request_body_path>]''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+This is the synchronous version of the [[#echo_subrequest_async|echo_subrequest_async]] directive. And just like [[#echo_location|echo_location]], it does not block the Nginx worker process (while [[#echo_blocking_sleep|echo_blocking_sleep]] does), rather, it uses continuation to pass control along the subrequest chain.
+
+See [[#echo_subrequest_async|echo_subrequest_async]] for more details.
+
+Nginx named locations like <code>@foo</code> is ''not'' supported here.
+
+This directive was first introduced in the [[#v0.15|release v0.15]].
+
+== echo_foreach_split ==
+'''syntax:''' ''echo_foreach_split <delimiter> <string>''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Split the second argument <code>string</code> using the delimiter specified in the first argument, and then iterate through the resulting items. For instance:
+
+<geshi lang="nginx">
+  location /loop {
+    echo_foreach_split ',' $arg_list;
+      echo "item: $echo_it";
+    echo_end;
+  }
+</geshi>
+
+Accessing /main yields
+
+<geshi lang="bash">
+  $ curl 'http://localhost/loop?list=cat,dog,mouse'
+  item: cat
+  item: dog
+  item: mouse
+</geshi>
+
+As seen in the previous example, this directive should always be accompanied by an [[#echo_end|echo_end]] directive.
+
+Parallel <code>echo_foreach_split</code> loops are allowed, but nested ones are currently forbidden.
+
+The <code>delimiter</code> argument could contain ''multiple'' arbitrary characters, like
+
+<geshi lang="nginx">
+  # this outputs "cat\ndog\nmouse\n"
+  echo_foreach_split -- '-a-' 'cat-a-dog-a-mouse';
+    echo $echo_it;
+  echo_end;
+</geshi>
+
+Logically speaking, this looping structure is just the <code>foreach</code> loop combined with a <code>split</code> function call in Perl (using the previous example):
+
+<geshi lang="perl">
+   foreach (split ',', $arg_list) {
+       print "item $_\n";
+   }
+</geshi>
+
+People will also find it useful in merging multiple <code>.js</code> or <code>.css</code> resources into a whole. Here's an example:
+
+<geshi lang="nginx">
+  location /merge {
+      default_type 'text/javascript';
+      
+      echo_foreach_split '&' $query_string;
+          echo "/* JS File $echo_it */";
+          echo_location_async $echo_it;
+          echo;
+      echo_end;
+  }
+</geshi>
+
+Then accessing /merge to merge the <code>.js</code> resources specified in the query string:
+
+<geshi lang="bash">
+  $ curl 'http://localhost/merge?/foo/bar.js&/yui/blah.js&/baz.js'
+</geshi>
+
+One can also use third-party Nginx cache module to cache the merged response generated by the <code>/merge</code> location in the previous example.
+
+This directive was first introduced in the [[#v0.17|release v0.17]].
+
+== echo_end ==
+'''syntax:''' ''echo_end''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+This directive is used to terminate the body of looping and conditional control structures like [[#echo_foreach_split|echo_foreach_split]].
+
+This directive was first introduced in the [[#v0.17|release v0.17]].
+
+== echo_request_body ==
+'''syntax:''' ''echo_request_body''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Outputs the contents of the request body previous read.
+
+Behind the scene, it's implemented roughly like this:
+
+<geshi lang="C">
+  if (r->request_body && r->request_body->bufs) {
+      return ngx_http_output_filter(r, r->request_body->bufs);
+  }
+</geshi>
+
+Unlike the [[#$echo_request_body|$echo_request_body]] and $request_body variables, this directive will show the whole request body even if some parts or all parts of it are saved in temporary files on the disk.
+
+It is a "no-op" if no request body has been read yet.
+
+This directive was first introduced in the [[#v0.18|release v0.18]].
+
+See also [[#echo_read_request_body|echo_read_request_body]] and the [[HttpChunkinModule|chunkin module]].
+
+== echo_exec ==
+'''syntax:''' ''echo_exec <location> [<query_string>]''
+
+'''syntax:''' ''echo_exec <named_location>''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Does an internal redirect to the location specified. An optional query string can be specified for normal locations, as in
+
+<geshi lang="nginx">
+  location /foo {
+      echo_exec /bar weight=5;
+  }
+  location /bar {
+      echo $arg_weight;
+  }
+</geshi>
+
+Or equivalently
+
+<geshi lang="nginx">
+  location /foo {
+      echo_exec /bar?weight=5;
+  }
+  location /bar {
+      echo $arg_weight;
+  }
+</geshi>
+
+Named locations are also supported. Here's an example:
+
+<geshi lang="nginx">
+  location /foo {
+      echo_exec @bar;
+  }
+  location @bar {
+      # you'll get /foo rather than @bar
+      #  due to a potential bug in nginx.
+      echo $echo_request_uri;
+  }
+</geshi>
+
+But query string (if any) will always be ignored for named location redirects due to a limitation in the <code>ngx_http_named_location</code> function.
+
+Never try to echo things before the <code>echo_exec</code> directive or you won't see the proper response of the location you want to redirect to. Because any echoing will cause the original location handler to send HTTP headers before the redirection happens.
+
+Technically speaking, this directive exposes the Nginx internal API functions <code>ngx_http_internal_redirect</code> and <code>ngx_http_named_location</code>.
+
+This directive was first introduced in the [[#v0.21|v0.21 release]].
+
+== echo_status ==
+'''syntax:''' ''echo_status <status-num>''
+
+'''default:''' ''echo_status 200''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''content''
+
+Specify the default response status code. Default to <code>200</code>. This directive is declarative and the relative order with other echo-like directives is not important.
+
+Here is an example,
+
+<geshi lang="nginx">
+    location = /bad {
+        echo_status 404;
+        echo "Something is missing...";
+    }
+</geshi>
+
+then we get a response like this:
+
+<geshi lang="text">
+    HTTP/1.1 404 Not Found
+    Server: nginx/1.2.1
+    Date: Sun, 24 Jun 2012 03:58:18 GMT
+    Content-Type: text/plain
+    Transfer-Encoding: chunked
+    Connection: keep-alive
+
+    Something is missing...
+</geshi>
+
+This directive was first introduced in the <code>v0.40</code> release.
+
+= Filter Directives =
+
+Use of the following directives trigger the filter registration of this module. By default, no filter will be registered by this module.
+
+Every filter directive supports variable interpolation in its arguments (if any).
+
+== echo_before_body ==
+'''syntax:''' ''echo_before_body [options] [argument]...''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''output filter''
+
+It's the filter version of the [[#echo|echo]] directive, and prepends its output to the beginning of the original outputs generated by the underlying content handler.
+
+An example is
+
+<geshi lang="nginx">
+    location /echo {
+        echo_before_body hello;
+        proxy_pass $scheme://127.0.0.1:$server_port$request_uri/more;
+    }
+    location /echo/more {
+        echo world
+    }
+</geshi>
+
+Accessing <code>/echo</code> from the client side yields
+
+<geshi lang="bash">
+  hello
+  world
+</geshi>
+
+In the previous sample, we borrow the [[HttpProxyModule|standard proxy module]] to serve as the underlying content handler that generates the "main contents".
+
+Multiple instances of this filter directive are also allowed, as in:
+
+<geshi lang="nginx">
+    location /echo {
+        echo_before_body hello;
+        echo_before_body world;
+        echo !;
+    }
+</geshi>
+
+On the client side, the output is like
+
+<geshi lang="bash">
+  $ curl 'http://localhost/echo'
+  hello
+  world
+  !
+</geshi>
+
+In this example, we also use the [[#Content Handler Directives|content handler directives]] provided by this module as the underlying content handler.
+
+This directive also supports the <code>-n</code> and <code>--</code> options like the [[#echo|echo]] directive.
+
+This directive can be mixed with its brother directive [[#echo_after_body|echo_after_body]].
+
+== echo_after_body ==
+'''syntax:''' ''echo_after_body [argument]...''
+
+'''default:''' ''no''
+
+'''context:''' ''location, location if''
+
+'''phase:''' ''output filter''
+
+It's very much like the [[#echo_before_body|echo_before_body]] directive, but ''appends'' its output to the end of the original outputs generated by the underlying content handler.
+
+Here's a simple example:
+
+<geshi lang="nginx">
+    location /echo {
+        echo_after_body hello;
+        proxy_pass http://127.0.0.1:$server_port$request_uri/more;
+    }
+    location /echo/more {
+        echo world
+    }
+</geshi>
+
+Accessing <code>/echo</code> from the client side yields
+
+<geshi lang="text">
+  world
+  hello
+</geshi>
+
+Multiple instances are allowed, as in:
+
+<geshi lang="nginx">
+    location /echo {
+        echo_after_body hello;
+        echo_after_body world;
+        echo i;
+        echo say;
+    }
+</geshi>
+
+The output on the client side while accessing the <code>/echo</code> location looks like
+
+<geshi lang="text">
+  i
+  say
+  hello
+  world
+</geshi>
+
+This directive also supports the <code>-n</code> and <code>--</code> options like the [[#echo|echo]] directive.
+
+This directive can be mixed with its brother directive [[#echo_before_body|echo_before_body]].
+
+= Variables =
+
+== $echo_it ==
+
+This is a "topic variable" used by [[#echo_foreach_split|echo_foreach_split]], just like the <code>$_</code> variable in Perl.
+
+== $echo_timer_elapsed ==
+
+This variable holds the seconds elapsed since the start of the current request (might be a subrequest though) or the last invocation of the [[#echo_reset_timer|echo_reset_timer]] command.
+
+The timing result takes three digits after the decimal point.
+
+References of this variable will force the underlying Nginx timer to update to the current system time, regardless the timer resolution settings elsewhere in the config file, just like the [[#echo_reset_timer|echo_reset_timer]] directive.
+
+== $echo_request_body ==
+
+Evaluates to the current (sub)request's request body previously read if no part of the body has been saved to a temporary file. To always show the request body even if it's very large, use the [[#echo_request_body|echo_request_body]] directive.
+
+== $echo_request_method ==
+
+Evaluates to the HTTP request method of the current request (it can be a subrequest).
+
+Behind the scene, it just takes the string data stored in <code>r->method_name</code>.
+
+Compare it to the [[#$echo_client_request_method|$echo_client_request_method]] variable.
+
+At least for Nginx 0.8.20 and older, the [[HttpCoreModule#$request_method|$request_method]] variable provided by the [[HttpCoreModule|http core module]] is actually doing what our [[#$echo_client_request_method|$echo_client_request_method]] is doing.
+
+This variable was first introduced in our [[#v0.15|v0.15 release]].
+
+== $echo_client_request_method ==
+
+Always evaluates to the main request's HTTP method even if the current request is a subrequest.
+
+Behind the scene, it just takes the string data stored in <code>r->main->method_name</code>.
+
+Compare it to the [[#$echo_request_method|$echo_request_method]] variable.
+
+This variable was first introduced in our [[#v0.15|v0.15 release]].
+
+== $echo_client_request_headers ==
+
+Evaluates to the original client request's headers.
+
+Just as the name suggests, it will always take the main request (or the client request) even if it's currently executed in a subrequest.
+
+A simple example is below:
+
+<geshi lang="nginx">
+  location /echoback {
+     echo "headers are:"
+     echo $echo_client_request_headers;
+  }
+</geshi>
+
+Accessing <code>/echoback</code> yields
+
+<geshi lang="bash">
+  $ curl 'http://localhost/echoback'
+  headers are
+  GET /echoback HTTP/1.1
+  User-Agent: curl/7.18.2 (i486-pc-linux-gnu) libcurl/7.18.2 OpenSSL/0.9.8g
+  Host: localhost:1984
+  Accept: */*
+</geshi>
+
+Behind the scene, it recovers <code>r->main->header_in</code> (or the large header buffers, if any) on the C level and does not construct the headers itself by traversing parsed results in the request object.
+
+This variable was first introduced in [[#v0.15|version 0.15]].
+
+== $echo_cacheable_request_uri ==
+
+Evaluates to the parsed form of the URI (usually led by <code>/</code>) of the current (sub-)request. Unlike the [[#$echo_request_uri|$echo_request_uri]] variable, it is cacheable.
+
+See [[#$echo_request_uri|$echo_request_uri]] for more details.
+
+This variable was first introduced in [[#v0.17|version 0.17]].
+
+== $echo_request_uri ==
+
+Evaluates to the parsed form of the URI (usually led by <code>/</code>) of the current (sub-)request. Unlike the [[#$echo_cacheable_request_uri|$echo_cacheable_request_uri]] variable, it is ''not'' cacheable.
+
+This is quite different from the [[HttpCoreModule#$request_uri|$request_uri]] variable exported by the [[HttpCoreModule]], because <code>$request_uri</code> is the ''unparsed'' form of the current request's URI.
+
+This variable was first introduced in [[#v0.17|version 0.17]].
+
+== $echo_incr ==
+
+It is a counter that always generate the current counting number, starting from 1. The counter is always associated with the main request even if it is accessed within a subrequest.
+
+Consider the following example
+
+<geshi lang="Nginx">
+    location /main {
+        echo "main pre: $echo_incr";
+        echo_location_async /sub;
+        echo_location_async /sub;
+        echo "main post: $echo_incr";
+    }
+    location /sub {
+        echo "sub: $echo_incr";
+    }
+</geshi>
+
+Accessing <code>/main</code> yields
+
+    main pre: 1
+    sub: 3
+    sub: 4
+    main post: 2
+
+This directive was first introduced in the [[#v0.18|v0.18 release]].
+
+== $echo_response_status ==
+
+Evaluates to the status code of the current (sub)request, null if not any.
+
+Behind the scene, it's just the textual representation of <code>r->headers_out->status</code>.
+
+This directive was first introduced in the [[#v0.23|v0.23 release]].
+
+= Installation =
+
+You're recommended to install this module (as well as the Nginx core and many other goodies) via the [http://openresty.org ngx_openresty bundle]. See [http://openresty.org/#Installation the detailed instructions] for downloading and installing ngx_openresty into your system. This is the easiest and most safe way to set things up.
+
+Alternatively, you can install this module manually with the Nginx source:
+
+Grab the nginx source code from [http://nginx.org/ nginx.org], for example,
+the version 1.7.7 (see [[#Compatibility|nginx compatibility]]), and then build the source with this module:
+
+<geshi lang="bash">
+    $ wget 'http://nginx.org/download/nginx-1.7.7.tar.gz'
+    $ tar -xzvf nginx-1.7.7.tar.gz
+    $ cd nginx-1.7.7/
+    
+    # Here we assume you would install you nginx under /opt/nginx/.
+    $ ./configure --prefix=/opt/nginx \
+        --add-module=/path/to/echo-nginx-module
+     
+    $ make -j2
+    $ make install
+</geshi>
+
+Download the latest version of the release tarball of this module from [https://github.com/agentzh/echo-nginx-module/tags echo-nginx-module file list].
+
+Also, this module is included and enabled by default in the [http://openresty.org ngx_openresty bundle].
+
+= Compatibility =
+
+The following versions of Nginx should work with this module:
+
+* '''1.7.x'''                       (last tested: 1.7.7)
+* '''1.6.x'''
+* '''1.5.x'''                       (last tested: 1.5.12)
+* '''1.4.x'''                       (last tested: 1.4.4)
+* '''1.3.x'''                       (last tested: 1.3.7)
+* '''1.2.x'''                       (last tested: 1.2.9)
+* '''1.1.x'''                       (last tested: 1.1.5)
+* '''1.0.x'''                       (last tested: 1.0.11)
+* '''0.9.x'''                       (last tested: 0.9.4)
+* '''0.8.x'''                       (last tested: 0.8.54)
+* '''0.7.x >= 0.7.21'''             (last tested: 0.7.68)
+
+In particular,
+
+* the directive [[#echo_location_async|echo_location_async]] and its brother [[#echo_subrequest_async|echo_subrequest_async]] do ''not'' work with '''0.7.x < 0.7.46'''.
+* the [[#echo_after_body|echo_after_body]] directive does ''not'' work at all with nginx '''< 0.8.7'''.
+* the [[#echo_sleep|echo_sleep]] directive cannot be used after [[#echo_location|echo_location]] or [[#echo_subrequest|echo_subrequest]] for nginx '''< 0.8.11'''.
+
+Earlier versions of Nginx like 0.6.x and 0.5.x will ''not'' work at all.
+
+If you find that any particular version of Nginx above 0.7.21 does not work with this module, please consider [[#Report Bugs|reporting a bug]].
+
+= Known Issues =
+
+Due to an unknown bug in Nginx (it still exists in Nginx 1.7.7), the [[HttpSsiModule|standard SSI module]] is required to ensure that the contents of the subrequests issued by [[#echo_location_async|echo_locatoin_async]] and [[#echo_subrequest_async|echo_subrequest_async]] are correctly merged into the output chains of the main one. Fortunately, the SSI module is enabled by default during Nginx's <code>configure</code> process.
+
+If calling this directive without SSI module enabled, you'll get truncated response without contents of any subrequests and get an alert message in your Nginx's <code>error.log</code>, like this:
+
+<geshi lang="nginx">
+  [alert] 24212#0: *1 the http output chain is empty, client: 127.0.0.1, ...
+</geshi>
+
+= Modules that use this module for testing =
+
+The following modules take advantage of this <code>echo</code> module in their test suite:
+
+* The [[HttpMemcModule|memc]] module that supports almost the whole memcached TCP protocol.
+* The [[HttpChunkinModule|chunkin]] module that adds HTTP 1.1 chunked input support to Nginx.
+* The [[HttpHeadersMoreModule|headers_more]] module that allows you to add, set, and clear input and output headers under the conditions that you specify.
+* The <code>echo</code> module itself.
+
+Please mail me other modules that use <code>echo</code> in any form and I'll add them to the list above :)
+
+= Community =
+
+== English Mailing List ==
+
+The [https://groups.google.com/group/openresty-en openresty-en] mailing list is for English speakers.
+
+== Chinese Mailing List ==
+
+The [https://groups.google.com/group/openresty openresty] mailing list is for Chinese speakers.
+
+= Report Bugs =
+
+Although a lot of effort has been put into testing and code tuning, there must be some serious bugs lurking somewhere in this module. So whenever you are bitten by any quirks, please don't hesitate to
+
+# create a ticket on the [https://github.com/agentzh/echo-nginx-module/issues issue tracking interface] provided by GitHub,
+# or send a bug report, questions, or even patches to the [[#Community|OpenResty Community]].
+
+= Source Repository =
+
+Available on github at [https://github.com/agentzh/echo-nginx-module agentzh/echo-nginx-module].
+
+= Changes =
+
+The changes of every release of this module can be obtained from the ngx_openresty bundle's change logs:
+
+http://openresty.org/#Changes
+
+= Test Suite =
+
+This module comes with a Perl-driven test suite. The [https://github.com/agentzh/echo-nginx-module/tree/master/t/ test cases] are
+[https://github.com/agentzh/echo-nginx-module/blob/master/t/echo.t declarative] too. Thanks to the [http://search.cpan.org/perldoc?Test::Nginx Test::Nginx] module in the Perl world.
+
+To run it on your side:
+
+<geshi lang="bash">
+    $ PATH=/path/to/your/nginx-with-echo-module:$PATH prove -r t
+</geshi>
+
+You need to terminate any Nginx processes before running the test suite if you have changed the Nginx server binary.
+
+Because a single nginx server (by default, <code>localhost:1984</code>) is used across all the test scripts (<code>.t</code> files), it's meaningless to run the test suite in parallel by specifying <code>-jN</code> when invoking the <code>prove</code> utility.
+
+Some parts of the test suite requires standard modules [[HttpProxyModule|proxy]], [[HttpRewriteModule|rewrite]] and [[HttpSsiModule|SSI]] to be enabled as well when building Nginx.
+
+= TODO =
+
+* Fix the [[#echo_after_body|echo_after_body]] directive in subrequests.
+* Add directives ''echo_read_client_request_body'' and ''echo_request_headers''.
+* Add new directive ''echo_log'' to use Nginx's logging facility directly from the config file and specific loglevel can be specified, as in
+
+<geshi lang="nginx">
+  echo_log debug "I am being called.";
+</geshi>
+
+* Add support for options <code>-h</code> and <code>-t</code> to [[#echo_subrequest_async|echo_subrequest_async]] and [[#echo_subrequest|echo_subrequest]]. For example
+
+<geshi lang="nginx">
+  echo_subrequest POST /sub -q 'foo=Foo&bar=Bar' -b 'hello' -t 'text/plan' -h 'X-My-Header: blah blah'
+</geshi>
+
+* Add options to control whether a subrequest should inherit cached variables from its parent request (i.e. the current request that is calling the subrequest in question). Currently none of the subrequests issued by this module inherit the cached variables from the parent request.
+* Add new variable ''$echo_active_subrequests'' to show <code>r->main->count - 1</code>.
+* Add the ''echo_file'' and ''echo_cached_file'' directives.
+* Add new varaible ''$echo_request_headers'' to accompany the existing [[#$echo_client_request_headers|$echo_client_request_headers]] variable.
+* Add new directive ''echo_foreach'', as in
+
+<geshi lang="nginx">
+  echo_foreach 'cat' 'dog' 'mouse';
+    echo_location_async "/animals/$echo_it";
+  echo_end;
+</geshi>
+
+* Add new directive ''echo_foreach_range'', as in
+
+<geshi lang="nginx">
+  echo_foreach_range '[1..100]' '[a-zA-z0-9]';
+    echo_location_async "/item/$echo_it";
+  echo_end;
+</geshi>
+
+* Add new directive ''echo_repeat'', as in
+
+<geshi lang="nginx">
+  echo_repeat 10 $i {
+      echo "Page $i";
+      echo_location "/path/to/page/$i";
+  }
+</geshi>
+
+This is just another way of saying
+
+<geshi lang="nginx">
+  echo_foreach_range $i [1..10];
+      echo "Page $i";
+      echo_location "/path/to/page/$i";
+  echo_end;
+</geshi>
+
+Thanks Marcus Clyne for providing this idea.
+
+* Add new variable $echo_random which always returns a random non-negative integer with the lower/upper limit specified by the new directives <code>echo_random_min</code> and <code>echo_random_max</code>. For example,
+
+<geshi lang="nginx">
+  echo_random_min  10
+  echo_random_max  200
+  echo "random number: $echo_random";
+</geshi>
+
+Thanks Marcus Clyne for providing this idea.
+
+= Getting involved =
+
+You'll be very welcomed to submit patches to the [[#Author|author]] or just ask for a commit bit to the [[#Source Repository|source repository]] on GitHub.
+
+= Author =
+
+Yichun "agentzh" Zhang (章亦春) ''<agentzh@gmail.com>'', CloudFlare Inc.
+
+This wiki page is also maintained by the author himself, and everybody is encouraged to improve this page as well.
+
+= Copyright & License =
+
+Copyright (c) 2009-2014, Yichun "agentzh" Zhang (章亦春) <agentzh@gmail.com>, CloudFlare Inc.
+
+This module is licensed under the terms of the BSD license.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+= See Also =
+
+* The original [http://agentzh.blogspot.com/2009/10/hacking-on-nginx-echo-module.html blog post] about this module's initial development.
+* The standard [[HttpAdditionModule|addition filter module]].
+* The standard [[HttpProxyModule|proxy module]].
+* The [http://openresty.org ngx_openresty] bundle.
+

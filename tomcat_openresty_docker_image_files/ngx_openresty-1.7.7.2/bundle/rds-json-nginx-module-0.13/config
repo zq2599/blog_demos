@@ -1,0 +1,5 @@
+ngx_addon_name=ngx_http_rds_json_filter_module
+HTTP_AUX_FILTER_MODULES="$HTTP_AUX_FILTER_MODULES ngx_http_rds_json_filter_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/src/ngx_http_rds_json_filter_module.c $ngx_addon_dir/src/ngx_http_rds_json_processor.c $ngx_addon_dir/src/ngx_http_rds_json_util.c $ngx_addon_dir/src/ngx_http_rds_json_output.c $ngx_addon_dir/src/ngx_http_rds_json_handler.c"
+NGX_ADDON_DEPS="$NGX_ADDON_DEPS $ngx_addon_dir/src/ddebug.h $ngx_addon_dir/src/resty_dbd_stream.h $ngx_addon_dir/src/ngx_http_rds_json_filter_module.h $ngx_addon_dir/src/ngx_http_rds_json_processor.h $ngx_addon_dir/src/ngx_http_rds_json_util.h $ngx_addon_dir/src/ngx_http_rds.h $ngx_addon_dir/src/resty_dbd_stream.h $ngx_addon_dir/src/ngx_http_rds_json_output.h $ngx_addon_dir/src/ngx_http_rds_utils.h $ngx_addon_dir/src/ngx_http_rds_json_handler.h"
+

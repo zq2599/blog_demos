@@ -1,0 +1,17 @@
+v0.07 - 20 July, 2011
+* now we have implemented redis command pipelining by using multiple redis2_query directives in a single location. also updated the document to reflect this change.
+* implemented the new redis2_raw_queries directive which supports multiple pipelined redis commands in a single TCP query.
+* fixed github issue #5: CRLF in chunk data confused the response parser when packet segmentation happens. thanks dlogar.
+* fixed an issue in the multi-bulk reply parser that only chunks were allowed as elements. now single line replies are all allowed, but recursive multi-bulk replies are still not allowed.
+* fixed an issue regarding defining global variables in C header files: we should have defined the global ngx_http_redis2_module in a single compilation unit. thanks @姜大炮.
+* documented the redis2_next_upstream directive as per Lance.
+* documented the limited redis pub/sub feature support.
+* documented the various timeout config directives. thanks Mike Ferrier.
+* now we only issue a warning when there is left-over bytes in the redis response stream.
+* added a memory allocation failure check. (calio)
+* fixed a typo in the source; it does not affect runtime results though. thanks calio for catching it.
+* fixed one spot of unused-but-set-variable warning issued by gcc 4.6.
+* now we allow empty parameters in the redis2_query directive.
+* added a performance tuning section as per HowToMeetLadies.
+* fixed a typo in the source code reported by Rares Mirica.
+

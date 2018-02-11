@@ -1,0 +1,155 @@
+2011-12-27    VERSION 0.9
+    * Improve debug logging.
+      From Yichun Zhang (agentzh).
+
+2011-12-23
+    * Fix compatibility with poll, select and /dev/poll event models.
+      Reported by Yichun Zhang (agentzh).
+
+2011-11-10
+    * Fix compatibility with PostgreSQL 9.x.
+      Reported by Yichun Zhang (agentzh).
+
+    * Fix compatibility with nginx-1.1.4+.
+      From Yichun Zhang (agentzh).
+
+2011-06-21
+    * Enforce writing of proper SQL queries by replacing "row <row>"
+      output format with "text" and returning whole result-set with
+      values separated by newlines when using "postgres_output"
+      directive.
+
+    * Enforce writing of proper SQL queries by requiring result-set
+      to contain exactly single value when using "binary_value" or
+      "value" output formats when using "postgres_output" directive.
+
+2011-06-17
+    * Fix "duplicated last chunk" issue.
+      Reported by Silly Sad, diagnosed by Maxim Dounin.
+
+    * Improve build-time PostgreSQL client library discovery process
+      by using PostgreSQL's pg_config.
+      Patch from Silly Sad.
+
+2010-12-23    VERSION 0.8
+    * Add option to return content in binary format using
+      "binary_value" output format in "postgres_output" directive.
+      Mostly done by Yichun Zhang (agentzh).
+
+2010-11-01
+    * Support "postgres_pass", "postgres_query", "postgres_rewrite"
+      and "postgres_output" directives in "if" pseudo-locations.
+      From Yichun Zhang (agentzh).
+
+2010-10-02
+    * Major rewrite of "postgres_escape" directive.
+
+2010-09-30    VERSION 0.7
+    * Add option to send original response body with error responses
+      set by "postgres_rewrite" directive.
+
+2010-08-25
+    * Fix error that could lead to failed connection to the database.
+
+    * Log more details on failed connection to the database.
+
+2010-08-15    VERSION 0.6
+    * Fix linking issue that manifested itself when nginx was build
+      with both: ngx_postgres and ngx_supervisord modules.
+      Reported by Sergey A. Osokin.
+
+2010-08-09
+    * Fix pointer signedness mismatch, which broke build on Darwin
+      and probably few other operating systems.
+      Reported by sahuguet, fixed by Yichun Zhang (agentzh).
+
+2010-08-03    VERSION 0.5
+    * Fix compatibility with nginx-0.8.47+.
+
+2010-07-20
+    * Add "postgres_escape" directive.
+
+2010-07-05    VERSION 0.4
+    * Optimize generation of RDS output.
+
+2010-07-02
+    * Fix serious bug that under certain conditions (query evaluated
+      to empty string, failed connection to the database, etc) would
+      lead to segmentation fault on versions older than nginx-0.8.17
+      (including nginx-0.7.x).
+
+2010-06-30
+    * When returning row or value, use Content-Type specified by
+      "default_type" directive instead of "text/plain".
+
+    * Allow column to be specified by its name instead of its number
+      (in "postgres_output" and "postgres_set" directives).
+
+2010-06-23
+    * Add "postgres_rewrite" directive.
+
+    * Add "$postgres_affected" variable.
+
+2010-06-22
+    * Fix issue that would stop gzip filter from processing
+      responses in RDS format.
+      Found by Qing Lin (kindy), fixed by Yichun Zhang (agentzh).
+
+2010-06-21
+    * Add "postgres_output" directive.
+
+2010-06-18
+    * Add "$postgres_query" variable.
+
+2010-06-16
+    * Add "postgres_set" directive.
+
+    * Add "$postgres_columns" and "$postgres_rows" variables.
+
+2010-06-13    VERSION 0.3
+    * Allow configuration of method-specific queries.
+
+    * Restrict "postgres_pass" directive to "location" context.
+
+2010-06-07
+    * Free keepalive connections on nginx shutdown.
+      Requested by Yichun Zhang (agentzh).
+
+    * Fix memory leak that was happening when nginx was configured
+      to use non-existing database tables, etc.
+      Found by Valgrind, reported by Yichun Zhang (agentzh).
+
+2010-06-04
+    * Use recently standardized error codes in RDS format.
+
+2010-06-03
+    * Allow request methods other than GET and HEAD.
+      From Yichun Zhang (agentzh) via ngx_drizzle.
+
+2010-05-12    VERSION 0.2
+    * Add various improvements to build and testing infrastructures.
+      Mostly done by Yichun Zhang (agentzh).
+
+    * Put more restrictions on "postgres_pass" and "postgres_query"
+      directives. Handle their bad configuration properly.
+
+2010-05-10
+    * Log PostgreSQL errors into error.log.
+      Reminded by Yichun Zhang (agentzh).
+
+2010-05-06
+    * Remove connection timeout from re-used keepalive connection.
+
+    * Fix libpq headers detection on Debian.
+      Patch from Weibin Yao.
+
+    * Add "postgres_get_value" directive.
+      Requested by Johan Bergstroem.
+
+    * Bring back fail-safe check that got lost during pre-release
+      refactorization. Without this check performance was reduced
+      few times under high load, because about 1% of keepalive
+      connections got disconnected.
+
+2010-05-05    VERSION 0.1
+    * Initial release.

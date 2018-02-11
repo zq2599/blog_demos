@@ -1,0 +1,66 @@
+2014-12-23    VERSION 2.3
+    * Fix compatibility with nginx-1.7.9+.
+
+2014-12-02    VERSION 2.2
+    * Fix compatibility with nginx-1.7.8+.
+
+2014-05-19
+    * Fix build on Solaris with SunCC (Solaris Studio).
+      Reported by Jussi Sallinen.
+
+2013-03-19    VERSION 2.1
+    * When enabled, cache purge will now catch all requests with
+      PURGE (or specified) method, even if cache isn't configured.
+      Previously, it would pass such requests to the upstream.
+
+2012-12-07    VERSION 2.0
+    * Add alternative "same location" syntax.
+      From CloudFlare.
+
+2012-07-02    VERSION 1.6
+    * Fix compatibility with nginx-1.3.2+.
+      Reported by MagicBear, patch from Ruslan Ermilov.
+
+2011-12-20    VERSION 1.5
+    * Fix on-disk cache size calculation.
+      Since the initial release, recorded on-disk cache size was
+      decreased twice for purged content (once during cache purge
+      and once during subsequent cache update).
+      This resulted in recorded on-disk cache size being much
+      smaller than in reality, which could lead to on-disk cache
+      outgrowing defined "max_size" parameter.
+      Patch from Pyry Hakulinen.
+
+2011-10-05    VERSION 1.4
+    * Add AIO support.
+      Requested by Emin Hasanov.
+
+2011-05-03    VERSION 1.3
+    * Fix compatibility with nginx-1.0.1.
+      Reported by Sergey A. Osokin and Markus Linnala.
+
+2010-08-29
+    * Fix compatibility with nginx-0.8.0 and versions older than
+      nginx-0.7.60.
+
+2010-08-11    VERSION 1.2
+    * Fix various build scenarios with disabled upstream modules.
+      Reported by Johan Bergstroem.
+
+    * Add ability to purge content from SCGI's cache.
+      Requested by Johan Bergstroem.
+
+2010-06-08    VERSION 1.1
+    * Fix compatibility with nginx-0.8.40+.
+
+    * Add ability to purge content from uWSGI's cache.
+
+2010-01-10    VERSION 1.0
+    * Initial module release.
+
+2009-11-17
+    * Fix patch compatibility with nginx-0.8.11+.
+      Reported by Bing Ran.
+
+2009-08-11
+    * Initial patch release.

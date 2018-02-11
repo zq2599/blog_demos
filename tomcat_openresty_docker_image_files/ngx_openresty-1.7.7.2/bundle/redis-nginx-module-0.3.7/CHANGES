@@ -1,0 +1,102 @@
+Changes with ngx_http_redis 0.3.7                               28 Nov 2013
+
+    *) Bugfix: ngx_http_redis_module might issue the error message
+       "redis sent invalid trailer" for nginx >= 1.5.3.
+       Thanks to Maxim Dounin.
+
+
+Changes with ngx_http_redis 0.3.6                               03 Apr 2012
+
+    *) Feature: redis_gzip_flag.  Usefull if you are prefer to
+       store data compressed in redis.  Works with ngx_http_gunzip_filter
+       module.
+       Thanks to Maxim Dounin.
+
+    *) Bugfix: ngx_http_redis_module might issue the error message
+       "redis sent invalid trailer".
+       Thanks to agentzh.
+
+
+Changes with ngx_http_redis 0.3.5                               30 Aug 2011
+
+    *) Feature: add test for not set $redis_db directive.
+
+    *) Feature: keep-alive support merged from original
+       memcached module 1.1.4.
+
+
+Changes with ngx_http_redis 0.3.4                               24 Aug 2011
+
+    *) Change: better error messages diagnostics in select phase.
+
+    *) Add more comments in source code.
+
+    *) Bugfix: fix interaction with redis if redis_db was unused.
+       Found by Sergey Makarov.
+       Thanks to Igor Sysoev.
+
+    *) Feature: add test suite for redis backend.
+       Thanks to Maxim Dounin.
+
+
+Changes with ngx_http_redis 0.3.3                               07 Jun 2011
+
+    *) Bugfix: fix interaction with redis if redis_db was used.
+       Also, compile with -Werror now is possible.
+
+
+Changes with ngx_http_redis 0.3.2                               17 Aug 2010
+
+    *) Bugfix: ngx_http_redis_module might issue the error message 
+       "redis sent invalid trailer".  For more information see:
+       $ diff -ruN \
+             nginx-0.8.34/src/http/modules/ngx_http_memcached_module.c \
+             nginx-0.8.35/src/http/modules/ngx_http_memcached_module.c
+
+    *) Change: now the $redis_db set is not obligatory; default
+       value is "0".
+
+
+Changes with ngx_http_redis 0.3.1                               26 Dec 2009
+
+    *) Change: return 502 instead of 404 for error.
+
+    *) Change: better error messages diagnostics.
+
+    *) Bugfix: improve interoperability with redis; the bug had
+       appeared in 0.3.0.
+
+
+Changes with ngx_http_redis 0.3.0                               23 Dec 2009
+
+    *) Compatibility with latest stable (0.7.64) and
+       development 0.8.31 releases.
+
+    *) Bugfix: multiple commands issue with interoperability with
+       redis; the bug had appeared in 0.2.0.
+
+    *) Feature: redis_bind directive merge from original
+       memcached module (for 0.8.22 and later).
+
+
+Changes with ngx_http_redis 0.2.0                               19 Sep 2009
+
+    *) Feature: the $redis_db variable: now the ngx_http_redis
+       module uses the $redis_db variable value as the parameter
+       for SELECT command.
+
+    *) Cleanup: style/spaces fixes.
+
+
+Changes with ngx_http_redis 0.1.2                               14 Sep 2009
+
+    *) Change: backport to 0.7.61.
+
+
+Changes with ngx_http_redis 0.1.1                               31 Aug 2009
+
+    *) Change: compatibility with nginx 0.8.11.
+
+    *) Cleanup: mlcf -> rlcf, i.e.
+       (memcached location configuration) -> redis...
+

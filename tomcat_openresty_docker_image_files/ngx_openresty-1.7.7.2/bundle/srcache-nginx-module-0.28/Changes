@@ -1,0 +1,16 @@
+v0.12 - 11 July 2011
+* now we properly support fetch/store subrequests with internal redirection in them. main requests with internal redirection will still not be stored into the cache if there is a cache miss. thanks Liseen Wan for reporting it.
+* fixed spots that trigger the unused-but-set-variable warning by gcc 4.6.
+* added srcache_store_skip and srcache_fetch_skip directives to skip cache fetching or storing based on variables that are set and not empty nor 0. thanks Andre. Examples of using Lua to set $nocache to avoid storing URIs that contain /tmp:
+    set_by_lua $nocache '
+    	if string.match(ngx.var.request_uri, "/tmp") then
+    	  return "true"
+    	else
+    	  return ""
+    	end';
+
+    srcache_store_skip $nocache;
+* added new directive srcache_store_max_size. thanks Andre.
+* made our filter optimization work with nginx HUP by clearing the ngx_http_srcache_used flag at nginx pre-config callback. thanks Marcus Clyne.
+* now we skip NULL chains in our output filters and also removed the SUBREQUEST_IN_MEMORY flag for our srcache_store subrequests because it will cause mysterious hanging issues when memcached returns CLIENT_ERROR for "get".
+
