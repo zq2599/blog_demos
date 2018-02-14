@@ -21,7 +21,7 @@ public class ServerInfo {
 
     @RequestMapping(value = "/getserverinfo", method = RequestMethod.GET)
     public String getUserInfoWithRequestParam(){
-        return String.format("server : %s, time : %s", getIPAddr(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        return String.format("server : %15s, time : %s", getIPAddr(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
     }
 
     /**
