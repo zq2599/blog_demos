@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: k8spvdemo
+spec:
+  replicas: 1
+  template:
+    metadata:
+     labels:
+       name: k8spvdemo
+    spec:
+     containers:
+     - name: k8spvdemo
+       image: bolingcavalry/k8spvdemo:0.0.1-SNAPSHOT
+       volumeMounts:
+       - mountPath: "/usr/local/uploadfiles"
+         name: pv1
+       tty: true
+       ports:
+       - containerPort: 8080
+     volumes:
+     - name: pv1
+       persistentVolumeClaim:
+         claimName: pvc1

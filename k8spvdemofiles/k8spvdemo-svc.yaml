@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8spvdemo
+spec:
+  type: NodePort
+  ports:
+       - port: 8080
+         nodePort: 30010
+  selector:
+    name: k8spvdemo
