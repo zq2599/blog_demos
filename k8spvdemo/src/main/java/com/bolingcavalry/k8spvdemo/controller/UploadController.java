@@ -1,8 +1,7 @@
-package com.bolingcavalry.springbootfileserver.controller;
+package com.bolingcavalry.k8spvdemo.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,32 +19,11 @@ import java.util.UUID;
 /**
  * @Description : 上传文件的服务
  * @Author : zq2599@gmail.com
- * @Date : 2018-02-24 22:42
+ * @Date : 2018-03-11 16:51
  */
 @RestController
 public class UploadController {
     protected static final Logger logger = LoggerFactory.getLogger(UploadController.class);
-
-    //生成上传文件的文件名，文件名以：uuid+"_"+文件的原始名称
-    public String mkFileName(String fileName){
-        return UUID.randomUUID().toString()+"_"+fileName;
-    }
-
-    public String mkFilePath(String savePath,String fileName){
-        //得到文件名的hashCode的值，得到的就是filename这个字符串对象在内存中的地址
-        int hashcode = fileName.hashCode();
-        int dir1 = hashcode&0xf;
-        int dir2 = (hashcode&0xf0)>>4;
-        //构造新的保存目录
-        //String dir = savePath + "\\" + dir1 + "\\" + dir2;
-        String dir = savePath + File.separator + dir1 + File.separator + dir2;
-        //File既可以代表文件也可以代表目录
-        File file = new File(dir);
-        if(!file.exists()){
-            file.mkdirs();
-        }
-        return dir;
-    }
 
     public void responseAndClose(HttpServletResponse response, String message){
         response.reset();
@@ -81,19 +59,11 @@ public class UploadController {
             return;
         }
 
-        //上传文件路径
-        String savePath = request.getServletContext().getRealPath("/WEB-INF/upload");
-
         //上传文件名
         String fileName = file.getOriginalFilename();
 
-        logger.info("base save path [{}], original file name [{}]", savePath, fileName);
-
-        //得到文件保存的名称
-        fileName = mkFileName(fileName);
-
         //得到文件保存的路径
-        String savePathStr = mkFilePath(savePath, fileName);
+        String savePathStr = "/usr/local/uploadfiles";
 
         logger.info("real save path [{}], real file name [{}]", savePathStr, fileName);
 
