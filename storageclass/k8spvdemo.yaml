@@ -1,0 +1,32 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: k8spvdemo
+  namespace:  bolingcavalry
+spec:
+  serviceName: "k8spvdemo"
+  replicas: 1
+  volumeClaimTemplates:
+  - metadata:
+      name: test 
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "managed-nfs-storage"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 2Gi 
+  template:
+    metadata:
+     labels:
+       name: k8spvdemo
+    spec:
+     containers:
+     - name: k8spvdemo
+       image: bolingcavalry/k8spvdemo:0.0.1-SNAPSHOT
+       volumeMounts:
+       - mountPath: "/usr/local/uploadfiles"
+         name: test
+       tty: true
+       ports:
+       - containerPort: 8080
