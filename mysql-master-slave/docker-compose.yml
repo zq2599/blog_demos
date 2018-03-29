@@ -1,0 +1,21 @@
+version: '2'
+services:
+  master: 
+    image: bolingcavalry/mysql-master:0.0.1
+    environment:
+      MYSQL_ROOT_PASSWORD: 888888
+      MYSQL_REPLICATION_USER: rep
+      MYSQL_REPLICATION_PASSWORD: 888888
+    restart: always
+  slave: 
+    image: bolingcavalry/mysql-slave:0.0.1
+    depends_on:
+      - master
+    links: 
+      - master:masterhost 
+    environment:
+      MYSQL_ROOT_PASSWORD: 888888
+      MYSQL_MASTER_SERVICE_HOST: masterhost
+      MYSQL_REPLICATION_USER: rep
+      MYSQL_REPLICATION_PASSWORD: 888888
+    restart: always
