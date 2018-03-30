@@ -6,8 +6,10 @@ services:
       MYSQL_ROOT_PASSWORD: 888888
       MYSQL_REPLICATION_USER: rep
       MYSQL_REPLICATION_PASSWORD: 888888
+    volumes:
+     - ./master:/etc/mysql/extend.conf.d
     restart: always
-  slave: 
+  slave0: 
     image: bolingcavalry/mysql-slave:0.0.1
     depends_on:
       - master
@@ -18,4 +20,20 @@ services:
       MYSQL_MASTER_SERVICE_HOST: masterhost
       MYSQL_REPLICATION_USER: rep
       MYSQL_REPLICATION_PASSWORD: 888888
+    volumes:
+     - ./slave0:/etc/mysql/extend.conf.d
+    restart: always
+  slave1:
+    image: bolingcavalry/mysql-slave:0.0.1
+    depends_on:
+      - master
+    links:
+      - master:masterhost
+    environment:
+      MYSQL_ROOT_PASSWORD: 888888
+      MYSQL_MASTER_SERVICE_HOST: masterhost
+      MYSQL_REPLICATION_USER: rep
+      MYSQL_REPLICATION_PASSWORD: 888888
+    volumes:
+     - ./slave1:/etc/mysql/extend.conf.d
     restart: always
