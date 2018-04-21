@@ -57,7 +57,7 @@
 					<imageTags>
 						<imageTag>${project.version}</imageTag>
 					</imageTags>
-					<!--镜像的FROM，使用java官方镜像-->
+					<!--镜像的FROM，使用bolingcavalry/springboot-app-filebeat:0.0.3-->
 					<baseImage>bolingcavalry/springboot-app-filebeat:0.0.3</baseImage>
 					<!--该镜像的容器启动后，直接运行spring boot工程-->
 					<entryPoint>["sh","/filebeat-springboot-entrypoint.sh","/${project.build.finalName}.jar"]</entryPoint>
