@@ -1,21 +1,29 @@
-single-rabbit:
+rabbitmq:
   image: bolingcavalry/rabbitmq-server:0.0.1
-  hostname: single-rabbit
+  hostname: rabbitmq
   ports:
-    - "5672:5672"
     - "15672:15672"
   environment:
     - RABBITMQ_DEFAULT_USER=admin
     - RABBITMQ_DEFAULT_PASS=888888
-single-producer:
-  image: bolingcavalry/rabbitmqproducer:0.0.1-SNAPSHOT
-  hostname: single-producer
+producer:
+  image: bolingcavalry/rabbitmqproducer:0.0.2-SNAPSHOT
+  hostname: producer
   links:
-    - single-rabbit:rabbitmqhost
+    - rabbitmq:rabbitmqhost
   ports:
       - "18080:8080"
-single-consumer:
-  image: bolingcavalry/rabbitmqconsumer:0.0.1-SNAPSHOT
-  hostname: single-consumer
+  environment:
+   - mq.rabbit.address=rabbitmqhost:5672
+   - mq.rabbit.username=admin
+   - mq.rabbit.password=888888
+consumer:
+  image: bolingcavalry/rabbitmqconsumer:0.0.2-SNAPSHOT
+  hostname: consumer
   links:
-    - single-rabbit:rabbitmqhost
+    - rabbitmq:rabbitmqhost
+  environment:
+   - mq.rabbit.address=rabbitmqhost:5672
+   - mq.rabbit.username=admin
+   - mq.rabbit.password=888888
+   - mq.rabbit.queue.name=consumer.queue

@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
  * @Date : 2018-05-06 18:02
  */
 @Component
-@RabbitListener(queues = "fanout.bolingcavalry.b")
-public class FanoutReceiverB {
-    private static final Logger logger = LoggerFactory.getLogger(FanoutReceiverB.class);
+@RabbitListener(queues = "${mq.rabbit.queue.name}")
+public class FanoutReceiver {
+    private static final Logger logger = LoggerFactory.getLogger(FanoutReceiver.class);
 
     @RabbitHandler
     public void process(String message) {
-        logger.info("b. receive message : " + message);
+        logger.info("receive message : " + message);
     }
 }

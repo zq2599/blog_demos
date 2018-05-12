@@ -23,12 +23,19 @@ public class RabbitConfig {
 
     @Value("${mq.rabbit.address}")
     String address;
+
     @Value("${mq.rabbit.username}")
     String username;
+
     @Value("${mq.rabbit.password}")
     String password;
+
+    @Value("${mq.rabbit.queue.name}")
+    String queuename;
+
     @Value("${mq.rabbit.virtualHost}")
     String mqRabbitVirtualHost;
+
     @Value("${mq.rabbit.exchange.name}")
     String exchangeName;
 
@@ -64,25 +71,13 @@ public class RabbitConfig {
 
     //队列A
     @Bean
-    public Queue fanoutQueueA() {
-        return new Queue("fanout.bolingcavalry.a");
+    public Queue fanoutQueue() {
+        return new Queue(queuename);
     }
 
-    //绑定对列A到Fanout交换器
+    //绑定对列到Fanout交换器
     @Bean
-    Binding bindingAFanoutExchange(Queue fanoutQueueA, FanoutExchange fanoutExchange) {
-        return BindingBuilder.bind(fanoutQueueA).to(fanoutExchange);
-    }
-
-    //队列B
-    @Bean
-    public Queue fanoutQueueB() {
-        return new Queue("fanout.bolingcavalry.b");
-    }
-
-    //绑定对列B到Fanout交换器
-    @Bean
-    Binding bindingBFanoutExchange(Queue fanoutQueueB, FanoutExchange fanoutExchange) {
-        return BindingBuilder.bind(fanoutQueueB).to(fanoutExchange);
+    Binding bindingFanoutExchange(Queue fanoutQueue, FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(fanoutQueue).to(fanoutExchange);
     }
 }
