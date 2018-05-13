@@ -37,7 +37,16 @@ else
 		else
 			rabbitmqctl join_cluster --ram rabbit@$CLUSTER_WITH
 		fi
+		
 		rabbitmqctl start_app
+
+		# If set ha flag, enable here
+        	if [ -z "$HA_ENABLE" ]; then
+                	echo "Running with normal cluster mode"
+        	else
+			rabbitmqctl set_policy HA '^(?!amq\.).*' '{"ha-mode": "all"}'
+			echo "Running wiht HA cluster mode"	
+        	fi
                 
 		# Tail to keep the a foreground process active..
 		tail -f /var/log/rabbitmq/rabbit\@$HOSTNAME.log

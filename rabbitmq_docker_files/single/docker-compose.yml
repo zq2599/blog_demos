@@ -1,5 +1,5 @@
 rabbitmq:
-  image: bolingcavalry/rabbitmq-server:0.0.2
+  image: bolingcavalry/rabbitmq-server:0.0.3
   hostname: rabbitmq
   ports:
     - "15672:15672"
@@ -18,7 +18,7 @@ producer:
    - mq.rabbit.username=admin
    - mq.rabbit.password=888888
 consumer:
-  image: bolingcavalry/rabbitmqconsumer:0.0.2-SNAPSHOT
+  image: bolingcavalry/rabbitmqconsumer:0.0.3-SNAPSHOT
   hostname: consumer
   links:
     - rabbitmq:rabbitmqhost

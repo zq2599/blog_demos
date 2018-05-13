@@ -15,11 +15,11 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo '$TZ' > /etc/timezone
 
 #设置编码为中文
-#RUN yum -y install kde-l10n-Chinese glibc-common
+RUN yum -y install kde-l10n-Chinese glibc-common
 
-#RUN localedef -c -f UTF-8 -i zh_CN zh_CN.utf8
+RUN localedef -c -f UTF-8 -i zh_CN zh_CN.utf8
 
-#ENV LC_ALL zh_CN.utf8 
+ENV LC_ALL zh_CN.utf8 
 
 #安装wget工具
 RUN yum install -y wget unzip tar

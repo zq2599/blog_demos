@@ -1,61 +1,73 @@
-rabbit1:
-  image: bolingcavalry/rabbitmq-server:0.0.2
-  hostname: rabbit1
-  ports:
-    - "15672:15672"
-  environment:
-    - RABBITMQ_DEFAULT_USER=admin
-    - RABBITMQ_DEFAULT_PASS=888888
-rabbit2:
-  image: bolingcavalry/rabbitmq-server:0.0.2
-  hostname: rabbit2
-  links:
-    - rabbit1
-  environment:
-   - CLUSTERED=true
-   - CLUSTER_WITH=rabbit1
-   - RAM_NODE=true
-  ports:
+version: '2'
+services:
+  rabbit1:
+    image: bolingcavalry/rabbitmq-server:0.0.3
+    hostname: rabbit1
+    ports:
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=888888
+  rabbit2:
+    image: bolingcavalry/rabbitmq-server:0.0.3
+    hostname: rabbit2
+    depends_on:
+      - rabbit1
+    links:
+      - rabbit1
+    environment:
+     - CLUSTERED=true
+     - CLUSTER_WITH=rabbit1
+     - RAM_NODE=true
+    ports:
       - "15673:15672"
-rabbit3:
-  image: bolingcavalry/rabbitmq-server:0.0.2
-  hostname: rabbit3
-  links:
-    - rabbit1
-    - rabbit2
-  environment:
-   - CLUSTERED=true
-   - CLUSTER_WITH=rabbit1
-  ports:
+  rabbit3:
+    image: bolingcavalry/rabbitmq-server:0.0.3
+    hostname: rabbit3
+    depends_on:
+      - rabbit2
+    links:
+      - rabbit1
+      - rabbit2
+    environment:
+      - CLUSTERED=true
+      - CLUSTER_WITH=rabbit1
+    ports:
       - "15675:15672"
-producer:
-  image: bolingcavalry/rabbitmqproducer:0.0.2-SNAPSHOT
-  hostname: producer
-  links:
-    - rabbit1:rabbitmqhost
-  ports:
+  producer:
+    image: bolingcavalry/rabbitmqproducer:0.0.2-SNAPSHOT
+    hostname: producer
+    depends_on:
+      - rabbit3
+    links:
+      - rabbit1:rabbitmqhost
+    ports:
       - "18080:8080"
-  environment:
-   - mq.rabbit.address=rabbitmqhost:5672
-   - mq.rabbit.username=admin
-   - mq.rabbit.password=888888
-consumer1:
-  image: bolingcavalry/rabbitmqconsumer:0.0.2-SNAPSHOT
-  hostname: consumer
-  links:
-    - rabbit2:rabbitmqhost
-  environment:
-   - mq.rabbit.address=rabbitmqhost:5672
-   - mq.rabbit.username=admin
-   - mq.rabbit.password=888888
-   - mq.rabbit.queue.name=consumer1.queue
-consumer2:
-  image: bolingcavalry/rabbitmqconsumer:0.0.2-SNAPSHOT
-  hostname: consumer
-  links:
-    - rabbit3:rabbitmqhost
-  environment:
-   - mq.rabbit.address=rabbitmqhost:5672
-   - mq.rabbit.username=admin
-   - mq.rabbit.password=888888
-   - mq.rabbit.queue.name=consumer2.queue
+    environment:
+      - mq.rabbit.address=rabbitmqhost:5672
+      - mq.rabbit.username=admin
+      - mq.rabbit.password=888888
+  consumer1:
+    image: bolingcavalry/rabbitmqconsumer:0.0.3-SNAPSHOT
+    hostname: consumer1
+    depends_on:
+      - producer
+    links:
+      - rabbit2:rabbitmqhost
+    environment:
+     - mq.rabbit.address=rabbitmqhost:5672
+     - mq.rabbit.username=admin
+     - mq.rabbit.password=888888
+     - mq.rabbit.queue.name=consumer1.queue
+  consumer2:
+    image: bolingcavalry/rabbitmqconsumer:0.0.3-SNAPSHOT
+    hostname: consumer2
+    depends_on:
+      - consumer1
+    links:
+      - rabbit3:rabbitmqhost
+    environment:
+      - mq.rabbit.address=rabbitmqhost:5672
+      - mq.rabbit.username=admin
+      - mq.rabbit.password=888888
+      - mq.rabbit.queue.name=consumer2.queue
