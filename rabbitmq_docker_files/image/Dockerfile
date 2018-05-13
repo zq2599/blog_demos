@@ -1,5 +1,5 @@
 # Docker file for rabbitmq single or cluster from bolingcavalry 
-# VERSION 0.0.1
+# VERSION 0.0.3
 # Author: bolingcavalry
 
 #基础镜像

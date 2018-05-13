@@ -18,7 +18,7 @@ producer:
    - mq.rabbit.username=admin
    - mq.rabbit.password=888888
 consumer:
-  image: bolingcavalry/rabbitmqconsumer:0.0.3-SNAPSHOT
+  image: bolingcavalry/rabbitmqconsumer:0.0.5-SNAPSHOT
   hostname: consumer
   links:
     - rabbitmq:rabbitmqhost
