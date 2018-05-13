@@ -1,5 +1,5 @@
 rabbit1:
-  image: bolingcavalry/rabbitmq-server:0.0.1
+  image: bolingcavalry/rabbitmq-server:0.0.2
   hostname: rabbit1
   ports:
     - "15672:15672"
@@ -7,7 +7,7 @@ rabbit1:
     - RABBITMQ_DEFAULT_USER=admin
     - RABBITMQ_DEFAULT_PASS=888888
 rabbit2:
-  image: bolingcavalry/rabbitmq-server:0.0.1
+  image: bolingcavalry/rabbitmq-server:0.0.2
   hostname: rabbit2
   links:
     - rabbit1
@@ -18,7 +18,7 @@ rabbit2:
   ports:
       - "15673:15672"
 rabbit3:
-  image: bolingcavalry/rabbitmq-server:0.0.1
+  image: bolingcavalry/rabbitmq-server:0.0.2
   hostname: rabbit3
   links:
     - rabbit1

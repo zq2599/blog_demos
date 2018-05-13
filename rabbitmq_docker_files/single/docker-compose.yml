@@ -1,5 +1,5 @@
 rabbitmq:
-  image: bolingcavalry/rabbitmq-server:0.0.1
+  image: bolingcavalry/rabbitmq-server:0.0.2
   hostname: rabbitmq
   ports:
     - "15672:15672"
