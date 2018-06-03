@@ -1,0 +1,89 @@
+version: '2'
+services:
+  rabbit1:
+    image: bolingcavalry/rabbitmq-server:0.0.3
+    hostname: rabbit1
+    ports:
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=888888
+  rabbit2:
+    image: bolingcavalry/rabbitmq-server:0.0.3
+    hostname: rabbit2
+    depends_on:
+      - rabbit1
+    links:
+      - rabbit1
+    environment:
+     - CLUSTERED=true
+     - CLUSTER_WITH=rabbit1
+     - RAM_NODE=true
+     - HA_ENABLE=true
+    ports:
+      - "15673:15672"
+  rabbit3:
+    image: bolingcavalry/rabbitmq-server:0.0.3
+    hostname: rabbit3
+    depends_on:
+      - rabbit2
+    links:
+      - rabbit1
+      - rabbit2
+    environment:
+      - CLUSTERED=true
+      - CLUSTER_WITH=rabbit1
+    ports:
+      - "15675:15672"
+  messagettlproducer:
+    image: bolingcavalry/messagettlproducer:0.0.1-SNAPSHOT
+    hostname: messagettlproducer
+    depends_on:
+      - rabbit3
+    links:
+      - rabbit1:rabbitmqhost1
+      - rabbit2:rabbitmqhost2
+      - rabbit3:rabbitmqhost3
+    ports:
+      - "18080:8080"
+    environment:
+      - mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672
+      - mq.rabbit.username=admin
+      - mq.rabbit.password=888888
+      - message.ttl.exchange=message.ttl.exchange
+      - message.ttl.queue.source=message.ttl.queue.source
+      - message.ttl.queue.process=message.ttl.queue.process
+  queuettlproducer:
+    image: bolingcavalry/queuettlproducer:0.0.1-SNAPSHOT
+    hostname: queuettlproducer
+    depends_on:
+      - messagettlproducer
+    links:
+      - rabbit1:rabbitmqhost1
+      - rabbit2:rabbitmqhost2
+      - rabbit3:rabbitmqhost3
+    ports:
+      - "18081:8080"
+    environment:
+      - mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672
+      - mq.rabbit.username=admin
+      - mq.rabbit.password=888888
+      - queue.ttl.exchange=queue.ttl.exchange
+      - queue.ttl.queue.source=queue.ttl.queue.source
+      - queue.ttl.queue.process=queue.ttl.queue.process
+      - queue.ttl.value=5000
+  delayrabbitmqconsumer:
+    image: bolingcavalry/delayrabbitmqconsumer:0.0.1-SNAPSHOT
+    hostname: delayrabbitmqconsumer
+    depends_on:
+      - queuettlproducer
+    links:
+      - rabbit1:rabbitmqhost1
+      - rabbit2:rabbitmqhost2
+      - rabbit3:rabbitmqhost3
+    environment:
+     - mq.rabbit.address=rabbitmqhost1:5672,rabbitmqhost2:5672,rabbitmqhost3:5672
+     - mq.rabbit.username=admin
+     - mq.rabbit.password=888888
+     - message.ttl.queue.process=message.ttl.queue.process
+     - queue.ttl.queue.process=queue.ttl.queue.process
