@@ -45,6 +45,10 @@ public class RedisClient {
         getConnection().set(keyBytes, val);
     }
 
+    public long del(String key){
+        return getConnection().del(getKey(key));
+    }
+
     /**
      * 从缓存中取对象
      *

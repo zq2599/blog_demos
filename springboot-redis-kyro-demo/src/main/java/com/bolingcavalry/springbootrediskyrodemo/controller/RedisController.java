@@ -30,15 +30,23 @@ public class RedisController {
     private RedisClient redisClient;
 
     /**
+     * key的拼装逻辑
+     * @param id
+     * @return
+     */
+    private static String key(int id){
+        return PREFIX  + id;
+    }
+    /**
      * 返回指定id的记录
      * @param id
      */
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String check(@PathVariable("id") final int id) {
+    public String get(@PathVariable("id") final int id) {
         Person person = null;
         try{
-            person = redisClient.getObject(PREFIX + id);
+            person = redisClient.getObject(key(id));
         }catch(Exception e){
             logger.error("get from redis error, ", e);
         }
@@ -47,20 +55,37 @@ public class RedisController {
     }
 
     /**
+     * 删除指定id的记录
+     * @param id
+     */
+    @RequestMapping(value = "/del/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public String del(@PathVariable("id") final int id) {
+        long rlt = 0;
+        try{
+            rlt = redisClient.del(key(id));
+        }catch(Exception e){
+            logger.error("del from redis error, ", e);
+        }
+
+        return rlt>0 ? ("del success[" + id + "]") : ("can not get person by id [" + id + "]");
+    }
+
+    /**
      * 向redis增加一条记录
      */
     @RequestMapping(value = "/add/{id}/{name}/{age}", method = RequestMethod.GET)
     @ResponseBody
-    public String add(@PathVariable("id") int id, @PathVariable("id") String name, @PathVariable("id") int age) {
+    public String add(@PathVariable("id") int id, @PathVariable("name") String name, @PathVariable("age") int age) {
         Person person = new Person();
         person.setId(id);
         person.setName(name);
         person.setAge(age);
 
-        String rlt = null;
+        String rlt;
 
         try{
-            redisClient.set(PREFIX + person.getId(), person);
+            redisClient.set(key(person.getId()), person);
             rlt = "save to redis success!";
         }catch(Exception e){
             rlt = "save to redis fail, " + e;
