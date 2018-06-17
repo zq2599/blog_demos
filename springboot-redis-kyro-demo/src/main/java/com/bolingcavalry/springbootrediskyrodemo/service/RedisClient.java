@@ -1,7 +1,11 @@
 package com.bolingcavalry.springbootrediskyrodemo.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisConnectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Service;
@@ -14,11 +18,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class RedisClient {
 
+    private static final Logger logger = LoggerFactory.getLogger(RedisClient.class);
+
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
 
     private RedisConnection getConnection() {
         return redisTemplate.getConnectionFactory().getConnection();
+    }
+
+    /**
+     * 释放连接
+     * @param redisConnection
+     */
+    private void releaseConnection(RedisConnection redisConnection){
+        if(null!=redisConnection && null!=redisTemplate){
+            RedisConnectionFactory redisConnectionFactory = redisTemplate.getConnectionFactory();
+
+            if(null!=redisConnectionFactory){
+                RedisConnectionUtils.releaseConnection(redisConnection, redisConnectionFactory);
+            }
+        }
     }
 
     /**
@@ -42,11 +62,38 @@ public class RedisClient {
         byte[] keyBytes = getKey(key);
         RedisSerializer serializer = redisTemplate.getValueSerializer();
         byte[] val = serializer.serialize(t);
-        getConnection().set(keyBytes, val);
+        RedisConnection redisConnection = getConnection();
+
+        if(null!=redisConnection){
+            try {
+                redisConnection.set(keyBytes, val);
+            }finally {
+                releaseConnection(redisConnection);
+            }
+        }else{
+            logger.error("1. can not get valid connection");
+        }
     }
 
+    /**
+     * 删除指定对象
+     * @param key
+     * @return
+     */
     public long del(String key){
-        return getConnection().del(getKey(key));
+        RedisConnection redisConnection = getConnection();
+        long rlt = 0L;
+
+        if(null!=redisConnection){
+            try {
+                rlt = redisConnection.del(getKey(key));
+            }finally {
+                releaseConnection(redisConnection);
+            }
+        }else{
+            logger.error("1. can not get valid connection");
+        }
+        return rlt;
     }
 
     /**
@@ -58,7 +105,20 @@ public class RedisClient {
      */
     public <T> T getObject(String key) {
         byte[] keyBytes = getKey(key);
-        byte[] result = getConnection().get(keyBytes);
-        return (T) redisTemplate.getValueSerializer().deserialize(result);
+        byte[] result = null;
+
+        RedisConnection redisConnection = getConnection();
+
+        if(null!=redisConnection){
+            try {
+                result = redisConnection.get(keyBytes);
+            }finally {
+                releaseConnection(redisConnection);
+            }
+        }else{
+            logger.error("2. can not get valid connection");
+        }
+
+        return null!=redisConnection ? (T) redisTemplate.getValueSerializer().deserialize(result) : null;
     }
 }
