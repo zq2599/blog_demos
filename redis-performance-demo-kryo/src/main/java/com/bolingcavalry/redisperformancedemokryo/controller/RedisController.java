@@ -35,6 +35,8 @@ public class RedisController {
 
     private static final String PREFIX = "person_";
 
+    private static final int TIMES = 100;
+
     @Autowired
     private RedisClient redisClient;
 
@@ -54,7 +56,9 @@ public class RedisController {
      */
     @RequestMapping(value = "/check", method = RequestMethod.GET)
     public void check(HttpServletResponse response) {
-        checkPerson(checkPersionIdGenerator.incrementAndGet(), response);
+        for(int i=0;i<TIMES;i++) {
+            checkPerson(checkPersionIdGenerator.incrementAndGet(), response);
+        }
     }
 
     /**
@@ -63,14 +67,18 @@ public class RedisController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public void add(HttpServletResponse response) {
-        Person person = Helper.buildPerson(addPersionIdGenerator);
-        try{
-            redisClient.set(PREFIX + person.getId(), person);
-            Helper.success( response,"save success, id [" + person.getId() + "]");
-        }catch(Exception e){
-            logger.error("save redis error, ", e);
-            Helper.error( response,"save redis error!");
+        for(int i=0;i<TIMES;i++) {
+            Person person = Helper.buildPerson(addPersionIdGenerator);
+            try {
+                redisClient.set(PREFIX + person.getId(), person);
+            } catch (Exception e) {
+                logger.error("save redis error, ", e);
+                Helper.error(response, "save redis error!");
+                return;
+            }
         }
+
+        Helper.success(response, "save success");
     }
 
     /**
