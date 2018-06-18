@@ -47,8 +47,17 @@ public class RedisController {
 
     @RequestMapping(value = "/check", method = RequestMethod.GET)
     public void check(HttpServletResponse response) {
+        boolean hasError = false;
         for(int i=0;i<TIMES;i++) {
-            checkPerson(checkPersionIdGenerator.incrementAndGet(), response);
+            boolean rlt = checkPerson(checkPersionIdGenerator.incrementAndGet(), response);
+            if(!rlt){
+                hasError = true;
+                break;
+            }
+        }
+
+        if(!hasError){
+            Helper.success(response, "check success");
         }
     }
 
@@ -81,7 +90,7 @@ public class RedisController {
      * @param id
      * @param response
      */
-    private void checkPerson(int id, HttpServletResponse response){
+    private boolean checkPerson(int id, HttpServletResponse response){
         String raw = null;
         try{
             raw = stringRedisTemplate.opsForValue().get(PREFIX + id);
@@ -91,7 +100,7 @@ public class RedisController {
 
         if(null==raw){
             Helper.error( response, "[" + id + "] not exist!");
-            return;
+            return false;
         }
 
         Person person = JSONObject.parseObject(raw, Person.class);
@@ -99,9 +108,11 @@ public class RedisController {
         String error = Helper.checkPerson(person);
 
         if(null==error){
-            Helper.success(response, "[" + id + "] check success!");
+            //Helper.success(response, "[" + id + "] check success!");
+            return true;
         }else {
             Helper.error(response, "[" + id + "] " + error);
+            return false;
         }
     }
 
