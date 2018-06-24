@@ -63,15 +63,29 @@ public class RedisController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public void add(HttpServletResponse response) {
+        boolean isSuccess;
         for(int i=0;i<TIMES;i++) {
             Person person = Helper.buildPerson(addPersionIdGenerator);
-            try {
-                stringRedisTemplate.opsForValue().set(PREFIX + person.getId(), JSONObject.toJSONString(person));
 
-            } catch (Exception e) {
-                logger.error("save redis error, ", e);
-                Helper.error(response, "save redis error!");
-                return;
+            while (true) {
+                isSuccess = false;
+                try {
+                    stringRedisTemplate.opsForValue().set(PREFIX + person.getId(), JSONObject.toJSONString(person));
+                    isSuccess = true;
+                } catch (Exception e) {
+                    logger.error("save redis error");
+                    return;
+                }
+
+                if (isSuccess) {
+                    break;
+                } else {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        logger.error("1. sleep error, ", e);
+                    }
+                }
             }
         }
 
@@ -92,10 +106,27 @@ public class RedisController {
      */
     private boolean checkPerson(int id, HttpServletResponse response){
         String raw = null;
-        try{
-            raw = stringRedisTemplate.opsForValue().get(PREFIX + id);
-        }catch(Exception e){
-            logger.error("get from redis error, ", e);
+
+        boolean isSuccess;
+
+        while (true) {
+            isSuccess = false;
+            try {
+                raw = stringRedisTemplate.opsForValue().get(PREFIX + id);
+                isSuccess = true;
+            } catch (Exception e) {
+                logger.error("get from redis error");
+            }
+
+            if (isSuccess) {
+                break;
+            } else {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    logger.error("1. sleep error, ", e);
+                }
+            }
         }
 
         if(null==raw){

@@ -76,14 +76,30 @@ public class RedisController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public void add(HttpServletResponse response) {
+        boolean isSuccess;
+
         for(int i=0;i<TIMES;i++) {
             Person person = Helper.buildPerson(addPersionIdGenerator);
-            try {
-                redisClient.set(PREFIX + person.getId(), person);
-            } catch (Exception e) {
-                logger.error("save redis error, ", e);
-                Helper.error(response, "save redis error!");
-                return;
+
+            isSuccess = false;
+
+            while (true){
+                try {
+                    redisClient.set(PREFIX + person.getId(), person);
+                    isSuccess = true;
+                } catch (Exception e) {
+                    logger.error("save redis error");
+                }
+
+                if(isSuccess){
+                    break;
+                }else{
+                    try{
+                        Thread.sleep(100);
+                    }catch(InterruptedException e){
+                        logger.error("1. sleep error, ", e);
+                    }
+                }
             }
         }
 
@@ -108,10 +124,26 @@ public class RedisController {
      */
     private boolean checkPerson(int id, HttpServletResponse response){
         Person person = null;
-        try{
-            person = redisClient.getObject(PREFIX + id);
-        }catch(Exception e){
-            logger.error("get from redis error, ", e);
+        boolean isSuccess;
+
+        while (true) {
+            isSuccess = false;
+            try {
+                person = redisClient.getObject(PREFIX + id);
+                isSuccess = true;
+            } catch (Exception e) {
+                logger.error("get from redis error");
+            }
+
+            if(isSuccess){
+                break;
+            }else{
+                try{
+                    Thread.sleep(100);
+                }catch(InterruptedException e){
+                    logger.error("2. sleep error, ", e);
+                }
+            }
         }
 
         if(null==person){
