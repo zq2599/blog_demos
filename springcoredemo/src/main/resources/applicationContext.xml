@@ -20,7 +20,9 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 
 
     <beans>
-        <bean class="com.bolingcavalry.bean.Simple"></bean>
+        <bean class="com.bolingcavalry.bean.Simple" init-method="doInit">
+            <property name="name" value="abc"></property>
+        </bean>
     </beans>
 
 </beans>
