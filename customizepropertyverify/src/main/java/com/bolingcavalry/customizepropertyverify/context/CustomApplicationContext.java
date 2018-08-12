@@ -1,14 +1,14 @@
 package com.bolingcavalry.customizepropertyverify.context;
 
-import org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext;
+import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 
 /**
- * @Description : AnnotationConfigReactiveWebServerApplicationContext的子类，重写了initPropertySources方法，
+ * @Description : AnnotationConfigServletWebServerApplicationContext，重写了initPropertySources方法，
  * 要求spring启动的时候环境变量MYSQL_HOST必须存在
  * @Author : zq2599@gmail.com
  * @Date : 2018-08-10 21:40
  */
-public class CustomApplicationContext extends AnnotationConfigReactiveWebServerApplicationContext {
+public class CustomApplicationContext extends AnnotationConfigServletWebServerApplicationContext {
 
     @Override
     protected void initPropertySources() {
