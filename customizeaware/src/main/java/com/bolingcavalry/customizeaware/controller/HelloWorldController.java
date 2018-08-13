@@ -29,7 +29,10 @@ public class HelloWorldController {
 
         StringBuilder stringBuilder = new StringBuilder();
 
+        int arrayLength = 0;
+
         if(null!=beanDefinitionNames){
+            arrayLength = beanDefinitionNames.length;
             //将所有bean的名称拼接成字符串（带html的换行符号<br>）
             for(String name : beanDefinitionNames){
                 stringBuilder.append(name).append("<br>");
@@ -41,7 +44,7 @@ public class HelloWorldController {
                 + "<br><br>CustomizeBeanNameAware instance bean name : "
                 + customizeBeanNameAware.getBeanName()
                 + "<br><br>bean definition names, size "
-                + beanDefinitionNames.length
+                + arrayLength
                 + ", detail :<br><br>"
                 + stringBuilder;
     }
