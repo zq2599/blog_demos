@@ -1,0 +1,8 @@
+server:
+  port: 8081
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/
