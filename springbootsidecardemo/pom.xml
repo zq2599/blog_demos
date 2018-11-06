@@ -59,8 +59,6 @@
                     </imageTags>
                     <!--镜像的FROM，使用scratch-->
                     <baseImage>scratch</baseImage>
-                    <!--该镜像的容器启动后，直接运行spring boot工程-->
-                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
                     <!--构建镜像的配置信息-->
                     <resources>
                         <resource>
