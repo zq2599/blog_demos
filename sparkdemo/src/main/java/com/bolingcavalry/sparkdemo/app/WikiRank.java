@@ -111,9 +111,9 @@ public class WikiRank {
 
                     return pageInfo;
                 })
-                //转成键值对，键是name，值是PageInfo对象
+                //转成键值对，键是url，值是PageInfo对象
                 .mapToPair(pageInfo -> new Tuple2<>(pageInfo.getUrl(), pageInfo))
-                //按照name做reduce，将请求次数累加
+                //按照url做reduce，将请求次数累加
                 .reduceByKey((Function2<PageInfo, PageInfo, PageInfo>) (v1, v2) -> {
                     v2.setRequestTimes(v2.getRequestTimes() + v1.getRequestTimes());
                     v2.getRaws().addAll(v1.getRaws());
