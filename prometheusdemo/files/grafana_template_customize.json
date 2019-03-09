@@ -16,7 +16,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
   "iteration": 1552126723806,
   "links": [],
   "panels": [
@@ -172,6 +171,5 @@
   },
   "timezone": "",
   "title": "业务自定义监控",
-  "uid": "30UrEaCiz",
   "version": 6
 }

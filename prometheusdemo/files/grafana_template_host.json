@@ -16,7 +16,6 @@
   "editable": true,
   "gnetId": 9276,
   "graphTooltip": 0,
-  "id": 1,
   "iteration": 1552124595156,
   "links": [],
   "panels": [
@@ -2110,6 +2109,5 @@
   },
   "timezone": "browser",
   "title": "1.主机基础监控(cpu，内存，磁盘，网络)",
-  "uid": "Bkl9bBYik",
   "version": 1
 }

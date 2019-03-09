@@ -16,7 +16,6 @@
   "editable": true,
   "gnetId": 7731,
   "graphTooltip": 0,
-  "id": 2,
   "iteration": 1552124824231,
   "links": [],
   "panels": [
@@ -2516,6 +2515,5 @@
   },
   "timezone": "",
   "title": "Spring Boot 1.x",
-  "uid": "twqdYjziz",
   "version": 1
 }
