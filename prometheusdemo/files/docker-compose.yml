@@ -1,0 +1,65 @@
+version: '2'
+services:
+  node-exporter:
+    image: prom/node-exporter:v0.17.0-rc.0
+    container_name: node-exporter
+    restart: unless-stopped
+    ports:
+      - '9100:9100'
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--collector.textfile.directory=/node_exporter/prom'
+    volumes:
+      - /proc:/host/proc
+      - /sys:/host/sys
+      - /:/rootfs
+      - ./etc/node_exporter/prom:/node_exporter/prom
+  cadvisor: 
+    image: google/cadvisor:v0.28.0
+    container_name: cadvisor
+    depends_on:
+      - node-exporter
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports: 
+      - "8080:8080"
+    restart: unless-stopped
+  prometheusdemo:
+    image: bolingcavalry/prometheusdemo:0.0.1-SNAPSHOT
+    container_name: prometheusdemo
+    ports:
+    - "8081:8080"
+    restart: unless-stopped
+  prometheus: 
+    image: prom/prometheus:v2.8.0-rc.0
+    container_name: prometheus
+    depends_on:
+      - node-exporter
+    links:
+      - node-exporter:node-exporterhost
+      - cadvisor:cadvisorhost
+      - prometheusdemo:prometheusdemohost
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports: 
+      - "9090:9090"
+    restart: unless-stopped
+  grafana: 
+    image: grafana/grafana:5.4.2
+    container_name: grafana
+    links:
+      - prometheus
+    environment:
+      - GF_SERVER_ROOT_URL=http://grafana.server.name
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+      - GF_USERS_ALLOW_SIGN_UP=false
+    depends_on:
+      - prometheus
+    ports: 
+      - "3000:3000"
+    restart: unless-stopped
