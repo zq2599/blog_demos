@@ -2156,7 +2156,7 @@ echo "start create jvm dashboard"
 curl -X POST \
   http://${GRAFANA_HOST}:3000/api/dashboards/db \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer ${API_KEY}' \
+  -H "Authorization: Bearer ${API_KEY}" \
   -H 'Content-Type: application/json' \
   -H 'Postman-Token: 942fcc2f-e7e5-4945-9403-4248f2dbe29b' \
   -H 'cache-control: no-cache' \
