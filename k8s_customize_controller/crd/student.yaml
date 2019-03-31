@@ -1,0 +1,27 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  # metadata.name的内容是由"复数名.分组名"构成，如下，students是复数名，bolingcavalry.k8s.io是分组名
+  name: students.bolingcavalry.k8s.io
+spec:
+  # 分组名，在REST API中也会用到的，格式是: /apis/分组名/CRD版本
+  group: bolingcavalry.k8s.io
+  # list of versions supported by this CustomResourceDefinition
+  versions:
+    - name: v1
+      # 是否有效的开关.
+      served: true
+      # 只有一个版本能被标注为storage
+      storage: true
+  # 范围是属于namespace的
+  scope: Namespaced
+  names:
+    # 复数名
+    plural: students
+    # 单数名
+    singular: student
+    # 类型名
+    kind: Student
+    # 简称，就像service的简称是svc
+    shortNames:
+    - stu
