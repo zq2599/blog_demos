@@ -1,4 +1,4 @@
-package com.bolingcavalry.springcloudk8sconsumer;
+package com.bolingcavalry.webservice;
 
 import com.netflix.client.config.IClientConfig;
 import com.netflix.loadbalancer.AvailabilityFilteringRule;

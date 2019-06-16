@@ -1,6 +1,6 @@
 spring:
   application:
-    name: springcloudk8sconsumer
+    name: web-service
 
 server:
   port: 8080

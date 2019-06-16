@@ -1,4 +1,4 @@
-package com.bolingcavalry.springcloudk8sprovider;
+package com.bolingcavalry.accountservice;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +14,9 @@ import java.util.Date;
  * @date: 2019/6/16 10:22
  */
 @RestController
-public class ProviderController {
+public class AccountController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProviderController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AccountController.class);
 
     private final String hostName = System.getenv("HOSTNAME");
 

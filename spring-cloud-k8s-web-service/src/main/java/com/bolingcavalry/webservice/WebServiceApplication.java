@@ -1,4 +1,4 @@
-package com.bolingcavalry.springcloudk8sconsumer;
+package com.bolingcavalry.webservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,11 +12,11 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-@RibbonClient(name="springcloudk8sprovider", configuration = RibbonConfiguration.class)
-public class Springcloudk8sconsumerApplication {
+@RibbonClient(name="account-service", configuration = RibbonConfiguration.class)
+public class WebServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Springcloudk8sconsumerApplication.class, args);
+        SpringApplication.run(WebServiceApplication.class, args);
     }
 
     @LoadBalanced

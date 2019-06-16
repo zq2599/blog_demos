@@ -1,4 +1,4 @@
-package com.bolingcavalry.springcloudk8sconsumer;
+package com.bolingcavalry.webservice;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
@@ -10,12 +10,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @Description: 这里面封装了远程调用springcloudk8sprovider提供服务的逻辑
+ * @Description: 这里面封装了远程调用account-service提供服务的逻辑
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2019/6/16 12:21
  */
 @Service
-public class ProviderService {
+public class AccountService {
 
     @Autowired
     private RestTemplate restTemplate;
@@ -23,7 +23,7 @@ public class ProviderService {
     @HystrixCommand(fallbackMethod = "getFallbackName" ,commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000") })
     public String getDataFromSpringCloudK8SProvider(){
-        return this.restTemplate.getForObject("http://springcloudk8sprovider/name", String.class);
+        return this.restTemplate.getForObject("http://account-service/name", String.class);
     }
 
     /**
