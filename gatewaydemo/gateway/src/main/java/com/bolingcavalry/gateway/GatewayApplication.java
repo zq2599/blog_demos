@@ -17,7 +17,7 @@ public class GatewayApplication {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 //增加一个path匹配，以"/gateway/hello/"开头的请求都在此路由
-                .route(r -> r.path("/gateway/hello/**")
+                .route(r -> r.path("/customize/hello/**")
                         //表示将路径中的第一级参数删除，用剩下的路径与provider的路径做拼接，
                         //这里就是"lb://provider/hello/"，能匹配到provider的HelloController的路径
                         .filters(f -> f.stripPrefix(1)
