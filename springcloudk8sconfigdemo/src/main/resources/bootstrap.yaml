@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: springcloudk8sconfigdemo
+#  profiles:
+#    active: development
+  cloud:
+    kubernetes:
+      config:
+        sources:
+          - name: ${spring.application.name}
+            namespace: default
