@@ -1,0 +1,25 @@
+version: '2'
+services:
+  nacos:
+    image: bolingcavalry/nacosserver:0.0.1
+    container_name: nacos
+    restart: unless-stopped
+    ports:
+      - '8848:8848'
+  provider: 
+    image: bolingcavalry/nacossimpleprovider:1.0-SNAPSHOT
+    links:
+      - nacos:nacoshost
+    depends_on:
+      - nacos
+    restart: unless-stopped
+  consumer: 
+    image: bolingcavalry/nacossimpleconsumer:1.0-SNAPSHOT
+    links:
+      - nacos:nacoshost
+    container_name: consumer
+    depends_on:
+      - nacos
+    ports:
+      - '8080:8080'
+    restart: unless-stopped
