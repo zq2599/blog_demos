@@ -1,0 +1,16 @@
+version: '2'
+services:
+  nacos:
+    image: bolingcavalry/nacosserver:0.0.1
+    container_name: nacos
+    restart: unless-stopped
+    ports:
+    - '8848:8848'
+  config-demo:
+    image: bolingcavalry/nacosconfigdemo:1.0-SNAPSHOT
+    container_name: config-demo
+    restart: unless-stopped
+    depends_on:
+    - nacos
+    ports:
+    - '8080:8080'
