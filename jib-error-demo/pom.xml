@@ -64,7 +64,9 @@
                         <ports>
                             <port>8080</port>
                         </ports>
+                        <!--
                         <mainClass>com.bolingcavalry.jiberrordemo.JibErrorDemoApplication</mainClass>
+                        -->
                     </container>
                 </configuration>
                 <executions>
