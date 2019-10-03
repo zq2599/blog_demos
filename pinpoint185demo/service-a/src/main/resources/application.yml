@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    username: root
+    password: 888888
+    url: jdbc:mysql://192.168.121.143:3306/demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapping/*Mapping.xml
+  type-aliases-package: com.bolingcavalry.servicea.entity
+
+logging:
+  level:
+    com:
+      bolingcavalry:
+        servicea: debug
+
+# service-bµÄ·þÎñurl
+serviceb:
+  baseurl: http://localhost:8081/
