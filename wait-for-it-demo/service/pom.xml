@@ -54,12 +54,8 @@
 					</to>
 					<!--容器相关的属性-->
 					<container>
+						<!--entrypoint的值等于INHERIT表示jib插件不构建启动命令了，此时要使用者自己控制，可以在启动时输入，或者写在基础镜像中-->
 						<entrypoint>INHERIT</entrypoint>
-						<!--jvm内存参数-->
-						<jvmFlags>
-							<jvmFlag>-Xms1g</jvmFlag>
-							<jvmFlag>-Xmx1g</jvmFlag>
-						</jvmFlags>
 						<!--要暴露的端口-->
 						<ports>
 							<port>8080</port>
