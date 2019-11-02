@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: standalone
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+eureka:
+  server:
+    use-read-only-response-cache: false
+    response-cache-auto-expiration-in-seconds: 10
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
