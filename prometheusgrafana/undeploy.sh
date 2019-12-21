@@ -17,7 +17,6 @@ kubectl delete ServiceAccount prometheus
 kubectl delete ClusterRole prometheus
 
 echo "undeploy node-exporter"
-kubectl delete Service node-exporter -n kube-system
 kubectl delete DaemonSet node-exporter -n kube-system
 
 echo "undeploy successful"
