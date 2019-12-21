@@ -9,8 +9,8 @@ wget https://raw.githubusercontent.com/zq2599/blog_demos/master/prometheusgrafan
 echo "download configmap.yaml"
 wget https://raw.githubusercontent.com/zq2599/blog_demos/master/prometheusgrafana/prometheus/configmap.yaml
 
-echo "download promethues.yaml"
-wget https://raw.githubusercontent.com/zq2599/blog_demos/master/prometheusgrafana/prometheus/promethues.yaml
+echo "download prometheus.yaml"
+wget https://raw.githubusercontent.com/zq2599/blog_demos/master/prometheusgrafana/prometheus/prometheus.yaml
 
 echo "download grafana.yaml"
 wget https://raw.githubusercontent.com/zq2599/blog_demos/master/prometheusgrafana/grafana/grafana.yaml
@@ -30,8 +30,8 @@ if [ ! -f "configmap.yaml" ];then
   exit 1
 fi
 
-if [ ! -f "promethues.yaml" ];then
-  echo "download promethues.yaml fail, please retry!"
+if [ ! -f "prometheus.yaml" ];then
+  echo "download prometheus.yaml fail, please retry!"
   exit 1
 fi
 
@@ -43,7 +43,7 @@ fi
 kubectl create -f node-exporter.yaml
 kubectl create -f rbac-setup.yaml
 kubectl create -f configmap.yaml
-kubectl create -f promethues.yaml
+kubectl create -f prometheus.yaml
 kubectl create -f grafana.yaml
 
-echo "create promethues and grafana successful"
+echo "create prometheus and grafana successful"

@@ -1,47 +1,23 @@
 #!/bin/bash
 
-echo "download node-exporter.yaml"
-wget https://raw.githubusercontent.com/zq2599/blog_demos/master/prometheusgrafana/prometheus/node-exporter.yaml
+echo "undeploy grafana"
+kubectl delete Service grafana -n kube-system
+kubectl delete Deployment grafana-core -n kube-system
 
-echo "download rbac-setup.yaml"
-wget https://raw.githubusercontent.com/zq2599/blog_demos/master/prometheusgrafana/prometheus/rbac-setup.yaml
+echo "undeploy prometheus"
+kubectl delete Service prometheus -n kube-system
+kubectl delete Deployment prometheus -n kube-system
 
-echo "download configmap.yaml"
-wget https://raw.githubusercontent.com/zq2599/blog_demos/master/prometheusgrafana/prometheus/configmap.yaml
+echo "clear config"
+kubectl delete ConfigMap prometheus-config -n kube-system
 
-echo "download promethues.yaml"
-wget https://raw.githubusercontent.com/zq2599/blog_demos/master/prometheusgrafana/prometheus/promethues.yaml
+echo "clear rbac"
+kubectl delete ClusterRoleBinding prometheus
+kubectl delete ServiceAccount prometheus
+kubectl delete ClusterRole prometheus
 
-echo "download grafana.yaml"
-wget https://raw.githubusercontent.com/zq2599/blog_demos/master/prometheusgrafana/grafana/grafana.yaml
+echo "undeploy node-exporter"
+kubectl delete Service node-exporter -n kube-system
+kubectl delete Deployment node-exporter -n kube-system
 
-if [ ! -f "node-exporter.yaml" ];then
-  echo "download node-exporter.yaml fail, please retry!"
-  exit 1
-fi
-
-if [ ! -f "rbac-setup.yaml" ];then
-  echo "download rbac-setup.yaml fail, please retry!"
-  exit 1
-fi
-
-if [ ! -f "configmap.yaml" ];then
-  echo "download configmap.yaml fail, please retry!"
-  exit 1
-fi
-
-if [ ! -f "promethues.yaml" ];then
-  echo "download promethues.yaml fail, please retry!"
-  exit 1
-fi
-
-if [ ! -f "grafana.yaml" ];then
-  echo "download grafana.yaml fail, please retry!"
-  exit 1
-fi
-
-kubectl create -f node-exporter.yaml
-kubectl create -f rbac-setup.yaml
-kubectl create -f configmap.yaml
-kubectl create -f promethues.yaml
-kubectl create -f grafana.yaml
+echo "undeploy successful"
