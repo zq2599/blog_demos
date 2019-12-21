@@ -13,7 +13,7 @@ kubectl delete ConfigMap prometheus-config -n kube-system
 
 echo "clear rbac"
 kubectl delete ClusterRoleBinding prometheus
-kubectl delete ServiceAccount prometheus
+kubectl delete ServiceAccount prometheus -n kube-system
 kubectl delete ClusterRole prometheus
 
 echo "undeploy node-exporter"
