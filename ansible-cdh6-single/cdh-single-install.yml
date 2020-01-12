@@ -12,6 +12,8 @@
     service: name=firewalld state=stopped enabled=no
   - name: disable SELINUX
     selinux: state=disabled
+  - name: swap off
+    command: sed -ri 's/.*swap.*/#&/' /etc/fstab
   - name: create jdk package
     file:
       path: /usr/lib/jvm
