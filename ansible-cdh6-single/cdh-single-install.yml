@@ -1,5 +1,5 @@
 - name: cdh install
-  hosts: cdh-group
+  hosts: cdh_group
   gather_facts: True
   tasks:
   - name: update yum
@@ -18,17 +18,17 @@
       state: directory
       mode: '0777'
   - name: scp jdk install file 
-    copy: src=/root/playbooks/cdh6/jdk-8u191-linux-x64.tar.gz dest=/usr/lib/jvm/
+    copy: src=~/playbooks/cdh6/jdk-8u191-linux-x64.tar.gz dest=/usr/lib/jvm/
   - name: create jdbc package
     file:
       path: /usr/share/java
       state: directory
       mode: '0777'
   - name: scp jdbc file
-    copy: src=/root/playbooks/cdh6/mysql-connector-java-5.1.34.jar dest=/usr/share/java/mysql-connector-java.jar
+    copy: src=~/playbooks/cdh6/mysql-connector-java-5.1.34.jar dest=/usr/share/java/mysql-connector-java.jar
   - name: unarchive jdk install file from ansible 
     unarchive:
-      src: /root/playbooks/cdh6/jdk-8u191-linux-x64.tar.gz
+      src: ~/playbooks/cdh6/jdk-8u191-linux-x64.tar.gz
       dest: /usr/lib/jvm/
   - name: Ensure JAVA_HOME is set
     lineinfile:
@@ -105,6 +105,7 @@
       login_host: 127.0.0.1
       login_password: 123456
       name: scm
+      encoding: utf8
       state: present
   - name: create database amon
     mysql_db:
@@ -112,6 +113,7 @@
       login_host: 127.0.0.1
       login_password: 123456
       name: amon
+      encoding: utf8
       state: present
   - name: create database rman
     mysql_db:
@@ -119,6 +121,7 @@
       login_host: 127.0.0.1
       login_password: 123456
       name: rman
+      encoding: utf8
       state: present
   - name: create database hue
     mysql_db:
@@ -126,6 +129,7 @@
       login_host: 127.0.0.1
       login_password: 123456
       name: hue
+      encoding: utf8
       state: present
   - name: create database hive
     mysql_db:
@@ -133,6 +137,7 @@
       login_host: 127.0.0.1
       login_password: 123456
       name: hive
+      encoding: utf8
       state: present
   - name: create database sentry
     mysql_db:
@@ -140,6 +145,7 @@
       login_host: 127.0.0.1
       login_password: 123456
       name: sentry
+      encoding: utf8
       state: present
   - name: create database nav
     mysql_db:
@@ -147,6 +153,7 @@
       login_host: 127.0.0.1
       login_password: 123456
       name: nav
+      encoding: utf8
       state: present
   - name: create database navms
     mysql_db:
@@ -154,6 +161,7 @@
       login_host: 127.0.0.1
       login_password: 123456
       name: navms
+      encoding: utf8
       state: present
   - name: create database oozie
     mysql_db:
@@ -161,6 +169,7 @@
       login_host: 127.0.0.1
       login_password: 123456
       name: oozie
+      encoding: utf8
       state: present
   - name: create database user scm
     mysql_user:
@@ -223,17 +232,17 @@
       mode: '0777'
   - name: scp cloudera-manager-daemons install file
     copy: 
-      src: /root/playbooks/cdh6/cloudera-manager-daemons-6.1.0-769885.el7.x86_64.rpm 
+      src: ~/playbooks/cdh6/cloudera-manager-daemons-6.1.0-769885.el7.x86_64.rpm 
       dest: ~/cdh-install-files
       mode: '0777'
   - name: scp cloudera-manager-agent install file
     copy: 
-      src: /root/playbooks/cdh6/cloudera-manager-agent-6.1.0-769885.el7.x86_64.rpm 
+      src: ~/playbooks/cdh6/cloudera-manager-agent-6.1.0-769885.el7.x86_64.rpm 
       dest: ~/cdh-install-files
       mode: '0777'
   - name: scp cloudera-manager-agent install file
     copy: 
-      src: /root/playbooks/cdh6/cloudera-manager-server-6.1.0-769885.el7.x86_64.rpm 
+      src: ~/playbooks/cdh6/cloudera-manager-server-6.1.0-769885.el7.x86_64.rpm 
       dest: ~/cdh-install-files
       mode: '0777'
   - name: remove cloudera-manager-server package
@@ -266,11 +275,11 @@
       mode: '0777'
   - name: scp parcel file
     copy:
-      src: /root/playbooks/cdh6/CDH-6.1.1-1.cdh6.1.1.p0.875250-el7.parcel
+      src: ~/playbooks/cdh6/CDH-6.1.1-1.cdh6.1.1.p0.875250-el7.parcel
       dest: /opt/cloudera/parcel-repo/
       mode: '0777'
   - name: scp parcel sha file
     copy:
-      src: /root/playbooks/cdh6/CDH-6.1.1-1.cdh6.1.1.p0.875250-el7.parcel.sha
+      src: ~/playbooks/cdh6/CDH-6.1.1-1.cdh6.1.1.p0.875250-el7.parcel.sha
       dest: /opt/cloudera/parcel-repo/
       mode: '0777'

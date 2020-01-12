@@ -1,5 +1,5 @@
 - name: start cdh
-  hosts: cdh-group
+  hosts: cdh_group
   gather_facts: True
   tasks:
   - name: initial database
