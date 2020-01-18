@@ -1,0 +1,5 @@
+cm_agent: cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm
+cm_daemons: cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm
+cm_server: cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm
+parcel: CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel
+parcel_sha: CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel.sha
