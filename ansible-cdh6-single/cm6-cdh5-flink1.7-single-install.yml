@@ -287,7 +287,6 @@
       src: ~/playbooks/cdh6/{{parcel_sha}}
       dest: /opt/cloudera/parcel-repo/
       mode: '0777'
-  tasks:
   - name: unarchive flink install file from ansible 
     unarchive:
       src: ~/playbooks/cdh6/{{flink_install}}
