@@ -1,0 +1,7 @@
+cm_agent: cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm
+cm_daemons: cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm
+cm_server: cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm
+parcel: CDH-5.16.2-1.cdh5.16.2.p0.8-el7.parcel
+parcel_sha: CDH-5.16.2-1.cdh5.16.2.p0.8-el7.parcel.sha
+flink_install: flink-1.7.2-bin-hadoop26-scala_2.11.tgz
+flink_package_name: flink-1.7.2
