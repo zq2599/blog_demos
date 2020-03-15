@@ -17,7 +17,7 @@ import static com.sun.tools.doclint.Entity.para;
  * @date 2020-03-15 19:56
  * @description 消费kafka2.4.0版本的消息
  */
-public class Kafka240 {
+public class Kafka240String {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         //设置并行度
@@ -31,7 +31,7 @@ public class Kafka240 {
         //消费者的groupId
         properties.setProperty("group.id", "flink-connector");
         //实例化Consumer类
-        FlinkKafkaConsumer<String> flinkKafkaConsumer = new FlinkKafkaConsumer(
+        FlinkKafkaConsumer<String> flinkKafkaConsumer = new FlinkKafkaConsumer<>(
                 "test001",
                 new SimpleStringSchema(),
                 properties
