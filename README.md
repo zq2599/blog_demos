@@ -1,5 +1,11 @@
-# blog_demos
-我的博客http://blog.csdn.net/boling_cavalry ， 文章中的源码都在这里了。
+# 关于作者
+1. 作者的微信公众号、头条号、CSDN账号都是<font color="blue">程序员欣宸</font>
+2. 多年从事Java后台开发和设计工作；
+3. 对Docker和Kubernetes充满热爱；
+
+# 关于代码仓库blog_demos
+1. 程序员欣宸的CSDN博客地址：http://blog.csdn.net/boling_cavalry
+2. 这个代码仓库里面是博客中涉及的所有源码、文件等集合
 
 ## java部分
 ### spring-cloud-kubernetes框架学习
