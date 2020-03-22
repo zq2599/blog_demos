@@ -20,10 +20,20 @@
 1. [《在docker上编译openjdk8》](https://blog.csdn.net/boling_cavalry/article/details/70243954)
 2. [《修改，编译，GDB调试openjdk8源码(docker环境下)》](https://blog.csdn.net/boling_cavalry/article/details/70557537)
 3. [《环境变量_JAVA_LAUNCHER_DEBUG，它能给你更多的jvm信息》](https://blog.csdn.net/boling_cavalry/article/details/70904278)
+4. [《体验RxJava和lambda》](https://blog.csdn.net/boling_cavalry/article/details/72858158)
+5. [《实战限流（guava的RateLimiter）》](https://blog.csdn.net/boling_cavalry/article/details/75174486)
 
 
 
 # Spring技术栈
+## Spring
+1. [《修改和编译spring源码，构建jar(spring-context-4.0.2.RELEASE)》](https://blog.csdn.net/boling_cavalry/article/details/73139161)
+2. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之一：稳定重现问题》](https://blog.csdn.net/boling_cavalry/article/details/73071020)
+3. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之二：定位错误》](https://blog.csdn.net/boling_cavalry/article/details/73442311)
+4. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之三：改spring源码，取详细错误》](https://blog.csdn.net/boling_cavalry/article/details/73759475)
+5. [《实战spring自定义属性(schema)：快速体验》](https://blog.csdn.net/boling_cavalry/article/details/74066494)
+
+
 ## SpringBoot
 1. [《基于spring boot框架访问zookeeper》](https://blog.csdn.net/boling_cavalry/article/details/69802622)
 
@@ -67,6 +77,10 @@
 14. [《Docker下kafka学习，三部曲之一：极速体验kafka》](https://blog.csdn.net/boling_cavalry/article/details/71576775)
 15. [《Docker下kafka学习，三部曲之二：本地环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/71601189)
 16. [《Docker下kafka学习，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/71634631)
+17. [《Docker下部署dubbo，消费者应用无法使用link参数的问题》](https://blog.csdn.net/boling_cavalry/article/details/72388834)
+18. [《Docker下dubbo开发，三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/72303126)
+19. [《Docker下dubbo开发，三部曲之二：本地环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/72460526)
+20. [《Docker下dubbo开发，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/72789984)
 
 
 
@@ -81,6 +95,9 @@
 5. [《docker下使用disconf：细说demo开发》](https://blog.csdn.net/boling_cavalry/article/details/71424124)
 6. [《基于spring boot框架访问zookeeper》](https://blog.csdn.net/boling_cavalry/article/details/69802622)
 7. [《jedis使用入门（Docker环境下）》](https://blog.csdn.net/boling_cavalry/article/details/71440053)
+8. [《Docker下dubbo开发，三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/72303126)
+9. [《Docker下dubbo开发，三部曲之二：本地环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/72460526)
+10. [《Docker下dubbo开发，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/72789984)
 
 # 消息队列
 1. [《Docker下kafka学习，三部曲之一：极速体验kafka》](https://blog.csdn.net/boling_cavalry/article/details/71576775)
@@ -92,6 +109,18 @@
 
 # 工具和技巧
 1. [《根据java代码生成UML图》](https://blog.csdn.net/boling_cavalry/article/details/72033221)
+2. [《设置Intellij idea和maven，支持lambda表达式》](https://blog.csdn.net/boling_cavalry/article/details/72853503)
+3. [《安装Genymotion模拟器运行Android studio的工程》](https://blog.csdn.net/boling_cavalry/article/details/73287096)
+4. [《Intellij idea远程debug连接tomcat，实现单步调试》](https://blog.csdn.net/boling_cavalry/article/details/73384036)
+
+# 问题处理
+1. [《dubbo服务提供者在tomcat启动失败的问题》](https://blog.csdn.net/boling_cavalry/article/details/72188135)
+2. [《Docker下部署dubbo，消费者应用无法使用link参数的问题》](https://blog.csdn.net/boling_cavalry/article/details/72388834)
+3. [《adb shell无法连接到Genymotion上的虚拟设备的问题》](https://blog.csdn.net/boling_cavalry/article/details/73301843)
+4. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之一：稳定重现问题》](https://blog.csdn.net/boling_cavalry/article/details/73071020)
+5. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之二：定位错误》](https://blog.csdn.net/boling_cavalry/article/details/73442311)
+6. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之三：改spring源码，取详细错误》](https://blog.csdn.net/boling_cavalry/article/details/73759475)
+
 
 
 
