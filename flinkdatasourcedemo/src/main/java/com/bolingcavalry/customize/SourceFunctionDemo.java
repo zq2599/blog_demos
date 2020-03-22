@@ -15,7 +15,7 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 public class SourceFunctionDemo {
     public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        //并行度为1
+        //并行度为2
         env.setParallelism(2);
 
         DataStream<Tuple2<Integer,Integer>> dataStream = env.addSource(new SourceFunction<Tuple2<Integer, Integer>>() {

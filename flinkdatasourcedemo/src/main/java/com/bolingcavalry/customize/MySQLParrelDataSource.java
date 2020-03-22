@@ -2,6 +2,7 @@ package com.bolingcavalry.customize;
 
 import com.bolingcavalry.Student;
 import org.apache.flink.configuration.Configuration;
+import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunction;
 import org.apache.flink.streaming.api.functions.source.RichSourceFunction;
 
 import java.sql.Connection;
@@ -15,7 +16,7 @@ import java.sql.ResultSet;
  * @date 2020-03-21 20:35
  * @description 连接MySQL的数据源
  */
-public class MySQLDataSource extends RichSourceFunction<Student> {
+public class MySQLParrelDataSource extends RichParallelSourceFunction<Student> {
 
     private Connection connection = null;
 

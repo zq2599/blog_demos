@@ -10,12 +10,12 @@ import org.apache.flink.streaming.api.windowing.time.Time;
  * @author will
  * @email zq2599@gmail.com
  * @date 2020-03-21 16:35
- * @description 最简单的自定义数据源的实战：实现SourceFunction接口
+ * @description 多并行度自定义数据源实战：实现ParallelSourceFunction接口
  */
 public class ParrelSourceFunctionDemo {
     public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        //并行度为1
+        //并行度为2
         env.setParallelism(2);
 
         DataStream<Tuple2<Integer,Integer>> dataStream = env.addSource(new ParallelSourceFunction<Tuple2<Integer, Integer>>() {
@@ -46,6 +46,6 @@ public class ParrelSourceFunctionDemo {
                 .sum(1)
                 .print();
 
-        env.execute("Customize DataSource demo : SourceFunction");
+        env.execute("Customize DataSource demo : ParallelSourceFunction");
     }
 }
