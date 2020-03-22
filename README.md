@@ -50,16 +50,48 @@
 
 # Docker
 
-## Docker基础
+## Docker实战
 1. [《Docker的准备，安装，初体验》](https://blog.csdn.net/boling_cavalry/article/details/60367393)
 2. [《Docker下的web开发和Tomcat部署》](https://blog.csdn.net/boling_cavalry/article/details/61415268)
 3. [《实战docker，编写Dockerfile定制tomcat镜像，实现web应用在线部署》](https://blog.csdn.net/boling_cavalry/article/details/70184605)
 4. [《实战docker，构建nginx反向代理tomcat，学习link和docker-compose》](https://blog.csdn.net/boling_cavalry/article/details/70194072)
+5. [《在docker上编译openjdk8》](https://blog.csdn.net/boling_cavalry/article/details/70243954)
+6. [《修改，编译，GDB调试openjdk8源码(docker环境下)》](https://blog.csdn.net/boling_cavalry/article/details/70557537)
+7. [《让docker中的mysql启动时自动执行sql》](https://blog.csdn.net/boling_cavalry/article/details/71055159)
+8. [《Docker搭建disconf环境，三部曲之一：极速搭建disconf》](https://blog.csdn.net/boling_cavalry/article/details/71082610)
+9. [《Docker搭建disconf环境，三部曲之二：本地快速构建disconf镜像》](https://blog.csdn.net/boling_cavalry/article/details/71107498)
+10. [《Docker搭建disconf环境，三部曲之三：细说搭建过程》](https://blog.csdn.net/boling_cavalry/article/details/71120725)
+11. [《docker下使用disconf：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/71404395)
+12. [《docker下使用disconf：细说demo开发》](https://blog.csdn.net/boling_cavalry/article/details/71424124)
+13. [《jedis使用入门（Docker环境下）》](https://blog.csdn.net/boling_cavalry/article/details/71440053)
+14. [《Docker下kafka学习，三部曲之一：极速体验kafka》](https://blog.csdn.net/boling_cavalry/article/details/71576775)
+15. [《Docker下kafka学习，三部曲之二：本地环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/71601189)
+16. [《Docker下kafka学习，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/71634631)
+
 
 
 
 ## kubernetes部分
 
+# 中间件
+1. [《Docker搭建disconf环境，三部曲之一：极速搭建disconf》](https://blog.csdn.net/boling_cavalry/article/details/71082610)
+2. [《Docker搭建disconf环境，三部曲之二：本地快速构建disconf镜像》](https://blog.csdn.net/boling_cavalry/article/details/71107498)
+3. [《Docker搭建disconf环境，三部曲之三：细说搭建过程》](https://blog.csdn.net/boling_cavalry/article/details/71120725)
+4. [《docker下使用disconf：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/71404395)
+5. [《docker下使用disconf：细说demo开发》](https://blog.csdn.net/boling_cavalry/article/details/71424124)
+6. [《基于spring boot框架访问zookeeper》](https://blog.csdn.net/boling_cavalry/article/details/69802622)
+7. [《jedis使用入门（Docker环境下）》](https://blog.csdn.net/boling_cavalry/article/details/71440053)
+
+# 消息队列
+1. [《Docker下kafka学习，三部曲之一：极速体验kafka》](https://blog.csdn.net/boling_cavalry/article/details/71576775)
+2. [《Docker下kafka学习，三部曲之二：本地环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/71601189)
+3. [《Docker下kafka学习，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/71634631)
+
+# 数据库
+1. [《让docker中的mysql启动时自动执行sql》](https://blog.csdn.net/boling_cavalry/article/details/71055159)
+
+# 工具和技巧
+1. [《根据java代码生成UML图》](https://blog.csdn.net/boling_cavalry/article/details/72033221)
 
 
 
