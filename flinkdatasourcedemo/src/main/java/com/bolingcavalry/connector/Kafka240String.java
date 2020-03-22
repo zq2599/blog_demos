@@ -9,8 +9,6 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 
 import java.util.Properties;
 
-import static com.sun.tools.doclint.Entity.para;
-
 /**
  * @author will
  * @email zq2599@gmail.com
