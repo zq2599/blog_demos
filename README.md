@@ -5,9 +5,24 @@
 
 # 关于代码仓库blog_demos
 1. 程序员欣宸的CSDN博客地址：http://blog.csdn.net/boling_cavalry
-2. 这个代码仓库里面是博客中涉及的所有源码、文件等集合
+2. 这个代码仓库里面是博客中涉及的所有源码、文件等
 
-## java部分
+# 关于分类
+所有文章均为作者原创，总的来说分为以下几大类，若有您感兴趣的内容，我将不胜荣幸：
+1. Java；
+2. 后台中间件；
+3. Docker；
+4. Kubernetes；
+5. 大数据；
+6. 综合兴趣，例如LeetCode、树莓派、群晖系统等；
+
+## Java
+### Java基础
+
+
+### Spring技术栈
+
+
 ### spring-cloud-kubernetes框架学习
 文章地址：
 1. [《spring-cloud-kubernetes官方demo运行实战》](https://blog.csdn.net/boling_cavalry/article/details/91346780)
