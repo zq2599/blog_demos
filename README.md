@@ -22,6 +22,12 @@
 3. [《环境变量_JAVA_LAUNCHER_DEBUG，它能给你更多的jvm信息》](https://blog.csdn.net/boling_cavalry/article/details/70904278)
 4. [《体验RxJava和lambda》](https://blog.csdn.net/boling_cavalry/article/details/72858158)
 5. [《实战限流（guava的RateLimiter）》](https://blog.csdn.net/boling_cavalry/article/details/75174486)
+6. [《Java虚拟机学习：方法调用的字节码指令》](https://blog.csdn.net/boling_cavalry/article/details/76384425)
+7. [《java.util.Optional学习笔记》](https://blog.csdn.net/boling_cavalry/article/details/77610629)
+8. [《极速体验编译openjdk8（docker环境）》](https://blog.csdn.net/boling_cavalry/article/details/77623193)
+9. [《Java的wait()、notify()学习三部曲之一：JVM源码分析》](https://xinchen.blog.csdn.net/article/details/77793224)
+10. [《Java的wait()、notify()学习三部曲之二：修改JVM源码看参数》](https://blog.csdn.net/boling_cavalry/article/details/77897108)
+11. [《Java的wait()、notify()学习三部曲之三：修改JVM源码控制抢锁顺序》](https://blog.csdn.net/boling_cavalry/article/details/77995069)
 
 
 
@@ -81,11 +87,25 @@
 18. [《Docker下dubbo开发，三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/72303126)
 19. [《Docker下dubbo开发，三部曲之二：本地环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/72460526)
 20. [《Docker下dubbo开发，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/72789984)
-
+21. [《Docker下实战zabbix三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/76857936)
+22. [《Docker下实战zabbix三部曲之二：监控其他机器》](https://blog.csdn.net/boling_cavalry/article/details/77095153)
+23. [《Docker下实战zabbix三部曲之三：自定义监控项》](https://blog.csdn.net/boling_cavalry/article/details/77410178)
+24. [《极速体验编译openjdk8（docker环境）》](https://blog.csdn.net/boling_cavalry/article/details/77623193)
+25. [《CentOS7安装docker》](https://blog.csdn.net/boling_cavalry/article/details/77752721)
+26. [《docker下载镜像慢怎么办？daocloud加速器来帮你》](https://blog.csdn.net/boling_cavalry/article/details/77833069)
+27. [《Docker下HBase学习，三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/78041775)
+28. [《Docker下HBase学习，三部曲之二：集群HBase搭建》](https://blog.csdn.net/boling_cavalry/article/details/78041811)
+29. [《Docker下HBase学习，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/78156406)
+30. [《Docker下，极速体验mongodb》](https://blog.csdn.net/boling_cavalry/article/details/78168085)
 
 
 
 ## kubernetes部分
+
+# 大数据
+1. [《Docker下HBase学习，三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/78041775)
+2. [《Docker下HBase学习，三部曲之二：集群HBase搭建》](https://blog.csdn.net/boling_cavalry/article/details/78041811)
+3. [《Docker下HBase学习，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/78156406)
 
 # 中间件
 1. [《Docker搭建disconf环境，三部曲之一：极速搭建disconf》](https://blog.csdn.net/boling_cavalry/article/details/71082610)
@@ -106,12 +126,14 @@
 
 # 数据库
 1. [《让docker中的mysql启动时自动执行sql》](https://blog.csdn.net/boling_cavalry/article/details/71055159)
+2. [《Docker下，极速体验mongodb》](https://blog.csdn.net/boling_cavalry/article/details/78168085)
 
 # 工具和技巧
 1. [《根据java代码生成UML图》](https://blog.csdn.net/boling_cavalry/article/details/72033221)
 2. [《设置Intellij idea和maven，支持lambda表达式》](https://blog.csdn.net/boling_cavalry/article/details/72853503)
 3. [《安装Genymotion模拟器运行Android studio的工程》](https://blog.csdn.net/boling_cavalry/article/details/73287096)
 4. [《Intellij idea远程debug连接tomcat，实现单步调试》](https://blog.csdn.net/boling_cavalry/article/details/73384036)
+5. [《docker下载镜像慢怎么办？daocloud加速器来帮你》](https://blog.csdn.net/boling_cavalry/article/details/77833069)
 
 # 问题处理
 1. [《dubbo服务提供者在tomcat启动失败的问题》](https://blog.csdn.net/boling_cavalry/article/details/72188135)
@@ -121,6 +143,13 @@
 5. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之二：定位错误》](https://blog.csdn.net/boling_cavalry/article/details/73442311)
 6. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之三：改spring源码，取详细错误》](https://blog.csdn.net/boling_cavalry/article/details/73759475)
 
+# 监控
+1. [《Docker下实战zabbix三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/76857936)
+2. [《Docker下实战zabbix三部曲之二：监控其他机器》](https://blog.csdn.net/boling_cavalry/article/details/77095153)
+3. [《Docker下实战zabbix三部曲之三：自定义监控项》](https://blog.csdn.net/boling_cavalry/article/details/77410178)
 
 
 
+
+### 标记
+ [《Docker下，极速体验mongodb》](https://blog.csdn.net/boling_cavalry/article/details/78168085)
