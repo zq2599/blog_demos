@@ -98,8 +98,11 @@
 5. [《Spring Cloud源码分析之Eureka篇第二章：注册中心启动类上的注解EnableEurekaServer》](https://blog.csdn.net/boling_cavalry/article/details/81809860)
 6. [《Spring Cloud源码分析之Eureka篇第三章：EnableDiscoveryClient与EnableEurekaClient的区别(Edgware版本)》](https://blog.csdn.net/boling_cavalry/article/details/82668480)
 7. [《Spring Cloud源码分析之Eureka篇第四章：服务注册是如何发起的》](https://blog.csdn.net/boling_cavalry/article/details/82721583)
-
-7. [《应用升级SpringCloud版本时的注意事项(Dalston升级到Edgware)》](https://blog.csdn.net/boling_cavalry/article/details/82683755)
+8. [《Spring Cloud源码分析之Eureka篇第五章：更新服务列表》](https://blog.csdn.net/boling_cavalry/article/details/82813180)
+9. [《Spring Cloud源码分析之Eureka篇第六章：服务注册》](https://blog.csdn.net/boling_cavalry/article/details/82861618)
+10. [《Spring Cloud源码分析之Eureka篇第七章：续约》](https://blog.csdn.net/boling_cavalry/article/details/82915355)
+12. [《Spring Cloud源码分析之Eureka篇第八章：服务注册名称的来历》](https://blog.csdn.net/boling_cavalry/article/details/82930728)
+13. [《应用升级SpringCloud版本时的注意事项(Dalston升级到Edgware)》](https://blog.csdn.net/boling_cavalry/article/details/82683755)
 
 ## spring cloud alibaba
 1. [《Docker下,两分钟极速体验Nacos》](https://blog.csdn.net/boling_cavalry/article/details/97617353)；
@@ -262,9 +265,26 @@
 5. [《实战Redis序列化性能测试(Kryo和字符串)》](https://blog.csdn.net/boling_cavalry/article/details/80719683)
 
 ## 注册中心
+
+### dubbo
 1. [《Docker下dubbo开发，三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/72303126)
 2. [《Docker下dubbo开发，三部曲之二：本地环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/72460526)
 3. [《Docker下dubbo开发，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/72789984)
+
+### eureka
+1. [《Eureka的TimedSupervisorTask类（自动调节间隔的周期性任务）》](https://blog.csdn.net/boling_cavalry/article/details/82795825)
+2. [《实战监听Eureka client的缓存更新》](https://blog.csdn.net/boling_cavalry/article/details/82827802)
+3. [《Eureka的InstanceInfoReplicator类（服务注册辅助工具）》](https://blog.csdn.net/boling_cavalry/article/details/82909130)
+4. [《Eureka注册信息配置备忘》](https://blog.csdn.net/boling_cavalry/article/details/82927409)
+5. [《Wireshark抓包分析Eureka注册发现协议》](https://blog.csdn.net/boling_cavalry/article/details/82918227)
+4. [《Spring Cloud源码分析之Eureka篇第一章：准备工作》](https://blog.csdn.net/boling_cavalry/article/details/81809929)
+5. [《Spring Cloud源码分析之Eureka篇第二章：注册中心启动类上的注解EnableEurekaServer》](https://blog.csdn.net/boling_cavalry/article/details/81809860)
+6. [《Spring Cloud源码分析之Eureka篇第三章：EnableDiscoveryClient与EnableEurekaClient的区别(Edgware版本)》](https://blog.csdn.net/boling_cavalry/article/details/82668480)
+7. [《Spring Cloud源码分析之Eureka篇第四章：服务注册是如何发起的》](https://blog.csdn.net/boling_cavalry/article/details/82721583)
+8. [《Spring Cloud源码分析之Eureka篇第五章：更新服务列表》](https://blog.csdn.net/boling_cavalry/article/details/82813180)
+9. [《Spring Cloud源码分析之Eureka篇第六章：服务注册》](https://blog.csdn.net/boling_cavalry/article/details/82861618)
+10. [《Spring Cloud源码分析之Eureka篇第七章：续约》](https://blog.csdn.net/boling_cavalry/article/details/82915355)
+12. [《Spring Cloud源码分析之Eureka篇第八章：服务注册名称的来历》](https://blog.csdn.net/boling_cavalry/article/details/82930728)
 
 # 消息队列
 
@@ -313,6 +333,8 @@
 5. [《docker下载镜像慢怎么办？daocloud加速器来帮你》](https://blog.csdn.net/boling_cavalry/article/details/77833069)
 6. [《Docker下的mysql设置字符集》](https://blog.csdn.net/boling_cavalry/article/details/79342494)
 7. [《用IntelliJ IDEA看Java类图》](https://blog.csdn.net/boling_cavalry/article/details/79418823)
+8. [《Wireshark的HTTP请求包和响应包如何对应》](https://blog.csdn.net/boling_cavalry/article/details/82925463)
+9. [《Wireshark抓包分析Eureka注册发现协议》](https://blog.csdn.net/boling_cavalry/article/details/82918227)
 
 # 问题处理
 1. [《dubbo服务提供者在tomcat启动失败的问题》](https://blog.csdn.net/boling_cavalry/article/details/72188135)
@@ -355,6 +377,9 @@
 2. [《CentOS7安装Nginx1.10.1》](https://blog.csdn.net/boling_cavalry/article/details/79834850)
 3. [《CentOS7安装JDK8》](https://blog.csdn.net/boling_cavalry/article/details/79840049)
 
+## golang
+1. [《Ubuntu16安装Go语言环境》](https://blog.csdn.net/boling_cavalry/article/details/82904868)
+
 # 硬件
 
 ## 树莓派
@@ -365,4 +390,4 @@
 ### 标记(改过内容)
 [《把pinpoint编译环境做成Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78447310)
 ### 标记(加入列表)
-[《Spring Cloud源码分析之Eureka篇第四章：服务注册是如何发起的》](https://blog.csdn.net/boling_cavalry/article/details/82721583)
+[《Wireshark抓包分析Eureka注册发现协议》](https://blog.csdn.net/boling_cavalry/article/details/82918227)
