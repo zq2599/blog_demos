@@ -58,7 +58,25 @@
 6. [《SpringMVC源码分析：POST请求中的文件处理》](https://blog.csdn.net/boling_cavalry/article/details/79375713)
 7. [《下载Spring4.1.x源码并用IntelliJ IDEA打开》](https://blog.csdn.net/boling_cavalry/article/details/79426075)
 8. [《windows下修改、编译、构建spring-framework4.1.8.RELEASE源码》](https://blog.csdn.net/boling_cavalry/article/details/80791786)
+9. [《spring4.1.8初始化源码学习三部曲之一：AbstractApplicationContext构造方法》](https://blog.csdn.net/boling_cavalry/article/details/80957707)
+10. [《spring4.1.8初始化源码学习三部曲之二：setConfigLocations方法》](https://blog.csdn.net/boling_cavalry/article/details/80958832)
+11. [《spring4.1.8初始化源码学习三部曲之三：AbstractApplicationContext.refresh方法》](https://blog.csdn.net/boling_cavalry/article/details/81045637)
+12. [《spring的BeanFactory和ApplicationContext》](https://blog.csdn.net/boling_cavalry/article/details/81603303)
+13. [《ImportSelector与DeferredImportSelector的区别（spring4）》](https://blog.csdn.net/boling_cavalry/article/details/82555352)
+14. [《》]()
+15. [《》]()
+16. [《》]()
 
+##
+1. [《spring4.1.8扩展实战之一：自定义环境变量验证》](https://blog.csdn.net/boling_cavalry/article/details/81474340)
+2. [《spring4.1.8扩展实战之二：Aware接口揭秘》](https://blog.csdn.net/boling_cavalry/article/details/81611426)
+3. [《spring4.1.8扩展实战之三：广播与监听》](https://blog.csdn.net/boling_cavalry/article/details/81697314)
+4. [《spring4.1.8扩展实战之四：感知spring容器变化(SmartLifecycle接口)》](https://blog.csdn.net/boling_cavalry/article/details/82051356)
+5. [《spring4.1.8扩展实战之五：改变bean的定义(BeanFactoryPostProcessor接口)》](https://blog.csdn.net/boling_cavalry/article/details/82083889)
+6. [《spring4.1.8扩展实战之六：注册bean到spring容器(BeanDefinitionRegistryPostProcessor接口)》](https://blog.csdn.net/boling_cavalry/article/details/82193692)
+7. [《spring4.1.8扩展实战之七：控制bean(BeanPostProcessor接口)》](https://blog.csdn.net/boling_cavalry/article/details/82250986)
+8. [《spring4.1.8扩展实战之八：Import注解》](https://blog.csdn.net/boling_cavalry/article/details/82530167)
+9. [《》]()
 
 ## SpringBoot
 1. [《基于spring boot框架访问zookeeper》](https://blog.csdn.net/boling_cavalry/article/details/69802622)
@@ -68,11 +86,20 @@
 5. [《Docker下redis与springboot三部曲之三：springboot下访问redis哨兵》](https://blog.csdn.net/boling_cavalry/article/details/79041129)
 6. [《springboot线程池的使用和扩展》](https://blog.csdn.net/boling_cavalry/article/details/79120268)
 7. [《SpringBoot下用Kyro作为Redis序列化工具》](https://blog.csdn.net/boling_cavalry/article/details/80710774)
+8. [《SpringBoot应用使用自定义的ApplicationContext实现类》](https://blog.csdn.net/boling_cavalry/article/details/81587556)
+
+
 
 ## Spring Cloud
 1. [《Docker下的Spring Cloud三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79177930)
 2. [《Docker下的Spring Cloud三部曲之二：细说Spring Cloud开发》](https://blog.csdn.net/boling_cavalry/article/details/79134497)
 3. [《Docker下的Spring Cloud三部曲之三：在线横向扩容》](https://blog.csdn.net/boling_cavalry/article/details/79192376)
+4. [《Spring Cloud源码分析之Eureka篇第一章：准备工作》](https://blog.csdn.net/boling_cavalry/article/details/81809929)
+5. [《Spring Cloud源码分析之Eureka篇第二章：注册中心启动类上的注解EnableEurekaServer》](https://blog.csdn.net/boling_cavalry/article/details/81809860)
+6. [《Spring Cloud源码分析之Eureka篇第三章：EnableDiscoveryClient与EnableEurekaClient的区别(Edgware版本)》](https://blog.csdn.net/boling_cavalry/article/details/82668480)
+7. [《Spring Cloud源码分析之Eureka篇第四章：服务注册是如何发起的》](https://blog.csdn.net/boling_cavalry/article/details/82721583)
+
+7. [《应用升级SpringCloud版本时的注意事项(Dalston升级到Edgware)》](https://blog.csdn.net/boling_cavalry/article/details/82683755)
 
 ## spring cloud alibaba
 1. [《Docker下,两分钟极速体验Nacos》](https://blog.csdn.net/boling_cavalry/article/details/97617353)；
