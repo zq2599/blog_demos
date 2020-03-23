@@ -34,6 +34,10 @@
 12. [《CentOS7安装JDK8》](https://blog.csdn.net/boling_cavalry/article/details/79840049)
 13. [《没有JDK和Maven，用Docker也能构建Maven工程》](https://blog.csdn.net/boling_cavalry/article/details/80384722)
 14. [《实战Redis序列化性能测试(Kryo和字符串)》](https://blog.csdn.net/boling_cavalry/article/details/80719683)
+15. [《利用Docker极速下载OpenJDK11源码》](https://blog.csdn.net/boling_cavalry/article/details/83245148)
+16. [《CentOS7安装JDK8》](https://blog.csdn.net/boling_cavalry/article/details/79840049)
+17. [《Ubuntu下安装OpenJDK10》](https://blog.csdn.net/boling_cavalry/article/details/83213608)
+18. [《Ubuntu环境下载OpenJDK11源码》](https://blog.csdn.net/boling_cavalry/article/details/83240035)
 
 
 ## 深入JVM
@@ -45,11 +49,16 @@
 6. [《Java的wait()、notify()学习三部曲之一：JVM源码分析》](https://xinchen.blog.csdn.net/article/details/77793224)
 7. [《Java的wait()、notify()学习三部曲之二：修改JVM源码看参数》](https://blog.csdn.net/boling_cavalry/article/details/77897108)
 8. [《Java的wait()、notify()学习三部曲之三：修改JVM源码控制抢锁顺序》](https://blog.csdn.net/boling_cavalry/article/details/77995069)
+10. [《Ubuntu环境编辑OpenJDK11源码》](https://blog.csdn.net/boling_cavalry/article/details/83303317)
+11. [《极简，利用Docker仅两行命令就能下载和编译OpenJDK11》](https://blog.csdn.net/boling_cavalry/article/details/83353102)
+12. [《制作Docker镜像，用来下载OpenJDK11源码》](https://blog.csdn.net/boling_cavalry/article/details/83420005)
+13. [《制作Docker镜像，用来编译OpenJDK11源码》](https://blog.csdn.net/boling_cavalry/article/details/84890664)
 
 
 
 # Spring技术栈
-## Spring
+
+## Spring基础
 1. [《修改和编译spring源码，构建jar(spring-context-4.0.2.RELEASE)》](https://blog.csdn.net/boling_cavalry/article/details/73139161)
 2. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之一：稳定重现问题》](https://blog.csdn.net/boling_cavalry/article/details/73071020)
 3. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之二：定位错误》](https://blog.csdn.net/boling_cavalry/article/details/73442311)
@@ -67,7 +76,7 @@
 15. [《》]()
 16. [《》]()
 
-##
+## Spring扩展实战专题
 1. [《spring4.1.8扩展实战之一：自定义环境变量验证》](https://blog.csdn.net/boling_cavalry/article/details/81474340)
 2. [《spring4.1.8扩展实战之二：Aware接口揭秘》](https://blog.csdn.net/boling_cavalry/article/details/81611426)
 3. [《spring4.1.8扩展实战之三：广播与监听》](https://blog.csdn.net/boling_cavalry/article/details/81697314)
@@ -76,7 +85,6 @@
 6. [《spring4.1.8扩展实战之六：注册bean到spring容器(BeanDefinitionRegistryPostProcessor接口)》](https://blog.csdn.net/boling_cavalry/article/details/82193692)
 7. [《spring4.1.8扩展实战之七：控制bean(BeanPostProcessor接口)》](https://blog.csdn.net/boling_cavalry/article/details/82250986)
 8. [《spring4.1.8扩展实战之八：Import注解》](https://blog.csdn.net/boling_cavalry/article/details/82530167)
-9. [《》]()
 
 ## SpringBoot
 1. [《基于spring boot框架访问zookeeper》](https://blog.csdn.net/boling_cavalry/article/details/69802622)
@@ -87,8 +95,11 @@
 6. [《springboot线程池的使用和扩展》](https://blog.csdn.net/boling_cavalry/article/details/79120268)
 7. [《SpringBoot下用Kyro作为Redis序列化工具》](https://blog.csdn.net/boling_cavalry/article/details/80710774)
 8. [《SpringBoot应用使用自定义的ApplicationContext实现类》](https://blog.csdn.net/boling_cavalry/article/details/81587556)
-
-
+9. [《自定义spring boot starter三部曲之一：准备工作》](https://blog.csdn.net/boling_cavalry/article/details/82956512)
+10. [《自定义spring boot starter三部曲之二：实战开发》](https://blog.csdn.net/boling_cavalry/article/details/83041472)
+11. [《自定义spring boot starter三部曲之三：源码分析spring.factories加载过程》](https://blog.csdn.net/boling_cavalry/article/details/83048588)
+12. [《Spring Boot应用在kubernetes的sidecar设计与实战》](https://blog.csdn.net/boling_cavalry/article/details/83784113)
+13. [《springboot应用查询城市天气》](https://blog.csdn.net/boling_cavalry/article/details/86770023)
 
 ## Spring Cloud
 1. [《Docker下的Spring Cloud三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79177930)
@@ -103,6 +114,7 @@
 10. [《Spring Cloud源码分析之Eureka篇第七章：续约》](https://blog.csdn.net/boling_cavalry/article/details/82915355)
 12. [《Spring Cloud源码分析之Eureka篇第八章：服务注册名称的来历》](https://blog.csdn.net/boling_cavalry/article/details/82930728)
 13. [《应用升级SpringCloud版本时的注意事项(Dalston升级到Edgware)》](https://blog.csdn.net/boling_cavalry/article/details/82683755)
+14. [《本地服务调用K8S环境中的SpringCloud微服务实战》](https://blog.csdn.net/boling_cavalry/article/details/90578934)
 
 ## spring cloud alibaba
 1. [《Docker下,两分钟极速体验Nacos》](https://blog.csdn.net/boling_cavalry/article/details/97617353)；
@@ -206,15 +218,32 @@
 63. [《没有JDK和Maven，用Docker也能构建Maven工程》](https://blog.csdn.net/boling_cavalry/article/details/80384722)
 64. [《Docker下RabbitMQ延时队列实战两部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/80630100)
 65. [《Docker下RabbitMQ延时队列实战两部曲之二：细说开发》](https://blog.csdn.net/boling_cavalry/article/details/80635050)
-66. [《》]()
+66. [《利用Docker极速下载OpenJDK11源码》](https://blog.csdn.net/boling_cavalry/article/details/83245148)
+67. [《极简，利用Docker仅两行命令就能下载和编译OpenJDK11》](https://blog.csdn.net/boling_cavalry/article/details/83353102)
+68. [《kafka的Docker镜像使用说明(wurstmeister/kafka)》](https://blog.csdn.net/boling_cavalry/article/details/85395080)
+69. [《如何使用Docker内的kafka服务》](https://blog.csdn.net/boling_cavalry/article/details/85528519)
+70. [《自己动手制作elasticsearch-head的Docker镜像》](https://blog.csdn.net/boling_cavalry/article/details/86663168)
+71. [《自己动手制作elasticsearch的ik分词器的Docker镜像》](https://blog.csdn.net/boling_cavalry/article/details/86668180)
+72. [《docker下，一行命令搭建elasticsearch6.5.0集群(带head插件和ik分词器)》](https://blog.csdn.net/boling_cavalry/article/details/86669450)
+73. [《docker下，极速搭建spark集群(含hdfs集群)》](https://blog.csdn.net/boling_cavalry/article/details/86851069)
+74. [《docker下的spark集群，调整参数榨干硬件》](https://blog.csdn.net/boling_cavalry/article/details/87438666)
+75. [《用golang官方Docker镜像运行项目》](https://blog.csdn.net/boling_cavalry/article/details/87904485)
+76. [《Docker下Prometheus和Grafana三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/88367137)
+77. [《Docker下Prometheus和Grafana三部曲之二：细说Docker编排》](https://blog.csdn.net/boling_cavalry/article/details/88374848)
+78. [《Docker下Prometheus和Grafana三部曲之三：自定义监控项开发和配置》](https://blog.csdn.net/boling_cavalry/article/details/88375734)
 
 # kubernetes
 ## kubernetes基础
 1. [《Kubernetes持久卷实战两部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79516039)
 2. [《Kubernetes持久卷实战两部曲之二：细说开发》](https://blog.csdn.net/boling_cavalry/article/details/79592461)
 3. [《实战Kubernetes动态卷存储(NFS)》](https://blog.csdn.net/boling_cavalry/article/details/79598905)
-
-
+4. [《Spring Boot应用在kubernetes的sidecar设计与实战》](https://blog.csdn.net/boling_cavalry/article/details/83784113)
+5. [《Kubernetes源码学习之一:下载和编译源码》](https://blog.csdn.net/boling_cavalry/article/details/88591982)
+6. [《Kubernetes深入学习之二:编译和部署镜像(api-server)》](https://blog.csdn.net/boling_cavalry/article/details/88603293)
+7. [《k8s自定义controller三部曲之一:创建CRD（Custom Resource Definition）》](https://blog.csdn.net/boling_cavalry/article/details/88917818)
+8. [《k8s自定义controller三部曲之二:自动生成代码》](https://blog.csdn.net/boling_cavalry/article/details/88924194)
+9. [《k8s自定义controller三部曲之三：编写controller代码》](https://blog.csdn.net/boling_cavalry/article/details/88934063)
+10. [《查看k8s的etcd数据》](https://blog.csdn.net/boling_cavalry/article/details/88958242)
 
 
 ## kubernetes安装部署
@@ -228,7 +257,12 @@
 8. [《CentOS7环境安装Kubernetes四部曲之二：配置模板和安装master》](https://blog.csdn.net/boling_cavalry/article/details/79615597)
 9. [《CentOS7环境安装Kubernetes四部曲之三：添加节点》](https://blog.csdn.net/boling_cavalry/article/details/79621557)
 10. [《CentOS7环境安装Kubernetes四部曲之四：安装kubectl工具》](https://blog.csdn.net/boling_cavalry/article/details/79624655)
-11. [《》]()
+11. [《CentOS7环境部署kubenetes1.12版本五部曲之一：标准化机器》](https://blog.csdn.net/boling_cavalry/article/details/83692428)
+12. [《CentOS7环境部署kubenetes1.12版本五部曲之二：创建master节点》](https://blog.csdn.net/boling_cavalry/article/details/83692606)
+12. [《CentOS7环境部署kubenetes1.12版本五部曲之三：node节点加入》](https://blog.csdn.net/boling_cavalry/article/details/83714209)
+12. [《CentOS7环境部署kubenetes1.12版本五部曲之四：安装dashboard》](https://blog.csdn.net/boling_cavalry/article/details/83715479)
+12. [《CentOS7环境部署kubenetes1.12版本五部曲之五：安装kubectl》](https://blog.csdn.net/boling_cavalry/article/details/83740262)
+12. [《极速安装和体验k8s(Minikube)》](https://blog.csdn.net/boling_cavalry/article/details/90547822)
 
 ## kubernetes进阶实战
 1. [《kubernetes下的Nginx加Tomcat三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79215453)
@@ -237,14 +271,41 @@
 4. [《Kubernetes下web服务的性能测试三部曲之一：准备工作》](https://blog.csdn.net/boling_cavalry/article/details/79321518)
 5. [《Kubernetes下web服务的性能测试三部曲之二：纵向扩容》](https://blog.csdn.net/boling_cavalry/article/details/79327660)
 6. [《Kubernetes下web服务的性能测试三部曲之三：横向扩容》](https://blog.csdn.net/boling_cavalry/article/details/79336661)
-10. [《》]()
-11. [《》]()
-12. [《》]()
+10. [《helm实战之开发Chart》](https://blog.csdn.net/boling_cavalry/article/details/88759724)
+11. [《在windows电脑上配置kubectl远程操作kubernetes》](https://blog.csdn.net/boling_cavalry/article/details/90577769)
+12. [《本地服务调用K8S环境中的SpringCloud微服务实战》](https://blog.csdn.net/boling_cavalry/article/details/90578934)
 
 # 大数据
+
+## Flink
+1. [《Flink1.7从安装到体验》](https://blog.csdn.net/boling_cavalry/article/details/85038527)
+2. [《开发第一个Flink应用》](https://blog.csdn.net/boling_cavalry/article/details/85059168)
+3. [《没有了可用Task slot，Flink新增任务会怎样？》](https://blog.csdn.net/boling_cavalry/article/details/85213905)
+4. [《Flink实战：消费Wikipedia实时消息》](https://blog.csdn.net/boling_cavalry/article/details/85205622)
+5. [《树莓派3B搭建Flink集群》](https://blog.csdn.net/boling_cavalry/article/details/85222494)
+6. [《Flink数据源拆解分析(WikipediaEditsSource)》](https://blog.csdn.net/boling_cavalry/article/details/85221446)
+7. [《Flink消费kafka消息实战》](https://blog.csdn.net/boling_cavalry/article/details/85549434)
+
+## Spark
+1. [《部署spark2.2集群(standalone模式)》](https://blog.csdn.net/boling_cavalry/article/details/86747258)
+2. [《第一个spark应用开发详解(java版)》](https://blog.csdn.net/boling_cavalry/article/details/86776746)
+3. [《部署Spark2.2集群(on Yarn模式)》](https://blog.csdn.net/boling_cavalry/article/details/86795338)
+4. [《docker下，极速搭建spark集群(含hdfs集群)》](https://blog.csdn.net/boling_cavalry/article/details/86851069)
+5. [《spark实战之：分析维基百科网站统计数据(java版)》](https://blog.csdn.net/boling_cavalry/article/details/87241814)
+6. [《docker下的spark集群，调整参数榨干硬件》](https://blog.csdn.net/boling_cavalry/article/details/87438666)
+7. [《IDEA开发Spark应用实战(Scala)》](https://blog.csdn.net/boling_cavalry/article/details/87510822)
+
+## HBase
 1. [《Docker下HBase学习，三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/78041775)
 2. [《Docker下HBase学习，三部曲之二：集群HBase搭建》](https://blog.csdn.net/boling_cavalry/article/details/78041811)
 3. [《Docker下HBase学习，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/78156406)
+
+## Hadoop
+1. [《Linux部署hadoop2.7.7集群》](https://blog.csdn.net/boling_cavalry/article/details/86774385)
+
+## 数据集
+1. [《寻找海量数据集用于大数据开发实战(维基百科网站统计数据)》](https://blog.csdn.net/boling_cavalry/article/details/86894540)
+
 
 # 中间件
 ## 配置中心
@@ -277,14 +338,14 @@
 3. [《Eureka的InstanceInfoReplicator类（服务注册辅助工具）》](https://blog.csdn.net/boling_cavalry/article/details/82909130)
 4. [《Eureka注册信息配置备忘》](https://blog.csdn.net/boling_cavalry/article/details/82927409)
 5. [《Wireshark抓包分析Eureka注册发现协议》](https://blog.csdn.net/boling_cavalry/article/details/82918227)
-4. [《Spring Cloud源码分析之Eureka篇第一章：准备工作》](https://blog.csdn.net/boling_cavalry/article/details/81809929)
-5. [《Spring Cloud源码分析之Eureka篇第二章：注册中心启动类上的注解EnableEurekaServer》](https://blog.csdn.net/boling_cavalry/article/details/81809860)
-6. [《Spring Cloud源码分析之Eureka篇第三章：EnableDiscoveryClient与EnableEurekaClient的区别(Edgware版本)》](https://blog.csdn.net/boling_cavalry/article/details/82668480)
-7. [《Spring Cloud源码分析之Eureka篇第四章：服务注册是如何发起的》](https://blog.csdn.net/boling_cavalry/article/details/82721583)
-8. [《Spring Cloud源码分析之Eureka篇第五章：更新服务列表》](https://blog.csdn.net/boling_cavalry/article/details/82813180)
-9. [《Spring Cloud源码分析之Eureka篇第六章：服务注册》](https://blog.csdn.net/boling_cavalry/article/details/82861618)
-10. [《Spring Cloud源码分析之Eureka篇第七章：续约》](https://blog.csdn.net/boling_cavalry/article/details/82915355)
-12. [《Spring Cloud源码分析之Eureka篇第八章：服务注册名称的来历》](https://blog.csdn.net/boling_cavalry/article/details/82930728)
+6. [《Spring Cloud源码分析之Eureka篇第一章：准备工作》](https://blog.csdn.net/boling_cavalry/article/details/81809929)
+7. [《Spring Cloud源码分析之Eureka篇第二章：注册中心启动类上的注解EnableEurekaServer》](https://blog.csdn.net/boling_cavalry/article/details/81809860)
+8. [《Spring Cloud源码分析之Eureka篇第三章：EnableDiscoveryClient与EnableEurekaClient的区别(Edgware版本)》](https://blog.csdn.net/boling_cavalry/article/details/82668480)
+9. [《Spring Cloud源码分析之Eureka篇第四章：服务注册是如何发起的》](https://blog.csdn.net/boling_cavalry/article/details/82721583)
+10. [《Spring Cloud源码分析之Eureka篇第五章：更新服务列表》](https://blog.csdn.net/boling_cavalry/article/details/82813180)
+11. [《Spring Cloud源码分析之Eureka篇第六章：服务注册》](https://blog.csdn.net/boling_cavalry/article/details/82861618)
+12. [《Spring Cloud源码分析之Eureka篇第七章：续约》](https://blog.csdn.net/boling_cavalry/article/details/82915355)
+13. [《Spring Cloud源码分析之Eureka篇第八章：服务注册名称的来历》](https://blog.csdn.net/boling_cavalry/article/details/82930728)
 
 # 消息队列
 
@@ -295,6 +356,8 @@
 4. [《Docker下的Kafka学习之一：制作集群用的镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78244943)
 5. [《Docker下的Kafka学习之二：搭建集群环境》](https://blog.csdn.net/boling_cavalry/article/details/78309050)
 6. [《Docker下的Kafka学习之三：集群环境下的java开发》](https://blog.csdn.net/boling_cavalry/article/details/78386451)
+7. [《kafka的Docker镜像使用说明(wurstmeister/kafka)》](https://blog.csdn.net/boling_cavalry/article/details/85395080)
+8. [《如何使用Docker内的kafka服务》](https://blog.csdn.net/boling_cavalry/article/details/85528519)
 
 ## RabbitMQ
 1. [《Docker下RabbitMQ四部曲之一：极速体验(单机和集群)》](https://blog.csdn.net/boling_cavalry/article/details/80212878)
@@ -318,12 +381,41 @@
 9. [《Docker下MySQL主从三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79747488)
 10. [《Docker下MySQL主从三部曲之二：细说镜像制作》](https://blog.csdn.net/boling_cavalry/article/details/79775617)
 11. [《Docker下MySQL主从三部曲之三：binlog日志参数实战》](https://blog.csdn.net/boling_cavalry/article/details/79782008)
+12. [《关于InnoDB表数据和索引数据的存储》](https://blog.csdn.net/boling_cavalry/article/details/85172258)
 
 ## ElasticSearch
+
+### ElasticSearch实战
 1. [《CentOS7搭建ELK-6.2.3版本》](https://blog.csdn.net/boling_cavalry/article/details/79836171)
 2. [《Docker下ELK三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79950677)
 3. [《Docker下ELK三部曲之二：细说开发》](https://blog.csdn.net/boling_cavalry/article/details/79972444)
 4. [《Docker下ELK三部曲之三：K8S上的ELK和应用日志上报》](https://blog.csdn.net/boling_cavalry/article/details/80141800)
+5. [《Linux环境快速搭建elasticsearch6.5.4集群和Head插件》](https://blog.csdn.net/boling_cavalry/article/details/86358716)
+6. [《elasticsearch安装和使用ik分词器》](https://blog.csdn.net/boling_cavalry/article/details/86549043)
+7. [《自己动手制作elasticsearch-head的Docker镜像》](https://blog.csdn.net/boling_cavalry/article/details/86663168)
+8. [《自己动手制作elasticsearch的ik分词器的Docker镜像》](https://blog.csdn.net/boling_cavalry/article/details/86668180)
+9. [《docker下，一行命令搭建elasticsearch6.5.0集群(带head插件和ik分词器)》](https://blog.csdn.net/boling_cavalry/article/details/86669450)
+10. [《Elasticsearch6.1.2源码下载和编译构建》](https://blog.csdn.net/boling_cavalry/article/details/89298234)
+11. [《IntelliJ IDEA远程调试Elasticsearch6.1.2》](https://blog.csdn.net/boling_cavalry/article/details/89417650)
+12. [《极速导入elasticsearch测试数据》](https://blog.csdn.net/boling_cavalry/article/details/89435566)
+
+### ElasticSearch基本功专题
+[《elasticsearch实战三部曲之一：索引操作》](https://blog.csdn.net/boling_cavalry/article/details/86361841)
+[《elasticsearch实战三部曲之二：文档操作》](https://blog.csdn.net/boling_cavalry/article/details/86379882)
+[《elasticsearch实战三部曲之三：搜索操作》](https://blog.csdn.net/boling_cavalry/article/details/86413235)
+
+[《Elasticsearch聚合学习之一：基本操作》](https://blog.csdn.net/boling_cavalry/article/details/89735952)
+[《Elasticsearch聚合学习之二：区间聚合》](https://blog.csdn.net/boling_cavalry/article/details/89763684)
+[《Elasticsearch聚合学习之三：范围限定》](https://blog.csdn.net/boling_cavalry/article/details/89785223)
+[《Elasticsearch聚合学习之四：结果排序》](https://blog.csdn.net/boling_cavalry/article/details/89812169)
+[《Elasticsearch聚合学习之五：排序结果不准的问题分析》](https://blog.csdn.net/boling_cavalry/article/details/90319399)
+[《》]()
+[《Elasticsearch聚合的嵌套桶如何排序》](https://blog.csdn.net/boling_cavalry/article/details/89816240)
+[《理解elasticsearch的post_filter》](https://blog.csdn.net/boling_cavalry/article/details/89801825)
+[《elasticsearch的字符串动态映射》](https://blog.csdn.net/boling_cavalry/article/details/89061560)
+[《实战Elasticsearch6的join类型》](https://blog.csdn.net/boling_cavalry/article/details/89067738)
+[《》]()
+
 
 # 工具和技巧
 1. [《根据java代码生成UML图》](https://blog.csdn.net/boling_cavalry/article/details/72033221)
@@ -348,20 +440,32 @@
 9. [《springboot启动失败的问题（'hibernate.dialect' not set）》](https://blog.csdn.net/boling_cavalry/article/details/79342319)
 10. [《springboot的JPA在Mysql8新增记录失败的问题》](https://blog.csdn.net/boling_cavalry/article/details/79342572)
 11. [《Win10环境编译spring-framework4.1.9版本，报错"Failed to capture snapshot of input files for task 'distZip'"》](https://blog.csdn.net/boling_cavalry/article/details/80796059)
+12. [《maven编译遇到"编码GBK的不可映射字符"警告的处理》](https://blog.csdn.net/boling_cavalry/article/details/83036666)
+13. [《 docker问题备忘："rpc error: code = 2 desc = containerd: container not found"》](https://blog.csdn.net/boling_cavalry/article/details/88817244)
 
 # 监控
+
+## promethus
+1. [《Docker下Prometheus和Grafana三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/88367137)
+2. [《Docker下Prometheus和Grafana三部曲之二：细说Docker编排》](https://blog.csdn.net/boling_cavalry/article/details/88374848)
+3. [《Docker下Prometheus和Grafana三部曲之三：自定义监控项开发和配置》](https://blog.csdn.net/boling_cavalry/article/details/88375734)
+
+## zabbix
 1. [《Docker下实战zabbix三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/76857936)
 2. [《Docker下实战zabbix三部曲之二：监控其他机器》](https://blog.csdn.net/boling_cavalry/article/details/77095153)
 3. [《Docker下实战zabbix三部曲之三：自定义监控项》](https://blog.csdn.net/boling_cavalry/article/details/77410178)
 4. [《Docker下，极速体验编译pinpoint1.6.x分支》](https://xinchen.blog.csdn.net/article/details/78440890)
-5. [《把pinpoint编译环境做成Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78447310)
-6. [《Docker下，极速体验pinpoint1.6.3》](https://blog.csdn.net/boling_cavalry/article/details/78447314)
-7. [《Docker下，pinpoint环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/78448564)
-8. [《pinpoint插件开发之一：牛刀小试，调整gson插件》](https://blog.csdn.net/boling_cavalry/article/details/78495628)
-9. [《pinpoint插件开发之二：从零开始新建一个插件》](https://blog.csdn.net/boling_cavalry/article/details/78568073)
+
+## pinpoint
+1. [《把pinpoint编译环境做成Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78447310)
+2. [《Docker下，极速体验pinpoint1.6.3》](https://blog.csdn.net/boling_cavalry/article/details/78447314)
+3. [《Docker下，pinpoint环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/78448564)
+4. [《pinpoint插件开发之一：牛刀小试，调整gson插件》](https://blog.csdn.net/boling_cavalry/article/details/78495628)
+5. [《pinpoint插件开发之二：从零开始新建一个插件》](https://blog.csdn.net/boling_cavalry/article/details/78568073)
 
 # DevOps
-## CI&CD
+
+## Maven
 1. [《maven构建docker镜像三部曲之一：准备环境》](https://blog.csdn.net/boling_cavalry/article/details/78869466)
 2. [《maven构建docker镜像三部曲之二：编码和构建镜像》](https://blog.csdn.net/boling_cavalry/article/details/78872020)
 3. [《maven构建docker镜像三部曲之三：推送到远程仓库(内网和阿里云)》](https://blog.csdn.net/boling_cavalry/article/details/78934391)
@@ -372,18 +476,38 @@
 8. [《实战：向GitHub提交代码时触发Jenkins自动构建》](https://blog.csdn.net/boling_cavalry/article/details/78943061)
 9. [《修改gradle脚本，加速spring4.1源码编译构建速度》](https://blog.csdn.net/boling_cavalry/article/details/80873343)
 
-## Linux
+## Jenkins
+1. [《通过http请求启动jenkins任务》](https://blog.csdn.net/boling_cavalry/article/details/85373901)
+
+
+# 算法
+1. [《LeetCode第三题(Longest Substring Without Repeating Characters)三部曲之一：解题思路》](https://blog.csdn.net/boling_cavalry/article/details/86563586)
+2. [《LeetCode第三题(Longest Substring Without Repeating Characters)三部曲之二：编码实现》](https://blog.csdn.net/boling_cavalry/article/details/86654969)
+3. [《LeetCode第三题(Longest Substring Without Repeating Characters)三部曲之三：两次优化》](https://blog.csdn.net/boling_cavalry/article/details/86655675)
+
+# Linux
 1. [《Ubuntu16环境安装和使用NFS》](https://blog.csdn.net/boling_cavalry/article/details/79498346)
 2. [《CentOS7安装Nginx1.10.1》](https://blog.csdn.net/boling_cavalry/article/details/79834850)
 3. [《CentOS7安装JDK8》](https://blog.csdn.net/boling_cavalry/article/details/79840049)
+4. [《Ubuntu下安装OpenJDK10》](https://blog.csdn.net/boling_cavalry/article/details/83213608)
+5. [《Ubuntu环境下载OpenJDK11源码》](https://blog.csdn.net/boling_cavalry/article/details/83240035)
+6. [《Ubuntu16安装nodejs10》](https://blog.csdn.net/boling_cavalry/article/details/86354385)
+7. [《Linux服务器端网络抓包和分析实战》](https://blog.csdn.net/boling_cavalry/article/details/86771775)
+8. [《Linux配置SSH免密码登录(非root账号)》](https://blog.csdn.net/boling_cavalry/article/details/86772345)
 
-## golang
+# golang
 1. [《Ubuntu16安装Go语言环境》](https://blog.csdn.net/boling_cavalry/article/details/82904868)
+2. [《golang实战之flag包》](https://blog.csdn.net/boling_cavalry/article/details/87901677)
+3. [《用golang官方Docker镜像运行项目》](https://blog.csdn.net/boling_cavalry/article/details/87904485)
+4. [《vim设置go语法高亮》](https://blog.csdn.net/boling_cavalry/article/details/88598828)
 
 # 硬件
 
 ## 树莓派
 1. [《树莓派3B安装64位操作系统(树莓派无需连接显示器键盘鼠标)》](https://blog.csdn.net/boling_cavalry/article/details/80716098)
+2. [《64位树莓派上安装和配置golang1.9.2》](https://blog.csdn.net/boling_cavalry/article/details/84501381)
+3. [《树莓派3B搭建Flink集群》](https://blog.csdn.net/boling_cavalry/article/details/85222494)
+4. [《树莓派部署Elasticsearch6集群》](https://blog.csdn.net/boling_cavalry/article/details/89440971)
 
 
 
