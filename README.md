@@ -28,6 +28,12 @@
 6. [《maven构建docker镜像三部曲之一：准备环境》](https://blog.csdn.net/boling_cavalry/article/details/78869466)
 7. [《maven构建docker镜像三部曲之二：编码和构建镜像》](https://blog.csdn.net/boling_cavalry/article/details/78872020)
 8. [《maven构建docker镜像三部曲之三：推送到远程仓库(内网和阿里云)》](https://blog.csdn.net/boling_cavalry/article/details/78934391)
+9. [《Docker下Java文件上传服务三部曲之一：准备环境》](https://blog.csdn.net/boling_cavalry/article/details/79361159)
+10. [《Docker下Java文件上传服务三部曲之二：服务端开发》](https://blog.csdn.net/boling_cavalry/article/details/79367520)
+11. [《Docker下Java文件上传服务三部曲之三：wireshark抓包分析》](https://blog.csdn.net/boling_cavalry/article/details/79380053)
+12. [《CentOS7安装JDK8》](https://blog.csdn.net/boling_cavalry/article/details/79840049)
+
+
 
 ## 深入JVM
 1. [《在docker上编译openjdk8》](https://blog.csdn.net/boling_cavalry/article/details/70243954)
@@ -48,11 +54,22 @@
 3. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之二：定位错误》](https://blog.csdn.net/boling_cavalry/article/details/73442311)
 4. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之三：改spring源码，取详细错误》](https://blog.csdn.net/boling_cavalry/article/details/73759475)
 5. [《实战spring自定义属性(schema)：快速体验》](https://blog.csdn.net/boling_cavalry/article/details/74066494)
+6. [《SpringMVC源码分析：POST请求中的文件处理》](https://blog.csdn.net/boling_cavalry/article/details/79375713)
+7. [《下载Spring4.1.x源码并用IntelliJ IDEA打开》](https://blog.csdn.net/boling_cavalry/article/details/79426075)
 
 
 ## SpringBoot
 1. [《基于spring boot框架访问zookeeper》](https://blog.csdn.net/boling_cavalry/article/details/69802622)
 2. [《Docker下运行springboot》](https://blog.csdn.net/boling_cavalry/article/details/78991870)
+3. [《Docker下redis与springboot三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/78991422)
+4. [《Docker下redis与springboot三部曲之二：安装redis主从和哨兵》](https://blog.csdn.net/boling_cavalry/article/details/78995407)
+5. [《Docker下redis与springboot三部曲之三：springboot下访问redis哨兵》](https://blog.csdn.net/boling_cavalry/article/details/79041129)
+6. [《springboot线程池的使用和扩展》](https://blog.csdn.net/boling_cavalry/article/details/79120268)
+
+## Spring Cloud
+1. [《Docker下的Spring Cloud三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79177930)
+2. [《Docker下的Spring Cloud三部曲之二：细说Spring Cloud开发》](https://blog.csdn.net/boling_cavalry/article/details/79134497)
+3. [《Docker下的Spring Cloud三部曲之三：在线横向扩容》](https://blog.csdn.net/boling_cavalry/article/details/79192376)
 
 ## spring cloud alibaba
 1. [《Docker下,两分钟极速体验Nacos》](https://blog.csdn.net/boling_cavalry/article/details/97617353)；
@@ -132,23 +149,56 @@
 39. [《pinpoint插件开发之二：从零开始新建一个插件》](https://blog.csdn.net/boling_cavalry/article/details/78568073)
 40. [《docker下的Jenkins安装和体验》](https://blog.csdn.net/boling_cavalry/article/details/78942408)
 41. [《Docker下运行springboot》](https://blog.csdn.net/boling_cavalry/article/details/78991870)
+42. [《Docker下redis与springboot三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/78991422)
+43. [《Docker下redis与springboot三部曲之二：安装redis主从和哨兵》](https://blog.csdn.net/boling_cavalry/article/details/78995407)
+44. [《Docker下redis与springboot三部曲之三：springboot下访问redis哨兵》](https://blog.csdn.net/boling_cavalry/article/details/79041129)
+45. [《实战maven私有仓库三部曲之三：Docker下搭建maven私有仓库》](https://blog.csdn.net/boling_cavalry/article/details/79111740)
+46. [《Docker下的Spring Cloud三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79177930)
+47. [《Docker下的Spring Cloud三部曲之二：细说Spring Cloud开发》](https://blog.csdn.net/boling_cavalry/article/details/79134497)
+48. [《Docker下的Spring Cloud三部曲之三：在线横向扩容》](https://blog.csdn.net/boling_cavalry/article/details/79192376)
+49. [《Docker下的OpenResty三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79290944)
+50. [《Docker下的OpenResty三部曲之二：细说开发》](https://blog.csdn.net/boling_cavalry/article/details/79292356)
+51. [《Docker下的OpenResty三部曲之三：OpenResty加Tomcat的服务》](https://blog.csdn.net/boling_cavalry/article/details/79311164)
+52. [《Docker下Java文件上传服务三部曲之一：准备环境》](https://blog.csdn.net/boling_cavalry/article/details/79361159)
+53. [《Docker下Java文件上传服务三部曲之二：服务端开发》](https://blog.csdn.net/boling_cavalry/article/details/79367520)
+54. [《Docker下Java文件上传服务三部曲之三：wireshark抓包分析》](https://blog.csdn.net/boling_cavalry/article/details/79380053)
+55. [《Docker下手工配置MySQL主从》](https://blog.csdn.net/boling_cavalry/article/details/79751085)
+56. [《Docker下MySQL主从三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79747488)
+57. [《Docker下MySQL主从三部曲之二：细说镜像制作》](https://blog.csdn.net/boling_cavalry/article/details/79775617)
+58. [《Docker下MySQL主从三部曲之三：binlog日志参数实战》](https://blog.csdn.net/boling_cavalry/article/details/79782008)
+
+# kubernetes
+## kubernetes基础
+1. [《Kubernetes持久卷实战两部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79516039)
+2. [《Kubernetes持久卷实战两部曲之二：细说开发》](https://blog.csdn.net/boling_cavalry/article/details/79592461)
+3. [《实战Kubernetes动态卷存储(NFS)》](https://blog.csdn.net/boling_cavalry/article/details/79598905)
 
 
-# kubernetes部
+
+
 ## kubernetes安装部署
 1. [《kubeadm搭建kubernetes集群之一：构建标准化镜像》](https://blog.csdn.net/boling_cavalry/article/details/78694206)
 2. [《kubeadm搭建kubernetes集群之二：创建master节点》](https://blog.csdn.net/boling_cavalry/article/details/78700527)
-2. [《kubeadm搭建kubernetes集群之三：加入node节点》](https://blog.csdn.net/boling_cavalry/article/details/78703364)
-2. [《rancher下的kubernetes之一：构建标准化vmware镜像》](https://blog.csdn.net/boling_cavalry/article/details/78762829)
-2. [《rancher下的kubernetes之二：安装rancher和kubernetes》](https://blog.csdn.net/boling_cavalry/article/details/78764915)
-2. [《》]()
-2. [《》]()
-2. [《》]()
-2. [《》]()
-2. [《》]()
-2. [《》]()
+3. [《kubeadm搭建kubernetes集群之三：加入node节点》](https://blog.csdn.net/boling_cavalry/article/details/78703364)
+4. [《rancher下的kubernetes之一：构建标准化vmware镜像》](https://blog.csdn.net/boling_cavalry/article/details/78762829)
+5. [《rancher下的kubernetes之二：安装rancher和kubernetes》](https://blog.csdn.net/boling_cavalry/article/details/78764915)
+6. [《rancher下的kubernetes之三：在linux上安装kubectl工具》](https://blog.csdn.net/boling_cavalry/article/details/79223091)
+7. [《CentOS7环境安装Kubernetes四部曲之一：标准化机器准备》](https://blog.csdn.net/boling_cavalry/article/details/79613037)
+8. [《CentOS7环境安装Kubernetes四部曲之二：配置模板和安装master》](https://blog.csdn.net/boling_cavalry/article/details/79615597)
+9. [《CentOS7环境安装Kubernetes四部曲之三：添加节点》](https://blog.csdn.net/boling_cavalry/article/details/79621557)
+10. [《CentOS7环境安装Kubernetes四部曲之四：安装kubectl工具》](https://blog.csdn.net/boling_cavalry/article/details/79624655)
+11. [《》]()
 
 ## kubernetes进阶实战
+1. [《kubernetes下的Nginx加Tomcat三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79215453)
+2. [《kubernetes下的Nginx加Tomcat三部曲之二：细说开发》](https://blog.csdn.net/boling_cavalry/article/details/79232244)
+3. [《kubernetes下的Nginx加Tomcat三部曲之三：实战扩容和升级》](https://blog.csdn.net/boling_cavalry/article/details/79246527)
+4. [《Kubernetes下web服务的性能测试三部曲之一：准备工作》](https://blog.csdn.net/boling_cavalry/article/details/79321518)
+5. [《Kubernetes下web服务的性能测试三部曲之二：纵向扩容》](https://blog.csdn.net/boling_cavalry/article/details/79327660)
+6. [《Kubernetes下web服务的性能测试三部曲之三：横向扩容》](https://blog.csdn.net/boling_cavalry/article/details/79336661)
+10. [《》]()
+11. [《》]()
+12. [《》]()
 
 # 大数据
 1. [《Docker下HBase学习，三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/78041775)
@@ -156,16 +206,26 @@
 3. [《Docker下HBase学习，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/78156406)
 
 # 中间件
+## 配置中心
 1. [《Docker搭建disconf环境，三部曲之一：极速搭建disconf》](https://blog.csdn.net/boling_cavalry/article/details/71082610)
 2. [《Docker搭建disconf环境，三部曲之二：本地快速构建disconf镜像》](https://blog.csdn.net/boling_cavalry/article/details/71107498)
 3. [《Docker搭建disconf环境，三部曲之三：细说搭建过程》](https://blog.csdn.net/boling_cavalry/article/details/71120725)
 4. [《docker下使用disconf：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/71404395)
 5. [《docker下使用disconf：细说demo开发》](https://blog.csdn.net/boling_cavalry/article/details/71424124)
-6. [《基于spring boot框架访问zookeeper》](https://blog.csdn.net/boling_cavalry/article/details/69802622)
-7. [《jedis使用入门（Docker环境下）》](https://blog.csdn.net/boling_cavalry/article/details/71440053)
-8. [《Docker下dubbo开发，三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/72303126)
-9. [《Docker下dubbo开发，三部曲之二：本地环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/72460526)
-10. [《Docker下dubbo开发，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/72789984)
+
+## zookeeper
+1. [《基于spring boot框架访问zookeeper》](https://blog.csdn.net/boling_cavalry/article/details/69802622)
+
+## 缓存
+1. [《jedis使用入门（Docker环境下）》](https://blog.csdn.net/boling_cavalry/article/details/71440053)
+2. [《Docker下redis与springboot三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/78991422)
+3. [《Docker下redis与springboot三部曲之二：安装redis主从和哨兵》](https://blog.csdn.net/boling_cavalry/article/details/78995407)
+4. [《Docker下redis与springboot三部曲之三：springboot下访问redis哨兵》](https://blog.csdn.net/boling_cavalry/article/details/79041129)
+
+## 注册中心
+1. [《Docker下dubbo开发，三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/72303126)
+2. [《Docker下dubbo开发，三部曲之二：本地环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/72460526)
+3. [《Docker下dubbo开发，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/72789984)
 
 # 消息队列
 1. [《Docker下kafka学习，三部曲之一：极速体验kafka》](https://blog.csdn.net/boling_cavalry/article/details/71576775)
@@ -182,6 +242,11 @@
 4. [《Docker下，实战mongodb副本集（Replication）》](https://blog.csdn.net/boling_cavalry/article/details/78173636)
 5. [《Docker下安装Rockmongo，图形化操作mongodb》](https://blog.csdn.net/boling_cavalry/article/details/78234762)
 6. [《Java实战操作MongoDB集群（副本集）》](https://blog.csdn.net/boling_cavalry/article/details/78238163)
+7. [《Docker下的mysql设置字符集》](https://blog.csdn.net/boling_cavalry/article/details/79342494)
+8. [《Docker下手工配置MySQL主从》](https://blog.csdn.net/boling_cavalry/article/details/79751085)
+9. [《Docker下MySQL主从三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79747488)
+10. [《Docker下MySQL主从三部曲之二：细说镜像制作》](https://blog.csdn.net/boling_cavalry/article/details/79775617)
+11. [《Docker下MySQL主从三部曲之三：binlog日志参数实战》](https://blog.csdn.net/boling_cavalry/article/details/79782008)
 
 # 工具和技巧
 1. [《根据java代码生成UML图》](https://blog.csdn.net/boling_cavalry/article/details/72033221)
@@ -189,6 +254,8 @@
 3. [《安装Genymotion模拟器运行Android studio的工程》](https://blog.csdn.net/boling_cavalry/article/details/73287096)
 4. [《Intellij idea远程debug连接tomcat，实现单步调试》](https://blog.csdn.net/boling_cavalry/article/details/73384036)
 5. [《docker下载镜像慢怎么办？daocloud加速器来帮你》](https://blog.csdn.net/boling_cavalry/article/details/77833069)
+6. [《Docker下的mysql设置字符集》](https://blog.csdn.net/boling_cavalry/article/details/79342494)
+7. [《用IntelliJ IDEA看Java类图》](https://blog.csdn.net/boling_cavalry/article/details/79418823)
 
 # 问题处理
 1. [《dubbo服务提供者在tomcat启动失败的问题》](https://blog.csdn.net/boling_cavalry/article/details/72188135)
@@ -197,6 +264,10 @@
 4. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之一：稳定重现问题》](https://blog.csdn.net/boling_cavalry/article/details/73071020)
 5. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之二：定位错误》](https://blog.csdn.net/boling_cavalry/article/details/73442311)
 6. [《spring+mybatis启动NoClassDefFoundError异常分析三部曲之三：改spring源码，取详细错误》](https://blog.csdn.net/boling_cavalry/article/details/73759475)
+7. [《docker-compose中启动镜像失败的问题》](https://blog.csdn.net/boling_cavalry/article/details/79050451)
+8. [《Docker下No module named 'pymongo'问题处理》](https://blog.csdn.net/boling_cavalry/article/details/79169560)
+9. [《springboot启动失败的问题（'hibernate.dialect' not set）》](https://blog.csdn.net/boling_cavalry/article/details/79342319)
+10. [《springboot的JPA在Mysql8新增记录失败的问题》](https://blog.csdn.net/boling_cavalry/article/details/79342572)
 
 # 监控
 1. [《Docker下实战zabbix三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/76857936)
@@ -215,7 +286,15 @@
 2. [《maven构建docker镜像三部曲之二：编码和构建镜像》](https://blog.csdn.net/boling_cavalry/article/details/78872020)
 3. [《maven构建docker镜像三部曲之三：推送到远程仓库(内网和阿里云)》](https://blog.csdn.net/boling_cavalry/article/details/78934391)
 4. [《docker下的Jenkins安装和体验》](https://blog.csdn.net/boling_cavalry/article/details/78942408)
+5. [《实战maven私有仓库三部曲之一：搭建和使用》](https://blog.csdn.net/boling_cavalry/article/details/79059021)
+6. [《实战maven私有仓库三部曲之二：上传到私有仓库》](https://blog.csdn.net/boling_cavalry/article/details/79070744)
+7. [《实战maven私有仓库三部曲之三：Docker下搭建maven私有仓库》](https://blog.csdn.net/boling_cavalry/article/details/79111740)
+8. [《实战：向GitHub提交代码时触发Jenkins自动构建》](https://blog.csdn.net/boling_cavalry/article/details/78943061)
 
+## Linux
+1. [《Ubuntu16环境安装和使用NFS》](https://blog.csdn.net/boling_cavalry/article/details/79498346)
+2. [《CentOS7安装Nginx1.10.1》](https://blog.csdn.net/boling_cavalry/article/details/79834850)
+3. [《CentOS7安装JDK8》](https://blog.csdn.net/boling_cavalry/article/details/79840049)
 
 ### 标记(改过内容)
 [《把pinpoint编译环境做成Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78447310)
