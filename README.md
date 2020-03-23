@@ -22,6 +22,7 @@
 2. [《实战限流（guava的RateLimiter）》](https://blog.csdn.net/boling_cavalry/article/details/75174486)
 3. [《java.util.Optional学习笔记》](https://blog.csdn.net/boling_cavalry/article/details/77610629)
 4. [《org.springframework.util.StopWatch：简洁的耗时统计小工具》](https://blog.csdn.net/boling_cavalry/article/details/78231032)
+5. [《Java实战操作MongoDB集群（副本集）》](https://blog.csdn.net/boling_cavalry/article/details/78238163)
 
 ## 深入JVM
 1. [《在docker上编译openjdk8》](https://blog.csdn.net/boling_cavalry/article/details/70243954)
@@ -104,6 +105,11 @@
 31. [《制作mongodb的Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78172113)
 32. [《Docker下，实战mongodb副本集（Replication）》](https://blog.csdn.net/boling_cavalry/article/details/78173636)
 33. [《Docker下安装Rockmongo，图形化操作mongodb》](https://blog.csdn.net/boling_cavalry/article/details/78234762)
+34. [《Docker下的Kafka学习之一：制作集群用的镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78244943)
+35. [《Docker下的Kafka学习之二：搭建集群环境》](https://blog.csdn.net/boling_cavalry/article/details/78309050)
+36. [《Docker下的Kafka学习之三：集群环境下的java开发》](https://blog.csdn.net/boling_cavalry/article/details/78386451)
+37. [《Docker下，极速体验编译pinpoint1.6.x分支》](https://xinchen.blog.csdn.net/article/details/78440890)
+38. [《把pinpoint编译环境做成Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78447310)
 
 
 
@@ -130,6 +136,9 @@
 1. [《Docker下kafka学习，三部曲之一：极速体验kafka》](https://blog.csdn.net/boling_cavalry/article/details/71576775)
 2. [《Docker下kafka学习，三部曲之二：本地环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/71601189)
 3. [《Docker下kafka学习，三部曲之三：java开发》](https://blog.csdn.net/boling_cavalry/article/details/71634631)
+4. [《Docker下的Kafka学习之一：制作集群用的镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78244943)
+5. [《Docker下的Kafka学习之二：搭建集群环境》](https://blog.csdn.net/boling_cavalry/article/details/78309050)
+6. [《Docker下的Kafka学习之三：集群环境下的java开发》](https://blog.csdn.net/boling_cavalry/article/details/78386451)
 
 # 数据库
 1. [《让docker中的mysql启动时自动执行sql》](https://blog.csdn.net/boling_cavalry/article/details/71055159)
@@ -137,6 +146,7 @@
 3. [《制作mongodb的Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78172113)
 4. [《Docker下，实战mongodb副本集（Replication）》](https://blog.csdn.net/boling_cavalry/article/details/78173636)
 5. [《Docker下安装Rockmongo，图形化操作mongodb》](https://blog.csdn.net/boling_cavalry/article/details/78234762)
+6. [《Java实战操作MongoDB集群（副本集）》](https://blog.csdn.net/boling_cavalry/article/details/78238163)
 
 # 工具和技巧
 1. [《根据java代码生成UML图》](https://blog.csdn.net/boling_cavalry/article/details/72033221)
@@ -157,9 +167,11 @@
 1. [《Docker下实战zabbix三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/76857936)
 2. [《Docker下实战zabbix三部曲之二：监控其他机器》](https://blog.csdn.net/boling_cavalry/article/details/77095153)
 3. [《Docker下实战zabbix三部曲之三：自定义监控项》](https://blog.csdn.net/boling_cavalry/article/details/77410178)
+4. [《Docker下，极速体验编译pinpoint1.6.x分支》](https://xinchen.blog.csdn.net/article/details/78440890)
+5. [《把pinpoint编译环境做成Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78447310)
 
 
 
 
 ### 标记
-[《Docker下安装Rockmongo，图形化操作mongodb》](https://blog.csdn.net/boling_cavalry/article/details/78234762)
+38. [《把pinpoint编译环境做成Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78447310)
