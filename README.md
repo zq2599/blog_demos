@@ -17,6 +17,9 @@
 4. Kubernetes；
 5. 大数据；
 6. 综合兴趣，例如LeetCode、树莓派、群晖系统等；
+7. DevOps；
+8. 常用工具和技巧；
+9. 问题处理备忘；
 
 # Java领域
 
@@ -504,27 +507,6 @@
 16. [《Ubuntu18重启docker服务失败问题备忘》](https://blog.csdn.net/boling_cavalry/article/details/100059053)
 17. [《hadoop2.7集群初始化之后没有DataNode的问题》](https://blog.csdn.net/boling_cavalry/article/details/102764540)
 
-# 监控
-
-## promethus
-1. [《Docker下Prometheus和Grafana三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/88367137)
-2. [《Docker下Prometheus和Grafana三部曲之二：细说Docker编排》](https://blog.csdn.net/boling_cavalry/article/details/88374848)
-3. [《Docker下Prometheus和Grafana三部曲之三：自定义监控项开发和配置》](https://blog.csdn.net/boling_cavalry/article/details/88375734)
-
-## zabbix
-1. [《Docker下实战zabbix三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/76857936)
-2. [《Docker下实战zabbix三部曲之二：监控其他机器》](https://blog.csdn.net/boling_cavalry/article/details/77095153)
-3. [《Docker下实战zabbix三部曲之三：自定义监控项》](https://blog.csdn.net/boling_cavalry/article/details/77410178)
-4. [《Docker下，极速体验编译pinpoint1.6.x分支》](https://xinchen.blog.csdn.net/article/details/78440890)
-
-## pinpoint
-1. [《把pinpoint编译环境做成Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78447310)
-2. [《Docker下，极速体验pinpoint1.6.3》](https://blog.csdn.net/boling_cavalry/article/details/78447314)
-3. [《Docker下，pinpoint环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/78448564)
-4. [《pinpoint插件开发之一：牛刀小试，调整gson插件》](https://blog.csdn.net/boling_cavalry/article/details/78495628)
-5. [《pinpoint插件开发之二：从零开始新建一个插件》](https://blog.csdn.net/boling_cavalry/article/details/78568073)
-6. [《分布式系统快速接入pinpoint1.8.3指南》](https://blog.csdn.net/boling_cavalry/article/details/102011341)
-
 # DevOps
 
 ## Maven
@@ -553,6 +535,24 @@
 7. [《kubernetes下的jenkins如何设置maven》](https://blog.csdn.net/boling_cavalry/article/details/104849839)
 8. [《K8S环境的Jenkin性能问题处理》](https://blog.csdn.net/boling_cavalry/article/details/105005245)
 
+## promethus
+1. [《Docker下Prometheus和Grafana三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/88367137)
+2. [《Docker下Prometheus和Grafana三部曲之二：细说Docker编排》](https://blog.csdn.net/boling_cavalry/article/details/88374848)
+3. [《Docker下Prometheus和Grafana三部曲之三：自定义监控项开发和配置》](https://blog.csdn.net/boling_cavalry/article/details/88375734)
+
+## zabbix
+1. [《Docker下实战zabbix三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/76857936)
+2. [《Docker下实战zabbix三部曲之二：监控其他机器》](https://blog.csdn.net/boling_cavalry/article/details/77095153)
+3. [《Docker下实战zabbix三部曲之三：自定义监控项》](https://blog.csdn.net/boling_cavalry/article/details/77410178)
+4. [《Docker下，极速体验编译pinpoint1.6.x分支》](https://xinchen.blog.csdn.net/article/details/78440890)
+
+## pinpoint
+1. [《把pinpoint编译环境做成Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78447310)
+2. [《Docker下，极速体验pinpoint1.6.3》](https://blog.csdn.net/boling_cavalry/article/details/78447314)
+3. [《Docker下，pinpoint环境搭建》](https://blog.csdn.net/boling_cavalry/article/details/78448564)
+4. [《pinpoint插件开发之一：牛刀小试，调整gson插件》](https://blog.csdn.net/boling_cavalry/article/details/78495628)
+5. [《pinpoint插件开发之二：从零开始新建一个插件》](https://blog.csdn.net/boling_cavalry/article/details/78568073)
+6. [《分布式系统快速接入pinpoint1.8.3指南》](https://blog.csdn.net/boling_cavalry/article/details/102011341)
 
 # 算法
 1. [《LeetCode第三题(Longest Substring Without Repeating Characters)三部曲之一：解题思路》](https://blog.csdn.net/boling_cavalry/article/details/86563586)
