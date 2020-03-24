@@ -24,20 +24,20 @@
 # Java领域
 
 ## 基础知识
-12. [《CentOS7安装JDK8》](https://blog.csdn.net/boling_cavalry/article/details/79840049)
-17. [《Ubuntu下安装OpenJDK10》](https://blog.csdn.net/boling_cavalry/article/details/83213608)
-18. [《Ubuntu环境下载OpenJDK11源码》](https://blog.csdn.net/boling_cavalry/article/details/83240035)
-1. [《体验RxJava和lambda》](https://blog.csdn.net/boling_cavalry/article/details/72858158)
-2. [《实战限流（guava的RateLimiter）》](https://blog.csdn.net/boling_cavalry/article/details/75174486)
-3. [《java.util.Optional学习笔记》](https://blog.csdn.net/boling_cavalry/article/details/77610629)
-4. [《org.springframework.util.StopWatch：简洁的耗时统计小工具》](https://blog.csdn.net/boling_cavalry/article/details/78231032)
+1. [《CentOS7安装JDK8》](https://blog.csdn.net/boling_cavalry/article/details/79840049)
+2. [《Ubuntu下安装OpenJDK10》](https://blog.csdn.net/boling_cavalry/article/details/83213608)
+3. [《Ubuntu环境下载OpenJDK11源码》](https://blog.csdn.net/boling_cavalry/article/details/83240035)
+4. [《体验RxJava和lambda》](https://blog.csdn.net/boling_cavalry/article/details/72858158)
+5. [《实战限流（guava的RateLimiter）》](https://blog.csdn.net/boling_cavalry/article/details/75174486)
+6. [《java.util.Optional学习笔记》](https://blog.csdn.net/boling_cavalry/article/details/77610629)
+7. [《org.springframework.util.StopWatch：简洁的耗时统计小工具》](https://blog.csdn.net/boling_cavalry/article/details/78231032)
 
 ## 进阶实战
-5. [《Java实战操作MongoDB集群（副本集）》](https://blog.csdn.net/boling_cavalry/article/details/78238163)
-9. [《Docker下Java文件上传服务三部曲之一：准备环境》](https://blog.csdn.net/boling_cavalry/article/details/79361159)
-10. [《Docker下Java文件上传服务三部曲之二：服务端开发》](https://blog.csdn.net/boling_cavalry/article/details/79367520)
-11. [《Docker下Java文件上传服务三部曲之三：wireshark抓包分析》](https://blog.csdn.net/boling_cavalry/article/details/79380053)
-14. [《实战Redis序列化性能测试(Kryo和字符串)》](https://blog.csdn.net/boling_cavalry/article/details/80719683)
+1. [《Java实战操作MongoDB集群（副本集）》](https://blog.csdn.net/boling_cavalry/article/details/78238163)
+2. [《Docker下Java文件上传服务三部曲之一：准备环境》](https://blog.csdn.net/boling_cavalry/article/details/79361159)
+3. [《Docker下Java文件上传服务三部曲之二：服务端开发》](https://blog.csdn.net/boling_cavalry/article/details/79367520)
+4. [《Docker下Java文件上传服务三部曲之三：wireshark抓包分析》](https://blog.csdn.net/boling_cavalry/article/details/79380053)
+5. [《实战Redis序列化性能测试(Kryo和字符串)》](https://blog.csdn.net/boling_cavalry/article/details/80719683)
 
 ## 畅游JVM世界
 1. [《极简，利用Docker仅两行命令就能下载和编译OpenJDK11》](https://blog.csdn.net/boling_cavalry/article/details/83353102)
@@ -73,7 +73,7 @@
 14. [《kubernetes下的jenkins如何设置maven》](https://blog.csdn.net/boling_cavalry/article/details/104849839)
 15. [《kubernetes下jenkins实战maven项目编译构建》](https://blog.csdn.net/boling_cavalry/article/details/104875452)
 
-# Spring邻域
+# Spring领域
 
 ## Spring基础
 1. [《修改和编译spring源码，构建jar(spring-context-4.0.2.RELEASE)》](https://blog.csdn.net/boling_cavalry/article/details/73139161)
