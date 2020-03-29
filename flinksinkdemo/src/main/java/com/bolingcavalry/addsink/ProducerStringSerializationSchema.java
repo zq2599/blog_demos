@@ -1,4 +1,4 @@
-package com.bolingcavalry;
+package com.bolingcavalry.addsink;
 
 import org.apache.flink.streaming.connectors.kafka.KafkaSerializationSchema;
 import org.apache.kafka.clients.producer.ProducerRecord;

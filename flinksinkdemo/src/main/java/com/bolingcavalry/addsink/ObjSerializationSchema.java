@@ -1,4 +1,4 @@
-package com.bolingcavalry;
+package com.bolingcavalry.addsink;
 
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.JsonProcessingException;
