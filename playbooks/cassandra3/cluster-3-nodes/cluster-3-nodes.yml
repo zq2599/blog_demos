@@ -35,17 +35,16 @@
       name: cassandra
       shell: /bin/bash
       group: cassandra
-      password: 888888
+      password: "{{ '888888' | password_hash('sha512') }}"
       create_home: True  
       home: "{{cassandra_home_path}}"
+      state: present
   - name: unarchive cassandra3 install file from ansible 
     unarchive:
       src: ~/playbooks/files/{{cassandra_targz_name}}
       dest: "{{cassandra_home_path}}"
   - name: scp cassandra3 config file 
     copy: src=~/playbooks/files/cassandra.yaml dest={{cassandra_home_path}}/{{cassandra_package_name}}/conf/
-  - name: scp cassandra3 env config file 
-    copy: src=~/playbooks/files/cassandra-env.sh dest={{cassandra_home_path}}/{{cassandra_package_name}}/conf/
   - name: create cassandra data directory
     file:
       path: /var/lib/cassandra
