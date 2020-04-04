@@ -1,0 +1,4 @@
+[cluster_group]
+cassandra01 ansible_host=192.168.133.167 ansible_port=22 ansible_user=root ansible_password=888888
+cassandra02 ansible_host=192.168.133.167 ansible_port=22 ansible_user=root ansible_password=888888
+cassandra03 ansible_host=192.168.133.167 ansible_port=22 ansible_user=root ansible_password=888888
