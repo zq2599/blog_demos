@@ -322,12 +322,15 @@
 8. [《本地服务调用K8S环境中的SpringCloud微服务实战》](https://blog.csdn.net/boling_cavalry/article/details/90578934)
 9. [《kubernetes下的jenkins如何设置maven》](https://blog.csdn.net/boling_cavalry/article/details/104849839)
 10. [《K8S环境的Jenkin性能问题处理》](https://blog.csdn.net/boling_cavalry/article/details/105005245)
+11. [《kubernetes1.15极速部署prometheus和grafana》](https://xinchen.blog.csdn.net/article/details/105156849)
+12. [《K8S环境的Jenkin性能问题处理续篇(任务Pod设置)》](https://xinchen.blog.csdn.net/article/details/105181474)
 
 ## helm实战
 1. [《helm实战之开发Chart》](https://blog.csdn.net/boling_cavalry/article/details/88759724)
 2. [《部署和体验Helm(2.16.1版本)》](https://blog.csdn.net/boling_cavalry/article/details/103667500)
 3. [《Helm部署和体验jenkins》](https://blog.csdn.net/boling_cavalry/article/details/103670976)
 4. [《Helm部署的服务如何修改配置》](https://blog.csdn.net/boling_cavalry/article/details/105004586)
+5. [《helm部署mysql》](https://xinchen.blog.csdn.net/article/details/105180743)
 
 # 大数据
 
@@ -541,11 +544,13 @@
 6. [《Jenkins集群下的pipeline实战》](https://blog.csdn.net/boling_cavalry/article/details/103104441)
 7. [《kubernetes下的jenkins如何设置maven》](https://blog.csdn.net/boling_cavalry/article/details/104849839)
 8. [《K8S环境的Jenkin性能问题处理》](https://blog.csdn.net/boling_cavalry/article/details/105005245)
+9. [《K8S环境的Jenkin性能问题处理续篇(任务Pod设置)》](https://xinchen.blog.csdn.net/article/details/105181474)
 
 ## promethus
 1. [《Docker下Prometheus和Grafana三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/88367137)
 2. [《Docker下Prometheus和Grafana三部曲之二：细说Docker编排》](https://blog.csdn.net/boling_cavalry/article/details/88374848)
 3. [《Docker下Prometheus和Grafana三部曲之三：自定义监控项开发和配置》](https://blog.csdn.net/boling_cavalry/article/details/88375734)
+4. [《kubernetes1.15极速部署prometheus和grafana》](https://xinchen.blog.csdn.net/article/details/105156849)
 
 ## zabbix
 1. [《Docker下实战zabbix三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/76857936)
