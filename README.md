@@ -72,6 +72,7 @@
 13. [《Jib构建镜像问题从定位到深入分析》](https://blog.csdn.net/boling_cavalry/article/details/101606958)
 14. [《kubernetes下的jenkins如何设置maven》](https://blog.csdn.net/boling_cavalry/article/details/104849839)
 15. [《kubernetes下jenkins实战maven项目编译构建》](https://blog.csdn.net/boling_cavalry/article/details/104875452)
+16. [《Nexus3常用功能备忘》](https://xinchen.blog.csdn.net/article/details/105458882)
 
 # Spring领域
 
@@ -324,6 +325,9 @@
 10. [《K8S环境的Jenkin性能问题处理》](https://blog.csdn.net/boling_cavalry/article/details/105005245)
 11. [《kubernetes1.15极速部署prometheus和grafana》](https://xinchen.blog.csdn.net/article/details/105156849)
 12. [《K8S环境的Jenkin性能问题处理续篇(任务Pod设置)》](https://xinchen.blog.csdn.net/article/details/105181474)
+13. [《K8S的StorageClass实战(NFS)》](https://xinchen.blog.csdn.net/article/details/105465672)
+14. [《K8S环境快速部署Kafka(K8S外部可访问)》](https://xinchen.blog.csdn.net/article/details/105466163)
+15. [《K8S的Kafka监控(Prometheus+Grafana)》](https://xinchen.blog.csdn.net/article/details/105466788)
 
 ## helm实战
 1. [《helm实战之开发Chart》](https://blog.csdn.net/boling_cavalry/article/details/88759724)
@@ -334,6 +338,12 @@
 
 # 大数据
 
+## CDH
+1. [《CDH5部署三部曲之一：准备工作》](https://xinchen.blog.csdn.net/article/details/105340968)
+2. [《CDH5部署三部曲之二：部署和设置》](https://xinchen.blog.csdn.net/article/details/105341713)
+3. [《CDH5部署三部曲之三：问题总结》](https://xinchen.blog.csdn.net/article/details/105342156)
+4. [《超简单的CDH6部署和体验(单机版)》](https://xinchen.blog.csdn.net/article/details/105356266)
+
 ## Flink
 1. [《Flink1.7从安装到体验》](https://blog.csdn.net/boling_cavalry/article/details/85038527)
 2. [《开发第一个Flink应用》](https://blog.csdn.net/boling_cavalry/article/details/85059168)
@@ -343,6 +353,14 @@
 6. [《Flink数据源拆解分析(WikipediaEditsSource)》](https://blog.csdn.net/boling_cavalry/article/details/85221446)
 7. [《Flink消费kafka消息实战》](https://blog.csdn.net/boling_cavalry/article/details/85549434)
 8. [《Docker部署flink备忘》](https://blog.csdn.net/boling_cavalry/article/details/105015546)
+9. [《Flink on Yarn三部曲之一：准备工作》](https://xinchen.blog.csdn.net/article/details/105356306)
+10. [《Flink on Yarn三部曲之二：部署和设置》](https://xinchen.blog.csdn.net/article/details/105356347)
+11. [《Flink on Yarn三部曲之三：提交Flink任务》](https://xinchen.blog.csdn.net/article/details/105356399)
+12. [《IDEA上运行Flink任务》](https://xinchen.blog.csdn.net/article/details/105459630)
+13. [《Flink1.9.2源码编译和使用》](https://xinchen.blog.csdn.net/article/details/105460060)
+14. [《Flink的DataSource三部曲之一：直接API》](https://xinchen.blog.csdn.net/article/details/105467076)
+15. [《Flink的DataSource三部曲之二:内置connector》](https://xinchen.blog.csdn.net/article/details/105471798)
+16. [《Flink的DataSource三部曲之三:自定义》](https://xinchen.blog.csdn.net/article/details/105472218)
 
 ## Spark
 1. [《部署spark2.2集群(standalone模式)》](https://blog.csdn.net/boling_cavalry/article/details/86747258)
@@ -354,6 +372,11 @@
 7. [《IDEA开发Spark应用实战(Scala)》](https://blog.csdn.net/boling_cavalry/article/details/87510822)
 8. [《查看Spark任务的详细信息》](https://blog.csdn.net/boling_cavalry/article/details/102291920)
 9. [《Mac部署spark2.4.4》](https://blog.csdn.net/boling_cavalry/article/details/102765992)
+
+## Kylin
+1. [《CDH+Kylin三部曲之一：准备工作》](https://xinchen.blog.csdn.net/article/details/105449630)
+2. [《CDH+Kylin三部曲之二：部署和设置》](https://xinchen.blog.csdn.net/article/details/105449952)
+3. [《CDH+Kylin三部曲之三：Kylin官方demo》](https://xinchen.blog.csdn.net/article/details/105450665)
 
 ## HBase
 1. [《Docker下HBase学习，三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/78041775)
@@ -430,6 +453,8 @@
 6. [《Docker下的Kafka学习之三：集群环境下的java开发》](https://blog.csdn.net/boling_cavalry/article/details/78386451)
 7. [《kafka的Docker镜像使用说明(wurstmeister/kafka)》](https://blog.csdn.net/boling_cavalry/article/details/85395080)
 8. [《如何使用Docker内的kafka服务》](https://blog.csdn.net/boling_cavalry/article/details/85528519)
+9. [《K8S环境快速部署Kafka(K8S外部可访问)》](https://xinchen.blog.csdn.net/article/details/105466163)
+10. [《K8S的Kafka监控(Prometheus+Grafana)》](https://xinchen.blog.csdn.net/article/details/105466788)
 
 ## RabbitMQ
 1. [《Docker下RabbitMQ四部曲之一：极速体验(单机和集群)》](https://blog.csdn.net/boling_cavalry/article/details/80212878)
@@ -519,6 +544,16 @@
 
 # DevOps
 
+## ansible
+1. [《ansible2.4安装和体验》](https://xinchen.blog.csdn.net/article/details/105342744)
+2. [《超简单的CDH6部署和体验(单机版)》](https://xinchen.blog.csdn.net/article/details/105356266)
+3. [《Flink on Yarn三部曲之一：准备工作》](https://xinchen.blog.csdn.net/article/details/105356306)
+4. [《Flink on Yarn三部曲之二：部署和设置》](https://xinchen.blog.csdn.net/article/details/105356347)
+5. [《Flink on Yarn三部曲之三：提交Flink任务》](https://xinchen.blog.csdn.net/article/details/105356399)
+6. [《CDH+Kylin三部曲之一：准备工作》](https://xinchen.blog.csdn.net/article/details/105449630)
+7. [《CDH+Kylin三部曲之二：部署和设置》](https://xinchen.blog.csdn.net/article/details/105449952)
+8. [《CDH+Kylin三部曲之三：Kylin官方demo》](https://xinchen.blog.csdn.net/article/details/105450665)
+
 ## Maven
 1. [《maven构建docker镜像三部曲之一：准备环境》](https://blog.csdn.net/boling_cavalry/article/details/78869466)
 2. [《maven构建docker镜像三部曲之二：编码和构建镜像》](https://blog.csdn.net/boling_cavalry/article/details/78872020)
@@ -545,12 +580,15 @@
 7. [《kubernetes下的jenkins如何设置maven》](https://blog.csdn.net/boling_cavalry/article/details/104849839)
 8. [《K8S环境的Jenkin性能问题处理》](https://blog.csdn.net/boling_cavalry/article/details/105005245)
 9. [《K8S环境的Jenkin性能问题处理续篇(任务Pod设置)》](https://xinchen.blog.csdn.net/article/details/105181474)
+10. [《远程触发Jenkins的Pipeline任务》](https://xinchen.blog.csdn.net/article/details/105189564)
+11. [《远程触发Jenkins的Pipeline任务的并发问题处理》](https://xinchen.blog.csdn.net/article/details/105340243)
 
 ## promethus
 1. [《Docker下Prometheus和Grafana三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/88367137)
 2. [《Docker下Prometheus和Grafana三部曲之二：细说Docker编排》](https://blog.csdn.net/boling_cavalry/article/details/88374848)
 3. [《Docker下Prometheus和Grafana三部曲之三：自定义监控项开发和配置》](https://blog.csdn.net/boling_cavalry/article/details/88375734)
 4. [《kubernetes1.15极速部署prometheus和grafana》](https://xinchen.blog.csdn.net/article/details/105156849)
+5. [《K8S的Kafka监控(Prometheus+Grafana)》](https://xinchen.blog.csdn.net/article/details/105466788)
 
 ## zabbix
 1. [《Docker下实战zabbix三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/76857936)
@@ -605,6 +643,12 @@
 4. [《树莓派部署Elasticsearch6集群》](https://blog.csdn.net/boling_cavalry/article/details/89440971)
 5. [《树莓派4B安装64位Linux(不用显示器键盘鼠标)》](https://blog.csdn.net/boling_cavalry/article/details/100594275)
 6. [《树莓派4B安装docker-compose(64位Linux)》](https://blog.csdn.net/boling_cavalry/article/details/101105693)
+
+## 群晖
+1. [《群晖DS218+做maven私服(nexus3)》](https://xinchen.blog.csdn.net/article/details/105458466)
+2. [《群晖DS218+部署mysql》](https://xinchen.blog.csdn.net/article/details/105460567)
+3. [《群晖DS218+部署kafka》](https://xinchen.blog.csdn.net/article/details/105462692)
+4. [《K8S使用群晖DS218+的NFS》](https://xinchen.blog.csdn.net/article/details/105465233)
 
 ### 标记(改过内容)
 [《把pinpoint编译环境做成Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78447310)
