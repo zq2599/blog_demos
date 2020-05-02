@@ -25,7 +25,9 @@ import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
 /**
- * Reads JSON-encoded TaxiRecords from a gzipped text file.
+ * @Description: 读取数据
+ * @author: willzhao E-mail: zq2599@gmail.com
+ * @date: 2020/5/2 15:02
  */
 public class UserBehaviorCsvFileReader implements Supplier<UserBehavior> {
 

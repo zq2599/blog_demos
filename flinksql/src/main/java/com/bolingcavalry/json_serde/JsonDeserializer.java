@@ -21,9 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 /**
- * Deserializes a record from a JSON string.
- *
- * @param <T> The type of the deserialized record.
+ * @Description: 反序列化类
+ * @author: willzhao E-mail: zq2599@gmail.com
+ * @date: 2020/5/2 15:02
  */
 public class JsonDeserializer<T> {
 

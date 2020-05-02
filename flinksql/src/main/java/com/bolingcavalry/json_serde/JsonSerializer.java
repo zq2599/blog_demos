@@ -20,9 +20,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Serializes a record as JSON string.
- *
- * @param <T> The type for the records to serialize.
+ * @Description: 序列化类
+ * @author: willzhao E-mail: zq2599@gmail.com
+ * @date: 2020/5/2 15:05
  */
 public class JsonSerializer<T> {
 

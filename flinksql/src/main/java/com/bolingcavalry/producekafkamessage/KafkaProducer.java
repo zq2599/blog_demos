@@ -27,7 +27,9 @@ import java.util.Properties;
 import java.util.function.Consumer;
 
 /**
- * Produces TaxiRecords into a Kafka topic.
+ * @Description: 向kafka发送消息的类
+ * @author: willzhao E-mail: zq2599@gmail.com
+ * @date: 2020/5/2 15:02
  */
 public class KafkaProducer implements Consumer<UserBehavior> {
 
@@ -43,12 +45,14 @@ public class KafkaProducer implements Consumer<UserBehavior> {
 
     @Override
     public void accept(UserBehavior record) {
-        // serialize record as JSON
+        // 将对象序列化成byte数组
         byte[] data = serializer.toJSONBytes(record);
-        // create producer record and publish to Kafka
+        // 封装
         ProducerRecord<byte[], byte[]> kafkaRecord = new ProducerRecord<>(topic, data);
+        // 发送
         producer.send(kafkaRecord);
 
+        // 通过sleep控制消息的速度，请依据自身kafka配置以及flink服务器配置来调整
         try {
             Thread.sleep(500);
         }catch(InterruptedException e){
@@ -57,8 +61,7 @@ public class KafkaProducer implements Consumer<UserBehavior> {
     }
 
     /**
-     * Create configuration properties for Kafka producer.
-     *
+     * kafka配置
      * @param brokers The brokers to connect to.
      * @return A Kafka producer configuration.
      */

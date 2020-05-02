@@ -16,46 +16,26 @@
 
 package com.bolingcavalry.producekafkamessage;
 
-import com.bolingcavalry.beans.UserBehavior;
-
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
- * Produces TaxiRecords (Ride, Fare, DriverChange) into Kafka topics.
+ * @Description: 应用类
+ * @author: willzhao E-mail: zq2599@gmail.com
+ * @date: 2020/5/2 15:02
  */
 public class SendMessageApplication {
 
     public static void main(String[] args) throws Exception {
-        Supplier<UserBehavior> userBehaviorSupplier = new UserBehaviorCsvFileReader("D:\\temp\\202005\\02\\UserBehavior1.csv");
+        // 文件地址
+        String filePath = "D:\\temp\\202005\\02\\UserBehavior.csv";
+        // kafka topic
+        String topic = "user_behavior";
+        // kafka borker地址
+        String broker = "192.168.50.43:9092";
 
-        Consumer<UserBehavior> userBehaviorConsumer = new KafkaProducer("user_behavior2", "192.168.50.43:9092");;
 
-        // create three threads for each record type
-        Thread userBehaviorFeeder = new Thread(new RecordFeeder(userBehaviorSupplier, userBehaviorConsumer));
-
-        // start emitting data
-        userBehaviorFeeder.start();
-
-        // wait for threads to complete
-        userBehaviorFeeder.join();
-    }
-
-    public static class RecordFeeder implements Runnable {
-
-        private final Supplier<UserBehavior> source;
-        private final Consumer<UserBehavior> sink;
-
-        RecordFeeder(Supplier<UserBehavior> source, Consumer<UserBehavior> sink) {
-            this.source = source;
-            this.sink = sink;
-        }
-
-        @Override
-        public void run() {
-            Stream.generate(source).sequential()
-                    .forEachOrdered(sink);
-        }
+        Stream.generate(new UserBehaviorCsvFileReader(filePath))
+                .sequential()
+                .forEachOrdered(new KafkaProducer(topic, broker));
     }
 }

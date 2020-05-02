@@ -21,7 +21,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 /**
- * POJO for a User Behavior record.
+ * @Description: 用户行为信息的实体类
+ * @author: willzhao E-mail: zq2599@gmail.com
+ * @date: 2020/5/2 15:02
  */
 public class UserBehavior {
 
