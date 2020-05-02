@@ -9,7 +9,7 @@ import java.util.List;
  * @author will
  * @email zq2599@gmail.com
  * @date 2020-03-14 22:08
- * @description kafka发送对象的sink
+ * @description 自定义的sink，写入mysql
  */
 public class StudentSink {
     public static void main(String[] args) throws Exception {
@@ -27,7 +27,8 @@ public class StudentSink {
         list.add(new Student("fff", 16));
 
         env.fromCollection(list)
-            .addSink(new MySQLSinkFunction());
+            .addSink(new MySQLSinkFunction())
+            .disableChaining();
 
         env.execute("sink demo : customize mysql obj");
     }
