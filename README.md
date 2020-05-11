@@ -361,6 +361,16 @@
 14. [《Flink的DataSource三部曲之一：直接API》](https://xinchen.blog.csdn.net/article/details/105467076)
 15. [《Flink的DataSource三部曲之二:内置connector》](https://xinchen.blog.csdn.net/article/details/105471798)
 16. [《Flink的DataSource三部曲之三:自定义》](https://xinchen.blog.csdn.net/article/details/105472218)
+17. [《Flink的sink实战之一：初探》](https://blog.csdn.net/boling_cavalry/article/details/105597628)
+18. [《Flink的sink实战之二：kafka》](https://blog.csdn.net/boling_cavalry/article/details/105598224)
+19. [《Flink的sink实战之三：cassandra3》](https://blog.csdn.net/boling_cavalry/article/details/105598968)
+20. [《Flink的sink实战之四：自定义》](https://blog.csdn.net/boling_cavalry/article/details/105599511)
+21. [《Flink SQL Client初探》](https://blog.csdn.net/boling_cavalry/article/details/105964425)
+22. [《准备数据集用于flink学习》](https://blog.csdn.net/boling_cavalry/article/details/106033059)
+23. [《将CSV的数据发送到kafka(java版)》](https://blog.csdn.net/boling_cavalry/article/details/106033472)
+24. [《Flink SQL Client综合实战》](https://blog.csdn.net/boling_cavalry/article/details/106038219)
+26. [《Flink Native Kubernetes实战》](https://blog.csdn.net/boling_cavalry/article/details/106038957)
+27. [《深入了解ProcessFunction的状态操作(Flink-1.10)》](https://blog.csdn.net/boling_cavalry/article/details/106040312)
 
 ## Spark
 1. [《部署spark2.2集群(standalone模式)》](https://blog.csdn.net/boling_cavalry/article/details/86747258)
@@ -553,6 +563,7 @@
 6. [《CDH+Kylin三部曲之一：准备工作》](https://xinchen.blog.csdn.net/article/details/105449630)
 7. [《CDH+Kylin三部曲之二：部署和设置》](https://xinchen.blog.csdn.net/article/details/105449952)
 8. [《CDH+Kylin三部曲之三：Kylin官方demo》](https://xinchen.blog.csdn.net/article/details/105450665)
+9. [《ansible快速部署cassandra3集群》](https://blog.csdn.net/boling_cavalry/article/details/105602584)
 
 ## Maven
 1. [《maven构建docker镜像三部曲之一：准备环境》](https://blog.csdn.net/boling_cavalry/article/details/78869466)
