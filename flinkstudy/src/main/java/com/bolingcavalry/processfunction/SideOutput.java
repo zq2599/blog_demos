@@ -42,7 +42,7 @@ public class SideOutput {
                     @Override
                     public void processElement(Tuple2<String, Integer> value, Context ctx, Collector<String> out) throws Exception {
 
-                        //进入下一个算子
+                        //进入主流程的下一个算子
                         out.collect("main, name : " + value.f0 + ", value : " + value.f1);
 
                         //f1字段为奇数的元素进入SideOutput
@@ -52,10 +52,12 @@ public class SideOutput {
                     }
                 });
 
-
+        // 禁止chanin，这样可以在页面上看清楚原始的DAG
         mainDataStream.disableChaining();
 
+        // 取得旁路数据
         DataStream<String> sideDataStream = mainDataStream.getSideOutput(outputTag);
+
 
         mainDataStream.print();
         sideDataStream.print();

@@ -24,6 +24,7 @@ public class Simple {
         // 并行度为1
         env.setParallelism(1);
 
+        // 设置数据源，一共三个元素
         DataStream<Tuple2<String,Integer>> dataStream = env.addSource(new SourceFunction<Tuple2<String, Integer>>() {
             @Override
             public void run(SourceContext<Tuple2<String, Integer>> ctx) throws Exception {
@@ -42,6 +43,7 @@ public class Simple {
                     // 发射一个元素，并且戴上了时间戳
                     ctx.collectWithTimestamp(new Tuple2<String, Integer>(name, value), timeStamp);
 
+                    // 为了让每个元素的时间戳不一样，每发射一次就延时10毫秒
                     Thread.sleep(10);
                 }
             }
