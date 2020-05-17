@@ -62,7 +62,7 @@ public class Simple {
                     public void processElement(Tuple2<String, Integer> value, Context ctx, Collector<String> out) throws Exception {
                         // f1字段为奇数的元素不会进入下一个算子
                         if(0 == value.f1 % 2) {
-                            out.collect(String.format("processElement，%s, %d, %d\n",
+                            out.collect(String.format("process，%s, %d, %d\n",
                                     value.f0,
                                     value.f1,
                                     ctx.timestamp()));
