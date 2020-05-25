@@ -371,6 +371,8 @@
 24. [《Flink SQL Client综合实战》](https://blog.csdn.net/boling_cavalry/article/details/106038219)
 26. [《Flink Native Kubernetes实战》](https://blog.csdn.net/boling_cavalry/article/details/106038957)
 27. [《深入了解ProcessFunction的状态操作(Flink-1.10)》](https://blog.csdn.net/boling_cavalry/article/details/106040312)
+28. [《Flink处理函数实战之一：ProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299035)
+29. [《Flink处理函数实战之二：KeyedProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299167)
 
 ## Spark
 1. [《部署spark2.2集群(standalone模式)》](https://blog.csdn.net/boling_cavalry/article/details/86747258)
