@@ -1,7 +1,6 @@
 package com.bolingcavalry.probedemo.controller;
 
 import org.springframework.boot.availability.ApplicationAvailability;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

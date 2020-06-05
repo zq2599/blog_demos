@@ -25,6 +25,18 @@ spec:
         - name: probedemo
           image: bolingcavalry/probedemo:0.0.1
           tty: true
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 5
           ports:
             - containerPort: 8080
           resources:

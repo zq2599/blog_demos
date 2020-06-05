@@ -22,6 +22,11 @@ import java.util.List;
 @RestController
 public class Hello {
 
+    /**
+     * 返回的是当前服务器IP地址，在k8s环境就是pod地址
+     * @return
+     * @throws SocketException
+     */
     @RequestMapping(value="/hello")
     public String hello() throws SocketException {
         List<Inet4Address> addresses = getLocalIp4AddressFromNetworkInterface();
