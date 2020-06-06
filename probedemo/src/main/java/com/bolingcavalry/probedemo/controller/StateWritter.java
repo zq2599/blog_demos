@@ -18,7 +18,7 @@ import java.util.Date;
  * version: 1.0 <br>
  */
 @RestController
-@RequestMapping("/staterwriter")
+@RequestMapping("/statewriter")
 public class StateWritter {
 
     @Resource
@@ -59,7 +59,7 @@ public class StateWritter {
      * @return
      */
     @RequestMapping(value="/accept")
-    public String refusing(){
+    public String accept(){
         AvailabilityChangeEvent.publish(applicationEventPublisher, StateWritter.this, ReadinessState.ACCEPTING_TRAFFIC);
         return "success accept, " + new Date();
     }
