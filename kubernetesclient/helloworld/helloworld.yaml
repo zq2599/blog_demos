@@ -26,7 +26,7 @@ spec:
       serviceAccountName: kubernates-client-service-account
       containers:
         - name: helloworld
-          image: 192.168.50.43:5888/common/helloworld:02307851
+          image: 192.168.50.43:5888/common/gitlabci-java-demo:02307851
           tty: true
           livenessProbe:
             httpGet:

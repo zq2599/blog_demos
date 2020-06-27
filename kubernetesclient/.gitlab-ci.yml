@@ -17,6 +17,7 @@ cache:
 stages:
   - package
   - build
+  - deploy
 
 # 生产jar的job
 make_jar:
@@ -47,3 +48,16 @@ make_hello_world_image:
     - docker logout
     - echo "清理掉本次构建的jar文件"
     - rm -rf helloworld/target/*.jar
+    
+# 部署到k8s环境
+deploy_k8s:
+  # 禁用cache，避免上传、下载、压缩、解压缩带来的开销
+  cache: {}
+  image: ictu/sshpass:latest
+  stage: deploy
+  tags:
+  - k8s
+  script:
+  - export TAG=$CI_COMMIT_SHORT_SHA
+  - echo "TAG is "$TAG
+  - sshpass -p 888888 ssh -o "StrictHostKeyChecking no" root@192.168.50.135 "kubectl set image deployment helloworld helloworld=192.168.50.43:5888/common/helloworld:$TAG -n kubernetesclient"

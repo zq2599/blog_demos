@@ -10,9 +10,9 @@
     </parent>
 
     <groupId>com.bolingcavalry</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>helloworld</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
+    <name>helloworld</name>
     <description>Demo project for Spring Boot</description>
     <packaging>jar</packaging>
 
@@ -26,7 +26,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
+        
         <dependency>
             <groupId>io.kubernetes</groupId>
             <artifactId>client-java</artifactId>
