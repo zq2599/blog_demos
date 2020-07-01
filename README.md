@@ -113,6 +113,13 @@
 7. [《SpringBoot下用Kyro作为Redis序列化工具》](https://blog.csdn.net/boling_cavalry/article/details/80710774)
 8. [《springboot应用查询城市天气》](https://blog.csdn.net/boling_cavalry/article/details/86770023)
 9. [《立即可用的实战源码(springboot+redis+mybatis+restTemplate)》](https://blog.csdn.net/boling_cavalry/article/details/101999606)
+10. [《SpringBoot-2.3镜像方案为什么要做多个layer》](https://blog.csdn.net/boling_cavalry/article/details/106600620)
+11. [《体验SpringBoot(2.3)应用制作Docker镜像(官方方案)》](https://blog.csdn.net/boling_cavalry/article/details/106597358)
+12. [《详解SpringBoot(2.3)应用制作Docker镜像(官方方案)》](https://blog.csdn.net/boling_cavalry/article/details/106598189)
+13. [《掌握SpringBoot-2.3的容器探针：基础篇》](https://blog.csdn.net/boling_cavalry/article/details/106605264)
+14. [《掌握SpringBoot-2.3的容器探针：深入篇》](https://blog.csdn.net/boling_cavalry/article/details/106606442)
+15. [《掌握SpringBoot-2.3的容器探针：实战篇》](https://blog.csdn.net/boling_cavalry/article/details/106607225)
+16. [《springboot的jar为何能独立运行》](https://blog.csdn.net/boling_cavalry/article/details/106966579)
 
 ## SpringBoot进阶实战
 1. [《Docker下redis与springboot三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/78991422)
@@ -182,6 +189,8 @@
 23. [《Java应用在docker环境配置容器健康检查》](https://blog.csdn.net/boling_cavalry/article/details/102649435)
 24. [《docker-compose下的java应用启动顺序两部曲之一：问题分析》](https://blog.csdn.net/boling_cavalry/article/details/102874052)
 25. [《docker-compose下的java应用启动顺序两部曲之二：实战》](https://blog.csdn.net/boling_cavalry/article/details/102880881)
+26. [《设置非root账号不用sudo直接执行docker命令》](https://blog.csdn.net/boling_cavalry/article/details/106590784)
+27. [《SpringBoot-2.3镜像方案为什么要做多个layer》](https://blog.csdn.net/boling_cavalry/article/details/106600620)
 
 ## 进阶实战
 1. [《Docker下的web开发和Tomcat部署》](https://blog.csdn.net/boling_cavalry/article/details/61415268)
@@ -291,6 +300,8 @@
 9. [《k8s自定义controller三部曲之三：编写controller代码》](https://blog.csdn.net/boling_cavalry/article/details/88934063)
 10. [《查看k8s的etcd数据》](https://blog.csdn.net/boling_cavalry/article/details/88958242)
 11. [《kubernetes部署metrics-server》](https://blog.csdn.net/boling_cavalry/article/details/105006295)
+12. [《Kubernetes的Local Persistent Volumes使用小记》](https://blog.csdn.net/boling_cavalry/article/details/106453727)
+13. [《开发阶段，将SpringBoot应用快速部署到K8S》](https://blog.csdn.net/boling_cavalry/article/details/106594392)
 
 ## kubernetes安装部署
 1. [《kubeadm搭建kubernetes集群之一：构建标准化镜像》](https://blog.csdn.net/boling_cavalry/article/details/78694206)
@@ -373,6 +384,7 @@
 27. [《深入了解ProcessFunction的状态操作(Flink-1.10)》](https://blog.csdn.net/boling_cavalry/article/details/106040312)
 28. [《Flink处理函数实战之一：ProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299035)
 29. [《Flink处理函数实战之二：KeyedProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299167)
+30. [《Flink处理函数实战之三：窗口处理》](https://blog.csdn.net/boling_cavalry/article/details/106453229)
 
 ## Spark
 1. [《部署spark2.2集群(standalone模式)》](https://blog.csdn.net/boling_cavalry/article/details/86747258)
@@ -583,7 +595,7 @@
 14. [《kubernetes下的jenkins如何设置maven》](https://blog.csdn.net/boling_cavalry/article/details/104849839)
 15. [《kubernetes下jenkins实战maven项目编译构建》](https://blog.csdn.net/boling_cavalry/article/details/104875452)
 
-## Jenkins
+## 持续构建
 1. [《通过http请求启动jenkins任务》](https://blog.csdn.net/boling_cavalry/article/details/85373901)
 2. [《Jenkins流水线(pipeline)实战之：从部署到体验》](https://blog.csdn.net/boling_cavalry/article/details/100848333)
 3. [《让Jenkins执行GitHub上的pipeline脚本》](https://blog.csdn.net/boling_cavalry/article/details/100857361)
@@ -595,6 +607,8 @@
 9. [《K8S环境的Jenkin性能问题处理续篇(任务Pod设置)》](https://xinchen.blog.csdn.net/article/details/105181474)
 10. [《远程触发Jenkins的Pipeline任务》](https://xinchen.blog.csdn.net/article/details/105189564)
 11. [《远程触发Jenkins的Pipeline任务的并发问题处理》](https://xinchen.blog.csdn.net/article/details/105340243)
+12. [《GitLab Runner部署(kubernetes环境)》](https://blog.csdn.net/boling_cavalry/article/details/106991576)
+13. [《GitLab CI构建SpringBoot-2.3应用》](https://blog.csdn.net/boling_cavalry/article/details/106991691)
 
 ## promethus
 1. [《Docker下Prometheus和Grafana三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/88367137)
@@ -662,6 +676,7 @@
 2. [《群晖DS218+部署mysql》](https://xinchen.blog.csdn.net/article/details/105460567)
 3. [《群晖DS218+部署kafka》](https://xinchen.blog.csdn.net/article/details/105462692)
 4. [《K8S使用群晖DS218+的NFS》](https://xinchen.blog.csdn.net/article/details/105465233)
+5. [《群晖DS218+部署GitLab》](https://blog.csdn.net/boling_cavalry/article/details/106973743)
 
 ### 标记(改过内容)
 [《把pinpoint编译环境做成Docker镜像文件》](https://blog.csdn.net/boling_cavalry/article/details/78447310)
