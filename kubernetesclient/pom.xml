@@ -39,22 +39,22 @@
         </dependency>
     </dependencies>
 
-    <dependencyManagement>
+        <dependencyManagement>
 
-        <dependencies>
-            <dependency>
-                <groupId>io.kubernetes</groupId>
-                <artifactId>client-java</artifactId>
-                <version>7.0.0</version>
-                <scope>compile</scope>
-            </dependency>
+            <dependencies>
+                <dependency>
+                    <groupId>io.kubernetes</groupId>
+                    <artifactId>client-java</artifactId>
+                    <version>7.0.0</version>
+                    <scope>compile</scope>
+                </dependency>
 
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.8.4</version>
-                <scope>compile</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+                <dependency>
+                    <groupId>com.google.code.gson</groupId>
+                    <artifactId>gson</artifactId>
+                    <version>2.8.4</version>
+                    <scope>compile</scope>
+                </dependency>
+            </dependencies>
+        </dependencyManagement>
 </project>
