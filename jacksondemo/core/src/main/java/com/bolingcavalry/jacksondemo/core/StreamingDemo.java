@@ -1,4 +1,4 @@
-package com.bolingcavalry.jacksondemo.normaluse.core;
+package com.bolingcavalry.jacksondemo.core;
 
 import com.bolingcavalry.jacksondemo.beans.TwitterEntry;
 import com.fasterxml.jackson.core.*;
@@ -13,9 +13,9 @@ import java.io.IOException;
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/7/4 15:50
  */
-public class LowLevel {
+public class StreamingDemo {
 
-    private static final Logger logger = LoggerFactory.getLogger(LowLevel.class);
+    private static final Logger logger = LoggerFactory.getLogger(StreamingDemo.class);
 
     JsonFactory jsonFactory = new JsonFactory();
 
@@ -113,6 +113,7 @@ public class LowLevel {
      * @return 由对象序列化得到的JSON字符串
      */
     public String serialize(TwitterEntry twitterEntry) throws IOException{
+        String rlt = null;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         JsonGenerator jsonGenerator = jsonFactory.createGenerator(byteArrayOutputStream, JsonEncoding.UTF8);
 
@@ -132,20 +133,23 @@ public class LowLevel {
             jsonGenerator.close();
         }
 
-        return byteArrayOutputStream.toString();
+        // 一定要在
+        rlt = byteArrayOutputStream.toString();
+
+        return rlt;
     }
 
 
     public static void main(String[] args) throws Exception {
 
-        LowLevel lowLevel = new LowLevel();
-
-        // 执行一次JSON转对象操作
-        TwitterEntry deserializeResult = lowLevel.deserialize(TEST_JSON_STR);
-        logger.info("\n反序列化结果是个java实例 : \n{}\n\n", deserializeResult);
+        StreamingDemo streamingDemo = new StreamingDemo();
 
         // 执行一次对象转JSON操作
-        String serializeResult = lowLevel.serialize(TEST_OBJECT);
-        logger.info("序列化结果是JSON字符串 : \n{}", serializeResult);
+        String serializeResult = streamingDemo.serialize(TEST_OBJECT);
+        logger.info("序列化结果是JSON字符串 : \n{}\n\n", serializeResult);
+
+        // 执行一次JSON转对象操作
+        TwitterEntry deserializeResult = streamingDemo.deserialize(TEST_JSON_STR);
+        logger.info("\n反序列化结果是个java实例 : \n{}", deserializeResult);
     }
 }

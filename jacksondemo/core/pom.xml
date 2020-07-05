@@ -12,8 +12,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bolingcavalry</groupId>
-    <artifactId>normaluse</artifactId>
-    <name>normaluse</name>
+    <artifactId>core</artifactId>
+    <name>core</name>
     <description>Demo project for jackson normal use</description>
     <build>
         <plugins>
