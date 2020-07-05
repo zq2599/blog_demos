@@ -12,9 +12,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bolingcavalry</groupId>
-    <artifactId>core</artifactId>
-    <name>core</name>
-    <description>Demo project for jackson core use</description>
+    <artifactId>databind</artifactId>
+    <name>databind</name>
+    <description>Demo project for jackson databind use</description>
     <build>
         <plugins>
             <plugin>

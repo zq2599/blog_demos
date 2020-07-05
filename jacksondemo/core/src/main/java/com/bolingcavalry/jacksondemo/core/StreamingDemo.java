@@ -2,11 +2,15 @@ package com.bolingcavalry.jacksondemo.core;
 
 import com.bolingcavalry.jacksondemo.beans.TwitterEntry;
 import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * @Description: jackson低阶方法的使用
@@ -18,6 +22,11 @@ public class StreamingDemo {
     private static final Logger logger = LoggerFactory.getLogger(StreamingDemo.class);
 
     JsonFactory jsonFactory = new JsonFactory();
+
+    /**
+     * 该字符串的值是个网络地址，该地址对应的内容是个JSON
+     */
+    final static String TEST_JSON_DATA_URL = "https://raw.githubusercontent.com/zq2599/blog_demos/master/files/twitteer_message.json";
 
     /**
      * 用来验证反序列化的JSON字符串
@@ -48,12 +57,12 @@ public class StreamingDemo {
 
 
     /**
-     * 反序列化测试(JSON -> Object)
+     * 反序列化测试(JSON -> Object)，入参是JSON字符串
+     * @param json JSON字符串
      * @return
      * @throws IOException
      */
-    public TwitterEntry deserialize(String json) throws IOException {
-
+    public TwitterEntry deserializeJSONStr(String json) throws IOException {
 
         JsonParser jsonParser = jsonFactory.createParser(json);
 
@@ -106,6 +115,26 @@ public class StreamingDemo {
         return result;
     }
 
+    /**
+     * 反序列化测试(JSON -> Object)，入参是JSON字符串
+     * @param url JSON字符串的网络地址
+     * @return
+     * @throws IOException
+     */
+    public TwitterEntry deserializeJSONFromUrl(String url) throws IOException {
+        // 从网络上取得JSON字符串
+        String json = IOUtils.toString(new URL(TEST_JSON_DATA_URL), JsonEncoding.UTF8.name());
+
+        logger.info("从网络取得JSON数据 :\n{}", json);
+
+        if(StringUtils.isNotBlank(json)) {
+            return deserializeJSONStr(json);
+        } else {
+            logger.error("从网络获取JSON数据失败");
+            return null;
+        }
+    }
+
 
     /**
      * 序列化测试(Object -> JSON)
@@ -145,11 +174,20 @@ public class StreamingDemo {
         StreamingDemo streamingDemo = new StreamingDemo();
 
         // 执行一次对象转JSON操作
+        logger.info("********************执行一次对象转JSON操作********************");
         String serializeResult = streamingDemo.serialize(TEST_OBJECT);
         logger.info("序列化结果是JSON字符串 : \n{}\n\n", serializeResult);
 
-        // 执行一次JSON转对象操作
-        TwitterEntry deserializeResult = streamingDemo.deserialize(TEST_JSON_STR);
-        logger.info("\n反序列化结果是个java实例 : \n{}", deserializeResult);
+        // 用本地字符串执行一次JSON转对象操作
+        logger.info("********************执行一次本地JSON反序列化操作********************");
+        TwitterEntry deserializeResult = streamingDemo.deserializeJSONStr(TEST_JSON_STR);
+        logger.info("\n本地JSON反序列化结果是个java实例 : \n{}\n\n", deserializeResult);
+
+        // 用网络地址执行一次JSON转对象操作
+        logger.info("********************执行一次网络JSON反序列化操作********************");
+        deserializeResult = streamingDemo.deserializeJSONFromUrl(TEST_JSON_DATA_URL);
+        logger.info("\n网络JSON反序列化结果是个java实例 : \n{}", deserializeResult);
+
+        ObjectMapper a;
     }
 }
