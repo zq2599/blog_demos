@@ -1,6 +1,6 @@
 package com.bolingcavalry.outsidecluster;
 
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.Configuration;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
@@ -26,8 +26,10 @@ public class OutsideclusterApplication {
 
     @RequestMapping(value = "/hello")
     public V1PodList hello() throws Exception {
-        String kubeConfigPath = "D:\\temp\\config";
+        // 存放K8S的config文件的全路径
+        String kubeConfigPath = "/Users/zhaoqin/temp/202007/05/config";
 
+        // 以config作为入参创建的client对象，可以访问到K8S的API Server
         ApiClient client = ClientBuilder
                 .kubeconfig(KubeConfig.loadKubeConfig(new FileReader(kubeConfigPath)))
                 .build();
@@ -40,7 +42,7 @@ public class OutsideclusterApplication {
         V1PodList v1PodList = api.listPodForAllNamespaces(null, null, null, null, null, null, null, null, null);
 
         // 使用jackson将集合对象序列化成JSON，在日志中打印出来
-        log.info("pod info \n{}", new Gson().toJson(v1PodList));
+        log.info("pod info \n{}", new GsonBuilder().setPrettyPrinting().create().toJson(v1PodList));
 
         return v1PodList;
     }
