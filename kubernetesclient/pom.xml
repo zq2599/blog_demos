@@ -19,6 +19,7 @@
     <modules>
         <module>helloworld</module>
         <module>outsidecluster</module>
+        <module>protobufclient</module>
     </modules>
 
     <properties>
