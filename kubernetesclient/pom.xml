@@ -20,6 +20,7 @@
         <module>helloworld</module>
         <module>outsidecluster</module>
         <module>protobufclient</module>
+        <module>openapi</module>
     </modules>
 
     <properties>
