@@ -1,32 +1,22 @@
 package com.bolingcavalry.patch;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
 import io.kubernetes.client.custom.V1Patch;
 import io.kubernetes.client.openapi.ApiClient;
-import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.Configuration;
-import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.openapi.apis.ExtensionsV1beta1Api;
-import io.kubernetes.client.openapi.models.*;
+import io.kubernetes.client.openapi.models.ExtensionsV1beta1Deployment;
 import io.kubernetes.client.util.ClientBuilder;
 import io.kubernetes.client.util.Config;
-import io.kubernetes.client.util.KubeConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.compress.utils.IOUtils;
-import org.apache.commons.io.FileUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import javax.annotation.PostConstruct;
-import java.io.*;
+import java.io.IOException;
 
 @SpringBootApplication
 @RestController
@@ -35,59 +25,9 @@ public class PatchExample {
 
     static String DEPLOYMENT_NAME = "test123";
 
-    /**
-     * 本次实战使用nginx作为测试镜像
-     */
-    static String IMAGE_NAME = "nginx";
+    static String NAMESPACE = "default";
 
-    /**
-     * 现部署1.18.0版本
-     */
-    static String OLD_TAG = "1.18.0";
-
-    /**
-     * 更新的时候使用1.19.1版本
-     */
-    static String NEW_TAG = "1.19.1";
-
-    /**
-     * 容器端口
-     */
-    static int CONTAINER_PORT = 80;
-
-    /**
-     * 执行部署的json字符串
-     */
-    /*
-    static String jsonDeploymentStr =
-            "{\"kind\":\"Deployment\",\"apiVersion\":\"extensions/v1beta1\",\"metadata\":{\"name\":\"" + DEPLOYMENT_NAME + "\",\"finalizers\":[\"example.com/test\"],\"labels\":{\"run\":\"" + DEPLOYMENT_NAME + "\"}},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"run\":\"" + DEPLOYMENT_NAME + "\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"run\":\"" + DEPLOYMENT_NAME + "\"}},\"spec\":{\"terminationGracePeriodSeconds\":30,\"containers\":[{\"name\":\"" + DEPLOYMENT_NAME + "\",\"image\":\"" + IMAGE_NAME + ":" + OLD_TAG + "\",\"ports\":[{\"containerPort\":" + CONTAINER_PORT + "}],\"resources\":{}}]}},\"strategy\":{}},\"status\":{}}";
-    */
-
-    /**
-     * 执行json patch的json字符串
-     */
-    /*
-    static String jsonPatchStr =
-            "[{\"op\":\"replace\",\"path\":\"/spec/template/spec/terminationGracePeriodSeconds\",\"value\":27}]";
-    */
-
-    /**
-     * 执行strategic merge path的json字符串
-     */
-    /*
-    static String strategicMergePatchStr =
-            "{\"metadata\":{\"$deleteFromPrimitiveList/finalizers\":[\"example.com/test\"]}}";
-    */
-
-    /**
-     * 执行service side apply的json字符串
-     */
-    /*
-    static String applyYamlStr =
-            "{\"kind\":\"Deployment\",\"apiVersion\":\"extensions/v1beta1\",\"metadata\":{\"name\":\"" + DEPLOYMENT_NAME + "\",\"finalizers\":[\"example.com/test\"],\"labels\":{\"run\":\"" + DEPLOYMENT_NAME + "\"}},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"run\":\"" + DEPLOYMENT_NAME + "\"}},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"run\":\"" + DEPLOYMENT_NAME + "\"}},\"spec\":{\"terminationGracePeriodSeconds\":30,\"containers\":[{\"name\":\"" + DEPLOYMENT_NAME + "\",\"image\":\"" + IMAGE_NAME + ":" + NEW_TAG + "\",\"ports\":[{\"containerPort\":" + CONTAINER_PORT + ", \"protocol\": \"TCP\"}],\"resources\":{}}]}},\"strategy\":{}},\"status\":{}}";
-    */
-
-    static String jsonDeploymentStr, jsonPatchStr, strategicMergePatchStr, applyYamlStr;
+    static String deployStr, jsonStr, mergeStr, strategicStr, applyYamlStr;
     /**
      * 默认的全局设置
      * @return
@@ -100,10 +40,19 @@ public class PatchExample {
         // 设置超时时间
         Configuration.getDefaultApiClient().setConnectTimeout(30000);
 
-        // patch实战中用到的字符串
-        jsonDeploymentStr = new ClassPathResourceReader("jsonDeployment.json").getContent();
-        jsonPatchStr = new ClassPathResourceReader("jsonPatch.json").getContent();
-        strategicMergePatchStr = new ClassPathResourceReader("strategicMergePatch.json").getContent();
+        // 部署用的JSON字符串
+        deployStr = new ClassPathResourceReader("deploy.json").getContent();
+
+        // json patch用的JSON字符串
+        jsonStr = new ClassPathResourceReader("json.json").getContent();
+
+        // merge patch用的JSON字符串，和部署的JSON相比：replicas从1变成2，增加一个名为from的label，值为merge
+        mergeStr = new ClassPathResourceReader("merge.json").getContent();
+
+        // strategic merge patch用的JSON字符串
+        strategicStr = new ClassPathResourceReader("strategic.json").getContent();
+
+        // server side apply用的JSON字符串
         applyYamlStr = new ClassPathResourceReader("applyYaml.json").getContent();
     }
 
@@ -122,7 +71,7 @@ public class PatchExample {
         ExtensionsV1beta1Deployment body = Configuration
                 .getDefaultApiClient()
                 .getJSON()
-                .deserialize(jsonDeploymentStr, ExtensionsV1beta1Deployment.class);
+                .deserialize(deployStr, ExtensionsV1beta1Deployment.class);
 
 
         log.info("start deploy");
@@ -142,25 +91,79 @@ public class PatchExample {
     }
 
     /**
+     * 通用patch方法，fieldManager和force都默认为空
+     * @param patchFormat patch类型，一共有四种
+     * @param jsonStr patch的json内容
+     * @return patch结果对象转成的字符串
+     * @throws Exception
+     */
+    private String patch(String patchFormat, String jsonStr) throws Exception {
+        return patch(patchFormat,  DEPLOYMENT_NAME, NAMESPACE, jsonStr, null, null);
+    }
+
+    /**
+     * 通用patch方法
+     * @param patchFormat patch类型，一共有四种
+     * @param deploymentName deployment的名称
+     * @param namespace namespace名称
+     * @param jsonStr patch的json内容
+     * @param fieldManager server side apply用到
+     * @param force server side apply要设置为true
+     * @return patch结果对象转成的字符串
+     * @throws Exception
+     */
+    private String patch(String patchFormat, String deploymentName, String namespace, String jsonStr, String fieldManager, Boolean force) throws Exception {
+        // 创建api对象，指定格式是patchFormat
+        ApiClient patchClient = ClientBuilder
+                .standard()
+                .setOverridePatchFormat(patchFormat)
+                .build();
+
+        log.info("start deploy : " + patchFormat);
+
+        // 开启debug便于调试，生产环境慎用！！！
+        patchClient.setDebugging(true);
+
+        // 创建deployment
+        ExtensionsV1beta1Deployment deployment = new ExtensionsV1beta1Api(patchClient)
+                .patchNamespacedDeployment(
+                        deploymentName,
+                        namespace,
+                        new V1Patch(jsonStr),
+                        null,
+                        null,
+                        null,
+                        null
+                );
+
+        log.info("end deploy : " + patchFormat);
+
+        return new GsonBuilder().setPrettyPrinting().create().toJson(deployment);
+    }
+
+    /**
      * JSON patch格式的关系
      *
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/patch/jsonpatch", method = RequestMethod.GET)
-    public String jsonpatch() throws Exception {
+    @RequestMapping(value = "/patch/json", method = RequestMethod.GET)
+    public String json() throws Exception {
         // 创建api对象，指定格式是json-patch
         ApiClient jsonpatchClient = ClientBuilder
                 .standard()
                 .setOverridePatchFormat(V1Patch.PATCH_FORMAT_JSON_PATCH)
                 .build();
 
+        log.info("start deploy");
+        jsonpatchClient.setDebugging(true);
+
         // 创建deployment
         ExtensionsV1beta1Deployment deployment = new ExtensionsV1beta1Api(jsonpatchClient)
                 .patchNamespacedDeployment(
                         DEPLOYMENT_NAME,
                         "default",
-                        new V1Patch(jsonPatchStr),
+                        new V1Patch(jsonStr),
                         null,
                         null,
                         null,
@@ -170,28 +173,19 @@ public class PatchExample {
         return new GsonBuilder().setPrettyPrinting().create().toJson(deployment);
     }
 
-    @RequestMapping(value = "/patch/strategic-merge-patch", method = RequestMethod.GET)
-    public String merge() throws Exception {
-        // 创建api对象，指定格式是strategic-merge-patch+json
-        ApiClient strategicMergePatchClient = ClientBuilder
-                .standard()
-                .setOverridePatchFormat(V1Patch.PATCH_FORMAT_STRATEGIC_MERGE_PATCH)
-                .build();
+    @RequestMapping(value = "/patch/fullmerge", method = RequestMethod.GET)
+    public String fullmerge() throws Exception {
+        return patch(V1Patch.PATCH_FORMAT_JSON_MERGE_PATCH, mergeStr);
+    }
 
-        strategicMergePatchClient.setDebugging(true);
+    @RequestMapping(value = "/patch/partmerge", method = RequestMethod.GET)
+    public String partmerge() throws Exception {
+        return patch(V1Patch.PATCH_FORMAT_JSON_MERGE_PATCH, strategicStr);
+    }
 
-        // 创建deployment
-        ExtensionsV1beta1Deployment deployment = new ExtensionsV1beta1Api(strategicMergePatchClient)
-                .patchNamespacedDeployment(
-                        DEPLOYMENT_NAME,
-                        "default",
-                        new V1Patch(strategicMergePatchStr),
-                        null,
-                        null,
-                        null,
-                        null);
-
-        return new GsonBuilder().setPrettyPrinting().create().toJson(deployment);
+    @RequestMapping(value = "/patch/strategic", method = RequestMethod.GET)
+    public String strategic() throws Exception {
+        return patch(V1Patch.PATCH_FORMAT_STRATEGIC_MERGE_PATCH, strategicStr);
     }
 
     @RequestMapping(value = "/patch/apply", method = RequestMethod.GET)
@@ -229,14 +223,14 @@ public class PatchExample {
 
     @RequestMapping(value = "/version")
     public String version() throws Exception {
-        return "1.7";
+        return "1.9";
 
 
     }
 
     @RequestMapping(value = "/test")
     public String test() throws Exception {
-        return new ClassPathResourceReader("jsonPatch.json").getContent();
+        return new ClassPathResourceReader("json.json").getContent();
     }
 
 

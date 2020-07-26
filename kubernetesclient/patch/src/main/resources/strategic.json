@@ -1,0 +1,14 @@
+{
+  "spec":{
+    "template":{
+      "spec":{
+        "containers":[
+          {
+            "name":"test456",
+            "image":"tomcat:7.0.105-jdk8"
+          }
+        ]
+      }
+    }
+  }
+}
