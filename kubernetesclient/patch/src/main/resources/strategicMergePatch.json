@@ -1,0 +1,7 @@
+{
+  "metadata":{
+    "$deleteFromPrimitiveList/finalizers":[
+      "example.com/test"
+    ]
+  }
+}

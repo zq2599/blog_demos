@@ -21,6 +21,7 @@
         <module>outsidecluster</module>
         <module>protobufclient</module>
         <module>openapi</module>
+        <module>patch</module>
     </modules>
 
     <properties>
