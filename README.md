@@ -340,6 +340,14 @@
 14. [《K8S环境快速部署Kafka(K8S外部可访问)》](https://xinchen.blog.csdn.net/article/details/105466163)
 15. [《K8S的Kafka监控(Prometheus+Grafana)》](https://xinchen.blog.csdn.net/article/details/105466788)
 
+## kubernetes官方java客户端特辑
+1. [《Kubernetes官方java客户端之一：准备》](https://blog.csdn.net/boling_cavalry/article/details/107480015)
+2. [《Kubernetes官方java客户端之二：序列化和反序列化问题》](https://blog.csdn.net/boling_cavalry/article/details/107503695)
+3. [《Kubernetes官方java客户端之三：外部应用》](https://blog.csdn.net/boling_cavalry/article/details/107528068)
+4. [《Kubernetes官方java客户端之四：内部应用》](https://blog.csdn.net/boling_cavalry/article/details/107552495)
+5. [《Kubernetes官方java客户端之五：proto基本操作》](https://blog.csdn.net/boling_cavalry/article/details/107552722)
+6. [《Kubernetes官方java客户端之六：OpenAPI基本操作》](https://blog.csdn.net/boling_cavalry/article/details/107574722)
+
 ## helm实战
 1. [《helm实战之开发Chart》](https://blog.csdn.net/boling_cavalry/article/details/88759724)
 2. [《部署和体验Helm(2.16.1版本)》](https://blog.csdn.net/boling_cavalry/article/details/103667500)
@@ -609,6 +617,7 @@
 11. [《远程触发Jenkins的Pipeline任务的并发问题处理》](https://xinchen.blog.csdn.net/article/details/105340243)
 12. [《GitLab Runner部署(kubernetes环境)》](https://blog.csdn.net/boling_cavalry/article/details/106991576)
 13. [《GitLab CI构建SpringBoot-2.3应用》](https://blog.csdn.net/boling_cavalry/article/details/106991691)
+14. [《Gitlab Runner的分布式缓存实战》](https://blog.csdn.net/boling_cavalry/article/details/107374730)
 
 ## promethus
 1. [《Docker下Prometheus和Grafana三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/88367137)
