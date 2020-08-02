@@ -3,9 +3,6 @@
   "apiVersion":"extensions/v1beta1",
   "metadata":{
     "name":"test123",
-    "finalizers":[
-      "example.com/test"
-    ],
     "labels":{
       "run":"test123"
     }

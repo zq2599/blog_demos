@@ -132,8 +132,8 @@ public class PatchExample {
                         new V1Patch(jsonStr),
                         null,
                         null,
-                        null,
-                        null
+                        fieldManager,
+                        force
                 );
 
         log.info("end deploy : " + patchFormat);
@@ -149,28 +149,7 @@ public class PatchExample {
      */
     @RequestMapping(value = "/patch/json", method = RequestMethod.GET)
     public String json() throws Exception {
-        // 创建api对象，指定格式是json-patch
-        ApiClient jsonpatchClient = ClientBuilder
-                .standard()
-                .setOverridePatchFormat(V1Patch.PATCH_FORMAT_JSON_PATCH)
-                .build();
-
-        log.info("start deploy");
-        jsonpatchClient.setDebugging(true);
-
-        // 创建deployment
-        ExtensionsV1beta1Deployment deployment = new ExtensionsV1beta1Api(jsonpatchClient)
-                .patchNamespacedDeployment(
-                        DEPLOYMENT_NAME,
-                        "default",
-                        new V1Patch(jsonStr),
-                        null,
-                        null,
-                        null,
-                        null
-                );
-
-        return new GsonBuilder().setPrettyPrinting().create().toJson(deployment);
+        return patch(V1Patch.PATCH_FORMAT_JSON_PATCH, jsonStr);
     }
 
     @RequestMapping(value = "/patch/fullmerge", method = RequestMethod.GET)
@@ -190,53 +169,18 @@ public class PatchExample {
 
     @RequestMapping(value = "/patch/apply", method = RequestMethod.GET)
     public String apply() throws Exception {
-        // 创建api对象，指定格式是apply-patch+yaml
-        ApiClient applyYamlClient = ClientBuilder
-                .standard()
-                .setOverridePatchFormat(V1Patch.PATCH_FORMAT_APPLY_YAML)
-                .build();
-
-        applyYamlClient.setDebugging(true);
-
-        String rlt = null;
-
-        // 创建deployment
-        try {
-            ExtensionsV1beta1Deployment deployment = new ExtensionsV1beta1Api(applyYamlClient)
-                    .patchNamespacedDeployment(
-                            DEPLOYMENT_NAME,
-                            "default",
-                            new V1Patch(applyYamlStr),
-                            null,
-                            null,
-                            "example-field-manager",
-                            true);
-            rlt = new GsonBuilder().setPrettyPrinting().create().toJson(deployment);
-        }catch (Exception e) {
-            e.printStackTrace();
-            log.error("error---", e);
-            rlt = e.toString();
-        }
-
-        return rlt;
+        return patch(V1Patch.PATCH_FORMAT_APPLY_YAML,  DEPLOYMENT_NAME, NAMESPACE, applyYamlStr, "example-field-manager", true);
     }
 
     @RequestMapping(value = "/version")
     public String version() throws Exception {
-        return "1.9";
-
-
+        return "1.16";
     }
 
     @RequestMapping(value = "/test")
     public String test() throws Exception {
         return new ClassPathResourceReader("json.json").getContent();
     }
-
-
-
-
-
 
     public static void main(String[] args) {
         SpringApplication.run(PatchExample.class, args);
