@@ -15,8 +15,8 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public User Sel(int id){
-        return userMapper.Sel(id);
+    public User sel(int id) {
+        return userMapper.sel(id);
     }
 
 }

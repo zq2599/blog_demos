@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserMapper {
-    User Sel(int id);
+    User sel(int id);
 }

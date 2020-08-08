@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
+        <!-- 映射文件中的类不用写全路径了-->
         <package name="com.bolingcavalry.simple.entity"/>
     </typeAliases>
 </configuration>

@@ -3,14 +3,16 @@
 <mapper namespace="com.bolingcavalry.simple.mapper.LogMapper">
 
     <resultMap id="logResultMap" type="Log">
-        <id property="id" column="id" />
-        <result column="user_id" jdbcType="INTEGER" property="userId" />
-        <result column="action" jdbcType="VARCHAR" property="action" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <id property="id" column="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="action" jdbcType="VARCHAR" property="action"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
 
     <select id="sel" parameterType="int" resultMap="logResultMap">
-        select * from log where id = #{id}
+        select *
+        from log
+        where id = #{id}
     </select>
 
 </mapper>

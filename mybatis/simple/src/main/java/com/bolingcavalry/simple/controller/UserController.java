@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @Description: (这里用一句话描述这个类的作用)
+ * @Description: user表操作的web接口
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/8/4 8:31
  */
@@ -16,9 +16,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("getUser/{id}")
+    @RequestMapping("user/{id}")
     public String GetUser(@PathVariable int id){
-        return userService.Sel(id).toString();
+        return userService.sel(id).toString();
     }
 
 }

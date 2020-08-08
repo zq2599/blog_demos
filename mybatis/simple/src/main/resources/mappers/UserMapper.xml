@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bolingcavalry.simple.mapper.UserMapper">
 
-    <select id="Sel" parameterType="int" resultType="User">
+    <select id="sel" parameterType="int" resultType="User">
         select * from user where id = #{id}
     </select>
 
