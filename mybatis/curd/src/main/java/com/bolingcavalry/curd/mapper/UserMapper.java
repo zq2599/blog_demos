@@ -19,4 +19,6 @@ public interface UserMapper {
     int insertWithFields(User user);
 
     int insertBatch(List<User> users);
+
+    int clearAll();
 }

@@ -20,5 +20,10 @@
         </foreach>
     </insert>
 
+    <!--删除所有数据-->
+    <delete id="clearAll">
+        delete from user
+    </delete>
+
 
 </mapper>

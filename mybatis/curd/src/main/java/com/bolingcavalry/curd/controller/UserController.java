@@ -17,16 +17,18 @@ import java.util.List;
  * @date: 2020/8/4 8:31
  */
 @RestController
+@RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
-    @RequestMapping("user/{id}")
+    @RequestMapping("/{id}")
     public String GetUser(@PathVariable int id){
         return userService.sel(id).toString();
     }
 
-    @RequestMapping(value = "user/insertwithfields/{name}/{age}", method = RequestMethod.GET)
+    @RequestMapping(value = "/insertwithfields/{name}/{age}", method = RequestMethod.GET)
     public User insertWithFields(@PathVariable("name") String name, @PathVariable("age")  int age) {
         User user = new User();
         user.setName(name);
@@ -35,7 +37,7 @@ public class UserController {
         return userService.insertWithFields(user);
     }
 
-    @RequestMapping(value = "user/insertbatch/{namePrefix}/{age}", method = RequestMethod.GET)
+    @RequestMapping(value = "/insertbatch/{namePrefix}/{age}", method = RequestMethod.GET)
     public List<User> insertBatch(@PathVariable("namePrefix") String namePrefix, @PathVariable("age")  int age) {
         List<User> list = new ArrayList<>();
 
@@ -50,4 +52,8 @@ public class UserController {
         return userService.insertBatch(list);
     }
 
+    @RequestMapping("/clearall")
+    public int clearAll(){
+        return userService.clearAll();
+    }
 }

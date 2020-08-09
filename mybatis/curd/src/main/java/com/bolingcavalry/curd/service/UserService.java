@@ -14,6 +14,7 @@ import java.util.List;
  */
 @Service
 public class UserService {
+
     @Autowired
     UserMapper userMapper;
 
@@ -31,4 +32,7 @@ public class UserService {
         return users;
     }
 
+    public int clearAll() {
+       return userMapper.clearAll();
+    }
 }
