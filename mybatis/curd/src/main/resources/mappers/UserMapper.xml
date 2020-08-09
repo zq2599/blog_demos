@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolingcavalry.curd.mapper.UserMapper">
+
+    <select id="sel" parameterType="int" resultType="user">
+        select * from user where id = #{id}
+    </select>
+
+    <!--新增单条记录-->
+    <insert id="insertWithFields" useGeneratedKeys="true" keyProperty="id">
+        insert into user (id, name, age) values (#{id}, #{name}, #{age})
+    </insert>
+
+    <!--批量新增-->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        insert into user (id, name, age)
+        values
+        <foreach collection="users" item="user" separator=",">
+            (#{user.id}, #{user.name}, #{user.age})
+        </foreach>
+    </insert>
+
+
+</mapper>

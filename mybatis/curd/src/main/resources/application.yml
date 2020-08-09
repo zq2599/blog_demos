@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  # 数据源
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.50.43:3306/mybatis?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# mybatis配置
+mybatis:
+  # 配置文件所在位置
+  config-location: classpath:mybatis-config.xml
+  # 映射文件所在位置
+  mapper-locations: classpath:mappers/*Mapper.xml
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com:
+      bolingcavalry:
+        simple:
+          mapper: debug

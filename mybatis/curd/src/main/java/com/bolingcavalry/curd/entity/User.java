@@ -1,6 +1,4 @@
-package com.bolingcavalry.simple.entity;
-
-import org.apache.ibatis.type.Alias;
+package com.bolingcavalry.curd.entity;
 
 /**
  * @Description: 实体类
