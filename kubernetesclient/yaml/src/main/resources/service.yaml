@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: yaml
+  name: test-service
+spec:
+  type: ClusterIP
+  selector:
+    app: test-service
+  ports:
+    - name: port-of-container
+      port: 8080

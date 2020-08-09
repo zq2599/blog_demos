@@ -23,6 +23,7 @@
         <module>openapi</module>
         <module>patch</module>
         <module>fluent</module>
+        <module>yaml</module>
     </modules>
 
     <properties>
