@@ -21,4 +21,6 @@ public interface UserMapper {
     int insertBatch(List<User> users);
 
     int clearAll();
+
+    List<User> findByName(String name);
 }

@@ -35,4 +35,8 @@ public class UserService {
     public int clearAll() {
        return userMapper.clearAll();
     }
+
+    public List<User> findByName(String name) {
+        return userMapper.findByName(name);
+    }
 }

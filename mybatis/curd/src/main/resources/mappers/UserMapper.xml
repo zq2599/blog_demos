@@ -20,6 +20,12 @@
         </foreach>
     </insert>
 
+    <!--按照名称查找-->
+    <select id="findByName" parameterType="String" resultType="user">
+        select id, name, age from user where name like concat('%', #{name}, '%')
+    </select>
+    
+
     <!--删除所有数据-->
     <delete id="clearAll">
         delete from user

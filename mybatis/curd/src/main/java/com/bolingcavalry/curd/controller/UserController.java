@@ -52,6 +52,11 @@ public class UserController {
         return userService.insertBatch(list);
     }
 
+    @RequestMapping("/findbyname/{name}")
+    public List<User> findByName(@PathVariable("name") String name){
+        return userService.findByName(name);
+    }
+
     @RequestMapping("/clearall")
     public int clearAll(){
         return userService.clearAll();

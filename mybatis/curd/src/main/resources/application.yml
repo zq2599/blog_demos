@@ -22,5 +22,5 @@ logging:
     root: INFO
     com:
       bolingcavalry:
-        simple:
+        curd:
           mapper: debug
