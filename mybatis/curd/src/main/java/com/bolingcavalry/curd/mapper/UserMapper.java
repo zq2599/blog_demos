@@ -23,4 +23,8 @@ public interface UserMapper {
     int clearAll();
 
     List<User> findByName(String name);
+
+    int update(User user);
+
+    int delete(int id);
 }

@@ -24,12 +24,22 @@
     <select id="findByName" parameterType="String" resultType="user">
         select id, name, age from user where name like concat('%', #{name}, '%')
     </select>
-    
+
+
+    <!--删除所有数据-->
+    <delete id="delete">
+        delete from user where id= #{id}
+    </delete>
+
 
     <!--删除所有数据-->
     <delete id="clearAll">
         delete from user
     </delete>
 
+    <!--更新-->
+    <update id="update">
+        update user set name = #{name}, age = #{age} where id = #{id}
+    </update>
 
 </mapper>

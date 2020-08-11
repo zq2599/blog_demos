@@ -39,4 +39,12 @@ public class UserService {
     public List<User> findByName(String name) {
         return userMapper.findByName(name);
     }
+
+    public int update(User user) {
+        return userMapper.update(user);
+    }
+
+    public int delete(int id) {
+        return userMapper.delete(id);
+    }
 }

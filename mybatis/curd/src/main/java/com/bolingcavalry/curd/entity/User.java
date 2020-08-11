@@ -1,13 +1,23 @@
 package com.bolingcavalry.curd.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @Description: 实体类
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/8/4 8:24
  */
+@ApiModel
 public class User {
+
+    @ApiModelProperty(value = "用户ID")
     private Integer id;
+
+    @ApiModelProperty(value = "用户名")
     private String name;
+
+    @ApiModelProperty(value = "用户地址")
     private Integer age;
 
     public Integer getId() {
