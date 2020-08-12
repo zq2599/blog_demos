@@ -42,4 +42,9 @@
         update user set name = #{name}, age = #{age} where id = #{id}
     </update>
 
+    <!--获取总数-->
+    <select id="totalCount" resultType="java.lang.Integer">
+        select count(*) from user
+    </select>
+
 </mapper>

@@ -1,5 +1,6 @@
 package com.bolingcavalry.curd.mapper;
 
+import com.bolingcavalry.curd.entity.LogExtend;
 import com.bolingcavalry.curd.entity.User;
 import org.springframework.stereotype.Repository;
 
@@ -27,4 +28,8 @@ public interface UserMapper {
     int update(User user);
 
     int delete(int id);
+
+    int totalCount();
+
+    LogExtend selExtend(int id);
 }

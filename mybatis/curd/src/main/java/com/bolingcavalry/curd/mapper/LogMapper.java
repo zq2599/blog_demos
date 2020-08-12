@@ -1,6 +1,7 @@
 package com.bolingcavalry.curd.mapper;
 
 import com.bolingcavalry.curd.entity.Log;
+import com.bolingcavalry.curd.entity.LogExtend;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,4 +13,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LogMapper {
     Log sel(int id);
+
+    LogExtend selExtend(int id);
+
+    int insertWithFields(Log log);
 }

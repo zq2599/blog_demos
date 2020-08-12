@@ -1,10 +1,13 @@
 package com.bolingcavalry.curd.controller;
 
+import com.bolingcavalry.curd.entity.Log;
+import com.bolingcavalry.curd.entity.LogExtend;
 import com.bolingcavalry.curd.service.LogService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description: log相关的web接口
@@ -12,13 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2020/8/4 8:31
  */
 @RestController
+@RequestMapping("/log")
+@Api(tags = {"LogController"})
 public class LogController {
     @Autowired
     private LogService logService;
 
-    @RequestMapping("log/{id}")
-    public String log(@PathVariable int id){
-        return logService.sel(id).toString();
+    @ApiOperation(value = "根据ID查找日志记录", notes="根据ID查找日志记录")
+    @ApiImplicitParam(name = "id", value = "日志ID", paramType = "path", required = true, dataType = "Integer")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public LogExtend logExtend(@PathVariable int id){
+        return logService.selExtend(id);
+    }
+
+    @ApiOperation(value = "新增user记录", notes="新增user记录")
+    @RequestMapping(value = "/insertwithfields",method = RequestMethod.PUT)
+    public Log create(@RequestBody Log log) {
+        return logService.insertWithFields(log);
     }
 
 }

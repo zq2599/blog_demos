@@ -1,6 +1,8 @@
 package com.bolingcavalry.curd.service;
 
 import com.bolingcavalry.curd.entity.Log;
+import com.bolingcavalry.curd.entity.LogExtend;
+import com.bolingcavalry.curd.entity.User;
 import com.bolingcavalry.curd.mapper.LogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,15 @@ public class LogService {
 
     public Log sel(int id){
         return logMapper.sel(id);
+    }
+
+    public LogExtend selExtend(int id) {
+        return logMapper.selExtend(id);
+    }
+
+    public Log insertWithFields(Log log) {
+        logMapper.insertWithFields(log);
+        return log;
     }
 
 }

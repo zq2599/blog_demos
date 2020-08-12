@@ -47,4 +47,8 @@ public class UserService {
     public int delete(int id) {
         return userMapper.delete(id);
     }
+
+    public int totalCount() {
+        return userMapper.totalCount();
+    }
 }
