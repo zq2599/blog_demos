@@ -28,7 +28,7 @@ public class LogController {
         return logService.selExtend(id);
     }
 
-    @ApiOperation(value = "新增user记录", notes="新增user记录")
+    @ApiOperation(value = "新增日志记录", notes="新增日志记录")
     @RequestMapping(value = "/insertwithfields",method = RequestMethod.PUT)
     public Log create(@RequestBody Log log) {
         return logService.insertWithFields(log);

@@ -66,8 +66,8 @@ public class UserController {
     @ApiOperation(value = "根据ID查找user记录", notes="根据ID查找user记录")
     @ApiImplicitParam(name = "id", value = "用户ID", paramType = "path", required = true, dataType = "Integer")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String GetUser(@PathVariable int id){
-        return userService.sel(id).toString();
+    public User GetUser(@PathVariable int id){
+        return userService.sel(id);
     }
 
     @ApiOperation(value = "获取总数", notes="获取总数")

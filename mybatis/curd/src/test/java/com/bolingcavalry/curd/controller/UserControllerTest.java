@@ -1,10 +1,11 @@
 package com.bolingcavalry.curd.controller;
 
+import com.bolingcavalry.curd.entity.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import org.junit.Ignore;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -29,25 +32,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestMethodOrder(MethodOrderer.OrderAnnotation. class )
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
-    @Test
-    @Order(1)
-    void init() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/user/clearall").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+    static String testName;
+
+    @BeforeAll
+    static void init() {
+        testName = "junit" + System.currentTimeMillis();
     }
 
     @Test
-    @Order(2)
+    @Order(1)
     void insertWithFields() throws Exception {
-        String responseString = mvc.perform(MockMvcRequestBuilders.get("/user/insertwithfields/Tom/11").accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is("Tom")))
+        String jsonStr = "{\"name\": \"" + testName + "\", \"age\": 10}";
+
+        mvc.perform(
+                MockMvcRequestBuilders.put("/user/insertwithfields")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonStr)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(testName)))
                 .andDo(print())
                 .andReturn()
                 .getResponse()
@@ -55,36 +64,36 @@ class UserControllerTest {
     }
 
     @Test
-    @Order(3)
-    @Ignore
-    void getUser() throws Exception {
-
-    }
-
-    @Test
-    @Order(4)
-    void insertBatch() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/user/insertbatch/Prefix/6").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());;
-    }
-
-
-
-    @Test
-    @Order(5)
+    @Order(2)
     void findByName() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/user/findbyname/Prefix").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/user/findbyname/"+ testName).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(10)))
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andDo(print());
     }
 
-    @Test
-    @Order(9)
-    void clearAll() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/user/clearall").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
 
+    @Test
+    @Order(3)
+    void delete() throws Exception {
+        // 先根据名称查出记录
+        String responseString = mvc.perform(MockMvcRequestBuilders.get("/user/findbyname/"+ testName).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andDo(print())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        // 反序列化得到数组
+        JsonArray jsonArray = JsonParser.parseString(responseString).getAsJsonArray();
+
+        // 反序列化得到user实例
+        User user = new Gson().fromJson(jsonArray.get(0), User.class);
+
+        // 执行删除
+        mvc.perform(MockMvcRequestBuilders.delete("/user/"+ user.getId()).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }

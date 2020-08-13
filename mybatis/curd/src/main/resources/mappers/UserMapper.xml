@@ -26,7 +26,7 @@
     </select>
 
 
-    <!--删除所有数据-->
+    <!--删除指定数据-->
     <delete id="delete">
         delete from user where id= #{id}
     </delete>

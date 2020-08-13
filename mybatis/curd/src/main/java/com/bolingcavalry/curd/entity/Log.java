@@ -1,5 +1,8 @@
 package com.bolingcavalry.curd.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.sql.Date;
 
 /**
@@ -7,10 +10,18 @@ import java.sql.Date;
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/8/4 8:24
  */
+@ApiModel(description = "日志实体类")
 public class Log {
+    @ApiModelProperty(value = "日志ID")
     private Integer id;
+
+    @ApiModelProperty(value = "用户ID")
     private Integer userId;
+
+    @ApiModelProperty(value = "日志内容")
     private String action;
+
+    @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
     public Integer getId() {
