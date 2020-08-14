@@ -13,7 +13,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * @Description: (这里用一句话描述这个类的作用)
+ * @Description: swagger配置类
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/8/11 7:54
  */
