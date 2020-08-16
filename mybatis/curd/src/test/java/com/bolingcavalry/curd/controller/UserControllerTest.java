@@ -16,16 +16,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 /**
- * @Description: (这里用一句话描述这个类的作用)
+ * @Description: 单元测试类
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/8/9 23:55
  */
@@ -38,11 +39,12 @@ class UserControllerTest {
     @Autowired
     private MockMvc mvc;
 
+    // user表的name字段，这里为了保证测试时新增和删除的记录是同一条，用UUID作为用户名
     static String testName;
 
     @BeforeAll
     static void init() {
-        testName = "junit" + System.currentTimeMillis();
+        testName = UUID.randomUUID().toString().replaceAll("-","");
     }
 
     @Test
@@ -94,6 +96,7 @@ class UserControllerTest {
         // 执行删除
         mvc.perform(MockMvcRequestBuilders.delete("/user/"+ user.getId()).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("1")))
                 .andDo(print());
     }
 }
