@@ -26,6 +26,7 @@
         <module>simple</module>
         <module>curd</module>
         <module>druidonesource</module>
+        <module>druidtwosource</module>
     </modules>
 
     <dependencyManagement>

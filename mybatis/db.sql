@@ -20,3 +20,10 @@ CREATE TABLE `log` (
 
 INSERT INTO mybatis.user (id, name, age) VALUES (3, 'tom', 11);
 INSERT INTO mybatis.log (id, user_id, action, create_time) VALUES (3, 3, 'read book', '2020-08-07 08:18:16');
+
+CREATE TABLE `address` (
+  `id` int(32) NOT NULL AUTO_INCREMENT,
+  `city` varchar(32) NOT NULL,
+  `street` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
