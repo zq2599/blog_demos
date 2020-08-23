@@ -1,8 +1,6 @@
 package com.bolingcavalry.druidtwosource.mapper.second;
 
 import com.bolingcavalry.druidtwosource.entity.Address;
-import com.bolingcavalry.druidtwosource.entity.LogExtend;
-import com.bolingcavalry.druidtwosource.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

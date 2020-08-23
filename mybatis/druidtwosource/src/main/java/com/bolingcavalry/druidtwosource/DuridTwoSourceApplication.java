@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
         DataSourceAutoConfiguration.class,
         DataSourceTransactionManagerAutoConfiguration.class,
 })
-
 public class DuridTwoSourceApplication {
 
     public static void main(String[] args) {

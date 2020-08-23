@@ -26,8 +26,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .tags(new Tag("UserController", "用户服务"),
-                        new Tag("LogController", "日志服务"),
-                        new Tag("TestAddressController", "地址服务"))
+                        new Tag("AddressController", "地址服务"))
                 .select()
                 // 当前包路径
                 .apis(RequestHandlerSelectors.basePackage("com.bolingcavalry.druidtwosource.controller"))

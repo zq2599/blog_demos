@@ -1,6 +1,5 @@
 package com.bolingcavalry.druidtwosource.mapper.first;
 
-import com.bolingcavalry.druidtwosource.entity.LogExtend;
 import com.bolingcavalry.druidtwosource.entity.User;
 import org.springframework.stereotype.Repository;
 
@@ -15,21 +14,9 @@ import java.util.List;
 @Repository
 public interface UserMapper {
 
-    User sel(int id);
-
     int insertWithFields(User user);
-
-    int insertBatch(List<User> users);
-
-    int clearAll();
 
     List<User> findByName(String name);
 
-    int update(User user);
-
     int delete(int id);
-
-    int totalCount();
-
-    LogExtend selExtend(int id);
 }

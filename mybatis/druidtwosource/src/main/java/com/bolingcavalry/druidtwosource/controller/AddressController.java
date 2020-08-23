@@ -16,9 +16,9 @@ import java.util.List;
  * @date: 2020/8/4 8:31
  */
 @RestController
-@RequestMapping("/addr")
-@Api(tags = {"testAddressController"})
-public class TestAddressController {
+@RequestMapping("/address")
+@Api(tags = {"AddressController"})
+public class AddressController {
 
     @Autowired
     private AddressService addressService;
