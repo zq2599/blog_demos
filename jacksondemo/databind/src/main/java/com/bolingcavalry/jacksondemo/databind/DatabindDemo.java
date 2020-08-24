@@ -41,7 +41,7 @@ public class DatabindDemo {
      * @throws IOException
      */
     public TwitterEntry deserializeJSONFromUrl(String url) throws IOException {
-        return mapper.readValue(new URL(Constant.TEST_JSON_DATA_URL), TwitterEntry.class);
+        return mapper.readValue(new URL(url), TwitterEntry.class);
     }
 
     /**
@@ -71,7 +71,5 @@ public class DatabindDemo {
         logger.info("********************执行一次网络JSON反序列化操作********************");
         deserializeResult = databindDemo.deserializeJSONFromUrl(Constant.TEST_JSON_DATA_URL);
         logger.info("\n网络JSON反序列化结果是个java实例 : \n{}", deserializeResult);
-
-        ObjectMapper a;
     }
 }

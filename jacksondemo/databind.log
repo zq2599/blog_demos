@@ -1,0 +1,31 @@
+2020-08-24 08:03:27 INFO  ConfigDemo:42 - {
+  "id" : 1,
+  "text" : "aabbcc",
+  "fromUserId" : 456,
+  "toUserId" : 0,
+  "languageCode" : "zh"
+}
+2020-08-24 08:04:06 INFO  ConfigDemo:42 - {"id":1,"text":"aabbcc","fromUserId":456,"toUserId":0,"languageCode":"zh"}
+2020-08-24 08:04:58 INFO  ConfigDemo:41 - {"id":1,"text":"aabbcc","fromUserId":456,"toUserId":0,"languageCode":"zh"}
+2020-08-24 08:05:05 INFO  ConfigDemo:41 - {
+  "id" : 1,
+  "text" : "aabbcc",
+  "fromUserId" : 456,
+  "toUserId" : 0,
+  "languageCode" : "zh"
+}
+2020-08-24 08:06:23 INFO  ConfigDemo:40 - 默认无缩放
+{"id":1,"text":"aabbcc","fromUserId":456,"toUserId":0,"languageCode":"zh"}
+2020-08-24 08:06:23 INFO  ConfigDemo:42 - 有缩放
+{
+  "id" : 1,
+  "text" : "aabbcc",
+  "fromUserId" : 456,
+  "toUserId" : 0,
+  "languageCode" : "zh"
+}
+2020-08-24 08:35:46 INFO  SimpleDemo:24 - 以下是序列化操作
+2020-08-24 08:35:46 INFO  SimpleDemo:29 - 序列化的字符串：{"id":123456,"text":"this is a message for serializer test","fromUserId":101,"toUserId":102,"languageCode":"zh"}
+2020-08-24 08:35:46 INFO  SimpleDemo:37 - 以下是反序列化操作
+2020-08-24 08:35:46 INFO  SimpleDemo:41 - 从字符串反序列化的对象：[Tweet, id: 1125687077, text='@stroughtonsmith You need to add a "Favourites" tab to TC/iPhone. Like what TwitterFon did. I can't WAIT for your Twitter App!! :) Any ETA?', from: 855523, to: 815309, lang: en]
+2020-08-24 08:35:49 INFO  SimpleDemo:45 - 从网络地址反序列化的对象：[Tweet, id: 112233445566, text='this is a message from zq2599's github', from: 201, to: 202, lang: en]
