@@ -15,6 +15,7 @@
         <module>core</module>
         <module>beans</module>
         <module>databind</module>
+        <module>annotation</module>
     </modules>
 
     <dependencyManagement>

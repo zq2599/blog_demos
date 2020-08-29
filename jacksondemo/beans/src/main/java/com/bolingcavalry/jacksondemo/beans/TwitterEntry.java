@@ -1,10 +1,5 @@
 package com.bolingcavalry.jacksondemo.beans;
 
-/**
- * @Description: 推特消息bean
- * @author: willzhao E-mail: zq2599@gmail.com
- * @date: 2020/7/4 16:24
- */
 public class TwitterEntry {
 
     /**
