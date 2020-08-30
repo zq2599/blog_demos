@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/8/29 11:35
  */
-@JsonRootName(value = "aaabbbccc")
 @JsonIgnoreProperties({"lastName", "grade"})
 public class Student {
 
