@@ -19,27 +19,11 @@ public class ClassAnnotationDeserializer {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        mapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
-
-//        String jsonStr = "{\n" +
-//                "    \"firstName\" : \"Bill\",\n" +
-//                "    \"age\" : 11,\n" +
-//                "    \"lastName\" : \"Abc\",\n" +
-//                "    \"father\" : {\n" +
-//                "      \"relation\" : \"父子\",\n" +
-//                "      \"name\" : \"\"\n" +
-//                "    },\n" +
-//                "    \"college\" : {\n" +
-//                "      \"age\" : 100,\n" +
-//                "      \"name\" : \"北京大学\",\n" +
-//                "      \"city\" : \"北京\"\n" +
-//                "    }\n" +
-//                "  }";
-
         String jsonStr = "{\n" +
-                "  \"aaabbbccc\" : {\n" +
                 "    \"firstName\" : \"Bill\",\n" +
                 "    \"age\" : 11,\n" +
+                "    \"lastName\" : \"112233\",\n" +
+                "    \"grade\" : 9,\n" +
                 "    \"father\" : {\n" +
                 "      \"relation\" : \"父子\"\n" +
                 "    },\n" +
@@ -48,8 +32,7 @@ public class ClassAnnotationDeserializer {
                 "      \"name\" : \"北京大学\",\n" +
                 "      \"city\" : \"北京\"\n" +
                 "    }\n" +
-                "  }\n" +
-                "}";
+                "  }";
 
         Student student = mapper.readValue(jsonStr, Student.class);
         logger.info("反序列化后得到的实例：\n{}", student);

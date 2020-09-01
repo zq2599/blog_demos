@@ -18,13 +18,8 @@ public class ClassAnnotationSerialization {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
         // 美化输出
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-
-
-
 
         College college = new College();
         college.setCity("北京");
@@ -40,14 +35,14 @@ public class ClassAnnotationSerialization {
 
         Student student = new Student();
         student.setFirstName("Bill");
-        student.setLastName("Gates");
         student.setAge(11);
+
+        student.setLastName("Gates");
         student.setGrade(5);
 
         student.setCollege(college);
         student.setAddress(address);
         student.setFather(father);
-
 
         logger.info("使用了JsonRootName注解的实例，序列化结果：\n{}", mapper.writeValueAsString(student));
 
