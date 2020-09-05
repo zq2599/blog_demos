@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/8/29 12:50
  */
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Parent {
 
     public String getRelation() {
@@ -28,7 +28,7 @@ public class Parent {
 
     private String relation;
 
-    private String name;
+    private String name="aaa";
 
 
 

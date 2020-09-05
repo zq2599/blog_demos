@@ -31,7 +31,7 @@ public class ClassAnnotationSerialization {
 
         Parent father = new Parent();
         father.setRelation("父子");
-        father.setName("");
+        //father.setName("");
 
         Student student = new Student();
         student.setFirstName("Bill");
@@ -44,7 +44,8 @@ public class ClassAnnotationSerialization {
         student.setAddress(address);
         student.setFather(father);
 
-        logger.info("使用了JsonRootName注解的实例，序列化结果：\n{}", mapper.writeValueAsString(student));
+        logger.info("使用了JsonRootName注解的实例，序列化结果：\n{}",
+                mapper.writeValueAsString(student));
 
 
     }

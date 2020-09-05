@@ -1,7 +1,6 @@
 package com.bolingcavalry.jacksondemo.annotation;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
@@ -14,19 +13,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class College {
 
     private String name;
-
     private String city;
+    protected int age = 100;
 
-    @Override
-    public String toString() {
-        return "College{" +
-                "name='" + name + '\'' +
-                ", city='" + city + '\'' +
-                ", age=" + age +
-                '}';
+
+    public String getCity() {
+        return city;
     }
 
-    protected int age = 100;
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getName() {
         return name;
@@ -36,11 +33,13 @@ public class College {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
-    }
 
-    public void setCity(String city) {
-        this.city = city;
+    @Override
+    public String toString() {
+        return "College{" +
+                "name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

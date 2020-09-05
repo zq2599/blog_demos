@@ -18,11 +18,13 @@ public class ClassAnnotationDeserializer {
     public static void main(String[] args) throws Exception {
 
         ObjectMapper mapper = new ObjectMapper();
+//        mapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
 
         String jsonStr = "{\n" +
                 "    \"firstName\" : \"Bill\",\n" +
                 "    \"age\" : 11,\n" +
-                "    \"lastName\" : \"112233\",\n" +
+                "    \"lastName1\" : \"112233\",\n" +
                 "    \"grade\" : 9,\n" +
                 "    \"father\" : {\n" +
                 "      \"relation\" : \"父子\"\n" +
