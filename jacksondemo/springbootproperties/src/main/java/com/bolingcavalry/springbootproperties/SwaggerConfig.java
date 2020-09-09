@@ -25,7 +25,7 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .tags(new Tag("JsonPropertySerializationController", "JsonProperty序列化相关测试"))
+                .tags(new Tag("JsonPropertySerializationController", "JsonProperty相关测试"))
                 .select()
                 // 当前包路径
                 .apis(RequestHandlerSelectors.basePackage("com.bolingcavalry.springbootproperties.controller"))
