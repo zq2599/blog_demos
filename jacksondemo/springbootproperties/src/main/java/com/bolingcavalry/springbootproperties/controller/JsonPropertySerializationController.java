@@ -30,7 +30,7 @@ public class JsonPropertySerializationController {
 
     @ApiOperation(value = "测试序列化", notes = "测试序列化")
     @RequestMapping(value = "/serialization", method = RequestMethod.GET)
-    public Test jsonproperty() throws JsonProcessingException {
+    public Test serialization() throws JsonProcessingException {
 
         Test test = new Test();
         logger.info(mapper.writeValueAsString(test));
@@ -40,7 +40,7 @@ public class JsonPropertySerializationController {
 
     @ApiOperation(value = "测试反序列化", notes="测试反序列化")
     @RequestMapping(value = "/deserialization",method = RequestMethod.PUT)
-    public String create(@RequestBody Test test) {
+    public String deserialization(@RequestBody Test test) {
         return test.toString();
     }
 }
