@@ -17,6 +17,7 @@
         <module>databind</module>
         <module>annotation</module>
         <module>springbootproperties</module>
+        <module>springbootconfigbean</module>
     </modules>
 
     <dependencyManagement>
