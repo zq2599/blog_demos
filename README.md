@@ -74,6 +74,18 @@
 15. [《kubernetes下jenkins实战maven项目编译构建》](https://blog.csdn.net/boling_cavalry/article/details/104875452)
 16. [《Nexus3常用功能备忘》](https://xinchen.blog.csdn.net/article/details/105458882)
 
+## Jackson学习特辑
+1. [《jackson学习之一：基本信息》](https://blog.csdn.net/boling_cavalry/article/details/107135958)
+2. [《jackson学习之二：jackson-core》](https://blog.csdn.net/boling_cavalry/article/details/108571629)
+3. [《jackson学习之三：常用API操作》](https://blog.csdn.net/boling_cavalry/article/details/108192174)
+4. [《jackson学习之四：WRAP_ROOT_VALUE（root对象）》](https://blog.csdn.net/boling_cavalry/article/details/108298858)
+5. [《jackson学习之五：JsonInclude注解》](https://blog.csdn.net/boling_cavalry/article/details/108412558)
+6. [《jackson学习之六：常用类注解》](https://blog.csdn.net/boling_cavalry/article/details/108333324)
+7. [《jackson学习之七：常用Field注解》](https://blog.csdn.net/boling_cavalry/article/details/108427844)
+8. [《jackson学习之八：常用方法注解》](https://blog.csdn.net/boling_cavalry/article/details/108433330)
+9. [《jackson学习之九：springboot整合(配置文件)》](https://blog.csdn.net/boling_cavalry/article/details/108460433)
+10. [《jackson学习之十(终篇)：springboot整合(配置类)》](https://blog.csdn.net/boling_cavalry/article/details/108559056)
+
 # Spring领域
 
 ##  Spring基础
