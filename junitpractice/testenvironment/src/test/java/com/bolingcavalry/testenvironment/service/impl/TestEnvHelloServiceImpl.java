@@ -1,6 +1,6 @@
-package com.bolingcavalry.simplebean.service.impl;
+package com.bolingcavalry.testenvironment.service.impl;
 
-import com.bolingcavalry.simplebean.service.HelloService;
+import com.bolingcavalry.testenvironment.service.HelloService;
 import org.springframework.boot.test.context.TestComponent;
 
 /**

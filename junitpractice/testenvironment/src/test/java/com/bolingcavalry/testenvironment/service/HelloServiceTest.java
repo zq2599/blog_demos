@@ -1,13 +1,10 @@
-package com.bolingcavalry.simplebean.service;
+package com.bolingcavalry.testenvironment.service;
 
-import com.bolingcavalry.simplebean.SimpleBeanApplication;
+import com.bolingcavalry.testenvironment.TestEnvironmentApplication;
+import com.bolingcavalry.testenvironment.service.impl.TestEnvHelloServiceImpl;
 import junit.framework.TestCase;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,10 +18,8 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @date: 2020/9/20 23:41
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {SimpleBeanApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {TestEnvironmentApplication.class, TestEnvHelloServiceImpl.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class HelloServiceTest {
-
-    private static final Logger logger = LoggerFactory.getLogger(HelloServiceTest.class);
 
     @LocalServerPort
     private int port;
@@ -32,40 +27,26 @@ class HelloServiceTest {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Qualifier("helloService")
     @Autowired
     HelloService helloService;
 
+    @Qualifier("testEnvHelloSerivce")
+    @Autowired
+    HelloService testEnvHelloSerivce;
 
     @Test
     void hello() {
         String name = "Tom";
         TestCase.assertEquals("Hello " + name, helloService.hello(name));
+
+        name = "Jack";
+        TestCase.assertEquals("Hello " + name + " from test env", testEnvHelloSerivce.hello(name));
     }
 
     @Test
     void testApplicationContext() {
         HelloService helloService = applicationContext.getBean(HelloService.class);
         TestCase.assertNotNull(helloService);
-        logger.info("port is {}", port);
-    }
-
-    @BeforeEach
-    void beforeEach() {
-        logger.info("execute beforeEach");
-    }
-
-    @AfterEach
-    void afterEach() {
-        logger.info("execute afterEach");
-    }
-
-    @BeforeAll
-    static void beforeAll() {
-        logger.info("execute beforeAll");
-    }
-
-    @AfterAll
-    static void afterAll() {
-        logger.info("execute afterAll");
     }
 }
