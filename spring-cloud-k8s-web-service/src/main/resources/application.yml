@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: web-service
+
+server:
+  port: 8080
+
+backend:
+  ribbon:
+    eureka:
+      enabled: false
+    client:
+      enabled: true
+    ServerListRefreshInterval: 5000
+
+hystrix.command.BackendCall.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.BackendCallThread.coreSize: 5

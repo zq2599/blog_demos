@@ -1,0 +1,63 @@
+image: maven:3.6.3-jdk-8
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+# 定义缓存
+# 如果gitlab runner是shell或者docker，此缓存功能没有问题
+# 如果是k8s环境，要确保已经设置了分布式文件服务作为缓存
+cache:
+  key: kubernetesclient-ci-cache
+  paths:
+    - .m2/repository/
+    - helloworld/target/*.jar
+
+# 本次构建的阶段：build package
+stages:
+  - package
+  - build
+  - deploy
+
+# 生产jar的job
+make_jar:
+  image: maven:3.6.3-jdk-8
+  stage: package
+  tags:
+    - k8s
+  script:
+    - echo "=============== 开始编译源码，在target目录生成jar文件 ==============="
+    - mvn $MAVEN_CLI_OPTS clean compile package -Dmaven.test.skip=true
+    - echo "helloworld子项目的target文件夹" `ls helloworld/target/`
+
+# 生产镜像的job
+make_hello_world_image:
+  image: docker:latest
+  stage: build
+  tags:
+    - k8s
+  script:
+    - echo "从缓存中恢复的target文件夹" `ls target/`
+    - echo "=============== 登录Harbor  ==============="
+    - docker login 192.168.50.43:5888 -u admin -p Harbor12345
+    - echo "=============== 打包Docker镜像 ： " helloworld:$CI_COMMIT_SHORT_SHA "==============="
+    - cd helloworld && docker build -t 192.168.50.43:5888/common/helloworld:$CI_COMMIT_SHORT_SHA .
+    - echo "=============== 推送到镜像仓库  ==============="
+    - docker push 192.168.50.43:5888/common/helloworld:$CI_COMMIT_SHORT_SHA
+    - echo "=============== 登出  ==============="
+    - docker logout
+    - echo "清理掉本次构建的jar文件"
+    - rm -rf helloworld/target/*.jar
+    
+# 部署到k8s环境
+deploy_k8s:
+  # 禁用cache，避免上传、下载、压缩、解压缩带来的开销
+  cache: {}
+  image: ictu/sshpass:latest
+  stage: deploy
+  tags:
+  - k8s
+  script:
+  - export TAG=$CI_COMMIT_SHORT_SHA
+  - echo "TAG is "$TAG
+  - sshpass -p 888888 ssh -o "StrictHostKeyChecking no" root@192.168.50.135 "kubectl set image deployment helloworld helloworld=192.168.50.43:5888/common/helloworld:$TAG -n kubernetesclient"

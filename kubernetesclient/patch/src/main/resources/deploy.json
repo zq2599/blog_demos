@@ -1,0 +1,49 @@
+{
+  "kind":"Deployment",
+  "apiVersion":"extensions/v1beta1",
+  "metadata":{
+    "name":"test123",
+    "labels":{
+      "run":"test123"
+    }
+  },
+  "spec":{
+    "replicas":1,
+    "selector":{
+      "matchLabels":{
+        "run":"test123"
+      }
+    },
+    "template":{
+      "metadata":{
+        "creationTimestamp":null,
+        "labels":{
+          "run":"test123"
+        }
+      },
+      "spec":{
+        "terminationGracePeriodSeconds":30,
+        "containers":[
+          {
+            "name":"test123",
+            "image":"nginx:1.18.0",
+            "ports":[
+              {
+                "containerPort":80
+              }
+            ],
+            "resources":{
+
+            }
+          }
+        ]
+      }
+    },
+    "strategy":{
+
+    }
+  },
+  "status":{
+
+  }
+}

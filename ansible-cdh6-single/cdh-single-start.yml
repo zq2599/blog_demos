@@ -1,0 +1,10 @@
+- name: start cdh
+  hosts: cdh_group
+  gather_facts: True
+  tasks:
+  - name: initial database
+    command: /opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm scm scm
+  - name: cloudera-scm-server start
+    service: name=cloudera-scm-server state=started enabled=yes
+  - name: cloudera-scm-agent start
+    service: name=cloudera-scm-agent state=started enabled=yes

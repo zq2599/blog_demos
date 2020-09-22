@@ -1,0 +1,6 @@
+spring:
+  data:
+    cassandra:
+      keyspace-name: keyspace001
+      contact-points: 192.168.133.168,192.168.133.170,192.168.133.171
+      port: 9042

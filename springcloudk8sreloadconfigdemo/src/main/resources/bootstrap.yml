@@ -1,0 +1,24 @@
+management:
+  endpoint:
+    restart:
+      enabled: true
+    health:
+      enabled: true
+    info:
+      enabled: true
+spring:
+  application:
+    name: springcloudk8sreloadconfigdemo
+  cloud:
+    kubernetes:
+      reload:
+        #自动更新配置的开关设置为打开
+        enabled: true
+        #更新配置信息的模式：polling是主动拉取，event是事件通知
+        mode: polling
+        #主动拉取的间隔时间是500毫秒
+        period: 500
+      config:
+        sources:
+        - name: ${spring.application.name}
+          namespace: default

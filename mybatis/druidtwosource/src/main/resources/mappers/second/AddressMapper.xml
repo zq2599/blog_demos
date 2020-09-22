@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolingcavalry.druidtwosource.mapper.second.AddressMapper">
+
+    <!--新增单条记录-->
+    <insert id="insertWithFields" useGeneratedKeys="true" keyProperty="id">
+        insert into address (id, city, street) values (#{id}, #{city}, #{street})
+    </insert>
+
+    <!--按照名称查找-->
+    <select id="findByCityName" parameterType="String" resultType="com.bolingcavalry.druidtwosource.entity.Address">
+        select id, city, street from address where city like concat('%', #{cityname}, '%')
+    </select>
+
+    <!--删除指定数据-->
+    <delete id="delete">
+        delete from address where id= #{id}
+    </delete>
+
+</mapper>

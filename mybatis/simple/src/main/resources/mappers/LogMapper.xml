@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolingcavalry.simple.mapper.LogMapper">
+
+    <resultMap id="logResultMap" type="log">
+        <id property="id" column="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="action" jdbcType="VARCHAR" property="action"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <select id="sel" parameterType="int" resultMap="logResultMap">
+        select *
+        from log
+        where id = #{id}
+    </select>
+
+</mapper>

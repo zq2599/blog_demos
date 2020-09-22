@@ -1,0 +1,5 @@
+cassandra_targz_name: apache-cassandra-3.11.6-bin.tar.gz
+cassandra_package_name: apache-cassandra-3.11.6
+cassandra_home_path: /home/cassandra
+cassandra_cluster_name: boling_cavalry
+cassandra_seeds: '"192.168.133.167,192.168.133.168"'

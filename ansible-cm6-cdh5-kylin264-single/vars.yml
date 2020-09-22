@@ -1,0 +1,8 @@
+cm_agent: cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm
+cm_daemons: cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm
+cm_server: cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm
+parcel: CDH-5.16.2-1.cdh5.16.2.p0.8-el7.parcel
+parcel_sha: CDH-5.16.2-1.cdh5.16.2.p0.8-el7.parcel.sha
+parcel_install_path: /opt/cloudera/parcels/CDH-5.16.2-1.cdh5.16.2.p0.8
+kylin_install: apache-kylin-2.6.4-bin-cdh57.tar.gz
+kylin_package_name: apache-kylin-2.6.4-bin

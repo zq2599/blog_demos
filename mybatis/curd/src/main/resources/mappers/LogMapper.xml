@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolingcavalry.curd.mapper.LogMapper">
+
+    <resultMap id="logExtendResultMap" type="logExtend">
+        <id property="id" column="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="action" jdbcType="VARCHAR" property="action"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="user_name" jdbcType="TIMESTAMP" property="userName"/>
+    </resultMap>
+
+    <!--新增单条记录-->
+    <insert id="insertWithFields" useGeneratedKeys="true" keyProperty="id" parameterType="log">
+        insert into log (id, user_id, action, create_time) values (#{id}, #{userId}, #{action}, #{createTime})
+    </insert>
+
+    <select id="selExtend" parameterType="int" resultMap="logExtendResultMap">
+        select l.id as id,
+               l.user_id as user_id,
+               l.action as action,
+               l.create_time as create_time,
+               u.name as user_name
+        from log as l
+        left join user as u
+        on l.user_id = u.id
+        where l.id = #{id}
+    </select>
+
+</mapper>

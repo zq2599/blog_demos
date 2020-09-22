@@ -1,0 +1,21 @@
+spring:
+  jackson:
+    # 日期格式化
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 序列化相关
+    serialization:
+      # 格式化输出
+      indent_output: true
+      # 忽略无法转换的对象
+      fail_on_empty_beans: true
+    # 反序列化相关
+    deserialization:
+      # 解析json时，遇到不存在的属性就忽略
+      fail_on_unknown_properties: false
+    # 设置空如何序列化
+    defaultPropertyInclusion: NON_EMPTY
+    parser:
+      # 允许特殊和转义符
+      allow_unquoted_control_chars: true
+      # 允许单引号
+      allow_single_quotes: true

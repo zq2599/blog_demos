@@ -1,0 +1,95 @@
+server:
+  port: 8080
+
+spring:
+  #1.JDBC数据源
+  datasource:
+    druid:
+      first:
+        username: root
+        password: 123456
+        url: jdbc:mysql://192.168.50.43:3306/mybatis?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        #初始化连接池的连接数量 大小，最小，最大
+        initial-size: 5
+        min-idle: 5
+        max-active: 20
+        #配置获取连接等待超时的时间
+        max-wait: 60000
+        #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        time-between-eviction-runs-millis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        min-evictable-idle-time-millis: 30000
+        # 配置一个连接在池中最大生存的时间，单位是毫秒
+        max-evictable-idle-time-millis: 300000
+        validation-query: SELECT 1 FROM user
+        test-while-idle: true
+        test-on-borrow: true
+        test-on-return: false
+        # 是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭   个人建议如果想用SQL防火墙 建议打开
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 20
+        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        filters: stat,wall,slf4j
+        filter:
+          stat:
+            merge-sql: true
+            slow-sql-millis: 5000
+
+      second:
+        username: root
+        password: 123456
+        url: jdbc:mysql://192.168.50.43:3306/mybatis_second?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        #初始化连接池的连接数量 大小，最小，最大
+        initial-size: 5
+        min-idle: 5
+        max-active: 20
+        #配置获取连接等待超时的时间
+        max-wait: 60000
+        #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        time-between-eviction-runs-millis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        min-evictable-idle-time-millis: 30000
+        # 配置一个连接在池中最大生存的时间，单位是毫秒
+        max-evictable-idle-time-millis: 300000
+        validation-query: SELECT 1 FROM user
+        test-while-idle: true
+        test-on-borrow: true
+        test-on-return: false
+        # 是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭   个人建议如果想用SQL防火墙 建议打开
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 20
+        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        filters: stat,wall,slf4j
+        filter:
+          stat:
+            merge-sql: true###
+            slow-sql-millis: 5000
+
+      #3.基础监控配置
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        #设置不统计哪些URL
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+        session-stat-enable: true
+        session-stat-max-count: 100
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+        #设置监控页面的登录名和密码
+        login-username: admin
+        login-password: admin
+        allow: 127.0.0.1
+        #deny: 192.168.1.100
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com:
+      bolingcavalry:
+        druidtwosource:
+          mapper: debug

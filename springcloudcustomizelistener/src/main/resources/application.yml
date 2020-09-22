@@ -1,0 +1,11 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: springcloud-customize-listener
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/
+  instance:
+    prefer-ip-address: true

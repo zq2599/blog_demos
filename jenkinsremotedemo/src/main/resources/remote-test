@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    triggers {
+        GenericTrigger(
+            genericVariables: [
+              [key: 'ref', value: '$.ref'],
+              [key: 'repositoryURL', value: '$.repositoryURL'],
+              [key: 'branch', value: '$.branch']
+            ],
+            token: 'token-remote-test' ,
+            causeString: '$ref' ,
+            printContributedVariables: true,
+            printPostContent: true
+        )
+    }
+
+    stages {
+        stage('show-param') {
+            steps {
+                echo 'token参数：$token'
+                echo '代码仓库：$repositoryURL'
+                echo '代码分支：$branch'
+            }
+        }
+
+        stage('down-sourcecode') {
+            steps {
+                echo '开始下载源码'
+                checkout([$class: 'GitSCM',
+                    branches: [[name: '*/$branch']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[url: '$repositoryURL']]])
+            }
+        }
+    }
+}

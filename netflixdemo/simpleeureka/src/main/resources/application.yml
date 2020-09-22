@@ -1,0 +1,38 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: eureka-server
+  security:
+    #配置spring security登录用户名和密码，给Eureka注册中心添加认证
+    user:
+      name: eureka
+      password: 123456
+
+eureka:
+  instance:
+    #该服务实例主机名
+    hostname: ${EUREKA_HOSTNAME:localhost}
+    #该服务实例在注册中心的唯一实例ID，${spring.cloud.client.ip-address}获取该服务实例ip
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+    #该服务实例向注册中心发送心跳间隔，单位秒，默认30秒
+    lease-renewal-interval-in-seconds: 20
+    #Eureka注册中心在删除此实例之前收到最后一次心跳后的等待时间，单位秒，默认90秒
+    lease-expiration-duration-in-seconds: 60
+  server:
+    #Eureka自我保护模式设置，true：开启，false：关闭，开发测试环境关闭，生产环境开启
+    enable-self-preservation: false
+    #清理失效节点的时间间隔，默认60000毫秒
+    eviction-interval-timer-in-ms: 60000
+  client:
+    #服务注册，是否将服务注册到Eureka注册中心，true：注册，false：不注册
+    register-with-eureka: false
+    #服务发现，是否从Eureka注册中心获取注册信息，true：获取，false：不获取
+    fetch-registry: false
+    healthcheck:
+      #Eureka的健康检查，只能在application.yml中设置，true：开启，false：关闭
+      enabled: true
+    service-url:
+      #配置Eureka注册中心即Eureka服务端的地址，单机状态配置自己的地址
+      defaultZone: ${EUREKA_SERVER:http://${eureka.instance.hostname}:${server.port}/eureka/}

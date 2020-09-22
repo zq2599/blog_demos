@@ -1,0 +1,13 @@
+version: '3'
+services:
+  eureka:
+    image: bolingcavalry/eureka:0.0.1-SNAPSHOT
+    container_name: eureka
+    restart: unless-stopped
+  service:
+    image: bolingcavalry/service:0.0.1-SNAPSHOT
+    container_name: service
+    restart: unless-stopped
+    command: sh -c './wait-for-it.sh eureka:8080 -t 0  -- java -Xms1g -Xmx1g -cp /app/resources:/app/classes:/app/libs/* com.bolingcavalry.waitforitdemo.ServiceApplication'
+    depends_on:
+    - eureka

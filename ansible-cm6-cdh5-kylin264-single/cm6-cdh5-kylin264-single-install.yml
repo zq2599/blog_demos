@@ -1,0 +1,319 @@
+- name: cdh install
+  hosts: cdh_group
+  gather_facts: True
+  vars_files:
+  - vars.yml
+  tasks:
+  - name: update yum
+    command: yum update -y
+  - name: install ntpdate
+    yum: name=ntpdate state=present
+  - name: ntpdate
+    command: ntpdate cn.ntp.org.cn
+  - name: stop and disable firewalld
+    service: name=firewalld state=stopped enabled=no
+  - name: disable SELINUX
+    selinux: state=disabled
+  - name: swap off
+    command: sed -ri 's/.*swap.*/#&/' /etc/fstab
+  - name: create jdk package
+    file:
+      path: /usr/lib/jvm
+      state: directory
+      mode: '0777'
+  - name: scp jdk install file 
+    copy: src=~/playbooks/cdh6/jdk-8u191-linux-x64.tar.gz dest=/usr/lib/jvm/
+  - name: create jdbc package
+    file:
+      path: /usr/share/java
+      state: directory
+      mode: '0777'
+  - name: scp jdbc file
+    copy: src=~/playbooks/cdh6/mysql-connector-java-5.1.34.jar dest=/usr/share/java/mysql-connector-java.jar
+  - name: unarchive jdk install file from ansible 
+    unarchive:
+      src: ~/playbooks/cdh6/jdk-8u191-linux-x64.tar.gz
+      dest: /usr/lib/jvm/
+  - name: Ensure JAVA_HOME is set
+    lineinfile:
+      path: /etc/profile
+      regexp: '^(.*)JAVA_HOME=(.*)$'
+      line: export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_191
+  - name: Ensure JRE_HOME is set
+    lineinfile:
+      path: /etc/profile
+      line: export JRE_HOME=${JAVA_HOME}/jre
+  - name: Ensure CLASSPATH is set
+    lineinfile:
+      path: /etc/profile
+      line: export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+  - name: Ensure JAVA_HOME exists in PATH
+    lineinfile:
+      path: /etc/profile
+      line: export PATH=${JAVA_HOME}/bin:$PATH
+  - name: create softlink path of jdk 
+    file:
+      path: /usr/java
+      state: directory
+      mode: '0777'
+  - name: create jdk softlink
+    file:
+      path: /usr/java/default
+      state: link
+      src: /usr/lib/jvm/jdk1.8.0_191 
+  - name: install chkconfig
+    yum: name=chkconfig state=present
+  - name: install bind-utils
+    yum: name=bind-utils state=present
+  - name: install psmisc
+    yum: name=psmisc state=present
+  - name: install libxslt
+    yum: name=libxslt state=present
+  - name: install zlib
+    yum: name=zlib state=present
+  - name: install sqlite
+    yum: name=sqlite state=present
+  - name: install cyrus-sasl-plain
+    yum: name=cyrus-sasl-plain state=present
+  - name: install cyrus-sasl-gssapi
+    yum: name=cyrus-sasl-gssapi state=present
+  - name: install fuse
+    yum: name=fuse state=present
+  - name: install fuse-libs
+    yum: name=fuse-libs state=present
+  - name: install redhat-lsb
+    yum: name=redhat-lsb state=present
+  - name: install net-tools
+    yum: name=net-tools state=present    
+  - name: set transparent_hugepage defrag
+    lineinfile:
+      path: /etc/rc.local
+      line: echo never > /sys/kernel/mm/transparent_hugepage/defrag
+  - name: set transparent_hugepage enabled
+    lineinfile:
+      path: /etc/rc.local
+      line: echo never > /sys/kernel/mm/transparent_hugepage/enabled
+  - name: install mariadb-server
+    yum: name=mariadb-server state=present
+  - name: start and enable mariadb
+    service: name=mariadb state=started enabled=yes
+  - name: install MySQL-python
+    yum: name=MySQL-python state=present
+  - name: create database user cdh
+    mysql_user:
+      name: cdh
+      password: 123456
+      priv: '*.*:ALL,GRANT'
+      state: present
+  - name: create database scm
+    mysql_db:
+      login_user: cdh
+      login_host: 127.0.0.1
+      login_password: 123456
+      name: scm
+      encoding: utf8
+      state: present
+  - name: create database amon
+    mysql_db:
+      login_user: cdh
+      login_host: 127.0.0.1
+      login_password: 123456
+      name: amon
+      encoding: utf8
+      state: present
+  - name: create database rman
+    mysql_db:
+      login_user: cdh
+      login_host: 127.0.0.1
+      login_password: 123456
+      name: rman
+      encoding: utf8
+      state: present
+  - name: create database hue
+    mysql_db:
+      login_user: cdh
+      login_host: 127.0.0.1
+      login_password: 123456
+      name: hue
+      encoding: utf8
+      state: present
+  - name: create database hive
+    mysql_db:
+      login_user: cdh
+      login_host: 127.0.0.1
+      login_password: 123456
+      name: hive
+      encoding: utf8
+      state: present
+  - name: create database sentry
+    mysql_db:
+      login_user: cdh
+      login_host: 127.0.0.1
+      login_password: 123456
+      name: sentry
+      encoding: utf8
+      state: present
+  - name: create database nav
+    mysql_db:
+      login_user: cdh
+      login_host: 127.0.0.1
+      login_password: 123456
+      name: nav
+      encoding: utf8
+      state: present
+  - name: create database navms
+    mysql_db:
+      login_user: cdh
+      login_host: 127.0.0.1
+      login_password: 123456
+      name: navms
+      encoding: utf8
+      state: present
+  - name: create database oozie
+    mysql_db:
+      login_user: cdh
+      login_host: 127.0.0.1
+      login_password: 123456
+      name: oozie
+      encoding: utf8
+      state: present
+  - name: create database user scm
+    mysql_user:
+      name: scm
+      password: scm
+      priv: 'scm.*:ALL'
+      state: present
+  - name: create database user amon
+    mysql_user:
+      name: amon
+      password: amon
+      priv: 'amon.*:ALL'
+      state: present
+  - name: create database user rman
+    mysql_user:
+      name: rman
+      password: rman
+      priv: 'rman.*:ALL'
+      state: present
+  - name: create database user hue
+    mysql_user:
+      name: hue
+      password: hue
+      priv: 'hue.*:ALL'
+      state: present
+  - name: create database user hive
+    mysql_user:
+      name: hive
+      password: hive
+      priv: 'hive.*:ALL'
+      state: present
+  - name: create database user sentry
+    mysql_user:
+      name: sentry
+      password: sentry
+      priv: 'sentry.*:ALL'
+      state: present
+  - name: create database user nav
+    mysql_user:
+      name: nav
+      password: nav
+      priv: 'nav.*:ALL'
+      state: present
+  - name: create database user navms
+    mysql_user:
+      name: navms
+      password: navms
+      priv: 'navms.*:ALL'
+      state: present
+  - name: create database user oozie
+    mysql_user:
+      name: oozie
+      password: oozie
+      priv: 'oozie.*:ALL'
+      state: present
+  - name: create install files package
+    file:
+      path: ~/cdh-install-files
+      state: directory
+      mode: '0777'
+  - name: scp cloudera-manager-daemons install file
+    copy: 
+      src: ~/playbooks/cdh6/{{cm_daemons}}
+      dest: ~/cdh-install-files
+      mode: '0777'
+  - name: scp cloudera-manager-agent install file
+    copy: 
+      src: ~/playbooks/cdh6/{{cm_agent}} 
+      dest: ~/cdh-install-files
+      mode: '0777'
+  - name: scp cloudera-manager-server install file
+    copy: 
+      src: ~/playbooks/cdh6/{{cm_server}}
+      dest: ~/cdh-install-files
+      mode: '0777'
+  - name: remove cloudera-manager-server package
+    yum:
+      name: cloudera-manager-server.x86_64
+      state: absent
+  - name: remove cloudera-manager-agent.x86_64 package
+    yum:
+      name: cloudera-manager-agent.x86_64
+      state: absent
+  - name: remove cloudera-manager-daemons package
+    yum:
+      name: cloudera-manager-daemons.x86_64
+      state: absent
+  - name: install cloudera-manager-daemons
+    command: yum install -y ~/cdh-install-files/{{cm_daemons}}
+  - name: install cloudera-manager-agent
+    command: yum install -y ~/cdh-install-files/{{cm_agent}}
+  - name: install cloudera-manager-server
+    command: yum install -y ~/cdh-install-files/{{cm_server}}
+  - name: switch off agent tls
+    lineinfile:
+      path: /etc/cloudera-scm-agent/config.ini
+      regexp: '^(.*)use_tls=(.*)$'
+      line: use_tls=0
+  - name: create parcel package
+    file:
+      path: /opt/cloudera/parcel-repo/
+      state: directory
+      mode: '0777'
+  - name: scp parcel file
+    copy:
+      src: ~/playbooks/cdh6/{{parcel}}
+      dest: /opt/cloudera/parcel-repo/
+      mode: '0777'
+  - name: scp parcel sha file
+    copy:
+      src: ~/playbooks/cdh6/{{parcel_sha}}
+      dest: /opt/cloudera/parcel-repo/
+      mode: '0777'
+  - name: ensure netstat can be execute by account hdfs
+    file:
+      path: /bin/netstat
+      mode: u+s
+  - name: Ensure SPARK_HOME is set
+    lineinfile:
+      path: /etc/profile
+      regexp: '^(.*)SPARK_HOME=(.*)$'
+      line: export SPARK_HOME={{parcel_install_path}}/lib/spark
+  - name: Ensure HBASE_HOME is set
+    lineinfile:
+      path: /etc/profile
+      regexp: '^(.*)HBASE_HOME=(.*)$'
+      line: export HBASE_HOME={{parcel_install_path}}/lib/hbase
+  - name: Ensure KYLIN_HOME is set
+    lineinfile:
+      path: /etc/profile
+      regexp: '^(.*)KYLIN_HOME=(.*)$'
+      line: export KYLIN_HOME=/usr/local/{{kylin_package_name}}
+  - name: unarchive kylin install file from ansible
+    unarchive:
+      src: ~/playbooks/cdh6/{{kylin_install}}
+      dest: /usr/local/
+  - name: Give insecure permissions to kylin path
+    file:
+      path: /usr/local/{{kylin_package_name}}
+      mode: '0777'
+      recurse: yes

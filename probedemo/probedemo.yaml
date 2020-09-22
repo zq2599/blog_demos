@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: probedemo
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 30080
+  selector:
+    name: probedemo
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: probedemo
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: probedemo
+    spec:
+      containers:
+        - name: probedemo
+          image: bolingcavalry/probedemo:0.0.1
+          tty: true
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 5
+            failureThreshold: 10
+            timeoutSeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 10
+            periodSeconds: 5
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"

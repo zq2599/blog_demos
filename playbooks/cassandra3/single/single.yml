@@ -1,0 +1,102 @@
+- name: cassandra3 single install
+  hosts: single_group
+  gather_facts: True
+  vars_files:
+  - vars-single.yml
+  tasks:
+  - name: update yum
+    command: yum update -y
+  - name: install ntpdate
+    yum: name=ntpdate state=present
+  - name: ntpdate
+    command: ntpdate cn.ntp.org.cn
+  - name: stop and disable firewalld
+    service: name=firewalld state=stopped enabled=no
+  - name: disable SELINUX
+    selinux: state=disabled
+  - name: swap off
+    command: sed -ri 's/.*swap.*/#&/' /etc/fstab
+  - name: create jdk package
+    file:
+      path: /usr/lib/jvm
+      state: directory
+      mode: '0777'
+  - name: install chkconfig
+    yum: name=vim state=present
+  - name: unarchive jdk install file from ansible 
+    unarchive:
+      src: ~/playbooks/files/jdk-8u191-linux-x64.tar.gz
+      dest: /usr/lib/jvm/
+  - name: create new group cassandra
+    group: 
+      name: cassandra  
+  - name: create new user cassandra
+    user: 
+      name: cassandra
+      shell: /bin/bash
+      group: cassandra
+      password: 888888
+      create_home: True  
+      home: "{{cassandra_home_path}}"
+  - name: unarchive cassandra3 install file from ansible 
+    unarchive:
+      src: ~/playbooks/files/{{cassandra_targz_name}}
+      dest: "{{cassandra_home_path}}"
+  - name: Change file ownership, group and permissions
+    file:
+      path: "{{cassandra_home_path}}/{{cassandra_package_name}}"
+      owner: cassandra
+      group: cassandra
+      mode: '0777'
+      recurse: yes
+  - name: scp cassandra3 config file 
+    copy: src=~/playbooks/files/cassandra.yaml dest={{cassandra_home_path}}/{{cassandra_package_name}}/conf/
+  - name: create cassandra data directory
+    file:
+      path: /var/lib/cassandra
+      state: directory
+      mode: '0777'
+      owner: cassandra
+      group: cassandra
+  - name: create cassandra log directory
+    file:
+      path: /var/log/cassandra
+      state: directory
+      mode: '0777'
+      owner: cassandra
+      group: cassandra
+  - name: create cassandra softlink
+    file:
+      path: "{{cassandra_home_path}}/cassandra"
+      state: link
+      src: "{{cassandra_home_path}}/{{cassandra_package_name}}"
+      mode: '0777'
+      owner: cassandra
+      group: cassandra
+  - name: Ensure JAVA_HOME is set
+    lineinfile:
+      path: /etc/profile
+      regexp: '^(.*)JAVA_HOME=(.*)$'
+      line: export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_191
+  - name: Ensure JRE_HOME is set
+    lineinfile:
+      path: /etc/profile
+      line: export JRE_HOME=${JAVA_HOME}/jre
+  - name: Ensure CLASSPATH is set
+    lineinfile:
+      path: /etc/profile
+      line: export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+  - name: Ensure CASSANDRA_HOME is set
+    lineinfile:
+      path: /etc/profile
+      regexp: '^(.*)CASSANDRA_HOME=(.*)$'
+      line: export CASSANDRA_HOME={{cassandra_home_path}}/cassandra
+  - name: Ensure JAVA_HOME and CASSANDRA_HOME exists in PATH
+    lineinfile:
+      path: /etc/profile
+      line: export PATH=${JAVA_HOME}/bin:${CASSANDRA_HOME}/bin:$PATH
+  - name: Ensure cluster name is set
+    lineinfile:
+      path: "{{cassandra_home_path}}/{{cassandra_package_name}}/conf/cassandra.yaml"
+      regexp: '^cluster_name:(.*)$'
+      line: "cluster_name: '{{cassandra_cluster_name}}'"
