@@ -12,7 +12,7 @@
     <groupId>com.bolingcavalry</groupId>
     <artifactId>testenvironment</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>junit</name>
+    <name>testenvironment</name>
     <description>Demo project for testenvironment in Spring Boot junit</description>
 
     <properties>

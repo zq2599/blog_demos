@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContext;
@@ -15,13 +16,13 @@ import org.springframework.context.ApplicationContext;
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/9/20 23:41
  */
-@SpringBootTest(classes = {SimpleBeanApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class HelloServiceTest {
+@SpringBootTest
+//@AutoConfigureMockMvc
+class Demo2Test {
 
-    private static final Logger logger = LoggerFactory.getLogger(HelloServiceTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(Demo2Test.class);
 
-    @LocalServerPort
-    private int port;
+
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -40,26 +41,7 @@ class HelloServiceTest {
     void testApplicationContext() {
         HelloService helloService = applicationContext.getBean(HelloService.class);
         TestCase.assertNotNull(helloService);
-        logger.info("port is {}", port);
     }
 
-    @BeforeEach
-    void beforeEach() {
-        logger.info("execute beforeEach");
-    }
 
-    @AfterEach
-    void afterEach() {
-        logger.info("execute afterEach");
-    }
-
-    @BeforeAll
-    static void beforeAll() {
-        logger.info("execute beforeAll");
-    }
-
-    @AfterAll
-    static void afterAll() {
-        logger.info("execute afterAll");
-    }
 }
