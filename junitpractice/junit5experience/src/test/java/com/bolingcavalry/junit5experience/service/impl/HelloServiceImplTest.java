@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.concurrent.TimeUnit;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * @Description: 演示Junit5的各类注解
@@ -23,11 +22,17 @@ class HelloServiceImplTest {
     @Autowired
     HelloService helloService;
 
+    /**
+     * 在所有测试方法执行前被执行
+     */
     @BeforeAll
     static void beforeAll() {
         log.info("execute beforeAll");
     }
 
+    /**
+     * 在所有测试方法执行后被执行
+     */
     @AfterAll
     static void afterAll() {
         log.info("execute afterAll");
@@ -51,20 +56,24 @@ class HelloServiceImplTest {
 
     @Test
     @DisplayName("测试service层的hello方法")
-    @Tag("string-result")
     void hello() {
         log.info("execute hello");
         assertThat(helloService.hello(NAME)).isEqualTo("Hello " + NAME);
     }
 
+    /**
+     * DisplayName中带有emoji，在测试框架中能够展示
+     */
     @Test
     @DisplayName("测试service层的increase方法\uD83D\uDE31")
-    @Tag("int-result")
     void increase() {
         log.info("execute increase");
         assertThat(helloService.increase(1)).isEqualByComparingTo(2);
     }
 
+    /**
+     * 不会被执行的测试方法
+     */
     @Test
     @Disabled
     void neverExecute() {
@@ -77,17 +86,7 @@ class HelloServiceImplTest {
      */
     @Test
     @Timeout(unit = TimeUnit.MILLISECONDS, value = 500)
-    @Disabled
     void remoteRequest() {
         assertThat(helloService.remoteRequest()).isEqualTo(true);
     }
-
-    @Test
-    void abc() {
-        assumeTrue(true, () -> "skip abc");
-
-        assertThat(helloService.remoteRequest()).isEqualTo(false);
-    }
-
-
 }

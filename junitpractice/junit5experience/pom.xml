@@ -46,21 +46,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
-                <configuration>
-                    <!-- 用groups节点表示会被执行的tag，多个tag用逗号分割 -->
-                    <!--
-                    <groups>string-result,int-result</groups>
-                    -->
-                    <!-- 用excludedGroups节点表示不会被执行的tag，多个tag用逗号分割 -->
-                    <excludedGroups>int-result</excludedGroups>
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
 </project>
