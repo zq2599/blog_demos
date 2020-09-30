@@ -6,6 +6,7 @@
     <modules>
         <module>simplebean</module>
         <module>junit5experience</module>
+        <module>assertassume</module>
         <!--
         <module>testenvironment</module>
         -->
