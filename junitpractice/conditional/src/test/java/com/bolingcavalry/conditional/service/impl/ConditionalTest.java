@@ -34,9 +34,9 @@ public class ConditionalTest {
 
     @Test
     @Order(3)
-    @EnabledOnOs({OS.MAC})
-    @DisplayName("操作系统：只有MAC才会执行")
-    void onlyMacTest() {
+    @DisabledOnOs({OS.MAC})
+    @DisplayName("操作系统：只有MAC才不会执行")
+    void withoutMacTest() {
         assertEquals(2, Math.addExact(1, 1));
     }
 
@@ -82,7 +82,7 @@ public class ConditionalTest {
 
     @Test
     @Order(9)
-    @EnabledIfEnvironmentVariable(named = "ENV", matches = ".*JAVA_HOME.*")
+    @EnabledIfEnvironmentVariable(named = "JAVA_HOME", matches = ".*")
     @DisplayName("环境变量：JAVA_HOME才会执行")
     void onlyJavaHomeExistsInEnvTest() {
         assertEquals(2, Math.addExact(1, 1));
