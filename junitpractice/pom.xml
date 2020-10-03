@@ -8,6 +8,7 @@
         <module>junit5experience</module>
         <module>assertassume</module>
         <module>conditional</module>
+        <module>tag</module>
         <!--
         <module>testenvironment</module>
         -->
