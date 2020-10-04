@@ -9,6 +9,8 @@
         <module>assertassume</module>
         <module>conditional</module>
         <module>tag</module>
+        <module>advanced</module>
+        <module>parameterized</module>
         <!--
         <module>testenvironment</module>
         -->
