@@ -1,19 +1,20 @@
 package com.bolingcavalry.parameterized.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.AggregateWith;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.converter.JavaTimeConversionPattern;
 import org.junit.jupiter.params.provider.*;
-import org.junit.platform.commons.util.StringUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -227,7 +228,7 @@ public class HelloTest {
 
     @Order(21)
     @DisplayName("CSV格式多条记录入参(自定义展示名称)")
-    @ParameterizedTest(name = "{index} ==> the rank of ''{0}'' is {1}")
+    @ParameterizedTest(name = "序号 [{index}]，fruit参数 [{0}]，rank参数 [{1}]")
     @CsvSource({
             "apple3, 31",
             "banana3, 32",
@@ -236,6 +237,4 @@ public class HelloTest {
     void csvSourceWithCustomDisplayNameTest(String fruit, int rank) {
         log.info("csvSourceWithCustomDisplayNameTest, fruit [{}], rank [{}]", fruit, rank);
     }
-
-
 }
