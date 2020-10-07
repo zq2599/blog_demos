@@ -2,9 +2,7 @@ package com.bolingcavalry.advanced.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestFactory;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;

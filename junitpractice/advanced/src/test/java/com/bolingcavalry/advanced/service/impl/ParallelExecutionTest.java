@@ -4,7 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Slf4j
@@ -33,4 +37,13 @@ class ParallelExecutionTest {
                 repetitionInfo.getTotalRepetitions());
     }
 
+
+    @Order(3)
+    @Execution(ExecutionMode.CONCURRENT)
+    @DisplayName("多个int型入参")
+    @ParameterizedTest
+    @ValueSource(ints = { 1,2,3,4,5,6,7,8,9,0 })
+    void intsTest(int candidate) {
+        log.info("ints [{}]", candidate);
+    }
 }
