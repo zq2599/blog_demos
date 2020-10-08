@@ -86,6 +86,17 @@
 9. [《jackson学习之九：springboot整合(配置文件)》](https://blog.csdn.net/boling_cavalry/article/details/108460433)
 10. [《jackson学习之十(终篇)：springboot整合(配置类)》](https://blog.csdn.net/boling_cavalry/article/details/108559056)
 
+## JUnit5学习特辑
+《JUnit5学习》系列旨在通过实战提升SpringBoot环境下的单元测试技能，一共八篇文章，链接如下：
+1. [《JUnit5学习之一：基本操作》](https://blog.csdn.net/boling_cavalry/article/details/108810587)
+2. [《JUnit5学习之二：Assumptions类》](https://blog.csdn.net/boling_cavalry/article/details/108861185)
+3. [《JUnit5学习之三：Assertions类》](https://blog.csdn.net/boling_cavalry/article/details/108899437)
+4. [《JUnit5学习之四：按条件执行》](https://blog.csdn.net/boling_cavalry/article/details/108909107)
+5. [《JUnit5学习之五：标签(Tag)和自定义注解》](https://blog.csdn.net/boling_cavalry/article/details/108914091)
+6. [《JUnit5学习之六：参数化测试(Parameterized Tests)基础》](https://blog.csdn.net/boling_cavalry/article/details/108930987)
+7. [《JUnit5学习之七：参数化测试(Parameterized Tests)进阶》](https://blog.csdn.net/boling_cavalry/article/details/108942301)
+8. [《JUnit5学习之八：综合进阶（终篇）》](https://blog.csdn.net/boling_cavalry/article/details/108952500)
+
 # Spring领域
 
 ##  Spring基础
