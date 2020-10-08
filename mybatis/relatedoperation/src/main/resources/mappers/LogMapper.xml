@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolingcavalry.relatedoperation.mapper.LogMapper">
+
+    <resultMap id="logWithUserResultMap" type="LogAssociateUser">
+        <id property="id" column="log_id"/>
+
+        <result  property="action" column="log_action" jdbcType="VARCHAR"/>
+
+        <result property="createTime" column="log_create_time" jdbcType="TIMESTAMP" />
+
+        <association property="user" javaType="User">
+            <id property="id" column="user_id"/>
+            <result property="name" column="user_name"/>
+            <result property="age" column="user_age"/>
+        </association>
+    </resultMap>
+
+    <select id="selLogAssociateUser" parameterType="int" resultMap="logWithUserResultMap">
+        select l.id as log_id,
+               l.action as log_action,
+               l.create_time as log_create_time,
+               u.id as user_id,
+               u.name as user_name,
+               u.age as user_age
+        from log as l
+               left join user as u
+               on l.user_id = u.id
+        where l.id = #{id}
+    </select>
+
+</mapper>
