@@ -16,11 +16,11 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public UserWithLogs selUserWithLogsLeftJoin(int id) {
-        return userMapper.selUserWithLogsLeftJoin(id);
+    public UserWithLogs leftJoinSel(int id) {
+        return userMapper.leftJoinSel(id);
     }
 
-    public UserWithLogs selUserWithLogsNestedSelect(int id) {
-        return userMapper.selUserWithLogsNestedSelect(id);
+    public UserWithLogs nestedSel(int id) {
+        return userMapper.nestedSel(id);
     }
 }

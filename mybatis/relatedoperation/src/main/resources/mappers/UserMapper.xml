@@ -2,22 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bolingcavalry.relatedoperation.mapper.UserMapper">
 
-    <resultMap id="leftJoinResultMap" type="UserWithLogs">
-        <id property="id" column="user_id"/>
-
-        <result  property="name" column="user_name" jdbcType="VARCHAR"/>
-
-        <result property="age" column="user_age" jdbcType="INTEGER" />
-
-        <collection property="logs" ofType="Log">
-            <id property="id" column="log_id"/>
-            <result property="userId" column="log_user_id" jdbcType="INTEGER" />
-            <result property="action" column="log_action" jdbcType="VARCHAR" />
-            <result property="createTime" column="log_create_time" jdbcType="TIMESTAMP" />
-        </collection>
-    </resultMap>
-
-    <select id="selUserWithLogsLeftJoin" parameterType="int" resultMap="leftJoinResultMap">
+    <!--联表-->
+    <select id="leftJoinSel" parameterType="int" resultMap="leftJoinResultMap">
         select
             u.id as user_id,
             u.name as user_name,
@@ -33,8 +19,23 @@
         where u.id = #{id}
     </select>
 
+    <resultMap id="leftJoinResultMap" type="UserWithLogs">
+        <id property="id" column="user_id"/>
 
-    <select id="selUserWithLogsNestedSelect" parameterType="int" resultMap="nestedResultMap">
+        <result  property="name" column="user_name" jdbcType="VARCHAR"/>
+
+        <result property="age" column="user_age" jdbcType="INTEGER" />
+
+        <collection property="logs" ofType="Log">
+            <id property="id" column="log_id"/>
+            <result property="userId" column="log_user_id" jdbcType="INTEGER" />
+            <result property="action" column="log_action" jdbcType="VARCHAR" />
+            <result property="createTime" column="log_create_time" jdbcType="TIMESTAMP" />
+        </collection>
+    </resultMap>
+
+    <!--嵌套-->
+    <select id="nestedSel" parameterType="int" resultMap="nestedResultMap">
         select
             u.id as user_id,
             u.name as user_name,

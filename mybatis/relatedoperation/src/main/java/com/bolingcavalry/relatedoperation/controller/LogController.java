@@ -23,11 +23,17 @@ public class LogController {
     @Autowired
     private LogService logService;
 
-    @ApiOperation(value = "根据ID查找日志记录", notes="根据ID查找日志记录")
+    @ApiOperation(value = "根据ID查找日志记录，带用户对象，联表查询实现", notes="根据ID查找日志记录，带用户对象，联表查询实现")
     @ApiImplicitParam(name = "id", value = "日志ID", paramType = "path", required = true, dataType = "Integer")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public LogAssociateUser sel(@PathVariable int id){
-        return logService.sel(id);
+    @RequestMapping(value = "/leftjoin/{id}", method = RequestMethod.GET)
+    public LogAssociateUser leftJoinSel(@PathVariable int id){
+        return logService.leftJoinSel(id);
     }
 
+    @ApiOperation(value = "根据ID查找日志记录，带用户对象，嵌套查询实现", notes="根据ID查找日志记录，带用户对象，嵌套查询实现")
+    @ApiImplicitParam(name = "id", value = "日志ID", paramType = "path", required = true, dataType = "Integer")
+    @RequestMapping(value = "/nested/{id}", method = RequestMethod.GET)
+    public LogAssociateUser nestedSel(@PathVariable int id){
+        return logService.nestedSel(id);
+    }
 }

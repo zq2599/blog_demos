@@ -11,5 +11,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LogMapper {
-    LogAssociateUser selLogAssociateUser(int id);
+
+    LogAssociateUser leftJoinSel(int id);
+
+    LogAssociateUser nestedSel(int id);
 }

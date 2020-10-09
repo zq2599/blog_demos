@@ -27,6 +27,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 public class ControllerTest {
 
+    /**
+     * 查询方式：联表
+     */
+    final static String SEARCH_TYPE_LEFT_JOIN = "leftjoin";
+
+    /**
+     * 查询方式：嵌套
+     */
+    final static String SEARCH_TYPE_NESTED = "nested";
+
     final static int TEST_USER_ID = 3;
 
     @Autowired MockMvc mvc;
@@ -57,17 +67,17 @@ public class ControllerTest {
 
 
         @Test
-        @DisplayName("通过用户ID获取用户信息(包含行为日志)，通过left join实现")
+        @DisplayName("通过用户ID获取用户信息(包含行为日志)，联表查询")
         @Order(1)
-        void selUserWithLogsLeftJoin() throws Exception {
-            queryAndCheck("leftjoin");
+        void leftJoinSel() throws Exception {
+            queryAndCheck(SEARCH_TYPE_LEFT_JOIN);
         }
 
         @Test
-        @DisplayName("通过用户ID获取用户信息(包含行为日志)，通过嵌套查询实现")
+        @DisplayName("通过用户ID获取用户信息(包含行为日志)，嵌套查询")
         @Order(2)
-        void selUserWithLogsNestedSelect() throws Exception {
-            queryAndCheck("nested");
+        void nestedSel() throws Exception {
+            queryAndCheck(SEARCH_TYPE_NESTED);
         }
     }
 
@@ -78,19 +88,39 @@ public class ControllerTest {
 
         final static int TEST_LOG_ID = 5;
 
-        @Test
-        @DisplayName("通过日志ID获取日志信息，关联了用户")
-        @Order(1)
-        void selTest() throws Exception {
-            mvc.perform(MockMvcRequestBuilders.get("/log/" + TEST_LOG_ID)
+        /**
+         * 通过日志ID获取日志信息有两种方式：联表和嵌套查询，
+         * 从客户端来看，仅一部分path不同，因此将请求和检查封装到一个通用方法中，
+         * 调用方法只需要指定不同的那一段path
+         * @param subPath
+         * @throws Exception
+         */
+        private void queryAndCheck(String subPath) throws Exception {
+            String queryPath = "/log/" + subPath + "/" + TEST_LOG_ID;
+
+            log.info("query path [{}]", queryPath);
+
+            mvc.perform(MockMvcRequestBuilders.get(queryPath)
                     .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value(TEST_LOG_ID))
                     .andExpect(jsonPath("$.user.id").value(TEST_USER_ID))
                     .andDo(print());
         }
+
+        @Test
+        @DisplayName("通过日志ID获取日志信息（关联了用户），联表查询")
+        @Order(1)
+        void leftJoinSel() throws Exception {
+            queryAndCheck(SEARCH_TYPE_LEFT_JOIN);
+        }
+
+        @Test
+        @DisplayName("通过日志ID获取日志信息（关联了用户），嵌套查询")
+        @Order(2)
+        void nestedSel() throws Exception {
+            queryAndCheck(SEARCH_TYPE_NESTED);
+        }
     }
-
-
 
 }

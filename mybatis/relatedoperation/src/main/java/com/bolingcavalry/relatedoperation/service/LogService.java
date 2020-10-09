@@ -15,7 +15,11 @@ public class LogService {
     @Autowired
     LogMapper logMapper;
 
-    public LogAssociateUser sel(int id){
-        return logMapper.selLogAssociateUser(id);
+    public LogAssociateUser leftJoinSel(int id){
+        return logMapper.leftJoinSel(id);
+    }
+
+    public LogAssociateUser nestedSel(int id){
+        return logMapper.nestedSel(id);
     }
 }

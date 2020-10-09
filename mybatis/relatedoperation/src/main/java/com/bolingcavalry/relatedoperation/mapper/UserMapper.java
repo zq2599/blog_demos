@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper {
 
-    UserWithLogs selUserWithLogsLeftJoin(int id);
+    UserWithLogs leftJoinSel(int id);
 
-    UserWithLogs selUserWithLogsNestedSelect(int id);
+    UserWithLogs nestedSel(int id);
 }

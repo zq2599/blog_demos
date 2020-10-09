@@ -24,18 +24,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "根据ID查找user记录（包含行为日志），通过left join实现", notes="根据ID查找user记录（包含行为日志），通过left join实现")
+    @ApiOperation(value = "根据ID查找user记录（包含行为日志），联表查询", notes="根据ID查找user记录（包含行为日志），联表查询")
     @ApiImplicitParam(name = "id", value = "用户ID", paramType = "path", required = true, dataType = "Integer")
     @RequestMapping(value = "/leftjoin/{id}", method = RequestMethod.GET)
-    public UserWithLogs selUserWithLogsLeftJoin(@PathVariable int id){
-        return userService.selUserWithLogsLeftJoin(id);
+    public UserWithLogs leftJoinSel(@PathVariable int id){
+        return userService.leftJoinSel(id);
     }
 
-    @ApiOperation(value = "根据ID查找user记录（包含行为日志），通过嵌套查询实现", notes="根据ID查找user记录（包含行为日志），通过嵌套查询实现")
+    @ApiOperation(value = "根据ID查找user记录（包含行为日志），嵌套查询", notes="根据ID查找user记录（包含行为日志），嵌套查询")
     @ApiImplicitParam(name = "id", value = "用户ID", paramType = "path", required = true, dataType = "Integer")
     @RequestMapping(value = "/nested/{id}", method = RequestMethod.GET)
-    public UserWithLogs selUserWithLogsNestedSelect(@PathVariable int id){
-        return userService.selUserWithLogsNestedSelect(id);
+    public UserWithLogs nestedSel(@PathVariable int id){
+        return userService.nestedSel(id);
     }
 
 }
