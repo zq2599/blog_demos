@@ -2,8 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bolingcavalry.relatedoperation.mapper.LogMapper">
 
+    <!--联表查询，返回log对象，该对象有个userName字段，值是user表的user_name字段-->
+    <select id="oneObjectSel" parameterType="int" resultMap="logExtendResultMap">
+        select l.id as id,
+               l.user_id as user_id,
+               l.action as action,
+               l.create_time as create_time,
+               u.name as user_name
+        from log as l
+                 left join user as u
+                           on l.user_id = u.id
+        where l.id = #{id}
+    </select>
 
-    <!--联表-->
+    <resultMap id="logExtendResultMap" type="logExtend">
+        <id property="id" column="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="action" jdbcType="VARCHAR" property="action"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="user_name" jdbcType="TIMESTAMP" property="userName"/>
+    </resultMap>
+
+
+    <!--联表查询，返回log对象，它的成员变量中有user对象-->
     <select id="leftJoinSel" parameterType="int" resultMap="leftJoinResultMap">
         select l.id as log_id,
                l.action as log_action,

@@ -39,6 +39,8 @@ public class ControllerTest {
 
     final static int TEST_USER_ID = 3;
 
+    final static String TEST_USER_NAME = "tom";
+
     @Autowired MockMvc mvc;
 
     @Nested
@@ -109,15 +111,27 @@ public class ControllerTest {
         }
 
         @Test
-        @DisplayName("通过日志ID获取日志信息（关联了用户），联表查询")
+        @DisplayName("通过日志ID获取日志信息,带userName字段，该字段通过联表查询实现")
         @Order(1)
+        void oneObjectSel() throws Exception {
+            mvc.perform(MockMvcRequestBuilders.get("/log/aggregate/" + TEST_LOG_ID)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.id").value(TEST_LOG_ID))
+                    .andExpect(jsonPath("$.userName").value(TEST_USER_NAME))
+                    .andDo(print());
+        }
+
+        @Test
+        @DisplayName("通过日志ID获取日志信息（关联了用户），联表查询")
+        @Order(2)
         void leftJoinSel() throws Exception {
             queryAndCheck(SEARCH_TYPE_LEFT_JOIN);
         }
 
         @Test
         @DisplayName("通过日志ID获取日志信息（关联了用户），嵌套查询")
-        @Order(2)
+        @Order(3)
         void nestedSel() throws Exception {
             queryAndCheck(SEARCH_TYPE_NESTED);
         }

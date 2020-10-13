@@ -1,6 +1,7 @@
 package com.bolingcavalry.relatedoperation.mapper;
 
 import com.bolingcavalry.relatedoperation.entity.LogAssociateUser;
+import com.bolingcavalry.relatedoperation.entity.LogExtend;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LogMapper {
+
+    LogExtend oneObjectSel(int id);
 
     LogAssociateUser leftJoinSel(int id);
 
