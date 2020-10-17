@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @Description: (这里用一句话描述这个类的作用)
+ *
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/10/17 19:04
  */

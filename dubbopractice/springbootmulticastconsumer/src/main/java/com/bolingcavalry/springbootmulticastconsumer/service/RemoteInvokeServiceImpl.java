@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RemoteInvokeServiceImpl {
 
-    @Reference
+    @Reference(timeout = 2000)
     private DemoService demoService;
 
 

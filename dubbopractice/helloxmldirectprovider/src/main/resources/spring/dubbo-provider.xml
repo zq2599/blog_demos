@@ -21,16 +21,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
 
-
-<!--    <dubbo:application metadata-type="remote" name="demo-provider"/>-->
-<!--    <dubbo:metadata-report address="zookeeper://192.168.50.43:2181"/>-->
-<!--    <dubbo:registry address="zookeeper://192.168.50.43:2181"/>-->
-<!--    <dubbo:protocol name="dubbo"/>-->
-
-
     <dubbo:application name="demo-provider"/>
     <!--不适用注册中心-->
-    <dubbo:registry address="multicast://224.5.6.7:1234?unicast=false" />
+    <dubbo:registry address="multicast://224.5.6.7:1234" />
 
     <bean id="demoService" class="com.bolingcavalry.helloxmldirectprovider.service.impl.DemoServiceImpl"/>
     <dubbo:service interface="com.bolingcavalry.dubbopractice.service.DemoService" ref="demoService"/>

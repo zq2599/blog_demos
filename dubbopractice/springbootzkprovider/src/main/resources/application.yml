@@ -7,4 +7,4 @@ dubbo:
   protocol:
     name: dubbo
     port: 20880
-    host: 192.168.50.5
+#    host: 192.168.50.5
