@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>dubbopractice</artifactId>
+        <groupId>com.bolingcavalry</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.bolingcavalry</groupId>
+    <artifactId>practiceinterface</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>practiceinterface</name>
+    <description>Beans of all app</description>
+
+
+
+</project>
