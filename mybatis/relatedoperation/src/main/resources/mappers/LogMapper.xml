@@ -20,7 +20,7 @@
         <result column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="action" jdbcType="VARCHAR" property="action"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="user_name" jdbcType="TIMESTAMP" property="userName"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
     </resultMap>
 
 
