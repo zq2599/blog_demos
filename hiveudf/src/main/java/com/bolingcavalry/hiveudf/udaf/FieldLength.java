@@ -7,7 +7,7 @@ import org.apache.hadoop.hive.ql.udf.generic.GenericUDAFParameterInfo;
 import org.apache.hadoop.hive.serde2.typeinfo.TypeInfo;
 
 /**
- * @Description: (这里用一句话描述这个类的作用)
+ * @Description: UDAF类
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/11/3 9:08
  */
@@ -21,4 +21,6 @@ public class FieldLength extends AbstractGenericUDAFResolver {
     public GenericUDAFEvaluator getEvaluator(TypeInfo[] info) throws SemanticException {
         return new FieldLengthUDAFEvaluator();
     }
+
+
 }

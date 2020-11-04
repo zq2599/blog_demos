@@ -4,7 +4,7 @@ import org.apache.hadoop.hive.ql.udf.generic.GenericUDAFEvaluator;
 import org.apache.hadoop.hive.ql.util.JavaDataModel;
 
 /**
- * @Description: 合并值缓冲区大小，这里是用来保存字符串长度，因此设为8byte
+ * @Description: 用于保存中间结果的对象
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/11/4 10:08
  */
@@ -26,6 +26,10 @@ public class FieldLengthAggregationBuffer extends GenericUDAFEvaluator.AbstractA
         }
     }
 
+    /**
+     * 合并值缓冲区大小，这里是用来保存字符串长度，因此设为8byte
+     * @return
+     */
     @Override
     public int estimate() {
         return JavaDataModel.PRIMITIVES1;
