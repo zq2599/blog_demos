@@ -6,10 +6,7 @@ import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentLengthException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDTF;
-import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
-import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
-import org.apache.hadoop.hive.serde2.objectinspector.StructField;
-import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +20,8 @@ import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectIn
  */
 public class WordSplit extends GenericUDTF {
 
+    private PrimitiveObjectInspector stringOI = null;
+
 
     private final static String[] EMPTY_ARRAY = {"NULL", "NULL", "NULL"};
 
@@ -33,7 +32,9 @@ public class WordSplit extends GenericUDTF {
      */
     @Override
     public void process(Object[] args) throws HiveException {
-        String input = args[0].toString();
+//      String input = args[0].toString();
+
+        String input = stringOI.getPrimitiveJavaObject(args[0]).toString();
 
         // 无效字符串
         if(StringUtils.isBlank(input)) {
@@ -80,6 +81,8 @@ public class WordSplit extends GenericUDTF {
         if(!Category.PRIMITIVE.equals(inputFields.get(0).getFieldObjectInspector().getCategory())) {
             throw new UDFArgumentException("ExplodeMap takes string as a parameter");
         }
+
+        stringOI = (PrimitiveObjectInspector)inputFields.get(0).getFieldObjectInspector();
 
         //列名集合
         ArrayList<String> fieldNames = new ArrayList<String>();
