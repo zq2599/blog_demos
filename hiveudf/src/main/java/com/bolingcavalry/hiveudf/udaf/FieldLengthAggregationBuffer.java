@@ -27,7 +27,7 @@ public class FieldLengthAggregationBuffer extends GenericUDAFEvaluator.AbstractA
     }
 
     /**
-     * 合并值缓冲区大小，这里是用来保存字符串长度，因此设为8byte
+     * 合并值缓冲区大小，这里是用来保存字符串长度，因此设为4byte
      * @return
      */
     @Override

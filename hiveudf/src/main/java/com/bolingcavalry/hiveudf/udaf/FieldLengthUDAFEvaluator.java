@@ -13,15 +13,11 @@ import org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector;
  */
 public class FieldLengthUDAFEvaluator extends GenericUDAFEvaluator {
 
-
     PrimitiveObjectInspector inputOI;
 
     ObjectInspector outputOI;
 
     PrimitiveObjectInspector integerOI;
-
-    int total = 0;
-
 
     /**
      * 每个阶段都会被执行的方法，
