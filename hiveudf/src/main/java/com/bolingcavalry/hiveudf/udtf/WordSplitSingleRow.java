@@ -1,24 +1,23 @@
 package com.bolingcavalry.hiveudf.udtf;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentLengthException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDTF;
 import org.apache.hadoop.hive.serde2.objectinspector.*;
-
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector.Category;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * @Description: (这里用一句话描述这个类的作用)
+ * @Description: 把指定字段拆成多列
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2020/11/5 14:43
  */
-public class WordSplit extends GenericUDTF {
+public class WordSplitSingleRow extends GenericUDTF {
 
     private PrimitiveObjectInspector stringOI = null;
 
@@ -32,7 +31,6 @@ public class WordSplit extends GenericUDTF {
      */
     @Override
     public void process(Object[] args) throws HiveException {
-//      String input = args[0].toString();
 
         String input = stringOI.getPrimitiveJavaObject(args[0]).toString();
 
@@ -42,7 +40,7 @@ public class WordSplit extends GenericUDTF {
         } else {
 
             // 分割字符串
-            String[] array = input.split(",");
+            String[] array = input.split(":");
 
             // 如果字符串数组不合法，就返回原始字符串和错误提示
             if(null==array || array.length<3) {
