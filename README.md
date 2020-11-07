@@ -394,6 +394,19 @@
 
 # 大数据
 
+## hive学习笔记
+1. [基本数据类型](https://xinchen.blog.csdn.net/article/details/109304044)
+2. [复杂数据类型](https://xinchen.blog.csdn.net/article/details/109344642)
+3. [内部表和外部表](https://xinchen.blog.csdn.net/article/details/109393908)
+4. [分区表](https://xinchen.blog.csdn.net/article/details/109404278)
+5. [分桶](https://xinchen.blog.csdn.net/article/details/109412454)
+6. [HiveQL基础](https://xinchen.blog.csdn.net/article/details/109432395)
+7. [内置函数](https://xinchen.blog.csdn.net/article/details/109440325)
+8. [Sqoop](https://xinchen.blog.csdn.net/article/details/109445825)
+9. [基础UDF](https://xinchen.blog.csdn.net/article/details/109457019)
+10. [用户自定义聚合函数(UDAF)](https://xinchen.blog.csdn.net/article/details/109499956)
+11. [UDTF](https://xinchen.blog.csdn.net/article/details/109530630)
+
 ## CDH
 1. [《CDH5部署三部曲之一：准备工作》](https://xinchen.blog.csdn.net/article/details/105340968)
 2. [《CDH5部署三部曲之二：部署和设置》](https://xinchen.blog.csdn.net/article/details/105341713)
