@@ -97,6 +97,14 @@
 7. [《JUnit5学习之七：参数化测试(Parameterized Tests)进阶》](https://blog.csdn.net/boling_cavalry/article/details/108942301)
 8. [《JUnit5学习之八：综合进阶（终篇）》](https://blog.csdn.net/boling_cavalry/article/details/108952500)
 
+## MyBatis学习（初级版）
+1. [《MyBatis初级实战之一：Spring Boot集成》](https://xinchen.blog.csdn.net/article/details/107805840)
+2. [《MyBatis初级实战之二：增删改查》](https://xinchen.blog.csdn.net/article/details/107971293)
+3. [《MyBatis初级实战之三：springboot集成druid》](https://xinchen.blog.csdn.net/article/details/108092045)
+4. [《MyBatis初级实战之四：druid多数据源》](https://xinchen.blog.csdn.net/article/details/108179671)
+5. [《MyBatis初级实战之五：一对一关联查询》](https://xinchen.blog.csdn.net/article/details/109020733)
+6. [《MyBatis初级实战之六：一对多关联查询》](https://xinchen.blog.csdn.net/article/details/109193441)
+
 # Spring领域
 
 ##  Spring基础
