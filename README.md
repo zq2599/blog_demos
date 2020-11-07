@@ -195,6 +195,12 @@
 6. [《spring-cloud-kubernetes与k8s的configmap》](https://xinchen.blog.csdn.net/article/details/95804909)
 7. [《spring-cloud-kubernetes自动同步k8s的configmap更新》](https://xinchen.blog.csdn.net/article/details/97529652)
 
+## dubbo实战特辑
+1. [准备和初体验](https://xinchen.blog.csdn.net/article/details/109096867)
+2. [与SpringBoot集成](https://xinchen.blog.csdn.net/article/details/109142783)
+3. [使用Zookeeper注册中心](https://xinchen.blog.csdn.net/article/details/109147843)
+4. [管理控制台dubbo-admin](https://xinchen.blog.csdn.net/article/details/109267151)
+
 # Docker
 
 ## 基础知识
