@@ -1,20 +1,14 @@
 package com.bolingcavalry.coprocessfunction;
 
-import com.bolingcavalry.Splitter;
-import com.bolingcavalry.keyedprocessfunction.ProcessTime;
+import com.bolingcavalry.coprocessfunction.function.AddTwoSourceValue;
+import com.bolingcavalry.coprocessfunction.function.CollectEveryOne;
 import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.TimeCharacteristic;
-import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.AssignerWithPeriodicWatermarks;
-import org.apache.flink.streaming.api.watermark.Watermark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 /**
@@ -23,12 +17,12 @@ import java.util.Date;
  * @date 2020-11-09 17:33
  * @description CoProcessFunction的基本功能体验(时间类型是处理时间)
  */
-public class SimpleCoProcess {
+public class ExecuteCoProcess {
 
-    private static final Logger logger = LoggerFactory.getLogger(SimpleCoProcess.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExecuteCoProcess.class);
 
     /**
-     * 根据指定的端口监听，
+     * 监听根据指定的端口，
      * 得到的数据先通过map转为Tuple2实例，
      * 给元素加入时间戳，
      * 再按f0字段分区，
@@ -41,7 +35,7 @@ public class SimpleCoProcess {
                 // 监听端口
                 .socketTextStream("localhost", port)
                 // 得到的字符串"aaa,3"转成Tuple2实例，f0="aaa"，f1=3
-                .map(new WordCountMapFunction())
+                .map(new WordCountMap())
                 // 给元素加入时间戳
                 .assignTimestampsAndWatermarks(new TimestampAssigner())
                 // 将单词作为key分区
@@ -66,14 +60,13 @@ public class SimpleCoProcess {
 
         stream1
             .connect(stream2)
-            .process(new TwoSourceAddFunction())
+//            .process(new CollectEveryOne())
+            .process(new AddTwoSourceValue())
             .print();
 
         // 执行
-        env.execute("ProcessFunction demo : KeyedProcessFunction");
+        env.execute("ProcessFunction demo : CoProcessFunction");
     }
 
-    public static String time(long timeStamp) {
-        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(timeStamp));
-    }
+
 }

@@ -10,7 +10,7 @@ import org.apache.flink.util.StringUtils;
  * @date 2020-03-14 20:27
  * @description 将字符串用逗号分割后转为Tuple2类型
  */
-public class WordCountMapFunction implements MapFunction<String, Tuple2<String, Integer>> {
+public class WordCountMap implements MapFunction<String, Tuple2<String, Integer>> {
     @Override
     public Tuple2<String, Integer> map(String s) throws Exception {
 
