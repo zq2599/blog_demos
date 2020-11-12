@@ -1,6 +1,5 @@
 package com.bolingcavalry.coprocessfunction;
 
-import com.bolingcavalry.Utils;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.java.tuple.Tuple2;

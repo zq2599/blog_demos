@@ -3,6 +3,7 @@ package com.bolingcavalry.coprocessfunction;
 import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.datastream.KeyedStream;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.co.CoProcessFunction;
 
@@ -43,6 +44,12 @@ public abstract class AbstractCoProcessFunctionExecutor {
     }
 
     /**
+     * 如果子类有侧输出需要处理，请重写此方法，会在主流程执行完毕后被调用
+     */
+    protected void doSideOutput(SingleOutputStreamOperator<Tuple2<String, Integer>> mainDataStream) {
+    }
+
+    /**
      * 执行业务的方法
      * @throws Exception
      */
@@ -58,13 +65,17 @@ public abstract class AbstractCoProcessFunctionExecutor {
         // 监听9999端口的输入
         KeyedStream<Tuple2<String, Integer>, Tuple> stream2 = buildStreamFromSocket(env, 9999);
 
-        stream1
+        SingleOutputStreamOperator<Tuple2<String, Integer>> mainDataStream = stream1
                 // 两个流连接
                 .connect(stream2)
                 // 执行低阶处理函数，具体处理逻辑在子类中实现
-                .process(getCoProcessFunctionInstance())
-                // 将低阶处理函数输出的元素全部打印出来
-                .print();
+                .process(getCoProcessFunctionInstance());
+
+        // 将低阶处理函数输出的元素全部打印出来
+        mainDataStream.print();
+
+        // 侧输出相关逻辑，子类有侧输出需求时重写此方法
+        doSideOutput(mainDataStream);
 
         // 执行
         env.execute("ProcessFunction demo : CoProcessFunction");
