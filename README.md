@@ -439,10 +439,17 @@
 23. [《将CSV的数据发送到kafka(java版)》](https://blog.csdn.net/boling_cavalry/article/details/106033472)
 24. [《Flink SQL Client综合实战》](https://blog.csdn.net/boling_cavalry/article/details/106038219)
 26. [《Flink Native Kubernetes实战》](https://blog.csdn.net/boling_cavalry/article/details/106038957)
-27. [《深入了解ProcessFunction的状态操作(Flink-1.10)》](https://blog.csdn.net/boling_cavalry/article/details/106040312)
-28. [《Flink处理函数实战之一：ProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299035)
-29. [《Flink处理函数实战之二：KeyedProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299167)
-30. [《Flink处理函数实战之三：窗口处理》](https://blog.csdn.net/boling_cavalry/article/details/106453229)
+27. [《Flink处理函数实战之一：深入了解ProcessFunction的状态操作(Flink-1.10)》](https://blog.csdn.net/boling_cavalry/article/details/106040312)
+28. [《Flink处理函数实战之二：ProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299035)
+29. [《Flink处理函数实战之三：KeyedProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299167)
+30. [《Flink处理函数实战之四：窗口处理》](https://blog.csdn.net/boling_cavalry/article/details/106453229)
+31. [《Flink处理函数实战之五：CoProcessFunction(双流处理)》](https://blog.csdn.net/boling_cavalry/article/details/109614001)
+32. [《理解ProcessFunction的Timer逻辑》](https://xinchen.blog.csdn.net/article/details/109564999)
+
+## 双流处理实战特辑
+1. [CoProcessFunction实战三部曲之一：基本功能](https://xinchen.blog.csdn.net/article/details/109624375)
+2. [CoProcessFunction实战三部曲之二：状态处理](https://xinchen.blog.csdn.net/article/details/109629119)
+3. [CoProcessFunction实战三部曲之三：定时器和侧输出](https://xinchen.blog.csdn.net/article/details/109645214)
 
 ## Spark
 1. [《部署spark2.2集群(standalone模式)》](https://blog.csdn.net/boling_cavalry/article/details/86747258)
