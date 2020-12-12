@@ -55,6 +55,11 @@ unzip sys.zip -d $GOPATH/src/golang.org/x/
 cd $GOPATH/src/golang.org/x
 mv sys-master sys
 
+echo "install protoc-gen-go"
+cd $GOPATH/src/github.com/golang/protobuf/protoc-gen-go/
+go build
+go install
+
 echo "install grpc"
 
 cd $GOPATH/src/
