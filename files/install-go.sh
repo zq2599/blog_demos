@@ -2,7 +2,7 @@
 
 echo "1. install go"
 cd ~ \
-&& curl -o go1.15.6.linux-amd64.tar.gz https://studygolang.com/dl/golang/go1.15.6.linux-amd64.tar.gz \
+&& wget https://studygolang.com/dl/golang/go1.15.6.linux-amd64.tar.gz -O go1.15.6.linux-amd64.tar.gz \
 && tar -C ~/ -xzf go1.15.6.linux-amd64.tar.gz \
 && rm -f ~/go1.15.6.linux-amd64.tar.gz
 
