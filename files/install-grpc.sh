@@ -19,7 +19,7 @@ cd ~/temp-grpc-install
 wget https://github.com/grpc/grpc-go/archive/master.zip -O grpc-go.zip
 unzip grpc-go.zip -d $GOPATH/src/google.golang.org/
 cd $GOPATH/src/google.golang.org/ 
-mv grpc-go-master grpc-go
+mv grpc-go-master grpc
 
 echo "2. x/net"
 cd ~/temp-grpc-install
