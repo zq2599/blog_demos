@@ -89,7 +89,7 @@ func (s *server) MultiReqMultiResp(reqStream pb.IGrpcStremService_MultiReqMultiR
 			log.Fatalln("4. 接收时发生异常", err)
 			return err
 		} else {
-			log.Println("4. 接收到数据", *singleRequest)
+			log.Println("4. 接收到数据", singleRequest.GetId())
 
 			id := singleRequest.GetId()
 

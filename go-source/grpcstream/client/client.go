@@ -35,16 +35,16 @@ func main() {
 	defer cancel()
 
 	log.Println("测试单一请求应答，一对一")
-	//singleReqSingleResp(ctx, client)
+	singleReqSingleResp(ctx, client)
 
 	log.Println("测试服务端流式应答，一对多")
-	//singleReqMultiResp(ctx, client)
+	singleReqMultiResp(ctx, client)
 
 	log.Println("测试客户端流式请求，多对一")
 	multiReqSingleResp(ctx, client)
 
 	log.Println("测试双向流式请求应答，多对多")
-	//multiReqMultiResp(ctx, client)
+	multiReqMultiResp(ctx, client)
 
 	log.Println("测试完成")
 }
