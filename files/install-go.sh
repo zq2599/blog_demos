@@ -9,7 +9,7 @@ cd ~ \
 echo "2. set env"
 cd ~
 mkdir ~/gopath
-echo 'export GOPROXY=https://goproxy.cn' >> ~/.bashrc
+echo 'export GOPROXY=https://goproxy.io' >> ~/.bashrc
 echo 'export GOPATH=~/gopath' >> ~/.bashrc
 echo 'export PATH=$PATH:~/go/bin:$GOPATH/bin' >> ~/.bashrc
 source ~/.bashrc
