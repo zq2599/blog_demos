@@ -1,0 +1,38 @@
+// 协议类型
+syntax = "proto3";
+
+// 包名
+package swaggerdemo;
+
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+// 定义swagger内容
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+		title: "grpc gateway helloworld sample";
+		version: "1.0";	
+  };
+  schemes: HTTP;
+};
+
+// 定义的服务名
+service Greeter {
+  // 具体的远程服务方法
+  rpc SayHello (HelloRequest) returns (HelloReply) {
+    option (google.api.http) = {
+      post: "/helloworld"
+      body: "*"
+    };
+  }
+}
+
+// SayHello方法的入参，只有一个字符串字段
+message HelloRequest {
+  string name = 1;
+}
+
+// SayHello方法的返回值，只有一个字符串字段
+message HelloReply {
+  string message = 1;
+}
