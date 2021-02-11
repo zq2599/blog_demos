@@ -2,4 +2,5 @@
 target/*
 */target
 */.idea
+*/*/.idea
 
