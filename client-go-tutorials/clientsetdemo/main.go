@@ -16,6 +16,8 @@ import (
 
 const (
 	NAMESPACE = "test-clientset"
+	DEPLOYMENT_NAME = "client-test-deployment"
+	SERVICE_NAME = "client-test-service"
 )
 
 func main() {
@@ -31,6 +33,9 @@ func main() {
 		// 如果取不到当前用户的家目录，就没办法设置kubeconfig的默认目录了，只能从入参中取
 		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
 	}
+
+	// 获取用户输入的操作类型，默认是create，还可以输入clean，用于清理所有资源
+	operate := flag.String("operate", "create", "operate type : create or clean")
 
 	flag.Parse()
 
@@ -49,15 +54,106 @@ func main() {
 		panic(err.Error())
 	}
 
+	fmt.Printf("operation is %v\n", *operate)
+
+	// 如果要执行清理操作
+	if "clean"==*operate {
+		clean(clientset)
+	} else {
+		// 创建namespace
+		createNamespace(clientset)
+
+		// 创建deployment
+		createDeployment(clientset)
+
+		// 创建service
+		createService(clientset)
+	}
+}
+
+// 清理本次实战创建的所有资源
+func clean(clientset *kubernetes.Clientset) {
+	emptyDeleteOptions := metav1.DeleteOptions{}
+
+	// 删除service
+	if err := clientset.CoreV1().Services(NAMESPACE).Delete(context.TODO(), SERVICE_NAME, emptyDeleteOptions) ; err != nil {
+		panic(err.Error())
+	}
+
+	// 删除deployment
+	if err := clientset.AppsV1().Deployments(NAMESPACE).Delete(context.TODO(), DEPLOYMENT_NAME, emptyDeleteOptions) ; err != nil {
+		panic(err.Error())
+	}
+
+	// 删除namespace
+	if err := clientset.CoreV1().Namespaces().Delete(context.TODO(), NAMESPACE, emptyDeleteOptions) ; err != nil {
+		panic(err.Error())
+	}
+}
+
+// 新建namespace
+func createNamespace(clientset *kubernetes.Clientset) {
+	namespaceClient := clientset.CoreV1().Namespaces()
+
+	namespace := &apiv1.Namespace{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: NAMESPACE,
+		},
+	}
+
+	result, err := namespaceClient.Create(context.TODO(), namespace, metav1.CreateOptions{})
+
+	if err!=nil {
+		panic(err.Error())
+	}
+
+	fmt.Printf("Create namespace %s \n", result.GetName())
+}
+
+// 新建service
+func createService(clientset *kubernetes.Clientset) {
+	// 得到service的客户端
+	serviceClient := clientset.CoreV1().Services(NAMESPACE)
+
+	// 实例化一个数据结构
+	service := &apiv1.Service{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: SERVICE_NAME,
+		},
+		Spec: apiv1.ServiceSpec{
+			Ports: []apiv1.ServicePort{{
+					Name: "http",
+					Port: 8080,
+					NodePort: 30080,
+				},
+			},
+			Selector: map[string]string{
+				"app" : "tomcat",
+			},
+			Type: apiv1.ServiceTypeNodePort,
+		},
+	}
+
+	result, err := serviceClient.Create(context.TODO(), service, metav1.CreateOptions{})
+
+	if err!=nil {
+		panic(err.Error())
+	}
+
+	fmt.Printf("Create service %s \n", result.GetName())
+}
+
+// 新建deployment
+func createDeployment(clientset *kubernetes.Clientset) {
 	// 得到deployment的客户端
 	deploymentClient := clientset.
-					AppsV1().
-					Deployments(NAMESPACE);
+		AppsV1().
+		Deployments(NAMESPACE)
 
 	// 实例化一个数据结构
 	deployment := &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "client-test-deployment",
+			Name: DEPLOYMENT_NAME,
 		},
 		Spec: appsv1.DeploymentSpec{
 			Replicas: pointer.Int32Ptr(2),
@@ -77,7 +173,7 @@ func main() {
 					Containers: []apiv1.Container{
 						{
 							Name: "tomcat",
-							Image: "tomcat:latest",
+							Image: "tomcat:8.0.18-jre8",
 							ImagePullPolicy: "IfNotPresent",
 							Ports: []apiv1.ContainerPort{
 								{
@@ -100,5 +196,4 @@ func main() {
 	}
 
 	fmt.Printf("Create deployment %s \n", result.GetName())
-
 }
