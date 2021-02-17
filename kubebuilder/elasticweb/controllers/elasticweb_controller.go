@@ -23,6 +23,7 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/utils/pointer"
@@ -35,8 +36,18 @@ import (
 )
 
 const (
-	APP_NAME       = "elastic-app"
+	// deployment中的APP标签名
+	APP_NAME = "elastic-app"
+	// tomcat容器的端口号
 	CONTAINER_PORT = 8080
+	// 单个POD的CPU资源申请
+	CPU_REQUEST = "100m"
+	// 单个POD的CPU资源上限
+	CPU_LIMIT = "100m"
+	// 单个POD的内存资源申请
+	MEM_REQUEST = "512Mi"
+	// 单个POD的内存资源上限
+	MEM_LIMIT = "512Mi"
 )
 
 // ElasticWebReconciler reconciles a ElasticWeb object
@@ -237,6 +248,16 @@ func createDeployment(ctx context.Context, r *ElasticWebReconciler, elasticWeb *
 									ContainerPort: CONTAINER_PORT,
 								},
 							},
+							Resources: corev1.ResourceRequirements{
+								Requests: corev1.ResourceList{
+									"cpu":    resource.MustParse(CPU_REQUEST),
+									"memory": resource.MustParse(MEM_REQUEST),
+								},
+								Limits: corev1.ResourceList{
+									"cpu":    resource.MustParse(CPU_LIMIT),
+									"memory": resource.MustParse(MEM_LIMIT),
+								},
+							},
 						},
 					},
 				},
@@ -312,7 +333,7 @@ func createServiceIfNotExists(ctx context.Context, r *ElasticWebReconciler, elas
 		return err
 	}
 
-	// 创建deployment
+	// 创建service
 	log.Info("start create service")
 	if err := r.Create(ctx, service); err != nil {
 		log.Error(err, "create service error")
