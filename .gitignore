@@ -3,4 +3,5 @@ target/*
 */target
 */.idea
 */*/.idea
-
+kubebuilder/elasticweb/bin/*
+.DS_Store

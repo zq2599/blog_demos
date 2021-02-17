@@ -1,0 +1,7 @@
+domain: com.bolingcavalry
+repo: elasticweb
+resources:
+- group: elasticweb
+  kind: ElasticWeb
+  version: v1
+version: "2"
