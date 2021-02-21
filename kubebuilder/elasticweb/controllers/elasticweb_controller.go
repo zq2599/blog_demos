@@ -59,8 +59,8 @@ type ElasticWebReconciler struct {
 
 // +kubebuilder:rbac:groups=elasticweb.com.bolingcavalry,resources=elasticwebs,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=elasticweb.com.bolingcavalry,resources=elasticwebs/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=apps,resources=deployment,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=core,resources=service,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=core,resources=services,verbs=get;list;watch;create;update;patch;delete
 
 func (r *ElasticWebReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	// 会用到context
