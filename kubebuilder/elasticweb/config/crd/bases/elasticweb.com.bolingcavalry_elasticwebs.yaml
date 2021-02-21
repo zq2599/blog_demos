@@ -62,8 +62,6 @@ spec:
               description: 当前kubernetes中实际支持的总QPS
               format: int32
               type: integer
-          required:
-          - realQPS
           type: object
       type: object
   version: v1

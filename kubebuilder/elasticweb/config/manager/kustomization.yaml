@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: bolingcavalry/elasticweb
-  newTag: "002"
+  newTag: "001.2"

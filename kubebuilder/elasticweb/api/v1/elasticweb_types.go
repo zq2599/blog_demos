@@ -38,7 +38,7 @@ type ElasticWebSpec struct {
 // 实际状态，该数据结构中的值都是业务代码计算出来的
 type ElasticWebStatus struct {
 	// 当前kubernetes中实际支持的总QPS
-	RealQPS *int32 `json:"realQPS"`
+	RealQPS *int32 `json:"realQPS,omitempty"`
 }
 
 // +kubebuilder:object:root=true

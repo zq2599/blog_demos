@@ -1,0 +1,52 @@
+
+---
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingWebhookConfiguration
+metadata:
+  creationTimestamp: null
+  name: mutating-webhook-configuration
+webhooks:
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: webhook-service
+      namespace: system
+      path: /mutate-elasticweb-com-bolingcavalry-v1-elasticweb
+  failurePolicy: Fail
+  name: melasticweb.kb.io
+  rules:
+  - apiGroups:
+    - elasticweb.com.bolingcavalry
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - elasticwebs
+
+---
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  creationTimestamp: null
+  name: validating-webhook-configuration
+webhooks:
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: webhook-service
+      namespace: system
+      path: /validate-elasticweb-com-bolingcavalry-v1-elasticweb
+  failurePolicy: Fail
+  name: velasticweb.kb.io
+  rules:
+  - apiGroups:
+    - elasticweb.com.bolingcavalry
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - elasticwebs
