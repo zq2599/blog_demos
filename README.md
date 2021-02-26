@@ -385,6 +385,21 @@
 5. [《Kubernetes官方java客户端之五：proto基本操作》](https://blog.csdn.net/boling_cavalry/article/details/107552722)
 6. [《Kubernetes官方java客户端之六：OpenAPI基本操作》](https://blog.csdn.net/boling_cavalry/article/details/107574722)
 
+## kubernetes官方go客户端特辑
+1. [client-go实战之一：准备工作](https://xinchen.blog.csdn.net/article/details/113753087)
+2. [client-go实战之二:RESTClient](https://xinchen.blog.csdn.net/article/details/113487087)
+3. [client-go实战之三：Clientset](https://xinchen.blog.csdn.net/article/details/113788269)
+4. [client-go实战之四：dynamicClient](https://xinchen.blog.csdn.net/article/details/113795523)
+5. [client-go实战之五：DiscoveryClient](https://xinchen.blog.csdn.net/article/details/113800054)
+
+## Operator实战特辑
+1. [kubebuilder实战之一：准备工作](https://xinchen.blog.csdn.net/article/details/113035349)
+2. [kubebuilder实战之二：初次体验kubebuilder](https://xinchen.blog.csdn.net/article/details/113089414)
+3. [kubebuilder实战之三：基础知识速览](https://xinchen.blog.csdn.net/article/details/113815479)
+4. [kubebuilder实战之四：operator需求说明和设计](https://xinchen.blog.csdn.net/article/details/113822065)
+5. [kubebuilder实战之五：operator编码](https://xinchen.blog.csdn.net/article/details/113836090)
+6. [kubebuilder实战之六：构建部署运行](https://xinchen.blog.csdn.net/article/details/113840999)
+
 ## helm实战
 1. [《helm实战之开发Chart》](https://blog.csdn.net/boling_cavalry/article/details/88759724)
 2. [《部署和体验Helm(2.16.1版本)》](https://blog.csdn.net/boling_cavalry/article/details/103667500)
