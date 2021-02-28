@@ -399,6 +399,8 @@
 4. [kubebuilder实战之四：operator需求说明和设计](https://xinchen.blog.csdn.net/article/details/113822065)
 5. [kubebuilder实战之五：operator编码](https://xinchen.blog.csdn.net/article/details/113836090)
 6. [kubebuilder实战之六：构建部署运行](https://xinchen.blog.csdn.net/article/details/113840999)
+7. [kubebuilder实战之七：webhook](https://xinchen.blog.csdn.net/article/details/113922328)
+8. [kubebuilder实战之八：知识点小记](https://xinchen.blog.csdn.net/article/details/114215218)
 
 ## helm实战
 1. [《helm实战之开发Chart》](https://blog.csdn.net/boling_cavalry/article/details/88759724)
