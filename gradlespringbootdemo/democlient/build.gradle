@@ -1,0 +1,11 @@
+plugins {
+    id 'java-library'
+}
+
+// 这里可以指定构建出来的jar的文件名
+archivesBaseName = 'demo-client'
+
+// 子模块自己的依赖
+dependencies {
+    implementation 'org.projectlombok:lombok'
+}
