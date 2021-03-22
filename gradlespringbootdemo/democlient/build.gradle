@@ -1,3 +1,4 @@
+// 构建二方库的插件
 plugins {
     id 'java-library'
 }
