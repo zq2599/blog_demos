@@ -1,0 +1,533 @@
+2021-03-27 22:36:45 INFO  HelloWorld:33 - aaaaaaaaaaaaaaaaaaaaaaa
+2021-03-27 22:37:52 DEBUG InternalLoggerFactory:63 - Using SLF4J as the default logging framework
+2021-03-27 22:37:52 DEBUG PlatformDependent:1037 - Platform: Windows
+2021-03-27 22:37:52 DEBUG PlatformDependent0:417 - -Dio.netty.noUnsafe: false
+2021-03-27 22:37:52 DEBUG PlatformDependent0:897 - Java version: 8
+2021-03-27 22:37:52 DEBUG PlatformDependent0:130 - sun.misc.Unsafe.theUnsafe: available
+2021-03-27 22:37:52 DEBUG PlatformDependent0:154 - sun.misc.Unsafe.copyMemory: available
+2021-03-27 22:37:52 DEBUG PlatformDependent0:192 - java.nio.Buffer.address: available
+2021-03-27 22:37:52 DEBUG PlatformDependent0:257 - direct buffer constructor: available
+2021-03-27 22:37:52 DEBUG PlatformDependent0:331 - java.nio.Bits.unaligned: available, true
+2021-03-27 22:37:52 DEBUG PlatformDependent0:396 - jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable prior to Java9
+2021-03-27 22:37:52 DEBUG PlatformDependent0:403 - java.nio.DirectByteBuffer.<init>(long, int): available
+2021-03-27 22:37:52 DEBUG PlatformDependent:1080 - sun.misc.Unsafe: available
+2021-03-27 22:37:52 DEBUG PlatformDependent:1201 - -Dio.netty.tmpdir: C:\Users\12167\AppData\Local\Temp (java.io.tmpdir)
+2021-03-27 22:37:52 DEBUG PlatformDependent:1280 - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+2021-03-27 22:37:52 DEBUG PlatformDependent:178 - -Dio.netty.maxDirectMemory: 7613186048 bytes
+2021-03-27 22:37:52 DEBUG PlatformDependent:185 - -Dio.netty.uninitializedArrayAllocationThreshold: -1
+2021-03-27 22:37:52 DEBUG CleanerJava6:92 - java.nio.ByteBuffer.cleaner(): available
+2021-03-27 22:37:52 DEBUG PlatformDependent:205 - -Dio.netty.noPreferDirect: false
+2021-03-27 22:37:52 DEBUG MultithreadEventLoopGroup:44 - -Dio.netty.eventLoopThreads: 12
+2021-03-27 22:37:52 DEBUG InternalThreadLocalMap:83 - -Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+2021-03-27 22:37:52 DEBUG InternalThreadLocalMap:86 - -Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+2021-03-27 22:37:52 DEBUG NioEventLoop:106 - -Dio.netty.noKeySetOptimization: false
+2021-03-27 22:37:52 DEBUG NioEventLoop:107 - -Dio.netty.selectorAutoRebuildThreshold: 512
+2021-03-27 22:37:52 DEBUG PlatformDependent:941 - org.jctools-core.MpscChunkedArrayQueue: available
+2021-03-27 22:37:53 DEBUG ResourceLeakDetector:129 - -Dio.netty.leakDetection.level: simple
+2021-03-27 22:37:53 DEBUG ResourceLeakDetector:130 - -Dio.netty.leakDetection.targetRecords: 4
+2021-03-27 22:37:53 DEBUG AbstractByteBuf:63 - -Dio.netty.buffer.checkAccessible: true
+2021-03-27 22:37:53 DEBUG AbstractByteBuf:64 - -Dio.netty.buffer.checkBounds: true
+2021-03-27 22:37:53 DEBUG ResourceLeakDetectorFactory:196 - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@78ccf37f
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:154 - -Dio.netty.allocator.numHeapArenas: 12
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:155 - -Dio.netty.allocator.numDirectArenas: 12
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:157 - -Dio.netty.allocator.pageSize: 8192
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:162 - -Dio.netty.allocator.maxOrder: 11
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:166 - -Dio.netty.allocator.chunkSize: 16777216
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:167 - -Dio.netty.allocator.smallCacheSize: 256
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:168 - -Dio.netty.allocator.normalCacheSize: 64
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:169 - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:170 - -Dio.netty.allocator.cacheTrimInterval: 8192
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:171 - -Dio.netty.allocator.cacheTrimIntervalMillis: 0
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:172 - -Dio.netty.allocator.useCacheForAllThreads: true
+2021-03-27 22:37:53 DEBUG PooledByteBufAllocator:173 - -Dio.netty.allocator.maxCachedByteBuffersPerChunk: 1023
+2021-03-27 22:37:53 DEBUG DefaultChannelId:79 - -Dio.netty.processId: 17700 (auto-detected)
+2021-03-27 22:37:53 DEBUG NetUtil:135 - -Djava.net.preferIPv4Stack: false
+2021-03-27 22:37:53 DEBUG NetUtil:136 - -Djava.net.preferIPv6Addresses: false
+2021-03-27 22:37:54 DEBUG NetUtilInitializations:129 - Loopback interface: lo (Software Loopback Interface 1, 127.0.0.1)
+2021-03-27 22:37:54 DEBUG NetUtil:187 - Failed to get SOMAXCONN from sysctl and file \proc\sys\net\core\somaxconn. Default: 200
+2021-03-27 22:37:55 DEBUG DefaultChannelId:101 - -Dio.netty.machineId: 00:50:56:ff:fe:c0:00:08 (auto-detected)
+2021-03-27 22:37:55 DEBUG ByteBufUtil:87 - -Dio.netty.allocator.type: pooled
+2021-03-27 22:37:55 DEBUG ByteBufUtil:96 - -Dio.netty.threadLocalDirectBufferSize: 0
+2021-03-27 22:37:55 DEBUG ByteBufUtil:99 - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+2021-03-27 22:37:55 DEBUG Recycler:103 - -Dio.netty.recycler.maxCapacityPerThread: 4096
+2021-03-27 22:37:55 DEBUG Recycler:104 - -Dio.netty.recycler.maxSharedCapacityFactor: 2
+2021-03-27 22:37:55 DEBUG Recycler:105 - -Dio.netty.recycler.linkCapacity: 16
+2021-03-27 22:37:55 DEBUG Recycler:106 - -Dio.netty.recycler.ratio: 8
+2021-03-27 22:37:55 DEBUG Recycler:107 - -Dio.netty.recycler.delayedQueue.ratio: 8
+2021-03-27 22:37:55 DEBUG NettyClientHandler:214 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] OUTBOUND SETTINGS: ack=false settings={ENABLE_PUSH=0, MAX_CONCURRENT_STREAMS=0, INITIAL_WINDOW_SIZE=1048576, MAX_HEADER_LIST_SIZE=8192}
+2021-03-27 22:37:55 DEBUG NettyClientHandler:214 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] OUTBOUND WINDOW_UPDATE: streamId=0 windowSizeIncrement=983041
+2021-03-27 22:37:55 DEBUG NettyClientHandler:214 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] INBOUND SETTINGS: ack=false settings={MAX_CONCURRENT_STREAMS=4294967295, MAX_FRAME_SIZE=16384}
+2021-03-27 22:37:55 DEBUG NettyClientHandler:191 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] OUTBOUND SETTINGS: ack=true
+2021-03-27 22:37:55 DEBUG NettyClientHandler:191 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] INBOUND SETTINGS: ack=true
+2021-03-27 22:37:55 DEBUG NettyClientHandler:214 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] OUTBOUND HEADERS: streamId=3 headers=GrpcHttp2OutboundHeaders[:authority: etcd, :path: /etcdserverpb.KV/Range, :method: POST, :scheme: http, content-type: application/grpc, te: trailers, user-agent: grpc-java-netty/1.27.1, grpc-accept-encoding: gzip] streamDependency=0 weight=16 exclusive=false padding=0 endStream=false
+2021-03-27 22:37:55 DEBUG NettyClientHandler:214 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] OUTBOUND DATA: streamId=3 padding=0 endStream=true length=21 bytes=00000000100a082f6161612f666f6f12042f616162
+2021-03-27 22:37:55 DEBUG NettyClientHandler:214 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] INBOUND WINDOW_UPDATE: streamId=0 windowSizeIncrement=21
+2021-03-27 22:37:55 DEBUG NettyClientHandler:214 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] INBOUND PING: ack=false bytes=145258749040133895
+2021-03-27 22:37:55 DEBUG NettyClientHandler:214 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] OUTBOUND PING: ack=true bytes=145258749040133895
+2021-03-27 22:37:55 DEBUG NettyClientHandler:214 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] INBOUND HEADERS: streamId=3 headers=GrpcHttp2ResponseHeaders[:status: 200, content-type: application/grpc] padding=0 endStream=false
+2021-03-27 22:37:55 DEBUG NettyClientHandler:214 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] INBOUND DATA: streamId=3 padding=0 endStream=false length=58 bytes=00000000350a1a08cbfba180dcd88b958f0110f7a5fed8a8dac9f2ad011802200212150a082f6161612f666f6f1002180220012a036261722001
+2021-03-27 22:37:55 DEBUG NettyClientHandler:214 - [id: 0x3a777c3b, L:/192.168.133.1:62589 - R:/192.168.133.218:2379] INBOUND HEADERS: streamId=3 headers=GrpcHttp2ResponseHeaders[grpc-status: 0, grpc-message: ] padding=0 endStream=true
+2021-03-27 22:37:55 INFO  HelloWorld:30 - key [bar], value [{}]
+2021-03-27 22:38:13 DEBUG InternalLoggerFactory:63 - Using SLF4J as the default logging framework
+2021-03-27 22:38:13 DEBUG PlatformDependent:1037 - Platform: Windows
+2021-03-27 22:38:13 DEBUG PlatformDependent0:417 - -Dio.netty.noUnsafe: false
+2021-03-27 22:38:13 DEBUG PlatformDependent0:897 - Java version: 8
+2021-03-27 22:38:13 DEBUG PlatformDependent0:130 - sun.misc.Unsafe.theUnsafe: available
+2021-03-27 22:38:13 DEBUG PlatformDependent0:154 - sun.misc.Unsafe.copyMemory: available
+2021-03-27 22:38:13 DEBUG PlatformDependent0:192 - java.nio.Buffer.address: available
+2021-03-27 22:38:13 DEBUG PlatformDependent0:257 - direct buffer constructor: available
+2021-03-27 22:38:13 DEBUG PlatformDependent0:331 - java.nio.Bits.unaligned: available, true
+2021-03-27 22:38:13 DEBUG PlatformDependent0:396 - jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable prior to Java9
+2021-03-27 22:38:13 DEBUG PlatformDependent0:403 - java.nio.DirectByteBuffer.<init>(long, int): available
+2021-03-27 22:38:13 DEBUG PlatformDependent:1080 - sun.misc.Unsafe: available
+2021-03-27 22:38:13 DEBUG PlatformDependent:1201 - -Dio.netty.tmpdir: C:\Users\12167\AppData\Local\Temp (java.io.tmpdir)
+2021-03-27 22:38:13 DEBUG PlatformDependent:1280 - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+2021-03-27 22:38:13 DEBUG PlatformDependent:178 - -Dio.netty.maxDirectMemory: 7613186048 bytes
+2021-03-27 22:38:13 DEBUG PlatformDependent:185 - -Dio.netty.uninitializedArrayAllocationThreshold: -1
+2021-03-27 22:38:13 DEBUG CleanerJava6:92 - java.nio.ByteBuffer.cleaner(): available
+2021-03-27 22:38:13 DEBUG PlatformDependent:205 - -Dio.netty.noPreferDirect: false
+2021-03-27 22:38:13 DEBUG MultithreadEventLoopGroup:44 - -Dio.netty.eventLoopThreads: 12
+2021-03-27 22:38:13 DEBUG InternalThreadLocalMap:83 - -Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+2021-03-27 22:38:13 DEBUG InternalThreadLocalMap:86 - -Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+2021-03-27 22:38:13 DEBUG NioEventLoop:106 - -Dio.netty.noKeySetOptimization: false
+2021-03-27 22:38:13 DEBUG NioEventLoop:107 - -Dio.netty.selectorAutoRebuildThreshold: 512
+2021-03-27 22:38:13 DEBUG PlatformDependent:941 - org.jctools-core.MpscChunkedArrayQueue: available
+2021-03-27 22:38:14 DEBUG ResourceLeakDetector:129 - -Dio.netty.leakDetection.level: simple
+2021-03-27 22:38:14 DEBUG ResourceLeakDetector:130 - -Dio.netty.leakDetection.targetRecords: 4
+2021-03-27 22:38:14 DEBUG AbstractByteBuf:63 - -Dio.netty.buffer.checkAccessible: true
+2021-03-27 22:38:14 DEBUG AbstractByteBuf:64 - -Dio.netty.buffer.checkBounds: true
+2021-03-27 22:38:14 DEBUG ResourceLeakDetectorFactory:196 - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@78ccf37f
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:154 - -Dio.netty.allocator.numHeapArenas: 12
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:155 - -Dio.netty.allocator.numDirectArenas: 12
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:157 - -Dio.netty.allocator.pageSize: 8192
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:162 - -Dio.netty.allocator.maxOrder: 11
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:166 - -Dio.netty.allocator.chunkSize: 16777216
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:167 - -Dio.netty.allocator.smallCacheSize: 256
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:168 - -Dio.netty.allocator.normalCacheSize: 64
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:169 - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:170 - -Dio.netty.allocator.cacheTrimInterval: 8192
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:171 - -Dio.netty.allocator.cacheTrimIntervalMillis: 0
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:172 - -Dio.netty.allocator.useCacheForAllThreads: true
+2021-03-27 22:38:14 DEBUG PooledByteBufAllocator:173 - -Dio.netty.allocator.maxCachedByteBuffersPerChunk: 1023
+2021-03-27 22:38:14 DEBUG DefaultChannelId:79 - -Dio.netty.processId: 24764 (auto-detected)
+2021-03-27 22:38:14 DEBUG NetUtil:135 - -Djava.net.preferIPv4Stack: false
+2021-03-27 22:38:14 DEBUG NetUtil:136 - -Djava.net.preferIPv6Addresses: false
+2021-03-27 22:38:15 DEBUG NetUtilInitializations:129 - Loopback interface: lo (Software Loopback Interface 1, 127.0.0.1)
+2021-03-27 22:38:15 DEBUG NetUtil:187 - Failed to get SOMAXCONN from sysctl and file \proc\sys\net\core\somaxconn. Default: 200
+2021-03-27 22:38:15 DEBUG DefaultChannelId:101 - -Dio.netty.machineId: 00:50:56:ff:fe:c0:00:08 (auto-detected)
+2021-03-27 22:38:15 DEBUG ByteBufUtil:87 - -Dio.netty.allocator.type: pooled
+2021-03-27 22:38:15 DEBUG ByteBufUtil:96 - -Dio.netty.threadLocalDirectBufferSize: 0
+2021-03-27 22:38:15 DEBUG ByteBufUtil:99 - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+2021-03-27 22:38:15 DEBUG Recycler:103 - -Dio.netty.recycler.maxCapacityPerThread: 4096
+2021-03-27 22:38:15 DEBUG Recycler:104 - -Dio.netty.recycler.maxSharedCapacityFactor: 2
+2021-03-27 22:38:15 DEBUG Recycler:105 - -Dio.netty.recycler.linkCapacity: 16
+2021-03-27 22:38:15 DEBUG Recycler:106 - -Dio.netty.recycler.ratio: 8
+2021-03-27 22:38:15 DEBUG Recycler:107 - -Dio.netty.recycler.delayedQueue.ratio: 8
+2021-03-27 22:38:15 DEBUG NettyClientHandler:214 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] OUTBOUND SETTINGS: ack=false settings={ENABLE_PUSH=0, MAX_CONCURRENT_STREAMS=0, INITIAL_WINDOW_SIZE=1048576, MAX_HEADER_LIST_SIZE=8192}
+2021-03-27 22:38:15 DEBUG NettyClientHandler:214 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] OUTBOUND WINDOW_UPDATE: streamId=0 windowSizeIncrement=983041
+2021-03-27 22:38:15 DEBUG NettyClientHandler:214 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] INBOUND SETTINGS: ack=false settings={MAX_CONCURRENT_STREAMS=4294967295, MAX_FRAME_SIZE=16384}
+2021-03-27 22:38:15 DEBUG NettyClientHandler:191 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] OUTBOUND SETTINGS: ack=true
+2021-03-27 22:38:15 DEBUG NettyClientHandler:191 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] INBOUND SETTINGS: ack=true
+2021-03-27 22:38:16 DEBUG NettyClientHandler:214 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] OUTBOUND HEADERS: streamId=3 headers=GrpcHttp2OutboundHeaders[:authority: etcd, :path: /etcdserverpb.KV/Range, :method: POST, :scheme: http, content-type: application/grpc, te: trailers, user-agent: grpc-java-netty/1.27.1, grpc-accept-encoding: gzip] streamDependency=0 weight=16 exclusive=false padding=0 endStream=false
+2021-03-27 22:38:16 DEBUG NettyClientHandler:214 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] OUTBOUND DATA: streamId=3 padding=0 endStream=true length=21 bytes=00000000100a082f6161612f666f6f12042f616162
+2021-03-27 22:38:16 DEBUG NettyClientHandler:214 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] INBOUND WINDOW_UPDATE: streamId=0 windowSizeIncrement=21
+2021-03-27 22:38:16 DEBUG NettyClientHandler:214 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] INBOUND PING: ack=false bytes=145258749040133895
+2021-03-27 22:38:16 DEBUG NettyClientHandler:214 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] OUTBOUND PING: ack=true bytes=145258749040133895
+2021-03-27 22:38:16 DEBUG NettyClientHandler:214 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] INBOUND HEADERS: streamId=3 headers=GrpcHttp2ResponseHeaders[:status: 200, content-type: application/grpc] padding=0 endStream=false
+2021-03-27 22:38:16 DEBUG NettyClientHandler:214 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] INBOUND DATA: streamId=3 padding=0 endStream=false length=58 bytes=00000000350a1a08cbfba180dcd88b958f0110f7a5fed8a8dac9f2ad011802200212150a082f6161612f666f6f1002180220012a036261722001
+2021-03-27 22:38:16 DEBUG NettyClientHandler:214 - [id: 0xdf612557, L:/192.168.133.1:62677 - R:/192.168.133.218:2379] INBOUND HEADERS: streamId=3 headers=GrpcHttp2ResponseHeaders[grpc-status: 0, grpc-message: ] padding=0 endStream=true
+2021-03-27 22:38:16 INFO  HelloWorld:30 - key [/aaa/foo], value [bar]
+2021-03-27 22:39:08 INFO  HelloWorld:30 - key [/aaa/foo], value [bar]
+2021-03-27 22:39:32 INFO  HelloWorld:30 - key [/aaa/foo], value [bar]
+2021-03-27 22:48:23 INFO  HelloWorld:34 - key [/aaa/foo], value [bar1]
+2021-03-27 22:49:36 INFO  HelloWorld:34 - key [/aaa/foo], value [bar1]
+2021-03-27 22:51:26 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:51:27 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:51:29 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:51:31 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:51:34 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:51:41 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:51:53 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:51:54 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:51:56 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:51:59 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:52:03 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:52:10 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:52:22 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:52:42 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:52:43 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:52:45 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:52:47 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:52:52 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:52:59 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:53:08 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:53:21 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:55:15 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:55:16 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:55:18 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:55:21 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:55:25 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:55:33 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:55:42 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:56:00 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:56:13 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:56:14 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:56:16 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:56:18 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:56:23 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:56:31 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:56:43 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:57:01 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:57:18 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:57:19 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:57:21 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:57:24 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:57:28 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:57:34 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:57:43 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:57:59 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:59:02 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:59:03 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:59:05 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:59:07 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:59:11 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:59:18 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:59:29 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 22:59:44 WARN  SmartNameResolver:143 - Error wile getting list of servers
+io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http://192.168.133.218:2379,http://192.168.133.218:2380,http://192.168.133.218:2381]
+	at io.etcd.jetcd.common.exception.EtcdExceptionFactory.newEtcdException(EtcdExceptionFactory.java:30)
+	at io.etcd.jetcd.resolver.SmartNameResolver.doResolve(SmartNameResolver.java:137)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2021-03-27 23:00:00 INFO  HelloWorld:35 - key [bbb], value [111]
+2021-03-27 23:00:20 INFO  HelloWorld:34 - key [/aaa/foo], value [bar1]
+2021-03-27 23:02:02 INFO  HelloWorld:34 - key [/aaa/foo], value [bar1]
+2021-03-27 23:03:41 INFO  HelloWorld:34 - key [/aaa/foo], value [bar1]
+2021-03-27 23:03:41 INFO  HelloWorld:35 - finish
+2021-03-27 23:05:28 INFO  HelloWorld:34 - key [/aaa/foo], value [bar1]
+2021-03-27 23:05:28 INFO  HelloWorld:35 - finish
+2021-03-27 23:05:35 INFO  HelloWorld:34 - key [/aaa/foo], value [bar1]
+2021-03-27 23:05:35 INFO  HelloWorld:35 - finish
+2021-03-27 23:06:07 INFO  HelloWorld:34 - key [/aaa/foo], value [bar1]
+2021-03-27 23:06:07 INFO  HelloWorld:35 - finish
+2021-03-27 23:06:21 INFO  HelloWorld:34 - key [/aaa/foo], value [bar]
+2021-03-27 23:06:21 INFO  HelloWorld:35 - finish
+2021-03-27 23:07:42 INFO  HelloWorld:34 - key [/aaa/foo], value [bar]
+2021-03-27 23:07:42 INFO  HelloWorld:35 - finish
+2021-03-27 23:08:15 INFO  HelloWorld:31 - key [/aaa/foo], value [bar]
+2021-03-27 23:08:15 INFO  HelloWorld:32 - finish
+2021-03-27 23:08:48 INFO  HelloWorld:30 - key [/aaa/foo], value [bar]
+2021-03-27 23:08:48 INFO  HelloWorld:31 - finish
