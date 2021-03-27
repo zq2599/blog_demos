@@ -1,18 +1,11 @@
-buildscript {
-    ext {
-        projectMainClassName = 'com.bolingcavalry.DemoApplication'
-    }
-}
-
 plugins {
     id 'org.springframework.boot'
-//    id 'io.spring.dependency-management'
 }
 
 // 用了插件org.springframework.boot之后，jar task会失效，可用bootJar取代
 bootJar {
-    baseName = "$project.name"
-    version = "$version"
+    archiveBaseName = project.name
+    archiveVersion = project.version
 
     manifest {
         attributes(
@@ -31,10 +24,18 @@ bootJar {
     }
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
 // 子模块自己的依赖
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    // 二方库依赖
     implementation project(':democlient')
+    // annotationProcessor不会传递，使用了lombok生成代码的模块，需要自己声明annotationProcessor
+    annotationProcessor 'org.projectlombok:lombok'
+
 }
 
 test {

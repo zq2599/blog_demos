@@ -8,5 +8,8 @@ archivesBaseName = 'demo-client'
 
 // 子模块自己的依赖
 dependencies {
-    implementation 'org.projectlombok:lombok'
+    // 使用api，将依赖传递给使用democlient的模块
+    api 'org.projectlombok:lombok'
+    // annotationProcessor不会传递，使用了lombok生成代码的模块，需要自己声明annotationProcessor
+    annotationProcessor 'org.projectlombok:lombok'
 }
