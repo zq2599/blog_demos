@@ -531,3 +531,7 @@ io.etcd.jetcd.common.exception.EtcdException: Unable to resolve endpoints [http:
 2021-03-27 23:08:15 INFO  HelloWorld:32 - finish
 2021-03-27 23:08:48 INFO  HelloWorld:30 - key [/aaa/foo], value [bar]
 2021-03-27 23:08:48 INFO  HelloWorld:31 - finish
+2021-03-28 11:57:49 INFO  HelloWorld:30 - key [/aaa/foo], value [111]
+2021-03-28 11:57:49 INFO  HelloWorld:31 - finish
+2021-03-28 15:03:30 INFO  HelloWorld:29 - start get, key [/aaa/foo]
+2021-03-28 15:03:32 INFO  HelloWorld:38 - finish get, key [/aaa/foo], value [111]
