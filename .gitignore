@@ -3,5 +3,6 @@ target/*
 */target
 */.idea
 */*/.idea
+*/.gradle/*
 kubebuilder/elasticweb/bin/*
 .DS_Store

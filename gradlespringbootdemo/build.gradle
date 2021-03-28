@@ -30,6 +30,7 @@ buildscript {
 plugins {
     id 'java'
     id 'java-library'
+    // 有这个声明，子模块可以使用org.springframework.boot插件而无需指定版本，但是apply=false表示当前模块不使用此插件
     id 'org.springframework.boot' version "${springBootVersion}" apply false
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
@@ -63,15 +64,10 @@ allprojects {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
         options.encoding = 'UTF-8'
+        options.compilerArgs =  [
+                '-Xlint:all', '-Xlint:-processing'
+        ]
     }
-
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
-    }
-
-    compileJava.options*.compilerArgs = [
-            '-Xlint:all', '-Xlint:-processing'
-    ]
 
     // Copy LICENSE
     tasks.withType(Jar) {
