@@ -1,3 +1,0 @@
-d2021-03-28 15:43:27 INFO  HelloWorld:43 - start put, key [/abc/foo-1616917407004], value [/abc/foo]
-R2021-03-28 15:43:28 INFO  HelloWorld:29 - start get, key [/abc/foo-1616917407004]
-e2021-03-28 15:43:28 INFO  HelloWorld:38 - finish get, key [/abc/foo-1616917407004], value [/abc/foo]

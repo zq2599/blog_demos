@@ -14,17 +14,33 @@ import static com.google.common.base.Charsets.UTF_8;
 
 @Slf4j
 public class HelloWorld {
+
+    /**
+     * 新建key-value客户端实例
+     * @return
+     */
     private KV getKVClient(){
         String endpoints = "http://192.168.50.239:2379,http://192.168.50.239:2380,http://192.168.50.239:2381";
-        String key = "/aaa/foo";
         Client client = Client.builder().endpoints(endpoints.split(",")).build();
         return client.getKVClient();
     }
 
+    /**
+     * 将字符串转为客户端所需的ByteSequence实例
+     * @param val
+     * @return
+     */
     private static ByteSequence bytesOf(String val) {
         return ByteSequence.from(val, UTF_8);
     }
 
+    /**
+     * 查询指定键对应的值
+     * @param key
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public String get(String key) throws ExecutionException, InterruptedException{
         log.info("start get, key [{}]", key);
         GetResponse response = getKVClient().get(bytesOf(key)).get();
@@ -39,6 +55,14 @@ public class HelloWorld {
         return value;
     }
 
+    /**
+     * 创建键值对
+     * @param key
+     * @param value
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public PutResponse put(String key, String value) throws ExecutionException, InterruptedException {
         log.info("start put, key [{}], value [{}]", key, value);
         return getKVClient().put(bytesOf(key), bytesOf(value)).get();
