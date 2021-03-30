@@ -5,4 +5,5 @@ target/*
 */*/.idea
 */*/.gradle/*
 kubebuilder/elasticweb/bin/*
+jetcd-tutorials/.gradle/*
 .DS_Store
