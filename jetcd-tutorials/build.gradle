@@ -64,8 +64,8 @@ allprojects {
     apply plugin: 'idea'
     apply plugin: 'io.spring.dependency-management'
 
-    // 编译相关参数
-    compileJava {
+    // 制作设置参数的一个闭包，后面compileJava和compileTestJava都会用到
+    def compileSetUp = {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
         options.encoding = 'UTF-8'
@@ -73,6 +73,10 @@ allprojects {
                 '-Xlint:all', '-Xlint:-processing'
         ]
     }
+
+    compileJava (compileSetUp)
+
+    compileTestJava (compileSetUp)
 
     // Copy LICENSE
     tasks.withType(Jar) {
