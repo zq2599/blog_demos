@@ -26,7 +26,7 @@ public class EtcdServiceImpl implements EtcdService {
      * @param val
      * @return
      */
-    private static ByteSequence bytesOf(String val) {
+    public static ByteSequence bytesOf(String val) {
         return ByteSequence.from(val, UTF_8);
     }
 

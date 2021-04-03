@@ -74,6 +74,7 @@ allprojects {
         ]
     }
 
+
     compileJava (compileSetUp)
 
     compileTestJava (compileSetUp)
