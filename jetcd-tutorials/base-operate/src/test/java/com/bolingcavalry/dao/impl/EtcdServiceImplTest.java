@@ -4,8 +4,6 @@ import com.bolingcavalry.dao.EtcdService;
 import io.etcd.jetcd.KeyValue;
 import io.etcd.jetcd.Response;
 import io.etcd.jetcd.kv.GetResponse;
-import io.etcd.jetcd.kv.PutResponse;
-import io.etcd.jetcd.op.Op;
 import io.etcd.jetcd.options.DeleteOption;
 import io.etcd.jetcd.options.GetOption;
 import org.junit.jupiter.api.*;
@@ -391,8 +389,46 @@ class EtcdServiceImplTest {
         assertEquals(0, etcdService.getRange(prefix, getOption).getCount());
     }
 
-
     @Test
-    void deleteRange() {
+    @Order(11)
+    @DisplayName("删除(删到指定key就结束)")
+    void deleteWithEndKey() throws Exception {
+        EtcdService etcdService = new EtcdServiceImpl();
+
+        String prefix = key("deleteWithEndKey");
+
+        int num = 10;
+        String endKey = null;
+
+        // 写入，每个key都不同，但是有相同的前缀
+        for (int i=0;i<num;i++) {
+            String key = prefix + i;
+
+            etcdService.put(key, String.valueOf(i));
+
+            // 把第九条记录的key保存在endKey变量中
+            if((num-2)==i) {
+                endKey = key;
+            }
+        }
+
+        GetOption getOption = GetOption.newBuilder()
+                .withPrefix(EtcdServiceImpl.bytesOf(prefix))
+                .build();
+
+        // 此时总数应该是十
+        assertEquals(num, etcdService.getRange(prefix, getOption).getCount());
+
+        // 删除条件是指定前缀，并且遇到第九条记录的key就停止删除操作，此时第九条和第十条都不会被删除
+        DeleteOption deleteOption = DeleteOption.newBuilder()
+                .withPrefix(EtcdServiceImpl.bytesOf(prefix))
+                .withRange(EtcdServiceImpl.bytesOf(endKey))
+                .build();
+
+        // 删除
+        etcdService.deleteRange(prefix, deleteOption);
+
+        // 删除后再查，总数应该是二
+        assertEquals(2, etcdService.getRange(prefix, getOption).getCount());
     }
 }
