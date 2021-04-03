@@ -49,4 +49,9 @@ public interface EtcdService {
      * @return
      */
     long deleteRange(String key, DeleteOption deleteOption) throws Exception;
+
+    /**
+     * 关闭，释放资源
+     */
+    void close();
 }

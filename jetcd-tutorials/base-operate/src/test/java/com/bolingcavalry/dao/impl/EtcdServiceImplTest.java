@@ -1,6 +1,7 @@
 package com.bolingcavalry.dao.impl;
 
 import com.bolingcavalry.dao.EtcdService;
+import io.etcd.jetcd.Client;
 import io.etcd.jetcd.KeyValue;
 import io.etcd.jetcd.Response;
 import io.etcd.jetcd.kv.GetResponse;
@@ -19,9 +20,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class EtcdServiceImplTest {
 
+    private static EtcdService etcdService = new EtcdServiceImpl();
 
     private static String key(String name) {
         return "/EtcdServiceImplTest/" + name + "-" + System.currentTimeMillis();
+    }
+
+    @AfterAll
+    static void close() {
+        etcdService.close();
     }
 
     /**
@@ -32,7 +39,7 @@ class EtcdServiceImplTest {
     @Order(1)
     @DisplayName("基本写操作")
     void put() throws Exception {
-        Response.Header header = new EtcdServiceImpl().put(key("put"), "123");
+        Response.Header header = etcdService.put(key("put"), "123");
         assertNotNull(header);
     }
 
@@ -44,7 +51,6 @@ class EtcdServiceImplTest {
     @Order(2)
     @DisplayName("基本读操作")
     void getSingle() throws Exception {
-        EtcdService etcdService = new EtcdServiceImpl();
         String key = key("getSingle");
         String value = String.valueOf(System.currentTimeMillis());
 
@@ -61,8 +67,6 @@ class EtcdServiceImplTest {
     @Order(3)
     @DisplayName("读操作(指定前缀)")
     void getWithPrefix() throws Exception {
-        EtcdService etcdService = new EtcdServiceImpl();
-
         String prefix = key("getWithPrefix");
 
         // 先写入十条
@@ -85,8 +89,6 @@ class EtcdServiceImplTest {
     @Order(4)
     @DisplayName("读操作(指定KeyValue结果数量)")
     void getWithLimit() throws Exception {
-        EtcdService etcdService = new EtcdServiceImpl();
-
         String prefix = key("getWithLimit");
 
         // 先写入十条
@@ -116,8 +118,6 @@ class EtcdServiceImplTest {
     @Order(5)
     @DisplayName("读操作(指定revision)")
     void getWithRevision() throws Exception {
-        EtcdService etcdService = new EtcdServiceImpl();
-
         String key = key("getWithRevision");
 
         // 先写入十条
@@ -174,8 +174,6 @@ class EtcdServiceImplTest {
     @Order(6)
     @DisplayName("读操作(结果排序)")
     void getWithOrder() throws Exception {
-        EtcdService etcdService = new EtcdServiceImpl();
-
         String prefix = key("getWithOrder");
 
         // 先写入十条，每一条的key都不同，value也不同
@@ -251,8 +249,6 @@ class EtcdServiceImplTest {
     @Order(7)
     @DisplayName("读操作(只返回key)")
     void getOnlyKey() throws Exception {
-        EtcdService etcdService = new EtcdServiceImpl();
-
         String key = key("getOnlyKey");
         // 写入一条记录
         etcdService.put(key, String.valueOf(System.currentTimeMillis()));
@@ -280,8 +276,6 @@ class EtcdServiceImplTest {
     @Order(8)
     @DisplayName("读操作(只返回数量)")
     void getOnlyCount() throws Exception {
-        EtcdService etcdService = new EtcdServiceImpl();
-
         String key = key("getOnlyCount");
         // 写入一条记录
         etcdService.put(key, String.valueOf(System.currentTimeMillis()));
@@ -304,8 +298,6 @@ class EtcdServiceImplTest {
     @Order(9)
     @DisplayName("读操作(查到指定key就结束)")
     void getWithEndKey() throws Exception {
-        EtcdService etcdService = new EtcdServiceImpl();
-
         String prefix = key("getWithEndKey");
         String endKey = null;
 
@@ -338,8 +330,6 @@ class EtcdServiceImplTest {
     @Order(10)
     @DisplayName("单个删除")
     void deleteSingle() throws Exception {
-        EtcdService etcdService = new EtcdServiceImpl();
-
         String key = key("deleteSingle");
 
         // 写入一条记录
@@ -359,8 +349,6 @@ class EtcdServiceImplTest {
     @Order(10)
     @DisplayName("删除(指定前缀)")
     void deleteWithPrefix() throws Exception {
-        EtcdService etcdService = new EtcdServiceImpl();
-
         String prefix = key("deleteWithPrefix");
 
         int num = 10;
@@ -393,8 +381,6 @@ class EtcdServiceImplTest {
     @Order(11)
     @DisplayName("删除(删到指定key就结束)")
     void deleteWithEndKey() throws Exception {
-        EtcdService etcdService = new EtcdServiceImpl();
-
         String prefix = key("deleteWithEndKey");
 
         int num = 10;

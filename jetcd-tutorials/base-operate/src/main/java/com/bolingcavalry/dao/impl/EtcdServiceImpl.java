@@ -18,7 +18,12 @@ import static com.google.common.base.Charsets.UTF_8;
  */
 public class EtcdServiceImpl implements EtcdService {
 
-    private static final String IP = "192.168.133.218";
+//    private static final String IP = "192.168.133.218";
+    private static final String IP = "192.168.50.239";
+
+    private Client client;
+
+    private Object lock = new Object();
 
     /**
      * 将字符串转为客户端所需的ByteSequence实例
@@ -34,9 +39,23 @@ public class EtcdServiceImpl implements EtcdService {
      * @return
      */
     private KV getKVClient(){
-        String endpoints = "http://" + IP + ":2379,http://" + IP + ":2380,http://" + IP + ":2381";
-        Client client = Client.builder().endpoints(endpoints.split(",")).build();
+
+        if (null==client) {
+            synchronized (lock) {
+                if (null==client) {
+                    String endpoints = "http://" + IP + ":2379,http://" + IP + ":2380,http://" + IP + ":2381";
+                    client = Client.builder().endpoints(endpoints.split(",")).build();
+                }
+            }
+        }
+
         return client.getKVClient();
+    }
+
+    @Override
+    public void close() {
+        client.close();
+        client = null;
     }
 
     @Override
