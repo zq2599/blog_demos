@@ -1,7 +1,6 @@
 package com.bolingcavalry.dao.impl;
 
 import com.bolingcavalry.dao.EtcdService;
-import io.etcd.jetcd.Client;
 import io.etcd.jetcd.KeyValue;
 import io.etcd.jetcd.Response;
 import io.etcd.jetcd.kv.GetResponse;
@@ -346,7 +345,7 @@ class EtcdServiceImplTest {
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     @DisplayName("删除(指定前缀)")
     void deleteWithPrefix() throws Exception {
         String prefix = key("deleteWithPrefix");

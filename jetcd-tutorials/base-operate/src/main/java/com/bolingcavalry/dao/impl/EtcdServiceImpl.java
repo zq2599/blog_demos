@@ -18,8 +18,8 @@ import static com.google.common.base.Charsets.UTF_8;
  */
 public class EtcdServiceImpl implements EtcdService {
 
-//    private static final String IP = "192.168.133.218";
-    private static final String IP = "192.168.50.239";
+    private static final String IP = "192.168.133.218";
+//    private static final String IP = "192.168.50.239";
 
     private Client client;
 
