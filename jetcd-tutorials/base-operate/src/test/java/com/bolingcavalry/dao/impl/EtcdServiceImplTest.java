@@ -377,7 +377,7 @@ class EtcdServiceImplTest {
     }
 
     @Test
-    @Order(11)
+    @Order(12)
     @DisplayName("删除(删到指定key就结束)")
     void deleteWithEndKey() throws Exception {
         String prefix = key("deleteWithEndKey");
