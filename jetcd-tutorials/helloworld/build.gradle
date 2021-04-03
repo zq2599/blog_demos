@@ -15,6 +15,3 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-
-group 'com.bolingcavalry'
-version '1.0-SNAPSHOT'

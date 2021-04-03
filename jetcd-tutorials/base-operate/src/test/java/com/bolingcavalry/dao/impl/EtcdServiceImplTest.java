@@ -12,7 +12,7 @@ import static com.google.common.base.Charsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @Description: (这里用一句话描述这个类的作用)
+ * @Description: etcd常用操作服务类的单元测试用例
  * @author: willzhao E-mail: zq2599@gmail.com
  * @date: 2021/4/3 9:46
  */
@@ -429,6 +429,7 @@ class EtcdServiceImplTest {
         etcdService.deleteRange(prefix, deleteOption);
 
         // 删除后再查，总数应该是二
+
         assertEquals(2, etcdService.getRange(prefix, getOption).getCount());
     }
 }
