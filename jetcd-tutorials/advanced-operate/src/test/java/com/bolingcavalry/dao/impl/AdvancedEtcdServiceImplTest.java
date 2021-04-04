@@ -1,5 +1,6 @@
 package com.bolingcavalry.dao.impl;
 
+import com.bolingcavalry.AdvancedOperateApplication;
 import com.bolingcavalry.dao.AdvancedEtcdService;
 import com.bolingcavalry.dao.EtcdService;
 import org.junit.jupiter.api.AfterAll;
@@ -17,9 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AdvancedEtcdServiceImplTest {
 
-    private static final String IP = "192.168.133.218";
-
-    private static final String endpoints = "http://" + IP + ":2379,http://" + IP + ":2380,http://" + IP + ":2381";
+    // 为了便于维护，不轮是单元测试还是springboot应用，endpoint都来自AdvancedOperateApplication.endpoints这个变量
+    private static final String endpoints = AdvancedOperateApplication.endpoints;
 
     private static EtcdService etcdService = new EtcdServiceImpl(endpoints);
 

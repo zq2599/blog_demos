@@ -1,5 +1,7 @@
 package com.bolingcavalry.dao;
 
+import io.etcd.jetcd.Watch;
+
 /**
  * @Description: Etcd高级操作的服务接口
  * @author: willzhao E-mail: zq2599@gmail.com
@@ -14,6 +16,21 @@ public interface AdvancedEtcdService {
      * @param updateValue   达到期望值时要设置的值
      */
     boolean cas(String key, String expectValue, String updateValue) throws Exception;
+
+    /**
+     * 为指定key添加监听
+     * @param key       键
+     * @param listener  监听事件
+     */
+
+    /**
+     * 为指定key添加监听
+     * @param key       键
+     * @param listener  监听事件
+     * @return          jetcd对应的监听对象
+     * @throws Exception
+     */
+    Watch.Watcher watch(String key, Watch.Listener listener) throws Exception;
 
     /**
      * 关闭，释放资源

@@ -1,20 +1,16 @@
 package com.bolingcavalry.dao.impl;
 
 import com.bolingcavalry.dao.AdvancedEtcdService;
-import io.etcd.jetcd.*;
-import io.etcd.jetcd.kv.GetResponse;
-import io.etcd.jetcd.kv.PutResponse;
+import io.etcd.jetcd.ByteSequence;
+import io.etcd.jetcd.Client;
+import io.etcd.jetcd.KV;
+import io.etcd.jetcd.Watch;
 import io.etcd.jetcd.kv.TxnResponse;
 import io.etcd.jetcd.op.Cmp;
 import io.etcd.jetcd.op.CmpTarget;
 import io.etcd.jetcd.op.Op;
-import io.etcd.jetcd.options.DeleteOption;
-import io.etcd.jetcd.options.GetOption;
 import io.etcd.jetcd.options.PutOption;
 import org.apache.commons.collections.CollectionUtils;
-
-import java.util.Collections;
-import java.util.concurrent.CompletableFuture;
 
 import static com.google.common.base.Charsets.UTF_8;
 
@@ -45,12 +41,9 @@ public class AdvancedEtcdServiceImpl implements AdvancedEtcdService {
         return ByteSequence.from(val, UTF_8);
     }
 
-    /**
-     * 新建key-value客户端实例
-     * @return
-     */
-    private KV getKVClient(){
 
+
+    private Client getClient() {
         if (null==client) {
             synchronized (lock) {
                 if (null==client) {
@@ -59,7 +52,7 @@ public class AdvancedEtcdServiceImpl implements AdvancedEtcdService {
             }
         }
 
-        return client.getKVClient();
+        return client;
     }
 
     @Override
@@ -73,7 +66,7 @@ public class AdvancedEtcdServiceImpl implements AdvancedEtcdService {
         Cmp cmp = new Cmp(bsKey, Cmp.Op.EQUAL, CmpTarget.value(bsExpectValue));
 
         // 执行事务
-        TxnResponse txnResponse = getKVClient()
+        TxnResponse txnResponse = getClient().getKVClient()
                                 .txn()
                                 .If(cmp)
                                 .Then(Op.put(bsKey, bsUpdateValue, PutOption.DEFAULT))
@@ -84,9 +77,15 @@ public class AdvancedEtcdServiceImpl implements AdvancedEtcdService {
         return txnResponse.isSucceeded() && CollectionUtils.isNotEmpty(txnResponse.getPutResponses());
     }
 
+
+    @Override
+    public Watch.Watcher watch(String key, Watch.Listener listener) throws Exception {
+        return getClient().getWatchClient().watch(bytesOf(key), listener);
+    }
+
     @Override
     public void close() {
-        client.close();
+        getClient().close();
         client = null;
     }
 
