@@ -33,6 +33,14 @@ public interface AdvancedEtcdService {
     Watch.Watcher watch(String key, Watch.Listener listener) throws Exception;
 
     /**
+     * 带无限续租的写操作
+     * @param key   键
+     * @param value 值
+     * @throws Exception
+     */
+    void putWithLease(String key, String value) throws Exception;
+
+    /**
      * 关闭，释放资源
      */
     void close();

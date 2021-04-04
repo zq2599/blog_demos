@@ -88,6 +88,8 @@ public class WatchController {
         // 将这个Watcher放入内存中保存，如果该key被删除就要将这个Watcher关闭
         watcherMap.put(key, watcher);
 
-        return "success " + new Date();
+        return "watch success " + new Date();
     }
+
+
 }
