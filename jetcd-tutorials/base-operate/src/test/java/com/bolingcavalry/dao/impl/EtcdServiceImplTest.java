@@ -19,7 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class EtcdServiceImplTest {
 
-    private static EtcdService etcdService = new EtcdServiceImpl();
+    private static final String IP = "192.168.133.218";
+
+    private static EtcdService etcdService = new EtcdServiceImpl("http://" + IP + ":2379,http://" + IP + ":2380,http://" + IP + ":2381");
 
     private static String key(String name) {
         return "/EtcdServiceImplTest/" + name + "-" + System.currentTimeMillis();

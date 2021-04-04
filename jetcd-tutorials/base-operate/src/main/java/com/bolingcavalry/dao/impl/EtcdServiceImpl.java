@@ -18,12 +18,18 @@ import static com.google.common.base.Charsets.UTF_8;
  */
 public class EtcdServiceImpl implements EtcdService {
 
-    private static final String IP = "192.168.133.218";
-//    private static final String IP = "192.168.50.239";
+
 
     private Client client;
 
+    private String endpoints;
+
     private Object lock = new Object();
+
+    public EtcdServiceImpl(String endpoints) {
+        super();
+        this.endpoints = endpoints;
+    }
 
     /**
      * 将字符串转为客户端所需的ByteSequence实例
@@ -43,7 +49,7 @@ public class EtcdServiceImpl implements EtcdService {
         if (null==client) {
             synchronized (lock) {
                 if (null==client) {
-                    String endpoints = "http://" + IP + ":2379,http://" + IP + ":2380,http://" + IP + ":2381";
+
                     client = Client.builder().endpoints(endpoints.split(",")).build();
                 }
             }
