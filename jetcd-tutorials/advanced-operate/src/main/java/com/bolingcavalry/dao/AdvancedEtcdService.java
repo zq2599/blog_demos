@@ -21,12 +21,6 @@ public interface AdvancedEtcdService {
      * 为指定key添加监听
      * @param key       键
      * @param listener  监听事件
-     */
-
-    /**
-     * 为指定key添加监听
-     * @param key       键
-     * @param listener  监听事件
      * @return          jetcd对应的监听对象
      * @throws Exception
      */
