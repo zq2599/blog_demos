@@ -74,6 +74,9 @@
 15. [《kubernetes下jenkins实战maven项目编译构建》](https://blog.csdn.net/boling_cavalry/article/details/104875452)
 16. [《Nexus3常用功能备忘》](https://xinchen.blog.csdn.net/article/details/105458882)
 
+## 玩转Gradle
+1. [Gradle构建多模块SpringBoot应用](https://xinchen.blog.csdn.net/article/details/115049633)
+
 ## Jackson学习特辑
 1. [《jackson学习之一：基本信息》](https://blog.csdn.net/boling_cavalry/article/details/107135958)
 2. [《jackson学习之二：jackson-core》](https://blog.csdn.net/boling_cavalry/article/details/108571629)
@@ -96,6 +99,11 @@
 6. [《JUnit5学习之六：参数化测试(Parameterized Tests)基础》](https://blog.csdn.net/boling_cavalry/article/details/108930987)
 7. [《JUnit5学习之七：参数化测试(Parameterized Tests)进阶》](https://blog.csdn.net/boling_cavalry/article/details/108942301)
 8. [《JUnit5学习之八：综合进阶（终篇）》](https://blog.csdn.net/boling_cavalry/article/details/108952500)
+
+## jetcd学习特辑
+1. [jetcd实战之一:极速体验](https://xinchen.blog.csdn.net/article/details/115276045)
+2. [jetcd实战之二:基本操作](https://xinchen.blog.csdn.net/article/details/115419439)
+3. [jetcd实战之三:进阶操作(事务、监听、租约)](https://xinchen.blog.csdn.net/article/details/115434576)
 
 ## MyBatis学习（初级版）
 1. [《MyBatis初级实战之一：Spring Boot集成》](https://xinchen.blog.csdn.net/article/details/107805840)
@@ -409,6 +417,17 @@
 4. [《Helm部署的服务如何修改配置》](https://blog.csdn.net/boling_cavalry/article/details/105004586)
 5. [《helm部署mysql》](https://xinchen.blog.csdn.net/article/details/105180743)
 
+## Serverless领域OpenFaaS特辑
+1. [部署](https://xinchen.blog.csdn.net/article/details/109805296)
+2. [函数入门](https://xinchen.blog.csdn.net/article/details/109816846)
+3. [Java函数](https://xinchen.blog.csdn.net/article/details/109845563)
+4. [模板操作(template)](https://xinchen.blog.csdn.net/article/details/109900209)
+5. [大话watchdog](https://xinchen.blog.csdn.net/article/details/109971608)
+6. [of-watchdog(为性能而生)](https://xinchen.blog.csdn.net/article/details/110285578)
+7. [java11模板解析](https://xinchen.blog.csdn.net/article/details/110310033)
+8. [OpenFaaS实战之八：自制模板(maven+jdk8)](https://xinchen.blog.csdn.net/article/details/114438355)
+9. [OpenFaaS实战之九：终篇，自制模板(springboot+maven+jdk8)](114483494)
+
 # 大数据
 
 ## hive学习笔记
@@ -628,6 +647,7 @@
 9. [《Wireshark抓包分析Eureka注册发现协议》](https://blog.csdn.net/boling_cavalry/article/details/82918227)
 10. [《免费申请和使用IntelliJ IDEA商业版License指南》](https://blog.csdn.net/boling_cavalry/article/details/100014835)
 11. [《发送kafka消息的shell脚本》](https://blog.csdn.net/boling_cavalry/article/details/104736677)
+12. [《github搜索技巧小结》](https://xinchen.blog.csdn.net/article/details/114737069)
 
 # 问题处理
 1. [《dubbo服务提供者在tomcat启动失败的问题》](https://blog.csdn.net/boling_cavalry/article/details/72188135)
