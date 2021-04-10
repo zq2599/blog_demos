@@ -1,0 +1,4 @@
+rootProject.name = 'grpc-tutorials'
+include 'grpc-lib'
+include 'local-server'
+
