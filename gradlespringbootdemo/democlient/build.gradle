@@ -1,10 +1,35 @@
-// 构建二方库的插件
 plugins {
     id 'java-library'
+    id 'maven'
 }
 
-// 这里可以指定构建出来的jar的文件名
-archivesBaseName = 'demo-client'
+// 如果要上传库到私服，就在此添加
+def uploadGroup = group
+def uploadArtifactId = this.name
+def uploadVersion = version
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: 'http://192.168.50.43:8081/repository/maven-releases/') {
+                authentication(
+                        userName: 'bolingcavalry',
+                        password: '888888'
+                )
+            }
+            snapshotRepository(url: 'http://192.168.50.43:8081/repository/maven-snapshots/') {
+                authentication(
+                        userName: 'bolingcavalry',
+                        password: '888888'
+                )
+            }
+
+            pom.groupId = uploadGroup
+            pom.artifactId = uploadArtifactId
+            pom.version = uploadVersion
+        }
+    }
+}
 
 // 子模块自己的依赖
 dependencies {
