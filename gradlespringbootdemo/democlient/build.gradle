@@ -11,16 +11,16 @@ def uploadVersion = version
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: 'http://192.168.50.43:8081/repository/maven-releases/') {
+            repository(url: 'http://192.168.50.43:8081/repository/my-release/') {
                 authentication(
                         userName: 'bolingcavalry',
-                        password: '888888'
+                        password: '123456'
                 )
             }
-            snapshotRepository(url: 'http://192.168.50.43:8081/repository/maven-snapshots/') {
+            snapshotRepository(url: 'http://192.168.50.43:8081/repository/my-snapshot/') {
                 authentication(
                         userName: 'bolingcavalry',
-                        password: '888888'
+                        password: '123456'
                 )
             }
 
