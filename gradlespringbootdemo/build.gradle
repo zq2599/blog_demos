@@ -53,7 +53,7 @@ ext {
 // 针对所有project的配置，包含根项目
 allprojects {
     group 'com.bolingcavalry'
-    version '1.0.0-SNAPSHOT'
+    version '1.0.0'
 
     apply plugin: 'java'
     apply plugin: 'idea'
@@ -110,22 +110,14 @@ allprojects {
             url 'https://maven.aliyun.com/repository/public'
         }
 
-        // 如果要访问私服的release库，就在此配置地址、帐号、密码
+        // 如果要访问私服的release库，就在此配置地址
         // 如果没有请删除这个配置
         maven {
-            credentials {
-                username 'bolingcavalry'
-                password '888888'
-            }
             url 'http://192.168.50.43:8081/repository/my-release/'
         }
-        // 如果要访问私服的snapshot库，就在此配置地址、帐号、密码
+        // 如果要访问私服的snapshot库，就在此配置地址
         // 如果没有请删除这个配置
         maven {
-            credentials {
-                username 'bolingcavalry'
-                password '123456'
-            }
             url 'http://192.168.50.43:8081/repository/my-snapshot/'
         }
         // 中央仓库
