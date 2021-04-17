@@ -14,33 +14,33 @@ buildscript {
         maven {
             url 'http://maven.aliyun.com/nexus/content/groups/public/'
         }
+
+        mavenCentral()
     }
     ext {
+        // 项目版本
         projectVersion = '1.0-SNAPSHOT'
 
+        // 依赖库的版本
         grpcSpringBootStarterVersion = '2.11.0.RELEASE'
 
-        // https://github.com/grpc/grpc-java/releases
+        // grpc版本 https://github.com/grpc/grpc-java/releases
         grpcVersion = '1.35.0'
-        // https://github.com/protocolbuffers/protobuf/releases
+        // protobuf版本 https://github.com/protocolbuffers/protobuf/releases
         protobufVersion = '3.14.0'
+        // protobuf的gradle插件版本
         protobufGradlePluginVersion = '0.8.12'
 
-        // https://github.com/spring-projects/spring-boot/releases
+        // sprignboot版本 https://github.com/spring-projects/spring-boot/releases
         springBootVersion = '2.3.8.RELEASE'
-        // https://github.com/spring-cloud/spring-cloud-release/releases
+        // springcloud版本 https://github.com/spring-cloud/spring-cloud-release/releases
         springCloudVersion = 'Hoxton.SR9'
-        // https://github.com/alibaba/spring-cloud-alibaba/releases
+        // nacos版本 https://github.com/alibaba/spring-cloud-alibaba/releases
         springCloudAlibabaNacosVersion = '2.2.3.RELEASE'
-        // https://github.com/spring-projects/spring-security-oauth/releases
+        // security版本 https://github.com/spring-projects/spring-security-oauth/releases
         springSecurityOAuthVersion = '2.5.0.RELEASE'
-
-        lombokPluginVersion = '4.0.0'
-        versioningPluginVersion = '2.14.0'
-        versionsPluginVersion = '0.29.0'
     }
 }
-
 
 plugins {
     id 'java'
@@ -63,19 +63,17 @@ if (hasProperty('buildScan')) {
 }
 
 wrapper {
-    // Update using:
-    // ./gradlew wrapper --gradle-version=6.5 --distribution-type=bin
     gradleVersion = '6.7.1'
 }
 
 def buildTimeAndDate = OffsetDateTime.now()
 
 ext {
+    // 构建时取得当前日期和时间
     buildDate = DateTimeFormatter.ISO_LOCAL_DATE.format(buildTimeAndDate)
     buildTime = DateTimeFormatter.ofPattern('HH:mm:ss.SSSZ').format(buildTimeAndDate)
     buildRevision = versioning.info.commit
 }
-
 
 allprojects {
     apply plugin: 'java'
@@ -102,7 +100,7 @@ allprojects {
         }
     }
 
-    // Generate MANIFEST.MF
+    // 写入到MANIFEST.MF中的内容
     jar {
         manifest {
             attributes(
@@ -167,54 +165,12 @@ allprojects { project ->
 
         ext {
             micrometerVersion = dependencyManagement.importedProperties['micrometer.version']
-            // not explicitly needed in subprojects, as the BOM for Sprint Boot sets this version
             springFrameworkVersion = dependencyManagement.importedProperties['spring-framework.version']
             springSecurityVersion = dependencyManagement.importedProperties['spring-security.version']
             springCloudCommonsVersion = dependencyManagement.importedProperties['spring-cloud-commons.version']
         }
     }
-
-    test {
-        useJUnitPlatform()
-        testLogging {
-            // failFast = true
-            // showStandardStreams = true
-            exceptionFormat = 'full'
-            showCauses = true
-            showExceptions = true
-            showStackTraces = true
-            // prints out individual test progress by hooking into junit engine events
-            // it.events('passed', 'skipped', 'failed', 'standard_out')
-            it.events('passed', 'skipped', 'failed')
-
-            it.debug { dbg ->
-                // prints out individual test progress when run under the debugger
-                // dbg.events('started', 'failed', 'passed', 'skipped', 'standard_error', 'standard_out')
-                dbg.events('started', 'failed', 'passed', 'skipped')
-            }
-        }
-    }
-
-//    if (project.name == 'grpc-common-spring-boot' || project.name == 'grpc-client-spring-boot-autoconfigure' || project.name == 'grpc-server-spring-boot-autoconfigure') {
-//        // Properly generate javadocs for the important projects
-//
-//        task delombok(type: DelombokTask, dependsOn: compileJava) {
-//            ext.outputDir = file("$buildDir/delombok")
-//            outputs.dir(outputDir)
-//            sourceSets.main.java.srcDirs.each {
-//                inputs.dir(it)
-//                args(it, '-d', outputDir)
-//            }
-//        }
-//
-//        java {
-//            registerFeature('optionalSupport') {
-//                usingSourceSet(sourceSets.main)
-//            }
-//        }
-//    }
 }
-
 
 group = 'com.bolingcavalry'
 version = projectVersion
