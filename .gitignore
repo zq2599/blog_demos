@@ -7,3 +7,4 @@ target/*
 kubebuilder/elasticweb/bin/*
 jetcd-tutorials/.gradle/*
 .DS_Store
+grpc-tutorials/.gradle/*
