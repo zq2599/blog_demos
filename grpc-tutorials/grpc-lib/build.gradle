@@ -1,3 +1,4 @@
+// 根据proto生成java代码的gradle插件
 plugins {
     id 'com.google.protobuf'
 }
@@ -18,10 +19,12 @@ protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:${protobufVersion}"
     }
+    // 自动生成的代码放在这里
     generatedFilesBaseDir = "$projectDir/src/generated"
     clean {
         delete generatedFilesBaseDir
     }
+    // 生成java代码的插件
     plugins {
         grpc {
             artifact = 'io.grpc:protoc-gen-grpc-java'
@@ -34,6 +37,7 @@ protobuf {
     }
 }
 
+// 对于eclipse，通过以下脚本可以将生成的代码加入source路径中，编译时会被用到
 eclipse {
     classpath {
         file.beforeMerged { cp ->
@@ -47,6 +51,7 @@ eclipse {
     }
 }
 
+// 对于idea，通过以下脚本可以将生成的代码加入source路径中，编译时会被用到
 idea {
     module {
         sourceDirs += file('src/generated/main/java')
