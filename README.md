@@ -76,6 +76,7 @@
 
 ## 玩转Gradle
 1. [Gradle构建多模块SpringBoot应用](https://xinchen.blog.csdn.net/article/details/115049633)
+2. [《Gradle项目的jar发布到私有仓库》](https://xinchen.blog.csdn.net/article/details/115609899)
 
 ## Jackson学习特辑
 1. [《jackson学习之一：基本信息》](https://blog.csdn.net/boling_cavalry/article/details/107135958)
@@ -159,6 +160,7 @@
 14. [《掌握SpringBoot-2.3的容器探针：深入篇》](https://blog.csdn.net/boling_cavalry/article/details/106606442)
 15. [《掌握SpringBoot-2.3的容器探针：实战篇》](https://blog.csdn.net/boling_cavalry/article/details/106607225)
 16. [《springboot的jar为何能独立运行》](https://blog.csdn.net/boling_cavalry/article/details/106966579)
+17. [《SpringBoot(2.4)应用制作Docker镜像(Gradle版官方方案)》](https://xinchen.blog.csdn.net/article/details/115451129)
 
 ## SpringBoot进阶实战
 1. [《Docker下redis与springboot三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/78991422)
@@ -330,6 +332,7 @@
 90. [《ARM64架构下，OpenJDK的官方Docker镜像为何没有8版本？》](https://blog.csdn.net/boling_cavalry/article/details/101908575)
 91. [《ARM架构下的Docker环境，OpenJDK官方没有8版本镜像，如何完美解决？》](https://blog.csdn.net/boling_cavalry/article/details/101855126)
 92. [《Docker部署flink备忘》](https://blog.csdn.net/boling_cavalry/article/details/105015546)
+93. [《用GitHub Actions制作Docker镜像》](https://xinchen.blog.csdn.net/article/details/115476859)
 
 # kubernetes
 
@@ -384,6 +387,7 @@
 13. [《K8S的StorageClass实战(NFS)》](https://xinchen.blog.csdn.net/article/details/105465672)
 14. [《K8S环境快速部署Kafka(K8S外部可访问)》](https://xinchen.blog.csdn.net/article/details/105466163)
 15. [《K8S的Kafka监控(Prometheus+Grafana)》](https://xinchen.blog.csdn.net/article/details/105466788)
+16. [《Kubernetes的Group、Version、Resource学习小记》](https://xinchen.blog.csdn.net/article/details/113715847)
 
 ## kubernetes官方java客户端特辑
 1. [《Kubernetes官方java客户端之一：准备》](https://blog.csdn.net/boling_cavalry/article/details/107480015)
@@ -712,6 +716,7 @@
 12. [《GitLab Runner部署(kubernetes环境)》](https://blog.csdn.net/boling_cavalry/article/details/106991576)
 13. [《GitLab CI构建SpringBoot-2.3应用》](https://blog.csdn.net/boling_cavalry/article/details/106991691)
 14. [《Gitlab Runner的分布式缓存实战》](https://blog.csdn.net/boling_cavalry/article/details/107374730)
+15. [《用GitHub Actions制作Docker镜像》](https://xinchen.blog.csdn.net/article/details/115476859)
 
 ## promethus
 1. [《Docker下Prometheus和Grafana三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/88367137)
@@ -760,9 +765,24 @@
 3. [《用golang官方Docker镜像运行项目》](https://blog.csdn.net/boling_cavalry/article/details/87904485)
 4. [《vim设置go语法高亮》](https://blog.csdn.net/boling_cavalry/article/details/88598828)
 
+## gRPC特辑
+1. [《gRPC学习之一：在CentOS7部署和设置GO》](https://xinchen.blog.csdn.net/article/details/110790538)
+2. [《gRPC学习之二：GO的gRPC开发环境准备》](https://xinchen.blog.csdn.net/article/details/111066105)
+3. [《gRPC学习之三：初试GO版gRPC开发》](https://xinchen.blog.csdn.net/article/details/111086114)
+4. [《gRPC学习之四：实战四类服务方法》](https://xinchen.blog.csdn.net/article/details/111144884)
+5. [《gRPC学习之五：gRPC-Gateway实战》](https://xinchen.blog.csdn.net/article/details/111399854)
+6. [《gRPC学习之六：gRPC-Gateway集成swagger》](https://xinchen.blog.csdn.net/article/details/111406857)
+
 # 机器学习
 1. [《机器学习的开发环境准备》](https://blog.csdn.net/boling_cavalry/article/details/96628350)
 2. [《Docker下，五分钟极速体验机器学习》](https://blog.csdn.net/boling_cavalry/article/details/96718499)
+
+# 多媒体
+## kurento
+1. [《Kurento实战之一：KMS部署和体验》](https://xinchen.blog.csdn.net/article/details/112070074)
+2. [《Kurento实战之二：快速部署和体验》](https://xinchen.blog.csdn.net/article/details/112385575)
+3. [《Kurento实战之三：知识点小导游》](https://xinchen.blog.csdn.net/article/details/112415314)
+4. [《Kurento实战之四：应用开发指南》](https://xinchen.blog.csdn.net/article/details/112504048)
 
 # 硬件
 
