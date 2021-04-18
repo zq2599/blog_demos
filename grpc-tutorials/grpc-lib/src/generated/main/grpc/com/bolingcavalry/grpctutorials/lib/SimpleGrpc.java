@@ -4,7 +4,7 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
  * <pre>
- * The greeting service definition.
+ * gRPC服务
  * </pre>
  */
 @javax.annotation.Generated(
@@ -94,14 +94,14 @@ public final class SimpleGrpc {
 
   /**
    * <pre>
-   * The greeting service definition.
+   * gRPC服务
    * </pre>
    */
   public static abstract class SimpleImplBase implements io.grpc.BindableService {
 
     /**
      * <pre>
-     * Sends a greeting
+     * 接口定义
      * </pre>
      */
     public void sayHello(com.bolingcavalry.grpctutorials.lib.HelloRequest request,
@@ -124,7 +124,7 @@ public final class SimpleGrpc {
 
   /**
    * <pre>
-   * The greeting service definition.
+   * gRPC服务
    * </pre>
    */
   public static final class SimpleStub extends io.grpc.stub.AbstractAsyncStub<SimpleStub> {
@@ -141,7 +141,7 @@ public final class SimpleGrpc {
 
     /**
      * <pre>
-     * Sends a greeting
+     * 接口定义
      * </pre>
      */
     public void sayHello(com.bolingcavalry.grpctutorials.lib.HelloRequest request,
@@ -153,7 +153,7 @@ public final class SimpleGrpc {
 
   /**
    * <pre>
-   * The greeting service definition.
+   * gRPC服务
    * </pre>
    */
   public static final class SimpleBlockingStub extends io.grpc.stub.AbstractBlockingStub<SimpleBlockingStub> {
@@ -170,7 +170,7 @@ public final class SimpleGrpc {
 
     /**
      * <pre>
-     * Sends a greeting
+     * 接口定义
      * </pre>
      */
     public com.bolingcavalry.grpctutorials.lib.HelloReply sayHello(com.bolingcavalry.grpctutorials.lib.HelloRequest request) {
@@ -181,7 +181,7 @@ public final class SimpleGrpc {
 
   /**
    * <pre>
-   * The greeting service definition.
+   * gRPC服务
    * </pre>
    */
   public static final class SimpleFutureStub extends io.grpc.stub.AbstractFutureStub<SimpleFutureStub> {
@@ -198,7 +198,7 @@ public final class SimpleGrpc {
 
     /**
      * <pre>
-     * Sends a greeting
+     * 接口定义
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.bolingcavalry.grpctutorials.lib.HelloReply> sayHello(

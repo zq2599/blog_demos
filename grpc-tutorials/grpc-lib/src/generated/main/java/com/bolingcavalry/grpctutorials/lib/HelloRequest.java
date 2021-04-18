@@ -5,7 +5,7 @@ package com.bolingcavalry.grpctutorials.lib;
 
 /**
  * <pre>
- * The request message containing the user's name.
+ * 入参的数据结构
  * </pre>
  *
  * Protobuf type {@code HelloRequest}
@@ -285,7 +285,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * The request message containing the user's name.
+   * 入参的数据结构
    * </pre>
    *
    * Protobuf type {@code HelloRequest}

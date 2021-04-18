@@ -5,7 +5,7 @@ package com.bolingcavalry.grpctutorials.lib;
 
 /**
  * <pre>
- * The response message containing the greetings
+ * 返回结果的数据结构
  * </pre>
  *
  * Protobuf type {@code HelloReply}
@@ -285,7 +285,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * The response message containing the greetings
+   * 返回结果的数据结构
    * </pre>
    *
    * Protobuf type {@code HelloReply}
