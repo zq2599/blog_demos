@@ -2,4 +2,5 @@ rootProject.name = 'grpc-tutorials'
 include 'grpc-lib'
 include 'local-server'
 include 'local-client'
+include 'server-stream-server-side'
 
