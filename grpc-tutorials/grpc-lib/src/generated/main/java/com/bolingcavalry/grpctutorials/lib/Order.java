@@ -65,7 +65,7 @@ private static final long serialVersionUID = 0L;
           }
           case 24: {
 
-            orderTime_ = input.readInt32();
+            orderTime_ = input.readInt64();
             break;
           }
           case 34: {
@@ -137,17 +137,17 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int ORDERTIME_FIELD_NUMBER = 3;
-  private int orderTime_;
+  private long orderTime_;
   /**
    * <pre>
    * 交易时间
    * </pre>
    *
-   * <code>int32 orderTime = 3;</code>
+   * <code>int64 orderTime = 3;</code>
    * @return The orderTime.
    */
   @java.lang.Override
-  public int getOrderTime() {
+  public long getOrderTime() {
     return orderTime_;
   }
 
@@ -217,8 +217,8 @@ private static final long serialVersionUID = 0L;
     if (productId_ != 0) {
       output.writeInt32(2, productId_);
     }
-    if (orderTime_ != 0) {
-      output.writeInt32(3, orderTime_);
+    if (orderTime_ != 0L) {
+      output.writeInt64(3, orderTime_);
     }
     if (!getBuyerRemarkBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 4, buyerRemark_);
@@ -240,9 +240,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(2, productId_);
     }
-    if (orderTime_ != 0) {
+    if (orderTime_ != 0L) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(3, orderTime_);
+        .computeInt64Size(3, orderTime_);
     }
     if (!getBuyerRemarkBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, buyerRemark_);
@@ -286,7 +286,8 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + PRODUCTID_FIELD_NUMBER;
     hash = (53 * hash) + getProductId();
     hash = (37 * hash) + ORDERTIME_FIELD_NUMBER;
-    hash = (53 * hash) + getOrderTime();
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        getOrderTime());
     hash = (37 * hash) + BUYERREMARK_FIELD_NUMBER;
     hash = (53 * hash) + getBuyerRemark().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -430,7 +431,7 @@ private static final long serialVersionUID = 0L;
 
       productId_ = 0;
 
-      orderTime_ = 0;
+      orderTime_ = 0L;
 
       buyerRemark_ = "";
 
@@ -518,7 +519,7 @@ private static final long serialVersionUID = 0L;
       if (other.getProductId() != 0) {
         setProductId(other.getProductId());
       }
-      if (other.getOrderTime() != 0) {
+      if (other.getOrderTime() != 0L) {
         setOrderTime(other.getOrderTime());
       }
       if (!other.getBuyerRemark().isEmpty()) {
@@ -640,17 +641,17 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int orderTime_ ;
+    private long orderTime_ ;
     /**
      * <pre>
      * 交易时间
      * </pre>
      *
-     * <code>int32 orderTime = 3;</code>
+     * <code>int64 orderTime = 3;</code>
      * @return The orderTime.
      */
     @java.lang.Override
-    public int getOrderTime() {
+    public long getOrderTime() {
       return orderTime_;
     }
     /**
@@ -658,11 +659,11 @@ private static final long serialVersionUID = 0L;
      * 交易时间
      * </pre>
      *
-     * <code>int32 orderTime = 3;</code>
+     * <code>int64 orderTime = 3;</code>
      * @param value The orderTime to set.
      * @return This builder for chaining.
      */
-    public Builder setOrderTime(int value) {
+    public Builder setOrderTime(long value) {
       
       orderTime_ = value;
       onChanged();
@@ -673,12 +674,12 @@ private static final long serialVersionUID = 0L;
      * 交易时间
      * </pre>
      *
-     * <code>int32 orderTime = 3;</code>
+     * <code>int64 orderTime = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearOrderTime() {
       
-      orderTime_ = 0;
+      orderTime_ = 0L;
       onChanged();
       return this;
     }

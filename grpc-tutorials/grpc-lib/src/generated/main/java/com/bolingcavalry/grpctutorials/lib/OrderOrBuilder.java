@@ -32,10 +32,10 @@ public interface OrderOrBuilder extends
    * 交易时间
    * </pre>
    *
-   * <code>int32 orderTime = 3;</code>
+   * <code>int64 orderTime = 3;</code>
    * @return The orderTime.
    */
-  int getOrderTime();
+  long getOrderTime();
 
   /**
    * <pre>
