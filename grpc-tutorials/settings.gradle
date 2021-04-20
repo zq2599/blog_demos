@@ -3,4 +3,5 @@ include 'grpc-lib'
 include 'local-server'
 include 'local-client'
 include 'server-stream-server-side'
+include 'server-stream-client-side'
 
