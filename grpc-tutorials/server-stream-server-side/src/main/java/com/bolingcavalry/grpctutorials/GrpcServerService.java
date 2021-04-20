@@ -30,7 +30,7 @@ public class GrpcServerService extends OrderQueryGrpc.OrderQueryImplBase {
             list.add(builder
                     .setOrderId(i)
                     .setProductId(1000+i)
-                    .setOrderTime(System.currentTimeMillis())
+                    .setOrderTime(System.currentTimeMillis()/1000)
                     .setBuyerRemark(("remark-" + i))
                     .build());
         }

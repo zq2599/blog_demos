@@ -8,6 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -43,18 +47,24 @@ public class GrpcClientService {
             return new ArrayList<>();
         }
 
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         log.info("start put order to list");
         while (orderIterator.hasNext()) {
             Order order = orderIterator.next();
 
             orders.add(new DispOrder(order.getOrderId(),
                                     order.getProductId(),
-                                    order.getOrderTime(),
+                                    // 使用DateTimeFormatter将时间戳转为字符串
+                                    dtf.format(LocalDateTime.ofEpochSecond(order.getOrderTime(), 0, ZoneOffset.of("+8"))),
                                     order.getBuyerRemark()));
             log.info("");
         }
+
         log.info("end put order to list");
 
         return orders;
     }
+
+
 }

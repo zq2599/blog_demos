@@ -16,6 +16,6 @@ import java.io.Serializable;
 public class DispOrder {
     private int orderId;
     private int productId;
-    private long orderTime;
+    private String orderTime;
     private String buyerRemark;
 }
