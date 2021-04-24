@@ -1,0 +1,13 @@
+// 使用springboot插件
+plugins {
+    id 'org.springframework.boot'
+}
+
+dependencies {
+    implementation 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    // 作为gRPC服务提供方，需要用到此库
+    implementation 'net.devh:grpc-server-spring-boot-starter'
+    // 依赖自动生成源码的工程
+    implementation project(':grpc-lib')
+}

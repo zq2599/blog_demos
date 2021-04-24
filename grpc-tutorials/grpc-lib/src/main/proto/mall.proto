@@ -15,7 +15,7 @@ service OrderQuery {
 // gRPC服务，这是个在线商城的购物车服务
 service CartService {
     // 客户端流式：添加多个商品到购物车
-    rpc add (stream ProductOrder) returns (AddCartReply) {}
+    rpc AddToCart (stream ProductOrder) returns (AddCartReply) {}
 }
 
 // 买家ID
