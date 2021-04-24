@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author will (zq2599@gmail.com)
  * @version 1.0
@@ -22,31 +25,17 @@ public class GrpcClientService {
     @GrpcClient("client-stream-server-side")
     private CartServiceGrpc.CartServiceStub cartServiceStub;
 
-    public String addToCart() {
-        /*
-        StreamObserver<RouteSummary> responseObserver =
-        (StreamObserver<RouteSummary>) mock(StreamObserver.class);
-    RouteGuideGrpc.RouteGuideStub stub = RouteGuideGrpc.newStub(inProcessChannel);
-    ArgumentCaptor<RouteSummary> routeSummaryCaptor = ArgumentCaptor.forClass(RouteSummary.class);
+    public String addToCart(int count) {
 
-    StreamObserver<Point> requestObserver = stub.recordRoute(responseObserver);
-
-    requestObserver.onNext(p1);
-    requestObserver.onNext(p2);
-    requestObserver.onNext(p3);
-    requestObserver.onNext(p4);
-
-    verify(responseObserver, never()).onNext(any(RouteSummary.class));
-
-    requestObserver.onCompleted();
-        */
-
+        CountDownLatch countDownLatch = new CountDownLatch(1);
 
         ExtendResponseObserver<AddCartReply> responseObserver = new ExtendResponseObserver<AddCartReply>() {
 
+            String extraStr;
+
             @Override
             public String getExtra() {
-                return String.format("返回码[%d]，返回信息[%s]" , code, message);
+                return extraStr;
             }
 
             private int code;
@@ -55,28 +44,41 @@ public class GrpcClientService {
 
             @Override
             public void onNext(AddCartReply value) {
+                log.info("on next");
                 code = value.getCode();
                 message = value.getMessage();
             }
 
             @Override
             public void onError(Throwable t) {
-
+                log.error("gRPC request error", t);
+                extraStr = "gRPC error, " + t.getMessage();
+                countDownLatch.countDown();
             }
 
             @Override
             public void onCompleted() {
-
+                log.info("on complete");
+                extraStr = String.format("返回码[%d]，返回信息:%s" , code, message);
+                countDownLatch.countDown();
             }
         };
 
         StreamObserver<ProductOrder> requestObserver = cartServiceStub.addToCart(responseObserver);
-        requestObserver.onNext(build(101, 1));
-        requestObserver.onNext(build(102, 2));
-        requestObserver.onNext(build(103, 3));
+
+        for(int i=0; i<count; i++) {
+            requestObserver.onNext(build(101 + i, 1 + i));
+        }
 
         requestObserver.onCompleted();
 
+        try {
+            countDownLatch.await(2, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            log.error("countDownLatch await error", e);
+        }
+
+        log.info("service finish");
         return responseObserver.getExtra();
 
     }
