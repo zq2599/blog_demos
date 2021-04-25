@@ -20,7 +20,6 @@ public class GrpcServerService extends CartServiceGrpc.CartServiceImplBase {
 
     @Override
     public StreamObserver<ProductOrder> addToCart(StreamObserver<AddCartReply> responseObserver) {
-        log.info("aaa");
         // 返回匿名类，给上层框架使用
         return new StreamObserver<ProductOrder>() {
 

@@ -29,6 +29,8 @@ public class GrpcClientService {
 
         CountDownLatch countDownLatch = new CountDownLatch(1);
 
+        // responseObserver的onNext和onCompleted会在另一个线程中被执行，
+        // ExtendResponseObserver继承自StreamObserver
         ExtendResponseObserver<AddCartReply> responseObserver = new ExtendResponseObserver<AddCartReply>() {
 
             String extraStr;
@@ -64,23 +66,29 @@ public class GrpcClientService {
             }
         };
 
+        // 远程调用，此时数据还没有给到服务端
         StreamObserver<ProductOrder> requestObserver = cartServiceStub.addToCart(responseObserver);
 
         for(int i=0; i<count; i++) {
+            // 发送一笔数据到服务端
             requestObserver.onNext(build(101 + i, 1 + i));
         }
 
+        // 客户端告诉服务端：数据已经发完了
         requestObserver.onCompleted();
 
         try {
+            // 开始等待，如果服务端处理完成，那么responseObserver的onCompleted方法会在另一个线程被执行，
+            // 那里会执行countDownLatch的countDown方法，一但countDown被执行，下面的await就执行完毕了，
+            // await的超时时间设置为2秒
             countDownLatch.await(2, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             log.error("countDownLatch await error", e);
         }
 
         log.info("service finish");
+        // 服务端返回的内容被放置在requestObserver中，从getExtra方法可以取得
         return responseObserver.getExtra();
-
     }
 
     /**
@@ -92,6 +100,4 @@ public class GrpcClientService {
     private static ProductOrder build(int productId, int num) {
         return ProductOrder.newBuilder().setProductId(productId).setNumber(num).build();
     }
-
-
 }
