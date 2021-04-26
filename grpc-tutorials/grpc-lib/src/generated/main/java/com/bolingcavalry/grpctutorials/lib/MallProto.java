@@ -34,6 +34,11 @@ public final class MallProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_AddCartReply_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_DeductReply_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_DeductReply_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -48,11 +53,14 @@ public final class MallProto {
       "\001(\005\022\021\n\torderTime\030\003 \001(\003\022\023\n\013buyerRemark\030\004 " +
       "\001(\t\"1\n\014ProductOrder\022\021\n\tproductId\030\001 \001(\005\022\016" +
       "\n\006number\030\002 \001(\005\"-\n\014AddCartReply\022\014\n\004code\030\001" +
-      " \001(\005\022\017\n\007message\030\002 \001(\t2.\n\nOrderQuery\022 \n\nL" +
-      "istOrders\022\006.Buyer\032\006.Order\"\0000\0012<\n\013CartSer" +
-      "vice\022-\n\tAddToCart\022\r.ProductOrder\032\r.AddCa" +
-      "rtReply\"\000(\001B2\n#com.bolingcavalry.grpctut" +
-      "orials.libB\tMallProtoP\001b\006proto3"
+      " \001(\005\022\017\n\007message\030\002 \001(\t\",\n\013DeductReply\022\014\n\004" +
+      "code\030\001 \001(\005\022\017\n\007message\030\002 \001(\t2.\n\nOrderQuer" +
+      "y\022 \n\nListOrders\022\006.Buyer\032\006.Order\"\0000\0012<\n\013C" +
+      "artService\022-\n\tAddToCart\022\r.ProductOrder\032\r" +
+      ".AddCartReply\"\000(\0012@\n\014StockService\0220\n\013Bat" +
+      "chDeduct\022\r.ProductOrder\032\014.DeductReply\"\000(" +
+      "\0010\001B2\n#com.bolingcavalry.grpctutorials.l" +
+      "ibB\tMallProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -81,6 +89,12 @@ public final class MallProto {
     internal_static_AddCartReply_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_AddCartReply_descriptor,
+        new java.lang.String[] { "Code", "Message", });
+    internal_static_DeductReply_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_DeductReply_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_DeductReply_descriptor,
         new java.lang.String[] { "Code", "Message", });
   }
 

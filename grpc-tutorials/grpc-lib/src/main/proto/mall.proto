@@ -18,6 +18,12 @@ service CartService {
     rpc AddToCart (stream ProductOrder) returns (AddCartReply) {}
 }
 
+// gRPC服务，这是个在线商城的库存服务
+service StockService {
+    // 双向流式：批量扣减库存
+    rpc BatchDeduct (stream ProductOrder) returns (stream DeductReply) {}
+}
+
 // 买家ID
 message Buyer {
     int32 buyerId = 1;
@@ -45,6 +51,14 @@ message ProductOrder {
 
 // 提交购物车返回结果的数据结构
 message AddCartReply {
+    // 返回码
+    int32 code = 1;
+    // 描述信息
+    string message = 2;
+}
+
+// 扣减库存返回结果的数据结构
+message DeductReply {
     // 返回码
     int32 code = 1;
     // 描述信息
