@@ -19,7 +19,6 @@ public class GrpcClientController {
 
     @RequestMapping("/")
     public String printMessage(@RequestParam(defaultValue = "1") int count) {
-//        return grpcClientService.addToCart(count);
-        return null;
+        return grpcClientService.batchDeduct(count);
     }
 }

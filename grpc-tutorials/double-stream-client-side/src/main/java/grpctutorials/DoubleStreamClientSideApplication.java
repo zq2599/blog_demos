@@ -6,12 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author will (zq2599@gmail.com)
  * @version 1.0
- * @description: 客户端流的启动类
- * @date 2021/4/24 11:02
+ * @description: application类
+ * @date 2021/4/17 10:09
  */
 @SpringBootApplication
-public class ClientStreamServerSideApplication {
+public class DoubleStreamClientSideApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(ClientStreamServerSideApplication.class, args);
+        SpringApplication.run(DoubleStreamClientSideApplication.class, args);
     }
+
 }

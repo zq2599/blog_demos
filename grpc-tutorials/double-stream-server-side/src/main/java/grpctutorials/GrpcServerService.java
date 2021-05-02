@@ -35,8 +35,8 @@ public class GrpcServerService extends StockServiceGrpc.StockServiceImplBase {
                 int code;
                 String message;
 
-                // 假设双数的都有库存不足的问题
-                if (0 == totalCount % 2) {
+                // 假设单数的都有库存不足的问题
+                if (0 == value.getNumber() % 2) {
                     code = 10000;
                     message = String.format("商品[%d]扣减库存数[%d]成功", value.getProductId(), value.getNumber());
                 } else {
