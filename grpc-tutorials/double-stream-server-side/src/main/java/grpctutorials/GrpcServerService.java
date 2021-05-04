@@ -1,6 +1,8 @@
 package grpctutorials;
 
-import com.bolingcavalry.grpctutorials.lib.*;
+import com.bolingcavalry.grpctutorials.lib.DeductReply;
+import com.bolingcavalry.grpctutorials.lib.ProductOrder;
+import com.bolingcavalry.grpctutorials.lib.StockServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -20,7 +22,6 @@ public class GrpcServerService extends StockServiceGrpc.StockServiceImplBase {
         // 返回匿名类，给上层框架使用
         return new StreamObserver<ProductOrder>() {
 
-            // 记录处理产品的总量
             private int totalCount = 0;
 
             @Override
@@ -52,7 +53,7 @@ public class GrpcServerService extends StockServiceGrpc.StockServiceImplBase {
 
             @Override
             public void onError(Throwable t) {
-                log.error("添加购物车异常", t);
+                log.error("批量减扣库存异常", t);
             }
 
             @Override

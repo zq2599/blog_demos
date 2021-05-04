@@ -37,16 +37,23 @@ public class GrpcClientService {
         // ExtendResponseObserver继承自StreamObserver
         ExtendResponseObserver<DeductReply> responseObserver = new ExtendResponseObserver<DeductReply>() {
 
-            StringBuilder stringBuilder = new StringBuilder();
+            // 用stringBuilder保存所有来自服务端的响应
+            private StringBuilder stringBuilder = new StringBuilder();
 
             @Override
             public String getExtra() {
                 return stringBuilder.toString();
             }
 
+            /**
+             * 客户端的流式请求期间，每一笔请求都会收到服务端的一个响应，
+             * 对应每个响应，这里的onNext方法都会被执行一次，入参是响应内容
+             * @param value
+             */
             @Override
             public void onNext(DeductReply value) {
                 log.info("batch deduct on next");
+                // 放入匿名类的成员变量中
                 stringBuilder.append(String.format("返回码[%d]，返回信息:%s<br>" , value.getCode(), value.getMessage()));
             }
 
@@ -57,9 +64,14 @@ public class GrpcClientService {
                 countDownLatch.countDown();
             }
 
+            /**
+             * 服务端确认响应完成后，这里的onCompleted方法会被调用
+             */
             @Override
             public void onCompleted() {
                 log.info("batch deduct on complete");
+                // 执行了countDown方法后，前面执行countDownLatch.await方法的线程就不再wait了，
+                // 会继续往下执行
                 countDownLatch.countDown();
             }
         };
@@ -68,7 +80,8 @@ public class GrpcClientService {
         StreamObserver<ProductOrder> requestObserver = stockServiceStub.batchDeduct(responseObserver);
 
         for(int i=0; i<count; i++) {
-            // 发送一笔数据到服务端
+            // 每次执行onNext都会发送一笔数据到服务端，
+            // 服务端的onNext方法都会被执行一次
             requestObserver.onNext(build(101 + i, 1 + i));
         }
 
