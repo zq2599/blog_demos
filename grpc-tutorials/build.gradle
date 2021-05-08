@@ -160,6 +160,7 @@ allprojects { project ->
                 dependency 'commons-collections:commons-collections:3.2.2'
                 dependency "net.devh:grpc-server-spring-boot-starter:${grpcSpringBootStarterVersion}"
                 dependency "net.devh:grpc-client-spring-boot-starter:${grpcSpringBootStarterVersion}"
+                dependency 'io.etcd:jetcd-core:0.5.0'
             }
         }
 

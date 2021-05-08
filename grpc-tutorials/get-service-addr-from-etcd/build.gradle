@@ -1,19 +1,12 @@
 plugins {
-    id 'java'
-}
-
-group 'com.bolingcavalry'
-version '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
+    id 'org.springframework.boot'
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-}
-
-test {
-    useJUnitPlatform()
+    implementation 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'net.devh:grpc-client-spring-boot-starter'
+    implementation 'io.etcd:jetcd-core'
+    implementation project(':grpc-lib')
 }
