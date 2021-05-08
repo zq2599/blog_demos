@@ -8,4 +8,5 @@ include 'client-stream-server-side'
 include 'client-stream-client-side'
 include 'double-stream-server-side'
 include 'double-stream-client-side'
+include 'get-service-addr-from-etcd'
 
