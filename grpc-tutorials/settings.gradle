@@ -9,4 +9,6 @@ include 'client-stream-client-side'
 include 'double-stream-server-side'
 include 'double-stream-client-side'
 include 'get-service-addr-from-etcd'
+include 'cloud-eureka'
+include 'cloud-server-side'
 
