@@ -20,7 +20,7 @@ import static com.google.common.base.Charsets.UTF_8;
 /**
  * @author will (zq2599@gmail.com)
  * @version 1.0
- * @description: TODO
+ * @description: 包装了SimpleBlockingStub实例的类，发起gRPC请求时需要用到SimpleBlockingStub实例
  * @date 2021/5/8 19:34
  */
 @Component("stubWrapper")
@@ -71,7 +71,11 @@ public class StubWrapper {
         return null==rawAddrInfo ? null : rawAddrInfo.split(":");
     }
 
-
+    /**
+     * 每次注册bean都会执行的方法，
+     * 该方法从etcd取得gRPC服务端地址，
+     * 用于实例化成员变量SimpleBlockingStub
+     */
     @PostConstruct
     public void simpleBlockingStub() {
         // 从etcd获取地址信息
