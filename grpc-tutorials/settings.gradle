@@ -11,4 +11,5 @@ include 'double-stream-client-side'
 include 'get-service-addr-from-etcd'
 include 'cloud-eureka'
 include 'cloud-server-side'
+include 'cloud-client-side'
 

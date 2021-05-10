@@ -1,0 +1,23 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: cloud-client-side
+eureka:
+  instance:
+    prefer-ip-address: true
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://192.168.50.5:8085/eureka/
+grpc:
+  client:
+    # gRPC配置的名字，GrpcClient注解会用到
+    cloud-server-side:
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
