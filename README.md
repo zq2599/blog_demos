@@ -114,6 +114,15 @@
 5. [《MyBatis初级实战之五：一对一关联查询》](https://xinchen.blog.csdn.net/article/details/109020733)
 6. [《MyBatis初级实战之六：一对多关联查询》](https://xinchen.blog.csdn.net/article/details/109193441)
 
+## java版gRPC实战专辑
+1. [用proto生成代码](https://xinchen.blog.csdn.net/article/details/115049443)
+2. [服务发布和调用](https://xinchen.blog.csdn.net/article/details/115803738)
+3. [服务端流](https://xinchen.blog.csdn.net/article/details/115983001)
+4. [客户端流](https://xinchen.blog.csdn.net/article/details/116097756)
+5. [双向流](https://xinchen.blog.csdn.net/article/details/116354293)
+6. [客户端动态获取服务端地址](https://xinchen.blog.csdn.net/article/details/116479078)
+7. [基于eureka的注册发现](https://xinchen.blog.csdn.net/article/details/116635441)
+
 # Spring领域
 
 ##  Spring基础
