@@ -27,7 +27,7 @@ import java.util.function.Consumer;
 @Slf4j
 public class BasicEventServiceImpl implements BasicEventService {
 
-    private static final int BUFFER_SIZE = 1024;
+    private static final int BUFFER_SIZE = 16;
 
     private Disruptor<StringEvent> disruptor;
 
