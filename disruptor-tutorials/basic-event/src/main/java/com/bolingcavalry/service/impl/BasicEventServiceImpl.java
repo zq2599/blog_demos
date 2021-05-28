@@ -40,8 +40,6 @@ public class BasicEventServiceImpl implements BasicEventService {
 
     @PostConstruct
     private void init() {
-        Executor executor = Executors.newCachedThreadPool();
-
         // 实例化
         disruptor = new Disruptor<>(new StringEventFactory(),
                 BUFFER_SIZE,
