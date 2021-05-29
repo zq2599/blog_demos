@@ -1,7 +1,9 @@
 package com.bolingcavalry.service.impl;
 
 import com.bolingcavalry.service.*;
-import com.lmax.disruptor.*;
+import com.lmax.disruptor.BatchEventProcessor;
+import com.lmax.disruptor.RingBuffer;
+import com.lmax.disruptor.SequenceBarrier;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -45,20 +47,26 @@ public class OneConsumerServiceImpl implements LowLevelOperateService {
             }
         };
 
+
+        // 创建环形队列实例
         ringBuffer = RingBuffer.createSingleProducer(new StringEventFactory(), BUFFER_SIZE);
 
+        // 准备线程池
         executors = Executors.newFixedThreadPool(1);
 
         //创建SequenceBarrier
         SequenceBarrier sequenceBarrier = ringBuffer.newBarrier();
 
+        // 创建事件处理的工作类，里面执行StringEventHandler处理事件
         BatchEventProcessor<StringEvent> batchEventProcessor = new BatchEventProcessor<>(
                 ringBuffer,
                 sequenceBarrier,
                 new StringEventHandler(eventCountPrinter));
 
+        // 将消费者的sequence传给环形队列
         ringBuffer.addGatingSequences(batchEventProcessor.getSequence());
 
+        // 在一个独立线程中取事件并消费
         executors.submit(batchEventProcessor);
 
         // 生产者

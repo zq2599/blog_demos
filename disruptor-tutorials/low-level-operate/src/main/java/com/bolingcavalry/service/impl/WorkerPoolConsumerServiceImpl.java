@@ -40,6 +40,7 @@ public class WorkerPoolConsumerServiceImpl implements LowLevelOperateService {
 
         StringWorkHandler[] handlers = new StringWorkHandler[CONSUMER_NUM];
 
+        // 创建多个StringWorkHandler实例，放入一个数组中
         for (int i=0;i < CONSUMER_NUM;i++) {
             handlers[i] = new StringWorkHandler(o -> {
                 long count = eventCount.incrementAndGet();
@@ -47,6 +48,7 @@ public class WorkerPoolConsumerServiceImpl implements LowLevelOperateService {
             });
         }
 
+        // 创建WorkerPool实例，将StringWorkHandler实例的数组传进去，代表共同消费者的数量
         WorkerPool<StringEvent> workerPool = new WorkerPool<>(ringBuffer, ringBuffer.newBarrier(), new IgnoreExceptionHandler(), handlers);
 
         // 这一句很重要，去掉就会出现重复消费同一个事件的问题
