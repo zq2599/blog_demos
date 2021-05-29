@@ -106,6 +106,10 @@
 2. [jetcd实战之二:基本操作](https://xinchen.blog.csdn.net/article/details/115419439)
 3. [jetcd实战之三:进阶操作(事务、监听、租约)](https://xinchen.blog.csdn.net/article/details/115434576)
 
+## disruptor学习特辑
+1. [disruptor笔记之一：快速入门](https://blog.csdn.net/boling_cavalry/article/details/117185656)
+2. [disruptor笔记之二：Disruptor类分析](https://blog.csdn.net/boling_cavalry/article/details/117318462)
+
 ## MyBatis学习（初级版）
 1. [《MyBatis初级实战之一：Spring Boot集成》](https://xinchen.blog.csdn.net/article/details/107805840)
 2. [《MyBatis初级实战之二：增删改查》](https://xinchen.blog.csdn.net/article/details/107971293)
@@ -177,6 +181,7 @@
 3. [《Docker下redis与springboot三部曲之三：springboot下访问redis哨兵》](https://blog.csdn.net/boling_cavalry/article/details/79041129)
 4. [《SpringBoot应用使用自定义的ApplicationContext实现类》](https://blog.csdn.net/boling_cavalry/article/details/81587556)
 5. [《Spring Boot应用在kubernetes的sidecar设计与实战》](https://blog.csdn.net/boling_cavalry/article/details/83784113)
+6. [《Spring Native实战(畅快体验79毫秒启动springboot应用)》](https://blog.csdn.net/boling_cavalry/article/details/117153661)
 
 ## SpringCloud基础
 1. [《极速体验SpringCloud Gateway》](https://blog.csdn.net/boling_cavalry/article/details/94907172)
@@ -792,6 +797,7 @@
 2. [《Kurento实战之二：快速部署和体验》](https://xinchen.blog.csdn.net/article/details/112385575)
 3. [《Kurento实战之三：知识点小导游》](https://xinchen.blog.csdn.net/article/details/112415314)
 4. [《Kurento实战之四：应用开发指南》](https://xinchen.blog.csdn.net/article/details/112504048)
+5. [《微信小程序+腾讯云直播的实时音视频实战笔记》](https://blog.csdn.net/boling_cavalry/article/details/116855410)
 
 # 硬件
 
