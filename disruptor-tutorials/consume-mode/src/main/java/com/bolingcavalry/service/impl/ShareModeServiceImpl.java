@@ -1,14 +1,8 @@
 package com.bolingcavalry.service.impl;
 
-import com.bolingcavalry.service.*;
-import com.lmax.disruptor.dsl.Disruptor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
+import com.bolingcavalry.service.ConsumeModeService;
+import com.bolingcavalry.service.MailWorkHandler;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Consumer;
 
 /**
  * @author will (zq2599@gmail.com)

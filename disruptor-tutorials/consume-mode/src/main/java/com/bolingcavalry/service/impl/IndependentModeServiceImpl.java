@@ -1,14 +1,9 @@
 package com.bolingcavalry.service.impl;
 
-import com.bolingcavalry.service.*;
-import com.lmax.disruptor.dsl.Disruptor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
+import com.bolingcavalry.service.ConsumeModeService;
+import com.bolingcavalry.service.MailEventHandler;
+import com.bolingcavalry.service.SmsEventHandler;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Consumer;
 
 /**
  * @author will (zq2599@gmail.com)
@@ -17,7 +12,6 @@ import java.util.function.Consumer;
  * @date 2021/5/23 11:05
  */
 @Service("independentModeService")
-@Slf4j
 public class IndependentModeServiceImpl extends ConsumeModeService {
 
     @Override
