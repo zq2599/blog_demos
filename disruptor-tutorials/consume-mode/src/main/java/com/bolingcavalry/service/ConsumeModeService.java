@@ -83,6 +83,15 @@ public abstract class ConsumeModeService {
     }
 
     /**
+     * 子类重写后再调用，该方法的作用是多生产者模式下，用另一个生产者发布一个事件
+     * @param value
+     * @return
+     */
+    public void publishWithProducer2(String value) throws Exception {
+        throw new Exception("父类未实现此方法，请在子类中重写此方法后再调用");
+    }
+
+    /**
      * 返回已经处理的任务总数
      * @return
      */
@@ -109,7 +118,7 @@ public abstract class ConsumeModeService {
     protected abstract void disruptorOperate();
 
     @PostConstruct
-    private void init() {
+    protected void init() {
         // 实例化
         disruptor = new Disruptor<>(new OrderEventFactory(),
                 BUFFER_SIZE,
