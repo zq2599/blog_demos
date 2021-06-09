@@ -1,5 +1,7 @@
 package com.bolingcavalry.service;
 
+import com.lmax.disruptor.EventTranslator;
+import com.lmax.disruptor.EventTranslatorOneArg;
 import com.lmax.disruptor.dsl.Disruptor;
 import lombok.Setter;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
@@ -30,6 +32,9 @@ public abstract class ConsumeModeService {
 
     @Setter
     private OrderEventProducer producer;
+
+    @Setter
+    private OrderEventProducerWithTranslator producerWithTranslator;
 
     /**
      * 统计消息总数
@@ -79,7 +84,20 @@ public abstract class ConsumeModeService {
      * @return
      */
     public void publish(String value) {
-        producer.onData(value);
+        // 两种producer都支持 ，使用非空的那个
+        if (null!= producer) {
+            producer.onData(value);
+        } else if (null!=producerWithTranslator) {
+            producerWithTranslator.onData(value);
+        }
+    }
+
+    /**
+     * 基于lambda发布
+     * @param translator
+     */
+    public void publistEvent(EventTranslatorOneArg<OrderEvent, String> translator, String value) {
+        disruptor.getRingBuffer().publishEvent(translator, value);
     }
 
     /**

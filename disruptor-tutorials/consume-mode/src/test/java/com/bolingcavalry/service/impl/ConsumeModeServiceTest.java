@@ -1,6 +1,8 @@
 package com.bolingcavalry.service.impl;
 
 import com.bolingcavalry.service.ConsumeModeService;
+import com.bolingcavalry.service.OrderEvent;
+import com.lmax.disruptor.EventTranslatorOneArg;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,27 +38,35 @@ public class ConsumeModeServiceTest {
 
     @Autowired
     @Qualifier("scene5")
-    Scene5 scene5;
+    ConsumeModeService scene5;
 
     @Autowired
     @Qualifier("scene6")
-    Scene6 scene6;
+    ConsumeModeService scene6;
 
     @Autowired
     @Qualifier("scene7")
-    Scene7 scene7;
+    ConsumeModeService scene7;
 
     @Autowired
     @Qualifier("scene8")
-    Scene8 scene8;
+    ConsumeModeService scene8;
 
     @Autowired
     @Qualifier("scene9")
-    Scene9 scene9;
+    ConsumeModeService scene9;
 
     @Autowired
     @Qualifier("scene10")
-    Scene10 scene10;
+    ConsumeModeService scene10;
+
+    @Autowired
+    @Qualifier("translatorPublishService")
+    ConsumeModeService translatorPublishService;
+
+    @Autowired
+    @Qualifier("lambdaService")
+    ConsumeModeService lambdaService;
 
     /**
      * 测试时生产的消息数量
@@ -205,5 +215,37 @@ public class ConsumeModeServiceTest {
                 // C5独立消费（100个事件）,
                 // 所以一共消费400个事件
                 EVENT_COUNT * 4);
+    }
+
+    @Test
+    public void testTranslatorPublishService() throws InterruptedException {
+        log.info("start testTranslatorPublishService");
+        testConsumeModeService(translatorPublishService,
+                EVENT_COUNT,
+                EVENT_COUNT * ConsumeModeService.INDEPENDENT_CONSUMER_NUM);
+    }
+
+    @Test
+    public void testLambdaService() throws InterruptedException {
+        log.info("start testLambdaService");
+
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+
+        // 告诉service，等消费到expectEventCount个消息时，就执行countDownLatch.countDown方法
+        lambdaService.setCountDown(countDownLatch, EVENT_COUNT);
+
+        for(int i=0;i<EVENT_COUNT;i++) {
+            log.info("publich {}", i);
+            final String content = String.valueOf(i);
+            lambdaService.publistEvent((event, sequence, value) -> event.setValue(value), content);
+        }
+
+        // 当前线程开始等待，前面的service.setCountDown方法已经告诉过service，
+        // 等消费到expectEventCount个消息时，就执行countDownLatch.countDown方法
+        // 千万注意，要调用await方法，而不是wait方法！
+        countDownLatch.await();
+
+        // 消费的事件总数应该等于发布的事件数
+        assertEquals(EVENT_COUNT, lambdaService.eventCount());
     }
 }
