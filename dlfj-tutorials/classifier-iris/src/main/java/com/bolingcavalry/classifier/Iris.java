@@ -121,47 +121,56 @@ public class Iris {
         // 每个鸢尾花有四个特征
         final int numInputs = 4;
 
-        // 公有三种鸢尾花
+        // 共有三种鸢尾花
         int outputNum = 3;
 
         // 随机数种子
         long seed = 6;
 
         //第二阶段：训练
-        log.info("Build model....");
+        log.info("开始配置...");
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
             .seed(seed)
             .activation(Activation.TANH)       // 激活函数选用标准的tanh(双曲正切)
             .weightInit(WeightInit.XAVIER)     // 权重初始化选用XAVIER：均值 0, 方差为 2.0/(fanIn + fanOut)的高斯分布
             .updater(new Sgd(0.1))  // 更新器，设置SGD学习速率调度器
             .l2(1e-4)                          // L2正则化配置
-            .list()                            // 将所有超参数配置添加到列表中
-            .layer(new DenseLayer.Builder().nIn(numInputs).nOut(3)  //
+            .list()                            // 配置多层网络
+            .layer(new DenseLayer.Builder().nIn(numInputs).nOut(3)  // 隐藏层
                 .build())
-            .layer(new DenseLayer.Builder().nIn(3).nOut(3)
+            .layer(new DenseLayer.Builder().nIn(3).nOut(3)          // 隐藏层
                 .build())
-            .layer( new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
-                .activation(Activation.SOFTMAX) //Override the global TANH activation with softmax for this layer
+            .layer( new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)   // 损失函数：负对数似然
+                .activation(Activation.SOFTMAX)                     // 输出层指定激活函数为：SOFTMAX
                 .nIn(3).nOut(outputNum).build())
             .build();
 
-        //run the model
+        // 模型配置
         MultiLayerNetwork model = new MultiLayerNetwork(conf);
+
+        // 初始化
         model.init();
-        //record score once every 100 iterations
+
+        // 每一百次迭代打印一次分数（损失函数的值）
         model.setListeners(new ScoreIterationListener(100));
 
+        long startTime = System.currentTimeMillis();
+
+        log.info("开始训练");
+        // 训练
         for(int i=0; i<1000; i++ ) {
             model.fit(trainingData);
         }
+        log.info("训练完成，耗时[{}]ms", System.currentTimeMillis()-startTime);
 
         // 第三阶段：评估
-        //evaluate the model on the test set
-        Evaluation eval = new Evaluation(3);
+
+        // 在测试集上评估模型
+        Evaluation eval = new Evaluation(numClasses);
         INDArray output = model.output(testData.getFeatures());
         eval.eval(testData.getLabels(), output);
-        log.info(eval.stats());
-    }
 
+        log.info("评估结果如下\n" + eval.stats());
+    }
 }
 
