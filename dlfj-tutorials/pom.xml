@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>commons</module>
+        <module>classifier-iris</module>
     </modules>
     <packaging>pom</packaging>
 
