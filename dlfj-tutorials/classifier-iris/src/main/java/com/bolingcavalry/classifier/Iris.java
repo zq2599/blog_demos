@@ -1,20 +1,3 @@
-/* *****************************************************************************
- * Copyright (c) 2020 Konduit K.K.
- * Copyright (c) 2015-2019 Skymind, Inc.
- *
- * This program and the accompanying materials are made available under the
- * terms of the Apache License, Version 2.0 which is available at
- * https://www.apache.org/licenses/LICENSE-2.0.
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
- *
- * SPDX-License-Identifier: Apache-2.0
- ******************************************************************************/
-
 package com.bolingcavalry.classifier;
 
 import com.bolingcavalry.commons.utils.DownloaderUtility;
@@ -55,7 +38,6 @@ public class Iris {
 
     public static void main(String[] args) throws  Exception {
 
-        //First: get the dataset using the record reader. CSVRecordReader handles loading/parsing
         //第一阶段：准备
 
         // 跳过的行数，因为可能是表头
@@ -74,10 +56,7 @@ public class Iris {
         // 读取下载后的文件
         recordReader.initialize(new FileSplit(new File(dataPathLocal,"iris.txt")));
 
-        //Second: the RecordReaderDataSetIterator handles conversion to DataSet objects, ready for use in neural network
-
         // 每一行的内容大概是这样的：5.1,3.5,1.4,0.2,0
-
         // 一共五个字段，从零开始算的话，标签在第四个字段
         int labelIndex = 4;
 
@@ -103,8 +82,6 @@ public class Iris {
 
         // 验证用的数据集
         DataSet testData = testAndTrain.getTest();
-
-        // We need to normalize our data. We'll use NormalizeStandardize (which gives us mean 0, unit variance):
 
         // 指定归一化器：独立地将每个特征值（和可选的标签值）归一化为0平均值和1的标准差。
         DataNormalization normalizer = new NormalizerStandardize();
