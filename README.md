@@ -107,8 +107,14 @@
 3. [jetcd实战之三:进阶操作(事务、监听、租约)](https://xinchen.blog.csdn.net/article/details/115434576)
 
 ## disruptor学习特辑
-1. [disruptor笔记之一：快速入门](https://blog.csdn.net/boling_cavalry/article/details/117185656)
-2. [disruptor笔记之二：Disruptor类分析](https://blog.csdn.net/boling_cavalry/article/details/117318462)
+1. [快速入门](https://blog.csdn.net/boling_cavalry/article/details/117185656)
+2. [Disruptor类分析](https://blog.csdn.net/boling_cavalry/article/details/117318462)
+3. [环形队列的基础操作(不用Disruptor类)](https://blog.csdn.net/boling_cavalry/article/details/117386253)
+4. [事件消费知识点小结](https://blog.csdn.net/boling_cavalry/article/details/117395009)
+5. [事件消费实战](https://blog.csdn.net/boling_cavalry/article/details/117405835)
+6. [常见场景](https://blog.csdn.net/boling_cavalry/article/details/117575447)
+7. [等待策略](https://blog.csdn.net/boling_cavalry/article/details/117608051)
+8. [知识点补充(终篇)](https://blog.csdn.net/boling_cavalry/article/details/117636483)
 
 ## MyBatis学习（初级版）
 1. [《MyBatis初级实战之一：Spring Boot集成》](https://xinchen.blog.csdn.net/article/details/107805840)
