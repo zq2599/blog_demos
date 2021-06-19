@@ -24,6 +24,10 @@ public class PlayerWithRecorder implements WebSocketConfigurer {
     return new PlayerHandler();
   }
 
+  /**
+   * 实例化KurentoClient，入参是KMS地址
+   * @return
+   */
   @Bean
   public KurentoClient kurentoClient() {
     return KurentoClient.create("ws://192.168.91.128:8888/kurento");
@@ -36,6 +40,10 @@ public class PlayerWithRecorder implements WebSocketConfigurer {
     return container;
   }
 
+  /**
+   * 标准的WebSocket处理类绑定
+   * @param registry
+   */
   @Override
   public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
     registry.addHandler(handler(), "/player");
