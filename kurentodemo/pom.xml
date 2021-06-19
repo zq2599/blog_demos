@@ -17,6 +17,7 @@
 
     <modules>
         <module>helloworld</module>
+        <module>player-with-record</module>
     </modules>
 
     <packaging>pom</packaging>
