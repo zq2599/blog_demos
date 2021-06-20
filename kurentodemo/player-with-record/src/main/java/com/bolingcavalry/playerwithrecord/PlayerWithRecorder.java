@@ -24,6 +24,11 @@ public class PlayerWithRecorder implements WebSocketConfigurer {
     return new PlayerHandler();
   }
 
+  @Bean
+  public PlayerRecorderHandler playerRecorderHandler() {
+    return new PlayerRecorderHandler();
+  }
+
   /**
    * 实例化KurentoClient，入参是KMS地址
    * @return
@@ -47,6 +52,7 @@ public class PlayerWithRecorder implements WebSocketConfigurer {
   @Override
   public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
     registry.addHandler(handler(), "/player");
+//    registry.addHandler(playerRecorderHandler(), "/player");
   }
 
   public static void main(String[] args) throws Exception {
