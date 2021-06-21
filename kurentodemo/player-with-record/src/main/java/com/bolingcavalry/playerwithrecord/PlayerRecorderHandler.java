@@ -190,6 +190,7 @@ public class PlayerRecorderHandler extends TextWebSocketHandler {
     user.setPlayerEndpoint(playerEndpoint);
     users.put(session.getId(), user);
 
+    // 以当前的年月日时分秒作为文件名
     String path = "file:///tmp/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".mp4";
 
     log.info("save path : {}", path);
