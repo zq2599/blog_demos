@@ -10,6 +10,7 @@
     <modules>
         <module>commons</module>
         <module>classifier-iris</module>
+        <module>simple-convolution</module>
     </modules>
     <packaging>pom</packaging>
 
