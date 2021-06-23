@@ -18,6 +18,7 @@
 package com.bolingcavalry.convolution;
 
 import com.bolingcavalry.commons.utils.DataUtilities;
+import lombok.extern.slf4j.Slf4j;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;
 import org.datavec.image.loader.NativeImageLoader;
@@ -64,47 +65,66 @@ import java.util.Random;
  * @author fvaleri
  * @author dariuszzbyrad
  */
+@Slf4j
 public class LeNetMNISTReLu {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LeNetMNISTReLu.class);
+
+    // 存放文件的地址，请酌情修改
     private static final String BASE_PATH = System.getProperty("java.io.tmpdir") + "/mnist";
-    private static final String DATA_URL = "http://github.com/myleott/mnist_png/raw/master/mnist_png.tar.gz";
 
     public static void main(String[] args) throws Exception {
-        int height = 28;    // height of the picture in px
-        int width = 28;     // width of the picture in px
+        // 图片像素高
+        int height = 28;
+        // 图片像素宽
+        int width = 28;
+
         int channels = 1;   // single channel for grayscale images
+
+        // 分类结果，0-9，共十种数字
         int outputNum = 10; // 10 digits classification
+
+        // 批大小
         int batchSize = 54; // number of samples that will be propagated through the network in each iteration
+
+        // 循环次数
         int nEpochs = 1;    // number of training epochs
 
+        // 初始化伪随机数的种子
         int seed = 1234;    // number used to initialize a pseudorandom number generator.
+
+        // 随机数工具
         Random randNumGen = new Random(seed);
 
-        LOGGER.info("Data load...");
-        if (!new File(BASE_PATH + "/mnist_png").exists()) {
+        log.info("检查数据集文件夹是否存在：{}", BASE_PATH + "/mnist_png");
 
-            LOGGER.debug("Data downloaded from {}", DATA_URL);
-            String localFilePath = BASE_PATH + "/mnist_png.tar.gz";
-            if (DataUtilities.downloadFile(DATA_URL, localFilePath)) {
-                DataUtilities.extractTarGz(localFilePath, BASE_PATH);
-            }
+        if (!new File(BASE_PATH + "/mnist_png").exists()) {
+            log.info("数据集文件不存在，请下载压缩包并解压到：{}", BASE_PATH);
+            return;
         }
 
-        LOGGER.info("Data vectorization...");
-        // vectorization of train data
+        log.info("训练集的矢量化操作...");
         File trainData = new File(BASE_PATH + "/mnist_png/training");
+
+        // 初始化训练集
         FileSplit trainSplit = new FileSplit(trainData, NativeImageLoader.ALLOWED_FORMATS, randNumGen);
-        ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator(); // use parent directory name as the image label
+        // 标签生成器，将指定文件的父目录作为标签
+        ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
+        // 读取图片，数据格式为NCHW
         ImageRecordReader trainRR = new ImageRecordReader(height, width, channels, labelMaker);
         trainRR.initialize(trainSplit);
+
+        // 根据批大小创建的迭代器
         DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, batchSize, 1, outputNum);
 
-        // pixel values from 0-255 to 0-1 (min-max scaling)
+        // 归一化配置(像素值从0-255变为0-1)
         DataNormalization imageScaler = new ImagePreProcessingScaler();
+
         imageScaler.fit(trainIter);
+        // 将归一化器作为预处理器
         trainIter.setPreProcessor(imageScaler);
 
-        // vectorization of test data
+
+        // 初始化测试集，与前面的训练集操作类似
+        log.info("测试集的矢量化操作...");
         File testData = new File(BASE_PATH + "/mnist_png/testing");
         FileSplit testSplit = new FileSplit(testData, NativeImageLoader.ALLOWED_FORMATS, randNumGen);
         ImageRecordReader testRR = new ImageRecordReader(height, width, channels, labelMaker);
@@ -112,9 +132,9 @@ public class LeNetMNISTReLu {
         DataSetIterator testIter = new RecordReaderDataSetIterator(testRR, batchSize, 1, outputNum);
         testIter.setPreProcessor(imageScaler); // same normalization for better results
 
-        LOGGER.info("Network configuration and training...");
-        // reduce the learning rate as the number of training epochs increases
-        // iteration #, learning rate
+        log.info("配置神经网络");
+
+        // 在训练中，将学习率配置为随着迭代阶梯性下降
         Map<Integer, Double> learningRateSchedule = new HashMap<>();
         learningRateSchedule.put(0, 0.06);
         learningRateSchedule.put(200, 0.05);
@@ -122,12 +142,18 @@ public class LeNetMNISTReLu {
         learningRateSchedule.put(800, 0.0060);
         learningRateSchedule.put(1000, 0.001);
 
+
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
             .seed(seed)
-            .l2(0.0005) // ridge regression value
+            // L2正则化系数
+            .l2(0.0005)
+            // 梯度下降的学习率设置
             .updater(new Nesterovs(new MapSchedule(ScheduleType.ITERATION, learningRateSchedule)))
+            // 权重初始化
             .weightInit(WeightInit.XAVIER)
+            // 准备分层
             .list()
+            // 卷积层
             .layer(new ConvolutionLayer.Builder(5, 5)
                 .nIn(channels)
                 .stride(1, 1)
@@ -160,14 +186,14 @@ public class LeNetMNISTReLu {
         MultiLayerNetwork net = new MultiLayerNetwork(conf);
         net.init();
         net.setListeners(new ScoreIterationListener(10));
-        LOGGER.info("Total num of params: {}", net.numParams());
+        log.info("Total num of params: {}", net.numParams());
 
         // evaluation while training (the score should go down)
         for (int i = 0; i < nEpochs; i++) {
             net.fit(trainIter);
-            LOGGER.info("Completed epoch {}", i);
+            log.info("Completed epoch {}", i);
             Evaluation eval = net.evaluate(testIter);
-            LOGGER.info(eval.stats());
+            log.info(eval.stats());
 
             trainIter.reset();
             testIter.reset();
@@ -175,6 +201,6 @@ public class LeNetMNISTReLu {
 
         File ministModelPath = new File(BASE_PATH + "/minist-model.zip");
         ModelSerializer.writeModel(net, ministModelPath, true);
-        LOGGER.info("The MINIST model has been saved in {}", ministModelPath.getPath());
+        log.info("The MINIST model has been saved in {}", ministModelPath.getPath());
     }
 }
