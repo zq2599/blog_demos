@@ -17,13 +17,13 @@
 
 package com.bolingcavalry.convolution;
 
-import com.bolingcavalry.commons.utils.DataUtilities;
 import lombok.extern.slf4j.Slf4j;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;
 import org.datavec.image.loader.NativeImageLoader;
 import org.datavec.image.recordreader.ImageRecordReader;
 import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
+//import org.deeplearning4j.eval.Evaluation;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
 import org.deeplearning4j.nn.conf.inputs.InputType;
@@ -44,8 +44,6 @@ import org.nd4j.linalg.learning.config.Nesterovs;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.nd4j.linalg.schedule.MapSchedule;
 import org.nd4j.linalg.schedule.ScheduleType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.HashMap;
@@ -77,19 +75,20 @@ public class LeNetMNISTReLu {
         // 图片像素宽
         int width = 28;
 
-        int channels = 1;   // single channel for grayscale images
+        // 因为是黑白图像，所以颜色通道只有一个
+        int channels = 1;
 
         // 分类结果，0-9，共十种数字
-        int outputNum = 10; // 10 digits classification
+        int outputNum = 10;
 
         // 批大小
-        int batchSize = 54; // number of samples that will be propagated through the network in each iteration
+        int batchSize = 54;
 
         // 循环次数
-        int nEpochs = 1;    // number of training epochs
+        int nEpochs = 1;
 
         // 初始化伪随机数的种子
-        int seed = 1234;    // number used to initialize a pseudorandom number generator.
+        int seed = 1234;
 
         // 随机数工具
         Random randNumGen = new Random(seed);
@@ -101,30 +100,29 @@ public class LeNetMNISTReLu {
             return;
         }
 
-        log.info("训练集的矢量化操作...");
-        File trainData = new File(BASE_PATH + "/mnist_png/training");
-
-        // 初始化训练集
-        FileSplit trainSplit = new FileSplit(trainData, NativeImageLoader.ALLOWED_FORMATS, randNumGen);
         // 标签生成器，将指定文件的父目录作为标签
         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
-        // 读取图片，数据格式为NCHW
-        ImageRecordReader trainRR = new ImageRecordReader(height, width, channels, labelMaker);
-        trainRR.initialize(trainSplit);
-
-        // 根据批大小创建的迭代器
-        DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, batchSize, 1, outputNum);
-
         // 归一化配置(像素值从0-255变为0-1)
         DataNormalization imageScaler = new ImagePreProcessingScaler();
 
+        // 不论训练集还是测试集，初始化操作都是相同套路：
+        // 1. 读取图片，数据格式为NCHW
+        // 2. 根据批大小创建的迭代器
+        // 3. 将归一化器作为预处理器
+
+        log.info("训练集的矢量化操作...");
+        // 初始化训练集
+        File trainData = new File(BASE_PATH + "/mnist_png/training");
+        FileSplit trainSplit = new FileSplit(trainData, NativeImageLoader.ALLOWED_FORMATS, randNumGen);
+        ImageRecordReader trainRR = new ImageRecordReader(height, width, channels, labelMaker);
+        trainRR.initialize(trainSplit);
+        DataSetIterator trainIter = new RecordReaderDataSetIterator(trainRR, batchSize, 1, outputNum);
+        // 拟合数据(实现类中实际上什么也没做)
         imageScaler.fit(trainIter);
-        // 将归一化器作为预处理器
         trainIter.setPreProcessor(imageScaler);
 
-
-        // 初始化测试集，与前面的训练集操作类似
         log.info("测试集的矢量化操作...");
+        // 初始化测试集，与前面的训练集操作类似
         File testData = new File(BASE_PATH + "/mnist_png/testing");
         FileSplit testSplit = new FileSplit(testData, NativeImageLoader.ALLOWED_FORMATS, randNumGen);
         ImageRecordReader testRR = new ImageRecordReader(height, width, channels, labelMaker);
@@ -142,7 +140,7 @@ public class LeNetMNISTReLu {
         learningRateSchedule.put(800, 0.0060);
         learningRateSchedule.put(1000, 0.001);
 
-
+        // 超参数
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
             .seed(seed)
             // L2正则化系数
@@ -160,22 +158,27 @@ public class LeNetMNISTReLu {
                 .nOut(20)
                 .activation(Activation.IDENTITY)
                 .build())
+            // 下采样，即池化
             .layer(new SubsamplingLayer.Builder(SubsamplingLayer.PoolingType.MAX)
                 .kernelSize(2, 2)
                 .stride(2, 2)
                 .build())
+            // 卷积层
             .layer(new ConvolutionLayer.Builder(5, 5)
                 .stride(1, 1) // nIn need not specified in later layers
                 .nOut(50)
                 .activation(Activation.IDENTITY)
                 .build())
+            // 下采样，即池化
             .layer(new SubsamplingLayer.Builder(SubsamplingLayer.PoolingType.MAX)
                 .kernelSize(2, 2)
                 .stride(2, 2)
                 .build())
+            // 稠密层，即全连接
             .layer(new DenseLayer.Builder().activation(Activation.RELU)
                 .nOut(500)
                 .build())
+            // 输出
             .layer(new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
                 .nOut(outputNum)
                 .activation(Activation.SOFTMAX)
@@ -185,22 +188,27 @@ public class LeNetMNISTReLu {
 
         MultiLayerNetwork net = new MultiLayerNetwork(conf);
         net.init();
-        net.setListeners(new ScoreIterationListener(10));
-        log.info("Total num of params: {}", net.numParams());
 
-        // evaluation while training (the score should go down)
+        // 每十个迭代打印一次损失函数值
+        net.setListeners(new ScoreIterationListener(10));
+
+        log.info("神经网络共[{}]个参数", net.numParams());
+
+        long startTime = System.currentTimeMillis();
+        // 循环操作
         for (int i = 0; i < nEpochs; i++) {
+            log.info("第[{}]个循环", i);
             net.fit(trainIter);
-            log.info("Completed epoch {}", i);
             Evaluation eval = net.evaluate(testIter);
             log.info(eval.stats());
-
             trainIter.reset();
             testIter.reset();
         }
+        log.info("完成训练和测试，耗时[{}]毫秒", System.currentTimeMillis()-startTime);
 
+        // 保存模型
         File ministModelPath = new File(BASE_PATH + "/minist-model.zip");
         ModelSerializer.writeModel(net, ministModelPath, true);
-        log.info("The MINIST model has been saved in {}", ministModelPath.getPath());
+        log.info("最新的MINIST模型保存在[{}]", ministModelPath.getPath());
     }
 }
