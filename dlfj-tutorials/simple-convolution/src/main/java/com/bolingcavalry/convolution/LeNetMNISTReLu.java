@@ -23,7 +23,6 @@ import org.datavec.api.split.FileSplit;
 import org.datavec.image.loader.NativeImageLoader;
 import org.datavec.image.recordreader.ImageRecordReader;
 import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
-//import org.deeplearning4j.eval.Evaluation;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
 import org.deeplearning4j.nn.conf.inputs.InputType;
@@ -67,7 +66,8 @@ import java.util.Random;
 public class LeNetMNISTReLu {
 
     // 存放文件的地址，请酌情修改
-    private static final String BASE_PATH = System.getProperty("java.io.tmpdir") + "/mnist";
+//    private static final String BASE_PATH = System.getProperty("java.io.tmpdir") + "/mnist";
+    private static final String BASE_PATH = "/home/will/temp/202106/26";
 
     public static void main(String[] args) throws Exception {
         // 图片像素高
