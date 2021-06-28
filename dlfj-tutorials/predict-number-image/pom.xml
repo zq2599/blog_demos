@@ -11,6 +11,8 @@
 
     <artifactId>predict-number-image</artifactId>
 
+    <packaging>jar</packaging>
+
     <!--不用spring-boot-starter-parent作为parent时的配置-->
     <dependencyManagement>
         <dependencies>
@@ -51,10 +53,20 @@
 
     <build>
         <plugins>
+            <!-- 如果父工程不是springboot，就要用以下方式使用插件，才能生成正常的jar -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${springboot.version}</version>
+                <configuration>
+                    <mainClass>com.bolingcavalry.predictnumber.PredictNumberApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
