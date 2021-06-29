@@ -54,6 +54,11 @@
                 <version>${dl4j-master.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.nd4j</groupId>
+                <artifactId>nd4j-native-platform</artifactId>
+                <version>${dl4j-master.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.datavec</groupId>
                 <artifactId>datavec-api</artifactId>
                 <version>${dl4j-master.version}</version>

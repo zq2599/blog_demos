@@ -36,7 +36,9 @@
 
         <dependency>
             <groupId>org.nd4j</groupId>
-            <artifactId>${nd4j.backend}</artifactId>
+            <!--注意要用nd4j-native-platform，否则容器启动时报错：no jnind4jcpu in java.library.path-->
+            <!--<artifactId>${nd4j.backend}</artifactId>-->
+            <artifactId>nd4j-native-platform</artifactId>
         </dependency>
 
         <dependency>
