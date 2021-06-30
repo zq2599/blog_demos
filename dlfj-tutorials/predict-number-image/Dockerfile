@@ -1,4 +1,5 @@
-FROM openjdk:8-jdk-alpine
+# 8-jdk-alpine版本启动的时候会crash
+FROM openjdk:8u292-jdk
 
 # 创建目录
 RUN mkdir -p /app/images && mkdir -p /app/model

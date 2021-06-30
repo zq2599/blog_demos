@@ -53,6 +53,7 @@ public class PredictServiceImpl implements PredictService {
         // 加载模型
         try {
             net = ModelSerializer.restoreMultiLayerNetwork(new File(modelPath));
+            log.info("module summary\n{}", net.summary());
         } catch (Exception exception) {
             log.error("loadModel error", exception);
         }
