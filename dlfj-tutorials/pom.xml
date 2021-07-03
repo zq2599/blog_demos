@@ -12,6 +12,7 @@
         <module>classifier-iris</module>
         <module>simple-convolution</module>
         <module>predict-number-image</module>
+        <module>ndarray-experience</module>
     </modules>
     <packaging>pom</packaging>
 
