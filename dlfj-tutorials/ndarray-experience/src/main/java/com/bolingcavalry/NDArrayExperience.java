@@ -104,7 +104,7 @@ public class NDArrayExperience {
         disp("展开", Nd4j.toFlattened(indArray6));
 
         // 转换：2行3列转为3行2列
-        disp("展开", indArray6.reshape(3,2));
+        disp("转换", indArray6.reshape(3,2));
 
         // 创建一个人3行3列的正方形矩阵
         INDArray indArray9 = Nd4j.create(new float[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, new int[]  {3,3});
@@ -126,18 +126,23 @@ public class NDArrayExperience {
         disp("rsub方法", indArray12);
 
 
-        INDArray indArray13 = Nd4j.create(new float[] {1, 2, 3, 4, 5, 6}, new int[]  {2,3});
-        INDArray indArray14 = Nd4j.create(new float[] {1, 1, 1, 1, 1, 1}, new int[]  {2,3});
-        INDArray indArray15 = Nd4j.create(new float[] {1, 2, 3, 4, 5, 6}, new int[]  {3,2});
 
-        disp("矩阵相加", indArray13.add(indArray14));
+        INDArray indArray14 = Nd4j.create(new float[] {1, 1, 1, 1, 1, 1}, new int[]  {2,3});
+
+
+
+        INDArray indArray13 = Nd4j.create(new float[] {1, 2, 3, 4, 5, 6}, new int[]  {2,3});
+        INDArray indArray15 = Nd4j.create(new float[] {1, 2, 3, 4, 5, 6}, new int[]  {3,2});
         disp("2行3列", indArray13);
         disp("3行2列", indArray15);
         disp("2行3列矩阵与3行2列矩阵的叉乘", indArray13.mmul(indArray15));
 
+        disp("矩阵相加", indArray13.add(indArray14));
+
         INDArray indArray16 = Nd4j.create(new float[] {1, 2, 3, 4, 5, 6}, new int[]  {2,3});
         // 总和
         double sum = indArray16.sum().getDouble();
+        System.out.println("矩阵元素累加和 : " + sum);
 
         disp("转置前", indArray16);
         disp("转置操作", indArray16.transpose());
@@ -153,6 +158,8 @@ public class NDArrayExperience {
         // 2行1列
         INDArray indArray18 = Nd4j.create(new float[] {1, 2}, new int[]  {2,1});
 
+        disp("源矩阵", indArray17);
+        disp("拼接上的矩阵", indArray18);
         // 2行3列的矩阵，横向拼接一列后，变成了2行4列
         disp("横向拼接(每一行都增加一列)", Nd4j.hstack(indArray17, indArray18));
 
@@ -160,6 +167,9 @@ public class NDArrayExperience {
         INDArray indArray19 = Nd4j.create(new float[] {1, 2, 3, 4, 5, 6}, new int[]  {2,3});
         // 1行3列
         INDArray indArray20 = Nd4j.create(new float[] {1, 2, 3}, new int[]  {1,3});
+
+        disp("源矩阵", indArray19);
+        disp("拼接上的矩阵", indArray20);
         // 2行3列的矩阵，纵向拼接一行，变成了3行3列
         disp("纵向拼接(增加一行)", Nd4j.vstack(indArray19, indArray20));
     }
