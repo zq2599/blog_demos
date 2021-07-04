@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * @Description: 数字识别服务的接口实现类
@@ -94,7 +95,7 @@ public class PredictServiceImpl implements PredictService {
 
         // 取出该黑白图片的特征
         INDArray features = ImageFileUtil.getGrayImageFeatures(imageFilePath, resizeFileName);
-
+        
         // 将特征传给模型去识别
         return net.predict(features)[0];
     }
