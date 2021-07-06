@@ -797,6 +797,20 @@
 1. [《机器学习的开发环境准备》](https://blog.csdn.net/boling_cavalry/article/details/96628350)
 2. [《Docker下，五分钟极速体验机器学习》](https://blog.csdn.net/boling_cavalry/article/details/96718499)
 
+# 深度学习
+
+## DL4J实战特辑
+1. [《DL4J实战之一：准备》](https://blog.csdn.net/boling_cavalry/article/details/117898354)
+2. [《DL4J实战之二：鸢尾花分类》](https://blog.csdn.net/boling_cavalry/article/details/117905798)
+3. [《DL4J实战之三：经典卷积实例(LeNet-5)》](https://blog.csdn.net/boling_cavalry/article/details/118239403)
+4. [《DL4J实战之四：经典卷积实例(GPU版本)》](https://blog.csdn.net/boling_cavalry/article/details/118240038)
+5. [《DL4J实战之五：矩阵操作基本功》](https://blog.csdn.net/boling_cavalry/article/details/118442820)
+
+## 深度学习工程化
+1. [《纯净Ubuntu16安装CUDA(9.1)和cuDNN》](https://blog.csdn.net/boling_cavalry/article/details/118065868)
+2. [《三分钟体验：SpringBoot用深度学习模型识别数字》](https://blog.csdn.net/boling_cavalry/article/details/118290933)
+3. [《SpringBoot用深度学习模型识别数字：开发详解》](https://blog.csdn.net/boling_cavalry/article/details/118353259)
+
 # 多媒体
 ## kurento
 1. [《Kurento实战之一：KMS部署和体验》](https://xinchen.blog.csdn.net/article/details/112070074)
@@ -804,6 +818,8 @@
 3. [《Kurento实战之三：知识点小导游》](https://xinchen.blog.csdn.net/article/details/112415314)
 4. [《Kurento实战之四：应用开发指南》](https://xinchen.blog.csdn.net/article/details/112504048)
 5. [《微信小程序+腾讯云直播的实时音视频实战笔记》](https://blog.csdn.net/boling_cavalry/article/details/116855410)
+6. [《Kurento实战之五：媒体播放》](https://blog.csdn.net/boling_cavalry/article/details/118055902)
+7. [《Kurento实战之六：云端录制》](https://blog.csdn.net/boling_cavalry/article/details/118065861)
 
 # 硬件
 
