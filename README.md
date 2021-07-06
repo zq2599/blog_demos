@@ -188,6 +188,8 @@
 4. [《SpringBoot应用使用自定义的ApplicationContext实现类》](https://blog.csdn.net/boling_cavalry/article/details/81587556)
 5. [《Spring Boot应用在kubernetes的sidecar设计与实战》](https://blog.csdn.net/boling_cavalry/article/details/83784113)
 6. [《Spring Native实战(畅快体验79毫秒启动springboot应用)》](https://blog.csdn.net/boling_cavalry/article/details/117153661)
+7. [《三分钟体验：SpringBoot用深度学习模型识别数字》](https://blog.csdn.net/boling_cavalry/article/details/118290933)
+8. [《SpringBoot用深度学习模型识别数字：开发详解》](https://blog.csdn.net/boling_cavalry/article/details/118353259)
 
 ## SpringCloud基础
 1. [《极速体验SpringCloud Gateway》](https://blog.csdn.net/boling_cavalry/article/details/94907172)
