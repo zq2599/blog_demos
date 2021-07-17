@@ -13,4 +13,4 @@ COPY ${DEPENDENCY}/META-INF /app/META-INF
 COPY ${DEPENDENCY}/BOOT-INF/classes /app
 
 # 指定启动命令
-ENTRYPOINT ["java","-Djava.library.path=/opencv-3.4.3/build/java/x64","-cp","app:app/lib/*","com.bolingcavalry.facedetect.FaceDetectApplication"]
+ENTRYPOINT ["java","-Djava.library.path=/opencv-3.4.3/build/lib","-cp","app:app/lib/*","com.bolingcavalry.facedetect.FaceDetectApplication"]
