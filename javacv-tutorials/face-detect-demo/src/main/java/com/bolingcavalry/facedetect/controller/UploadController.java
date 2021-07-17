@@ -136,6 +136,7 @@ public class UploadController {
             Imgproc.rectangle(srcImg, new Point(x, y), new Point(x + w, y + w), color, 2);
         }
 
+        // 添加人脸框之后的图片的名字
         String newFileName = UUID.randomUUID().toString() + ".png";
 
         // 保存
