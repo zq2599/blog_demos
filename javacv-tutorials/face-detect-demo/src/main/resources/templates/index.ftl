@@ -6,7 +6,8 @@
 <body>
 <h1 >图片上传Demo</h1>
 <form action="fileUpload" method="post" enctype="multipart/form-data">
-    <p>选择文件: <input type="file" name="fileName"/></p>
+    <p>选择检测文件: <input type="file" name="fileName"/></p>
+    <p>周围检测数量: <input type="number" name="minneighbors"/></p>
     <p><input type="submit" value="提交"/></p>
 </form>
 <#--判断是否上传文件-->
