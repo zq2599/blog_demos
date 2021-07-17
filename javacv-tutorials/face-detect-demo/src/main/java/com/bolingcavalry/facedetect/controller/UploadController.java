@@ -93,22 +93,18 @@ public class UploadController {
      */
     @RequestMapping("fileUpload")
     public String upload(@RequestParam("fileName") MultipartFile file, @RequestParam("minneighbors") int minneighbors, Map<String, Object> map){
-
         log.info("file [{}], size [{}], minneighbors [{}]", file.getOriginalFilename(), file.getSize(), minneighbors);
 
-        // 上传成功或者失败的提示
-        String msg;
-
-        if (upload(file, uploadPath, file.getOriginalFilename())){
-            // 上传成功，给出页面提示
-            msg = "上传成功！";
-        }else {
-            msg = "上传失败！";
+        String originalFileName = file.getOriginalFilename();
+        if (!upload(file, uploadPath, originalFileName)){
+            map.put("msg", "上传失败！");
+            return "forward:/index";
         }
 
-        String realPath = uploadPath + "/" + file.getOriginalFilename();
+        String realPath = uploadPath + "/" + originalFileName;
 
         Mat srcImg = Imgcodecs.imread(realPath);
+
         // 目标灰色图像
         Mat dstGrayImg = new Mat();
         // 转换灰色
@@ -127,7 +123,21 @@ public class UploadController {
         //遍历矩形,画到原图上面
         // 定义绘制颜色
         Scalar color = new Scalar(0, 0, 255);
-        for(Rect rect: faceRect.toArray()) {
+
+        Rect[] rects = faceRect.toArray();
+
+        // 没检测到
+        if (null==rects || rects.length<1) {
+            // 显示图片
+            map.put("msg", "未检测到人脸");
+            // 文件名
+            map.put("fileName", originalFileName);
+
+            return "forward:/index";
+        }
+
+        // 逐个处理
+        for(Rect rect: rects) {
             int x = rect.x;
             int y = rect.y;
             int w = rect.width;
@@ -143,7 +153,7 @@ public class UploadController {
         Imgcodecs.imwrite(uploadPath + "/" + newFileName, srcImg);
 
         // 显示图片
-        map.put("msg", msg);
+        map.put("msg", "一共检测到" + rects.length + "个人脸");
         // 文件名
         map.put("fileName", newFileName);
 
