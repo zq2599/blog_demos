@@ -807,11 +807,15 @@
 3. [《DL4J实战之三：经典卷积实例(LeNet-5)》](https://blog.csdn.net/boling_cavalry/article/details/118239403)
 4. [《DL4J实战之四：经典卷积实例(GPU版本)》](https://blog.csdn.net/boling_cavalry/article/details/118240038)
 5. [《DL4J实战之五：矩阵操作基本功》](https://blog.csdn.net/boling_cavalry/article/details/118442820)
+6. [《DL4J实战之六：图形化展示训练过程》](https://blog.csdn.net/boling_cavalry/article/details/118593750)
 
 ## 深度学习工程化
 1. [《纯净Ubuntu16安装CUDA(9.1)和cuDNN》](https://blog.csdn.net/boling_cavalry/article/details/118065868)
 2. [《三分钟体验：SpringBoot用深度学习模型识别数字》](https://blog.csdn.net/boling_cavalry/article/details/118290933)
 3. [《SpringBoot用深度学习模型识别数字：开发详解》](https://blog.csdn.net/boling_cavalry/article/details/118353259)
+4. [《三分钟极速体验：Java版人脸检测》](https://blog.csdn.net/boling_cavalry/article/details/118862001)
+5. [《Java版人脸检测详解上篇：运行环境的Docker镜像(CentOS+JDK+OpenCV)》](https://blog.csdn.net/boling_cavalry/article/details/118876299)
+6. [《Java版人脸检测详解下篇：编码》](https://blog.csdn.net/boling_cavalry/article/details/118970439)
 
 # 多媒体
 ## kurento
