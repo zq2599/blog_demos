@@ -2,7 +2,10 @@ package com.bolingcavalry.basic;
 
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacpp.*;
+
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -20,6 +23,9 @@ import static org.bytedeco.javacpp.swscale.sws_freeContext;
  */
 @Slf4j
 public class Stream2Image {
+
+//    private static final int DEST_FORMAT = AV_PIX_FMT_YUVJ420P;
+    private static final int DEST_FORMAT = AV_PIX_FMT_YUVJ420P;
 
     /**
      * 打开流媒体，取一帧，转为YUVJ420P，再保存为jpg文件
@@ -219,19 +225,19 @@ public class Stream2Image {
         // 一些参数设定
         pFrameRGB.width(width);
         pFrameRGB.height(height);
-        pFrameRGB.format(AV_PIX_FMT_YUVJ420P);
+        pFrameRGB.format(DEST_FORMAT);
 
         // 计算转为YUVJ420P之后的图片字节数
-        int numBytes = avpicture_get_size(AV_PIX_FMT_YUVJ420P, width, height);
+        int numBytes = avpicture_get_size(DEST_FORMAT, width, height);
 
         // 分配内存
         BytePointer buffer = new BytePointer(av_malloc(numBytes));
 
         // 图片处理工具的初始化操作
-        SwsContext sws_ctx = sws_getContext(width, height, pCodecCtx.pix_fmt(), width, height, AV_PIX_FMT_YUVJ420P, SWS_BICUBIC, null, null, (DoublePointer) null);
+        SwsContext sws_ctx = sws_getContext(width, height, pCodecCtx.pix_fmt(), width, height, DEST_FORMAT, SWS_BICUBIC, null, null, (DoublePointer) null);
 
         // 将pFrameRGB的data指针指向刚才分配好的内存(即buffer)
-        avpicture_fill(new avcodec.AVPicture(pFrameRGB), buffer, AV_PIX_FMT_YUVJ420P, width, height);
+        avpicture_fill(new avcodec.AVPicture(pFrameRGB), buffer, DEST_FORMAT, width, height);
 
         // 转换图像格式，将解压出来的YUV420P的图像转换为YUVJ420P的图像
         sws_scale(sws_ctx, sourceFrame.data(), sourceFrame.linesize(), 0, height, pFrameRGB.data(), pFrameRGB.linesize());
@@ -295,7 +301,7 @@ public class Stream2Image {
             avcodec.AVCodecContext pCodecCtx = pAVStream.codec();
             pCodecCtx.codec_id(codec_id);
             pCodecCtx.codec_type(AVMEDIA_TYPE_VIDEO);
-            pCodecCtx.pix_fmt(AV_PIX_FMT_YUVJ420P);
+            pCodecCtx.pix_fmt(DEST_FORMAT);
             pCodecCtx.width(width);
             pCodecCtx.height(height);
             pCodecCtx.time_base().num(1);
@@ -395,10 +401,10 @@ public class Stream2Image {
 
     public static void main(String[] args) throws Exception {
         // CCTV13，1920*1080分辨率，不稳定，打开失败时请多试几次
-//        String url = "http://ivi.bupt.edu.cn/hls/cctv13hd.m3u8";
+        String url = "http://ivi.bupt.edu.cn/hls/cctv13hd.m3u8";
 
         // 安徽卫视，1024*576分辨率，较为稳定
-        String url = "rtmp://58.200.131.2:1935/livetv/ahtv";
+//        String url = "rtmp://58.200.131.2:1935/livetv/ahtv";
         // 本地视频文件，请改为您自己的本地文件地址
 //        String url = "E:\\temp\\202107\\24\\test.mp4";
 
