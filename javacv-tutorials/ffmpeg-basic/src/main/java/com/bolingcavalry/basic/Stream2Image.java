@@ -2,12 +2,10 @@ package com.bolingcavalry.basic;
 
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacpp.*;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-
 import static org.bytedeco.javacpp.avcodec.*;
 import static org.bytedeco.javacpp.avformat.*;
 import static org.bytedeco.javacpp.avutil.*;
@@ -23,8 +21,14 @@ import static org.bytedeco.javacpp.swscale.sws_freeContext;
 @Slf4j
 public class Stream2Image {
 
-    public void openVideo(String url,String out_file) throws IOException {
-        log.error("正在打开流媒体 [{}]", url);
+    /**
+     * 打开流媒体，取一帧，转为YUVJ420P，再保存为jpg文件
+     * @param url
+     * @param out_file
+     * @throws IOException
+     */
+    public void openMediaAndSaveImage(String url,String out_file) throws IOException {
+        log.info("正在打开流媒体 [{}]", url);
 
         // 打开指定流媒体，进行解封装，得到解封装上下文
         AVFormatContext pFormatCtx = getFormatContext(url);
@@ -77,7 +81,6 @@ public class Stream2Image {
         saveImg(frameData.avFrame,out_file);
 
         // 按顺序释放
-//        release(null, pFormatCtx.pb(), pCodecCtx, pFormatCtx, frameData.buffer, frameData.avFrame, pFrame);
         release(true, null, null, pCodecCtx, pFormatCtx, frameData.buffer, frameData.avFrame, pFrame);
 
         log.info("操作成功");
@@ -94,11 +97,13 @@ public class Stream2Image {
 
         // 打开流媒体
         if (avformat_open_input(pFormatCtx, url, null, null) != 0) {
+            log.error("打开媒体失败");
             return null;
         }
 
         // 读取流媒体数据，以获得流的信息
         if (avformat_find_stream_info(pFormatCtx, (PointerPointer<Pointer>) null) < 0) {
+            log.error("获得媒体流信息失败");
             return null;
         }
 
@@ -238,12 +243,11 @@ public class Stream2Image {
         return new FrameData(pFrameRGB, buffer);
     }
 
-
     /**
      * 将传入的帧以图片的形式保存在指定位置
      * @param pFrame
      * @param out_file
-     * @return true 成功 false 失败
+     * @return 小于0表示失败
      */
     private int saveImg(avutil.AVFrame pFrame, String out_file) {
         av_log_set_level(AV_LOG_ERROR);//设置FFmpeg日志级别（默认是debug，设置成error可以屏蔽大多数不必要的控制台消息）
@@ -387,21 +391,29 @@ public class Stream2Image {
                 avformat_free_context(pFormatCtx);
             }
         }
-
-
     }
 
     public static void main(String[] args) throws Exception {
-
+        // CCTV13，1920*1080分辨率，不稳定，打开失败时请多试几次
 //        String url = "http://ivi.bupt.edu.cn/hls/cctv13hd.m3u8";
-//        String url = "rtmp://58.200.131.2:1935/livetv/ahtv";
-        String url = "E:\\temp\\202107\\24\\test.mp4";
+
+        // 安徽卫视，1024*576分辨率，较为稳定
+        String url = "rtmp://58.200.131.2:1935/livetv/ahtv";
+        // 本地视频文件，请改为您自己的本地文件地址
+//        String url = "E:\\temp\\202107\\24\\test.mp4";
+
+        // 完整图片存放路径，注意文件名是当前的年月日时分秒
         String localPath = "E:\\temp\\202107\\24\\save\\" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
 
-        new Stream2Image().openVideo(url, localPath);
+        // 开始操作
+        new Stream2Image().openMediaAndSaveImage(url, localPath);
     }
 }
 
+/**
+ * AVFrame及其关联的数据，在释放资源的时候都要做释放操作，
+ * 这里将它们放在一个类中，在方法调用的时候方便传递
+ */
 class FrameData {
 
     AVFrame avFrame;
