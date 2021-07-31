@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: consumer-okhttp
+
+server:
+  port: 8082

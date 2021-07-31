@@ -3,9 +3,9 @@ spring:
     name: provider
 
 server:
-  port: 8888
+  port: 8080
 
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8762/eureka/
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
