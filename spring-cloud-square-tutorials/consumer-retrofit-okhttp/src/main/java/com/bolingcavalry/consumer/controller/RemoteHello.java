@@ -2,13 +2,10 @@ package com.bolingcavalry.consumer.controller;
 
 import com.bolingcavalry.client.HelloResponse;
 import com.bolingcavalry.consumer.service.HelloService;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.io.IOException;
 
 /**
@@ -20,11 +17,11 @@ import java.io.IOException;
  */
 @RestController
 public class RemoteHello {
-//    @Autowired
-//    HelloService helloService;
-//
-//    @GetMapping("/remote-str")
-//    public HelloResponse hello() throws IOException {
-//        return helloService.hello();
-//    }
+    @Autowired(required = false)
+    HelloService helloService;
+
+    @GetMapping("/remote-obj")
+    public HelloResponse hello(@RequestParam("name") String name) throws IOException {
+        return helloService.hello(name).execute().body();
+    }
 }

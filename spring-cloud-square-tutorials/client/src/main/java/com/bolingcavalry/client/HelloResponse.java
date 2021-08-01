@@ -3,8 +3,6 @@ package com.bolingcavalry.client;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * @author zq2599@gmail.com
  * @Title: 普通bean
@@ -18,7 +16,7 @@ public class HelloResponse {
 
     private String name;
 
-    private Date date;
+    private String date;
 
     private String description;
 }

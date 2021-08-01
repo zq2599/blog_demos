@@ -42,6 +42,10 @@ public class Hello {
                 selectedInstance.getPort());
     }
 
+    private String dateStr(){
+        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+    }
+
     /**
      * 返回字符串类型
      * @return
@@ -53,7 +57,8 @@ public class Hello {
                 .get(new Random().nextInt(instances.size()));
         return "Hello World : "
                 + providerDescription()
-                + new SimpleDateFormat(" : yyyy-MM-dd hh:mm:ss").format(new Date());
+                + ", "
+                + dateStr();
     }
 
     /**
@@ -62,6 +67,6 @@ public class Hello {
      */
     @GetMapping("/hello-obj")
     public HelloResponse helloObj(@RequestParam("name") String name) {
-        return new HelloResponse(name, new Date(), providerDescription());
+        return new HelloResponse(name, dateStr(), providerDescription());
     }
 }
