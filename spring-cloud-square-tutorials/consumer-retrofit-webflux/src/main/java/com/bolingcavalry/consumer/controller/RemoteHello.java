@@ -23,7 +23,7 @@ public class RemoteHello {
     HelloService helloService;
 
     @GetMapping("/remote-obj")
-    public Mono<HelloResponse> hello(@RequestParam("name") String name) throws IOException {
+    public Mono<HelloResponse> hello(@RequestParam("name") String name) {
         return helloService.hello(name);
     }
 }

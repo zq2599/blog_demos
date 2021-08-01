@@ -11,8 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 7/30/21 2:53 下午
  */
 @SpringBootApplication
-public class ConsumerApplication {
+public class OkhttpApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ConsumerApplication.class, args);
+        SpringApplication.run(OkhttpApplication.class, args);
     }
 }

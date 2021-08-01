@@ -27,14 +27,12 @@
     <description>Demo project for Spring Cloud Square Retrofit Web</description>
 
     <modules>
-<!--        <module>server</module>-->
-<!--        <module>client</module>-->
         <module>provider</module>
         <module>eureka</module>
         <module>consumer-okhttp</module>
         <module>client</module>
         <module>consumer-retrofit-okhttp</module>
-        <module>retrofit-webflux</module>
+        <module>consumer-retrofit-webflux</module>
     </modules>
 
 
