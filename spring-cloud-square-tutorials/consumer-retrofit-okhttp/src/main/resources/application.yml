@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: consumer-retrofit=okhttp
+
+server:
+  port: 8083

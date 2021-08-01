@@ -2,6 +2,7 @@ package com.bolingcavalry.consumer;
 
 import okhttp3.OkHttpClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.square.retrofit.EnableRetrofitClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 7/30/21 11:16 下午
  */
 @Configuration
+@EnableRetrofitClients
 class OkHttpClientConfig{
     @Bean
     @LoadBalanced
