@@ -23,6 +23,8 @@ import java.util.Random;
 @RestController
 public class Hello {
 
+    public static final String HELLO_PREFIX = "Hello World";
+
     @Autowired
     DiscoveryClient client;
 
@@ -55,7 +57,8 @@ public class Hello {
         List<ServiceInstance> instances = client.getInstances("provider");
         ServiceInstance selectedInstance = instances
                 .get(new Random().nextInt(instances.size()));
-        return "Hello World : "
+        return HELLO_PREFIX
+                + " : "
                 + providerDescription()
                 + ", "
                 + dateStr();
