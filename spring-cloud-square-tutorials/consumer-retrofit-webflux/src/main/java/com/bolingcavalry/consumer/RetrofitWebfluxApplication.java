@@ -8,11 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Title: 服务消费者
  * @Package
  * @Description:
- * @date 7/30/21 2:53 下午
+ * @date 8/1/21 6:46 下午
  */
 @SpringBootApplication
-public class ConsumerApplication {
+public class RetrofitWebfluxApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ConsumerApplication.class, args);
+        SpringApplication.run(RetrofitWebfluxApplication.class, args);
     }
 }

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: consumer-retrofit-okhttp
+
+server:
+  port: 18082
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

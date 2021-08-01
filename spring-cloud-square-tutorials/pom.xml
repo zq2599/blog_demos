@@ -34,6 +34,7 @@
         <module>consumer-okhttp</module>
         <module>client</module>
         <module>consumer-retrofit-okhttp</module>
+        <module>retrofit-webflux</module>
     </modules>
 
 
@@ -88,7 +89,13 @@
 
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-square-okhttp</artifactId>
+                <artifactId>spring-boot-starter-webflux</artifactId>
+                <version>${square.dependency.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-square-retrofit-webclient</artifactId>
                 <version>${square.dependency.version}</version>
             </dependency>
 
