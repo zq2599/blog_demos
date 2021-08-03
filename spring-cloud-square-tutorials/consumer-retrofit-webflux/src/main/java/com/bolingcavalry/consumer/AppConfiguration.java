@@ -16,7 +16,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @Configuration
 @EnableRetrofitClients
-class OkHttpClientConfig {
+class AppConfiguration {
     @Bean
     @LoadBalanced
     public WebClient.Builder builder() {
