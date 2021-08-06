@@ -133,6 +133,9 @@
 6. [客户端动态获取服务端地址](https://xinchen.blog.csdn.net/article/details/116479078)
 7. [基于eureka的注册发现](https://xinchen.blog.csdn.net/article/details/116635441)
 
+## javacv特辑
+1. [Java版流媒体编解码和图像处理(JavaCPP+FFmpeg)](https://xinchen.blog.csdn.net/article/details/119062543)
+
 # Spring领域
 
 ##  Spring基础
@@ -226,6 +229,12 @@
 5. [《spring-cloud-kubernetes与SpringCloud Gateway》](https://xinchen.blog.csdn.net/article/details/95001691)
 6. [《spring-cloud-kubernetes与k8s的configmap》](https://xinchen.blog.csdn.net/article/details/95804909)
 7. [《spring-cloud-kubernetes自动同步k8s的configmap更新》](https://xinchen.blog.csdn.net/article/details/97529652)
+
+## spring-cloud-square特辑
+1. [五分钟搞懂spring-cloud-square](https://xinchen.blog.csdn.net/article/details/119130289)
+2. [spring-cloud-square开发实战(三种类型全覆盖)](https://xinchen.blog.csdn.net/article/details/119304887)
+3. [spring-cloud-square源码速读(spring-cloud-square-okhttp篇)](https://xinchen.blog.csdn.net/article/details/119360559)
+4. [spring-cloud-square源码速读（retrofit + okhttp篇）](https://xinchen.blog.csdn.net/article/details/119383904)
 
 ## dubbo实战特辑
 1. [准备和初体验](https://xinchen.blog.csdn.net/article/details/109096867)
