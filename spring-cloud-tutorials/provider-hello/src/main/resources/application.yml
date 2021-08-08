@@ -1,0 +1,12 @@
+server:
+  #服务端口
+  port: 8082
+
+spring:
+  application:
+    name: provider-hello
+  cloud:
+    nacos:
+      discovery:
+        # nacos服务地址
+        server-addr: 127.0.0.1:8848
