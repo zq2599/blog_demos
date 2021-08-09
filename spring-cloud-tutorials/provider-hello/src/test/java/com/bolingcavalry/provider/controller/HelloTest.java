@@ -1,5 +1,6 @@
 package com.bolingcavalry.provider.controller;
 
+import com.bolingcavalry.common.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ class HelloTest {
     void hello() throws Exception {
         String responseString = mvc.perform(MockMvcRequestBuilders.get("/hello/str").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString(Hello.HELLO_PREFIX)))
+                .andExpect(content().string(containsString(Constants.HELLO_PREFIX)))
                 .andDo(print())
                 .andReturn()
                 .getResponse()

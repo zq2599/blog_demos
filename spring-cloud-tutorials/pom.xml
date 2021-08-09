@@ -6,6 +6,7 @@
     <modules>
         <module>hello-gateway</module>
         <module>provider-hello</module>
+        <module>common</module>
     </modules>
 
     <parent>

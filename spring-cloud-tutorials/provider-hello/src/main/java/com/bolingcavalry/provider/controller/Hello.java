@@ -1,5 +1,6 @@
 package com.bolingcavalry.provider.controller;
 
+import com.bolingcavalry.common.Constants;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +19,6 @@ import java.util.Date;
 @RequestMapping("/hello")
 public class Hello {
 
-    public static final String HELLO_PREFIX = "Hello World";
-
     private String dateStr(){
         return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
     }
@@ -30,6 +29,6 @@ public class Hello {
      */
     @GetMapping("/str")
     public String helloStr() {
-        return HELLO_PREFIX + ", " + dateStr();
+        return Constants.HELLO_PREFIX + ", " + dateStr();
     }
 }
