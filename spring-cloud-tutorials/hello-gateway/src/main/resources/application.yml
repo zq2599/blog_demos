@@ -7,7 +7,7 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: time_route
+        - id: path_route
           uri: http://127.0.0.1:8082
           predicates:
           - Path=/hello/**
