@@ -7,6 +7,7 @@
         <module>hello-gateway</module>
         <module>provider-hello</module>
         <module>common</module>
+        <module>gateway-nacos-config</module>
     </modules>
 
     <parent>
