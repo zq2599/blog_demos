@@ -46,6 +46,12 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
+        <!-- 路由策略使用lb的方式是，这个依赖一定要有 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
 
         <!--nacos:用于服务注册与发现-->
         <dependency>

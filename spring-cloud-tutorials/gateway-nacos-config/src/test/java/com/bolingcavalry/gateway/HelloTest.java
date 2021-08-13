@@ -38,4 +38,16 @@ public class HelloTest {
                 // 验证结果，注意结果是字符串格式
                 .expectBody(String.class).consumeWith(result  -> assertTrue(result.getResponseBody().contains(Constants.HELLO_PREFIX)));
     }
+
+    @Test
+    void testLoadBalance() {
+        webClient.get()
+                .uri("/lbtest/str")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                // 验证状态
+                .expectStatus().isOk()
+                // 验证结果，注意结果是字符串格式
+                .expectBody(String.class).consumeWith(result  -> assertTrue(result.getResponseBody().contains(Constants.LB_PREFIX)));
+    }
 }
