@@ -9,12 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway-nacos-config</artifactId>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+    <artifactId>gateway-by-code</artifactId>
 
     <dependencies>
         <dependency>
@@ -40,12 +35,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- 使用bootstrap.yml的时候，这个依赖一定要有 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-
         <!-- 路由策略使用lb的方式是，这个依赖一定要有 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -63,7 +52,6 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-
     </dependencies>
 
 </project>
