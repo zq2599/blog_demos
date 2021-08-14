@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway-nacos-config</artifactId>
+    <artifactId>gateway-dynamic-by-nacos</artifactId>
 
     <dependencies>
         <dependency>
@@ -35,6 +35,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 把springboot内容断点暴露出去 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <!-- 使用bootstrap.yml的时候，这个依赖一定要有 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -58,7 +64,27 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 如果父工程不是springboot，就要用以下方式使用插件，才能生成正常的jar -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.bolingcavalry.gateway.GatewayApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>

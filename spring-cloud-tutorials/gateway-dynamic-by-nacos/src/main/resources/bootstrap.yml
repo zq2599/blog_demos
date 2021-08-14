@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: gateway-dynamic-by-nacos
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        group: DEFAULT_GROUP
