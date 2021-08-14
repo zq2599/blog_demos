@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway-by-code</artifactId>
+    <artifactId>gateway-dynamic</artifactId>
 
     <dependencies>
         <dependency>
@@ -33,6 +33,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <!-- 把springboot内容断点暴露出去 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- 路由策略使用lb的方式是，这个依赖一定要有 -->

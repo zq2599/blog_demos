@@ -50,4 +50,24 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+            <!-- 如果父工程不是springboot，就要用以下方式使用插件，才能生成正常的jar -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.bolingcavalry.gateway.GatewayApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
