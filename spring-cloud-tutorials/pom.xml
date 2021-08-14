@@ -9,6 +9,7 @@
         <module>common</module>
         <module>gateway-nacos-config</module>
         <module>gateway-by-code</module>
+        <module>gateway-by-loadbalance</module>
     </modules>
 
     <parent>

@@ -1,0 +1,17 @@
+server:
+  #服务端口
+  port: 8085
+spring:
+  application:
+    name: gateway-by-loadbalance
+  cloud:
+    nacos:
+      # 注册中心的配置
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+        - id: path_route_lb
+          uri: lb://provider-hello
+          predicates:
+          - Path=/lbtest/**
