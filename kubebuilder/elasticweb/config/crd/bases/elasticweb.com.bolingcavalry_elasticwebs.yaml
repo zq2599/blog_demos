@@ -1,0 +1,77 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.5
+  creationTimestamp: null
+  name: elasticwebs.elasticweb.com.bolingcavalry
+spec:
+  group: elasticweb.com.bolingcavalry
+  names:
+    kind: ElasticWeb
+    listKind: ElasticWebList
+    plural: elasticwebs
+    singular: elasticweb
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      description: ElasticWeb is the Schema for the elasticwebs API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: 期望状态
+          properties:
+            image:
+              description: 业务服务对应的镜像，包括名称:tag
+              type: string
+            port:
+              description: service占用的宿主机端口，外部请求通过此端口访问pod的服务
+              format: int32
+              type: integer
+            singlePodQPS:
+              description: 单个pod的QPS上限
+              format: int32
+              type: integer
+            totalQPS:
+              description: 当前整个业务的总QPS
+              format: int32
+              type: integer
+          required:
+          - image
+          - port
+          - singlePodQPS
+          - totalQPS
+          type: object
+        status:
+          description: 实际状态，该数据结构中的值都是业务代码计算出来的
+          properties:
+            realQPS:
+              description: 当前kubernetes中实际支持的总QPS
+              format: int32
+              type: integer
+          type: object
+      type: object
+  version: v1
+  versions:
+  - name: v1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

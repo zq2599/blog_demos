@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+// 生成java代码的package
+option java_package = "com.bolingcavalry.grpctutorials.lib";
+// 类名
+option java_outer_classname = "MallProto";
+
+// gRPC服务，这是个在线商城的订单查询服务
+service OrderQuery {
+    // 服务端流式：订单列表接口，入参是买家信息，返回订单列表(用stream修饰返回值)
+    rpc ListOrders (Buyer) returns (stream Order) {}
+}
+
+// gRPC服务，这是个在线商城的购物车服务
+service CartService {
+    // 客户端流式：添加多个商品到购物车
+    rpc AddToCart (stream ProductOrder) returns (AddCartReply) {}
+}
+
+// gRPC服务，这是个在线商城的库存服务
+service StockService {
+    // 双向流式：批量扣减库存
+    rpc BatchDeduct (stream ProductOrder) returns (stream DeductReply) {}
+}
+
+// 买家ID
+message Buyer {
+    int32 buyerId = 1;
+}
+
+// 订单查询返回结果的数据结构
+message Order {
+    // 订单ID
+    int32 orderId = 1;
+    // 商品ID
+    int32 productId = 2;
+    // 交易时间
+    int64 orderTime = 3;
+    // 买家备注
+    string buyerRemark = 4;
+}
+
+// 提交购物车时的产品信息
+message ProductOrder {
+    // 商品ID
+    int32 productId = 1;
+    // 商品数量
+    int32 number = 2;
+}
+
+// 提交购物车返回结果的数据结构
+message AddCartReply {
+    // 返回码
+    int32 code = 1;
+    // 描述信息
+    string message = 2;
+}
+
+// 扣减库存返回结果的数据结构
+message DeductReply {
+    // 返回码
+    int32 code = 1;
+    // 描述信息
+    string message = 2;
+}

@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+}
+
+// 子模块自己的依赖
+dependencies {
+    implementation 'io.etcd:jetcd-core'
+    implementation 'org.projectlombok:lombok'
+    // annotationProcessor不会传递，使用了lombok生成代码的模块，需要自己声明annotationProcessor
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.slf4j:slf4j-log4j12'
+    testImplementation('org.junit.jupiter:junit-jupiter')
+}
+
+test {
+    useJUnitPlatform()
+}

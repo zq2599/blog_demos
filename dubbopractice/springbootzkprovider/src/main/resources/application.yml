@@ -1,0 +1,10 @@
+dubbo:
+  application:
+    #application-name 本模块名字
+    name: springboot-zk-provider
+  registry:
+    address: zookeeper://192.168.50.43:2181
+  protocol:
+    name: dubbo
+    port: 20880
+#    host: 192.168.50.5

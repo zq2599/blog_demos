@@ -1,0 +1,152 @@
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+
+buildscript {
+    repositories {
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+        // 如果有私服就在此配置，如果没有请注释掉
+        maven {
+            url 'http://192.168.50.43:8081/repository/aliyun-proxy/'
+        }
+        // 阿里云
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+
+        mavenCentral()
+    }
+    ext {
+        // 项目版本
+        projectVersion = '1.0-SNAPSHOT'
+
+        // sprignboot版本 https://github.com/spring-projects/spring-boot/releases
+        springBootVersion = '2.3.8.RELEASE'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'org.springframework.boot' version "${springBootVersion}" apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'net.nemerosa.versioning' version '2.14.0'
+    id 'io.franzbecker.gradle-lombok' version '4.0.0' apply false
+    id 'com.github.ben-manes.versions' version '0.36.0' // gradle dependencyUpdates
+}
+
+// If you attempt to build without the `--scan` parameter in `gradle 6.0+` it will cause a build error that it can't find
+// a buildScan property to change. This avoids that problem.
+if (hasProperty('buildScan')) {
+    buildScan {
+        termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+        termsOfServiceAgree = 'yes'
+    }
+}
+
+wrapper {
+    gradleVersion = '6.7.1'
+}
+
+def buildTimeAndDate = OffsetDateTime.now()
+
+ext {
+    // 构建时取得当前日期和时间
+    buildDate = DateTimeFormatter.ISO_LOCAL_DATE.format(buildTimeAndDate)
+    buildTime = DateTimeFormatter.ofPattern('HH:mm:ss.SSSZ').format(buildTimeAndDate)
+    buildRevision = versioning.info.commit
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'io.franzbecker.gradle-lombok'
+
+    compileJava {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+        options.encoding = 'UTF-8'
+    }
+
+    compileJava.options*.compilerArgs = [
+            '-Xlint:all', '-Xlint:-processing'
+    ]
+
+    // Copy LICENSE
+    tasks.withType(Jar) {
+        from(project.rootDir) {
+            include 'LICENSE'
+            into 'META-INF'
+        }
+    }
+
+    // 写入到MANIFEST.MF中的内容
+    jar {
+        manifest {
+            attributes(
+                    'Created-By': "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})".toString(),
+                    'Built-By': 'travis',
+                    'Build-Date': buildDate,
+                    'Build-Time': buildTime,
+                    'Built-OS': "${System.properties['os.name']}",
+                    'Build-Revision': buildRevision,
+                    'Specification-Title': project.name,
+                    'Specification-Version': projectVersion,
+                    'Specification-Vendor': 'Will Zhao',
+                    'Implementation-Title': project.name,
+                    'Implementation-Version': projectVersion,
+                    'Implementation-Vendor': 'Will Zhao'
+            )
+        }
+    }
+
+    repositories {
+        mavenCentral()
+
+        // 如果有私服就在此配置，如果没有请注释掉
+        maven {
+            url 'http://192.168.50.43:8081/repository/aliyun-proxy/'
+        }
+
+        // 阿里云
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+
+        jcenter()
+    }
+
+    buildscript {
+        repositories {
+            maven { url 'https://plugins.gradle.org/m2/' }
+        }
+    }
+}
+
+allprojects { project ->
+    buildscript {
+        dependencyManagement {
+            imports {
+                mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+                mavenBom "org.junit:junit-bom:5.7.0"
+            }
+
+            dependencies {
+                dependency 'org.projectlombok:lombok:1.16.16'
+                dependency 'org.apache.commons:commons-lang3:3.11'
+                dependency 'commons-collections:commons-collections:3.2.2'
+                dependency 'com.lmax:disruptor:3.4.4'
+            }
+        }
+
+        ext {
+            springFrameworkVersion = dependencyManagement.importedProperties['spring-framework.version']
+        }
+    }
+}
+
+group = 'bolingcavalry'
+version = projectVersion

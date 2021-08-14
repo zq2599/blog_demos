@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+  labels:
+    name: dev
+---
+apiVersion: elasticweb.com.bolingcavalry/v1
+kind: ElasticWeb
+metadata:
+  namespace: dev
+  name: elasticweb-sample
+spec:
+  # Add fields here
+  image: tomcat:8.0.18-jre8
+  port: 30003
+  singlePodQPS: 1500
+  # totalQPS: 600

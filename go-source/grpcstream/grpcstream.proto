@@ -1,0 +1,31 @@
+// 协议类型
+syntax = "proto3";
+
+// 包名
+package grpcstream;
+
+// 服务端请求的数据结构
+message SingleRequest {
+  int32 id = 1;
+}
+
+// 服务端响应的数据结构
+message SingleResponse {
+  int32 id = 1;
+  string name = 2;
+}
+
+// 定义的服务名
+service IGrpcStremService {
+  // 单项RPC ：单个请求，单个响应
+  rpc SingleReqSingleResp (SingleRequest) returns (SingleResponse);
+
+  // 服务端流式 ：单个请求，集合响应
+  rpc SingleReqMultiResp (SingleRequest) returns (stream SingleResponse);
+
+  // 客户端流式 ：集合请求，单个响应
+  rpc MultiReqSingleResp (stream SingleRequest) returns (SingleResponse);
+
+  // 双向流式 ：集合请求，集合响应
+  rpc MultiReqMultiResp (stream SingleRequest) returns (stream SingleResponse);
+}

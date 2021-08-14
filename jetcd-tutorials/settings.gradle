@@ -1,0 +1,5 @@
+rootProject.name = 'jetcd-tutorials'
+include 'base-operate'
+include 'helloworld'
+include 'advanced-operate'
+

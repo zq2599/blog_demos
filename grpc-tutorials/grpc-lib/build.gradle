@@ -1,0 +1,62 @@
+// 根据proto生成java代码的gradle插件
+plugins {
+    id 'com.google.protobuf'
+}
+
+dependencies {
+    implementation 'io.grpc:grpc-netty-shaded'
+    implementation 'io.grpc:grpc-protobuf'
+    implementation 'io.grpc:grpc-stub'
+    if (JavaVersion.current().isJava9Compatible()) {
+        // Workaround for @javax.annotation.Generated
+        // see: https://github.com/grpc/grpc-java/issues/3633
+        implementation 'jakarta.annotation:jakarta.annotation-api'
+    }
+}
+
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protobufVersion}"
+    }
+    // 自动生成的代码放在这里
+    generatedFilesBaseDir = "$projectDir/src/generated"
+    clean {
+        delete generatedFilesBaseDir
+    }
+    // 生成java代码的插件
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+// 对于eclipse，通过以下脚本可以将生成的代码加入source路径中，编译时会被用到
+eclipse {
+    classpath {
+        file.beforeMerged { cp ->
+            def generatedGrpcFolder = new org.gradle.plugins.ide.eclipse.model.SourceFolder('src/generated/main/grpc', null);
+            generatedGrpcFolder.entryAttributes['ignore_optional_problems'] = 'true';
+            cp.entries.add( generatedGrpcFolder );
+            def generatedJavaFolder = new org.gradle.plugins.ide.eclipse.model.SourceFolder('src/generated/main/java', null);
+            generatedJavaFolder.entryAttributes['ignore_optional_problems'] = 'true';
+            cp.entries.add( generatedJavaFolder );
+        }
+    }
+}
+
+// 对于idea，通过以下脚本可以将生成的代码加入source路径中，编译时会被用到
+idea {
+    module {
+        sourceDirs += file('src/generated/main/java')
+        sourceDirs += file('src/generated/main/grpc')
+        generatedSourceDirs += file('src/generated/main/java')
+        generatedSourceDirs += file('src/generated/main/grpc')
+    }
+}

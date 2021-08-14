@@ -1,0 +1,14 @@
+dubbo:
+  application:
+    name: springboot-multicast-consumer
+    id: springboot-multicast-consumer
+    qosEnable: false
+  registry:
+    address: multicast://224.5.6.7:1234?unicast=false
+    id: registry
+  protocol:
+    name: dubbo
+    port: 20880
+#    host: 192.168.50.5
+server:
+  port: 8081

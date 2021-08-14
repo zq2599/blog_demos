@@ -1,0 +1,4 @@
+rootProject.name = 'gradlespringbootdemo'
+include 'democlient'
+include 'webapp'
+

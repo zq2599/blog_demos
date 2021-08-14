@@ -1,0 +1,9 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: get-service-addr-from-etcd
+
+grpc:
+  # etcd的地址，从此处取得gRPC服务端的IP和端口
+  etcdendpoints: 'http://192.168.72.128:2379,http://192.168.50.239:2380,http://192.168.50.239:2381'

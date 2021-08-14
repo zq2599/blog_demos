@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+// 生成java代码的package
+option java_package = "com.bolingcavalry.grpctutorials.lib";
+option java_outer_classname = "HelloWorldProto";
+
+// gRPC服务
+service Simple {
+    // 接口定义
+    rpc SayHello (HelloRequest) returns (HelloReply) {
+    }
+}
+
+// 入参的数据结构
+message HelloRequest {
+    string name = 1;
+}
+
+// 返回结果的数据结构
+message HelloReply {
+    string message = 1;
+}

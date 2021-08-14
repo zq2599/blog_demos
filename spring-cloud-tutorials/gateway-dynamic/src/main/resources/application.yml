@@ -1,0 +1,31 @@
+server:
+  #服务端口
+  port: 8086
+spring:
+  application:
+    name: gateway-dynamic
+  cloud:
+    nacos:
+      # 注册中心的配置
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+        - id: path_route_addr
+          uri: http://127.0.0.1:8082
+          predicates:
+            - Path=/hello/**
+        - id: path_route_lb
+          uri: lb://provider-hello
+          predicates:
+            - Path=/lbtest/**
+
+# 暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

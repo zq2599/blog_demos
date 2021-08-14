@@ -1,0 +1,18 @@
+plugins {
+    id 'java-library'
+}
+
+// 子模块自己的依赖
+dependencies {
+    api 'io.etcd:jetcd-core'
+    api 'org.projectlombok:lombok'
+    // annotationProcessor不会传递，使用了lombok生成代码的模块，需要自己声明annotationProcessor
+    annotationProcessor 'org.projectlombok:lombok'
+    // slf4j的包自己用就行了，不要继承到其他工程中去，否则容易和其他日志包起冲突
+    implementation 'org.slf4j:slf4j-log4j12'
+    testImplementation('org.junit.jupiter:junit-jupiter')
+}
+
+test {
+    useJUnitPlatform()
+}

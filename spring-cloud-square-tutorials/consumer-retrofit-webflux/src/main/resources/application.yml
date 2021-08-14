@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: consumer-retrofit-webflux
+
+server:
+  port: 18083
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

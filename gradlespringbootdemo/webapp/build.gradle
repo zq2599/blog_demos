@@ -1,0 +1,43 @@
+plugins {
+    id 'org.springframework.boot'
+}
+
+// 用了插件org.springframework.boot之后，jar task会失效，可用bootJar取代
+bootJar {
+    archiveBaseName = project.name
+    archiveVersion = project.version
+
+    manifest {
+        attributes(
+                'Created-By': "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})".toString(),
+                'Built-By': 'travis',
+                'Build-Date': buildDate,
+                'Build-Time': buildTime,
+                'Built-OS': "${System.properties['os.name']}",
+                'Specification-Title': project.name,
+                'Specification-Version': projectVersion,
+                'Specification-Vendor': 'Will Zhao',
+                'Implementation-Title': project.name,
+                'Implementation-Version': projectVersion,
+                'Implementation-Vendor': 'Will Zhao'
+        )
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+// 子模块自己的依赖
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // 二方库依赖
+    implementation project(':democlient')
+    // annotationProcessor不会传递，使用了lombok生成代码的模块，需要自己声明annotationProcessor
+    annotationProcessor 'org.projectlombok:lombok'
+
+}
+
+test {
+    useJUnitPlatform()
+}

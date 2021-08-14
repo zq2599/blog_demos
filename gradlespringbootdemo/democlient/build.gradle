@@ -1,0 +1,48 @@
+plugins {
+    id 'java-library'
+    // 使用maven插件执行上传jar到Nexus3的操作
+    id 'maven'
+}
+
+// 如果要上传库到私服，就在此添加
+def uploadGroup = group
+def uploadArtifactId = this.name
+def uploadVersion = version
+
+// uploadArchives任务的配置
+uploadArchives {
+    // 仓库配置
+    repositories {
+        mavenDeployer {
+            // release仓库的配置
+            repository(url: 'http://192.168.50.43:8081/repository/my-release/') {
+                authentication(
+                        // Nexus3上有权限上传jar的帐号及其密码
+                        userName: 'bolingcavalry',
+                        password: '123456'
+                )
+            }
+            // snapshot仓库的配置
+            snapshotRepository(url: 'http://192.168.50.43:8081/repository/my-snapshot/') {
+                authentication(
+                        // Nexus3上有权限上传jar的帐号及其密码
+                        userName: 'bolingcavalry',
+                        password: '123456'
+                )
+            }
+
+            // 二方库的身份参数：group、artifact、version
+            pom.groupId = uploadGroup
+            pom.artifactId = uploadArtifactId
+            pom.version = uploadVersion
+        }
+    }
+}
+
+// 子模块自己的依赖
+dependencies {
+    // 使用api，将依赖传递给使用democlient的模块
+    api 'org.projectlombok:lombok'
+    // annotationProcessor不会传递，使用了lombok生成代码的模块，需要自己声明annotationProcessor
+    annotationProcessor 'org.projectlombok:lombok'
+}

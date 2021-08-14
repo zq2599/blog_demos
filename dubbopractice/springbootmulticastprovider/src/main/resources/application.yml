@@ -1,0 +1,12 @@
+dubbo:
+  application:
+    #application-name 本模块名字
+    name: springboot-multicast-provider
+    id: springboot-multicast-provider
+  registry:
+    address: multicast://224.5.6.7:1234
+    id: registry
+  protocol:
+    name: dubbo
+    port: 20880
+#    host: 192.168.50.5

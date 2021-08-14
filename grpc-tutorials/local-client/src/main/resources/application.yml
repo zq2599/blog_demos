@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: local-grpc-client
+
+grpc:
+  client:
+    # gRPC配置的名字，GrpcClient注解会用到
+    local-grpc-server:
+      # gRPC服务端地址
+      address: 'static://127.0.0.1:9898'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext

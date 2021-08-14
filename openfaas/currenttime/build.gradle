@@ -1,0 +1,60 @@
+plugins {
+    // Apply the java-library plugin to add support for Java Library
+    id 'java-library'
+    id 'distribution'
+}
+
+dependencies {
+    // This dependency is exported to consumers, that is to say found on their compile classpath.
+    api 'org.apache.commons:commons-math3:3.6.1'
+
+    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
+    implementation 'com.google.guava:guava:23.0'
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+
+    compile 'com.openfaas:model:0.1.1'
+    compile 'com.openfaas:entrypoint:0.1.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.11.0'
+    compile 'org.apache.commons:commons-lang3:3.10'
+
+}
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    // Use jcenter for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+
+    flatDir {
+        dirs '../libs'
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'OpenFaaS Function',
+                   'Implementation-Version': '1.0'
+    }
+}
+
+
+distributions {
+    main {
+        contents {
+            from jar
+            into('lib') {
+                from(project.configurations.runtime)
+            }
+        }
+    }
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}

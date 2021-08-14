@@ -1,0 +1,5 @@
+rootProject.name = 'disruptor-tutorials'
+include 'basic-event'
+include 'low-level-operate'
+include 'consume-mode'
+

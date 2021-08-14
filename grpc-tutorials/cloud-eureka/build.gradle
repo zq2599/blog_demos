@@ -1,0 +1,14 @@
+// 使用springboot插件
+plugins {
+    id 'org.springframework.boot'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    // 依赖eureka
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+    // 状态暴露需要的依赖
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // 依赖自动生成源码的工程
+    implementation project(':grpc-lib')
+}

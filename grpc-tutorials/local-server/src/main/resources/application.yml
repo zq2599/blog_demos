@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: local-server
+# gRPC有关的配置，这里只需要配置服务端口号
+grpc:
+  server:
+    port: 9898

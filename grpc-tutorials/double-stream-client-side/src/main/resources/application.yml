@@ -1,0 +1,15 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: double-stream-client-side
+
+grpc:
+  client:
+    # gRPC配置的名字，GrpcClient注解会用到
+    double-stream-server-side:
+      # gRPC服务端地址
+      address: 'static://127.0.0.1:9901'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext

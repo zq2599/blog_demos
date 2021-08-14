@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.bolingcavalry</groupId>
+    <artifactId>javacv-tutorials</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>face-detect-demo</module>
+        <module>basic-demo</module>
+        <module>ffmpeg-basic</module>
+    </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+        <springboot.version>2.4.8</springboot.version>
+
+<!--        &lt;!&ndash; javacpp当前版本 &ndash;&gt;-->
+<!--        <javacpp.version>1.4.1</javacpp.version>-->
+<!--        &lt;!&ndash; opencv版本 &ndash;&gt;-->
+<!--        <opencv.version>3.4.3</opencv.version>-->
+<!--        &lt;!&ndash; ffmpeg版本 &ndash;&gt;-->
+<!--        <ffmpeg.version>3.4.2</ffmpeg.version>-->
+
+        <!-- javacpp当前版本 -->
+        <javacpp.version>1.4.3</javacpp.version>
+        <!-- opencv版本 -->
+        <opencv.version>3.4.3</opencv.version>
+        <!-- ffmpeg版本 -->
+        <ffmpeg.version>4.0.2</ffmpeg.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.18</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bytedeco</groupId>
+                <artifactId>javacv-platform</artifactId>
+                <version>${javacpp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bytedeco</groupId>
+                <artifactId>javacv</artifactId>
+                <version>${javacpp.version}</version>
+            </dependency>
+            <!-- javacpp -->
+            <dependency>
+                <groupId>org.bytedeco</groupId>
+                <artifactId>javacpp</artifactId>
+                <version>${javacpp.version}</version>
+            </dependency>
+            <!-- ffmpeg -->
+            <dependency>
+                <groupId>org.bytedeco.javacpp-presets</groupId>
+                <artifactId>ffmpeg-platform</artifactId>
+                <version>${ffmpeg.version}-${javacpp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bytedeco.javacpp-presets</groupId>
+                <artifactId>ffmpeg</artifactId>
+                <version>${ffmpeg.version}-${javacpp.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.31</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.3</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+</project>

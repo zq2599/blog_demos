@@ -74,6 +74,10 @@
 15. [《kubernetes下jenkins实战maven项目编译构建》](https://blog.csdn.net/boling_cavalry/article/details/104875452)
 16. [《Nexus3常用功能备忘》](https://xinchen.blog.csdn.net/article/details/105458882)
 
+## 玩转Gradle
+1. [Gradle构建多模块SpringBoot应用](https://xinchen.blog.csdn.net/article/details/115049633)
+2. [《Gradle项目的jar发布到私有仓库》](https://xinchen.blog.csdn.net/article/details/115609899)
+
 ## Jackson学习特辑
 1. [《jackson学习之一：基本信息》](https://blog.csdn.net/boling_cavalry/article/details/107135958)
 2. [《jackson学习之二：jackson-core》](https://blog.csdn.net/boling_cavalry/article/details/108571629)
@@ -85,6 +89,52 @@
 8. [《jackson学习之八：常用方法注解》](https://blog.csdn.net/boling_cavalry/article/details/108433330)
 9. [《jackson学习之九：springboot整合(配置文件)》](https://blog.csdn.net/boling_cavalry/article/details/108460433)
 10. [《jackson学习之十(终篇)：springboot整合(配置类)》](https://blog.csdn.net/boling_cavalry/article/details/108559056)
+
+## JUnit5学习特辑
+《JUnit5学习》系列旨在通过实战提升SpringBoot环境下的单元测试技能，一共八篇文章，链接如下：
+1. [《JUnit5学习之一：基本操作》](https://blog.csdn.net/boling_cavalry/article/details/108810587)
+2. [《JUnit5学习之二：Assumptions类》](https://blog.csdn.net/boling_cavalry/article/details/108861185)
+3. [《JUnit5学习之三：Assertions类》](https://blog.csdn.net/boling_cavalry/article/details/108899437)
+4. [《JUnit5学习之四：按条件执行》](https://blog.csdn.net/boling_cavalry/article/details/108909107)
+5. [《JUnit5学习之五：标签(Tag)和自定义注解》](https://blog.csdn.net/boling_cavalry/article/details/108914091)
+6. [《JUnit5学习之六：参数化测试(Parameterized Tests)基础》](https://blog.csdn.net/boling_cavalry/article/details/108930987)
+7. [《JUnit5学习之七：参数化测试(Parameterized Tests)进阶》](https://blog.csdn.net/boling_cavalry/article/details/108942301)
+8. [《JUnit5学习之八：综合进阶（终篇）》](https://blog.csdn.net/boling_cavalry/article/details/108952500)
+
+## jetcd学习特辑
+1. [jetcd实战之一:极速体验](https://xinchen.blog.csdn.net/article/details/115276045)
+2. [jetcd实战之二:基本操作](https://xinchen.blog.csdn.net/article/details/115419439)
+3. [jetcd实战之三:进阶操作(事务、监听、租约)](https://xinchen.blog.csdn.net/article/details/115434576)
+
+## disruptor学习特辑
+1. [快速入门](https://blog.csdn.net/boling_cavalry/article/details/117185656)
+2. [Disruptor类分析](https://blog.csdn.net/boling_cavalry/article/details/117318462)
+3. [环形队列的基础操作(不用Disruptor类)](https://blog.csdn.net/boling_cavalry/article/details/117386253)
+4. [事件消费知识点小结](https://blog.csdn.net/boling_cavalry/article/details/117395009)
+5. [事件消费实战](https://blog.csdn.net/boling_cavalry/article/details/117405835)
+6. [常见场景](https://blog.csdn.net/boling_cavalry/article/details/117575447)
+7. [等待策略](https://blog.csdn.net/boling_cavalry/article/details/117608051)
+8. [知识点补充(终篇)](https://blog.csdn.net/boling_cavalry/article/details/117636483)
+
+## MyBatis学习（初级版）
+1. [《MyBatis初级实战之一：Spring Boot集成》](https://xinchen.blog.csdn.net/article/details/107805840)
+2. [《MyBatis初级实战之二：增删改查》](https://xinchen.blog.csdn.net/article/details/107971293)
+3. [《MyBatis初级实战之三：springboot集成druid》](https://xinchen.blog.csdn.net/article/details/108092045)
+4. [《MyBatis初级实战之四：druid多数据源》](https://xinchen.blog.csdn.net/article/details/108179671)
+5. [《MyBatis初级实战之五：一对一关联查询》](https://xinchen.blog.csdn.net/article/details/109020733)
+6. [《MyBatis初级实战之六：一对多关联查询》](https://xinchen.blog.csdn.net/article/details/109193441)
+
+## java版gRPC实战专辑
+1. [用proto生成代码](https://xinchen.blog.csdn.net/article/details/115049443)
+2. [服务发布和调用](https://xinchen.blog.csdn.net/article/details/115803738)
+3. [服务端流](https://xinchen.blog.csdn.net/article/details/115983001)
+4. [客户端流](https://xinchen.blog.csdn.net/article/details/116097756)
+5. [双向流](https://xinchen.blog.csdn.net/article/details/116354293)
+6. [客户端动态获取服务端地址](https://xinchen.blog.csdn.net/article/details/116479078)
+7. [基于eureka的注册发现](https://xinchen.blog.csdn.net/article/details/116635441)
+
+## javacv特辑
+1. [Java版流媒体编解码和图像处理(JavaCPP+FFmpeg)](https://xinchen.blog.csdn.net/article/details/119062543)
 
 # Spring领域
 
@@ -132,6 +182,7 @@
 14. [《掌握SpringBoot-2.3的容器探针：深入篇》](https://blog.csdn.net/boling_cavalry/article/details/106606442)
 15. [《掌握SpringBoot-2.3的容器探针：实战篇》](https://blog.csdn.net/boling_cavalry/article/details/106607225)
 16. [《springboot的jar为何能独立运行》](https://blog.csdn.net/boling_cavalry/article/details/106966579)
+17. [《SpringBoot(2.4)应用制作Docker镜像(Gradle版官方方案)》](https://xinchen.blog.csdn.net/article/details/115451129)
 
 ## SpringBoot进阶实战
 1. [《Docker下redis与springboot三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/78991422)
@@ -139,6 +190,9 @@
 3. [《Docker下redis与springboot三部曲之三：springboot下访问redis哨兵》](https://blog.csdn.net/boling_cavalry/article/details/79041129)
 4. [《SpringBoot应用使用自定义的ApplicationContext实现类》](https://blog.csdn.net/boling_cavalry/article/details/81587556)
 5. [《Spring Boot应用在kubernetes的sidecar设计与实战》](https://blog.csdn.net/boling_cavalry/article/details/83784113)
+6. [《Spring Native实战(畅快体验79毫秒启动springboot应用)》](https://blog.csdn.net/boling_cavalry/article/details/117153661)
+7. [《三分钟体验：SpringBoot用深度学习模型识别数字》](https://blog.csdn.net/boling_cavalry/article/details/118290933)
+8. [《SpringBoot用深度学习模型识别数字：开发详解》](https://blog.csdn.net/boling_cavalry/article/details/118353259)
 
 ## SpringCloud基础
 1. [《极速体验SpringCloud Gateway》](https://blog.csdn.net/boling_cavalry/article/details/94907172)
@@ -175,6 +229,18 @@
 5. [《spring-cloud-kubernetes与SpringCloud Gateway》](https://xinchen.blog.csdn.net/article/details/95001691)
 6. [《spring-cloud-kubernetes与k8s的configmap》](https://xinchen.blog.csdn.net/article/details/95804909)
 7. [《spring-cloud-kubernetes自动同步k8s的configmap更新》](https://xinchen.blog.csdn.net/article/details/97529652)
+
+## spring-cloud-square特辑
+1. [五分钟搞懂spring-cloud-square](https://xinchen.blog.csdn.net/article/details/119130289)
+2. [spring-cloud-square开发实战(三种类型全覆盖)](https://xinchen.blog.csdn.net/article/details/119304887)
+3. [spring-cloud-square源码速读(spring-cloud-square-okhttp篇)](https://xinchen.blog.csdn.net/article/details/119360559)
+4. [spring-cloud-square源码速读（retrofit + okhttp篇）](https://xinchen.blog.csdn.net/article/details/119383904)
+
+## dubbo实战特辑
+1. [准备和初体验](https://xinchen.blog.csdn.net/article/details/109096867)
+2. [与SpringBoot集成](https://xinchen.blog.csdn.net/article/details/109142783)
+3. [使用Zookeeper注册中心](https://xinchen.blog.csdn.net/article/details/109147843)
+4. [管理控制台dubbo-admin](https://xinchen.blog.csdn.net/article/details/109267151)
 
 # Docker
 
@@ -297,6 +363,7 @@
 90. [《ARM64架构下，OpenJDK的官方Docker镜像为何没有8版本？》](https://blog.csdn.net/boling_cavalry/article/details/101908575)
 91. [《ARM架构下的Docker环境，OpenJDK官方没有8版本镜像，如何完美解决？》](https://blog.csdn.net/boling_cavalry/article/details/101855126)
 92. [《Docker部署flink备忘》](https://blog.csdn.net/boling_cavalry/article/details/105015546)
+93. [《用GitHub Actions制作Docker镜像》](https://xinchen.blog.csdn.net/article/details/115476859)
 
 # kubernetes
 
@@ -351,6 +418,7 @@
 13. [《K8S的StorageClass实战(NFS)》](https://xinchen.blog.csdn.net/article/details/105465672)
 14. [《K8S环境快速部署Kafka(K8S外部可访问)》](https://xinchen.blog.csdn.net/article/details/105466163)
 15. [《K8S的Kafka监控(Prometheus+Grafana)》](https://xinchen.blog.csdn.net/article/details/105466788)
+16. [《Kubernetes的Group、Version、Resource学习小记》](https://xinchen.blog.csdn.net/article/details/113715847)
 
 ## kubernetes官方java客户端特辑
 1. [《Kubernetes官方java客户端之一：准备》](https://blog.csdn.net/boling_cavalry/article/details/107480015)
@@ -360,6 +428,23 @@
 5. [《Kubernetes官方java客户端之五：proto基本操作》](https://blog.csdn.net/boling_cavalry/article/details/107552722)
 6. [《Kubernetes官方java客户端之六：OpenAPI基本操作》](https://blog.csdn.net/boling_cavalry/article/details/107574722)
 
+## kubernetes官方go客户端特辑
+1. [client-go实战之一：准备工作](https://xinchen.blog.csdn.net/article/details/113753087)
+2. [client-go实战之二:RESTClient](https://xinchen.blog.csdn.net/article/details/113487087)
+3. [client-go实战之三：Clientset](https://xinchen.blog.csdn.net/article/details/113788269)
+4. [client-go实战之四：dynamicClient](https://xinchen.blog.csdn.net/article/details/113795523)
+5. [client-go实战之五：DiscoveryClient](https://xinchen.blog.csdn.net/article/details/113800054)
+
+## Operator实战特辑
+1. [kubebuilder实战之一：准备工作](https://xinchen.blog.csdn.net/article/details/113035349)
+2. [kubebuilder实战之二：初次体验kubebuilder](https://xinchen.blog.csdn.net/article/details/113089414)
+3. [kubebuilder实战之三：基础知识速览](https://xinchen.blog.csdn.net/article/details/113815479)
+4. [kubebuilder实战之四：operator需求说明和设计](https://xinchen.blog.csdn.net/article/details/113822065)
+5. [kubebuilder实战之五：operator编码](https://xinchen.blog.csdn.net/article/details/113836090)
+6. [kubebuilder实战之六：构建部署运行](https://xinchen.blog.csdn.net/article/details/113840999)
+7. [kubebuilder实战之七：webhook](https://xinchen.blog.csdn.net/article/details/113922328)
+8. [kubebuilder实战之八：知识点小记](https://xinchen.blog.csdn.net/article/details/114215218)
+
 ## helm实战
 1. [《helm实战之开发Chart》](https://blog.csdn.net/boling_cavalry/article/details/88759724)
 2. [《部署和体验Helm(2.16.1版本)》](https://blog.csdn.net/boling_cavalry/article/details/103667500)
@@ -367,7 +452,31 @@
 4. [《Helm部署的服务如何修改配置》](https://blog.csdn.net/boling_cavalry/article/details/105004586)
 5. [《helm部署mysql》](https://xinchen.blog.csdn.net/article/details/105180743)
 
+## Serverless领域OpenFaaS特辑
+1. [部署](https://xinchen.blog.csdn.net/article/details/109805296)
+2. [函数入门](https://xinchen.blog.csdn.net/article/details/109816846)
+3. [Java函数](https://xinchen.blog.csdn.net/article/details/109845563)
+4. [模板操作(template)](https://xinchen.blog.csdn.net/article/details/109900209)
+5. [大话watchdog](https://xinchen.blog.csdn.net/article/details/109971608)
+6. [of-watchdog(为性能而生)](https://xinchen.blog.csdn.net/article/details/110285578)
+7. [java11模板解析](https://xinchen.blog.csdn.net/article/details/110310033)
+8. [OpenFaaS实战之八：自制模板(maven+jdk8)](https://xinchen.blog.csdn.net/article/details/114438355)
+9. [OpenFaaS实战之九：终篇，自制模板(springboot+maven+jdk8)](114483494)
+
 # 大数据
+
+## hive学习笔记
+1. [基本数据类型](https://xinchen.blog.csdn.net/article/details/109304044)
+2. [复杂数据类型](https://xinchen.blog.csdn.net/article/details/109344642)
+3. [内部表和外部表](https://xinchen.blog.csdn.net/article/details/109393908)
+4. [分区表](https://xinchen.blog.csdn.net/article/details/109404278)
+5. [分桶](https://xinchen.blog.csdn.net/article/details/109412454)
+6. [HiveQL基础](https://xinchen.blog.csdn.net/article/details/109432395)
+7. [内置函数](https://xinchen.blog.csdn.net/article/details/109440325)
+8. [Sqoop](https://xinchen.blog.csdn.net/article/details/109445825)
+9. [基础UDF](https://xinchen.blog.csdn.net/article/details/109457019)
+10. [用户自定义聚合函数(UDAF)](https://xinchen.blog.csdn.net/article/details/109499956)
+11. [UDTF](https://xinchen.blog.csdn.net/article/details/109530630)
 
 ## CDH
 1. [《CDH5部署三部曲之一：准备工作》](https://xinchen.blog.csdn.net/article/details/105340968)
@@ -401,10 +510,17 @@
 23. [《将CSV的数据发送到kafka(java版)》](https://blog.csdn.net/boling_cavalry/article/details/106033472)
 24. [《Flink SQL Client综合实战》](https://blog.csdn.net/boling_cavalry/article/details/106038219)
 26. [《Flink Native Kubernetes实战》](https://blog.csdn.net/boling_cavalry/article/details/106038957)
-27. [《深入了解ProcessFunction的状态操作(Flink-1.10)》](https://blog.csdn.net/boling_cavalry/article/details/106040312)
-28. [《Flink处理函数实战之一：ProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299035)
-29. [《Flink处理函数实战之二：KeyedProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299167)
-30. [《Flink处理函数实战之三：窗口处理》](https://blog.csdn.net/boling_cavalry/article/details/106453229)
+27. [《Flink处理函数实战之一：深入了解ProcessFunction的状态操作(Flink-1.10)》](https://blog.csdn.net/boling_cavalry/article/details/106040312)
+28. [《Flink处理函数实战之二：ProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299035)
+29. [《Flink处理函数实战之三：KeyedProcessFunction类》](https://blog.csdn.net/boling_cavalry/article/details/106299167)
+30. [《Flink处理函数实战之四：窗口处理》](https://blog.csdn.net/boling_cavalry/article/details/106453229)
+31. [《Flink处理函数实战之五：CoProcessFunction(双流处理)》](https://blog.csdn.net/boling_cavalry/article/details/109614001)
+32. [《理解ProcessFunction的Timer逻辑》](https://xinchen.blog.csdn.net/article/details/109564999)
+
+## 双流处理实战特辑
+1. [《CoProcessFunction实战三部曲之一：基本功能》](https://xinchen.blog.csdn.net/article/details/109624375)
+2. [《CoProcessFunction实战三部曲之二：状态处理》](https://xinchen.blog.csdn.net/article/details/109629119)
+3. [《CoProcessFunction实战三部曲之三：定时器和侧输出》](https://xinchen.blog.csdn.net/article/details/109645214)
 
 ## Spark
 1. [《部署spark2.2集群(standalone模式)》](https://blog.csdn.net/boling_cavalry/article/details/86747258)
@@ -566,6 +682,7 @@
 9. [《Wireshark抓包分析Eureka注册发现协议》](https://blog.csdn.net/boling_cavalry/article/details/82918227)
 10. [《免费申请和使用IntelliJ IDEA商业版License指南》](https://blog.csdn.net/boling_cavalry/article/details/100014835)
 11. [《发送kafka消息的shell脚本》](https://blog.csdn.net/boling_cavalry/article/details/104736677)
+12. [《github搜索技巧小结》](https://xinchen.blog.csdn.net/article/details/114737069)
 
 # 问题处理
 1. [《dubbo服务提供者在tomcat启动失败的问题》](https://blog.csdn.net/boling_cavalry/article/details/72188135)
@@ -630,6 +747,7 @@
 12. [《GitLab Runner部署(kubernetes环境)》](https://blog.csdn.net/boling_cavalry/article/details/106991576)
 13. [《GitLab CI构建SpringBoot-2.3应用》](https://blog.csdn.net/boling_cavalry/article/details/106991691)
 14. [《Gitlab Runner的分布式缓存实战》](https://blog.csdn.net/boling_cavalry/article/details/107374730)
+15. [《用GitHub Actions制作Docker镜像》](https://xinchen.blog.csdn.net/article/details/115476859)
 
 ## promethus
 1. [《Docker下Prometheus和Grafana三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/88367137)
@@ -678,9 +796,45 @@
 3. [《用golang官方Docker镜像运行项目》](https://blog.csdn.net/boling_cavalry/article/details/87904485)
 4. [《vim设置go语法高亮》](https://blog.csdn.net/boling_cavalry/article/details/88598828)
 
+## gRPC特辑
+1. [《gRPC学习之一：在CentOS7部署和设置GO》](https://xinchen.blog.csdn.net/article/details/110790538)
+2. [《gRPC学习之二：GO的gRPC开发环境准备》](https://xinchen.blog.csdn.net/article/details/111066105)
+3. [《gRPC学习之三：初试GO版gRPC开发》](https://xinchen.blog.csdn.net/article/details/111086114)
+4. [《gRPC学习之四：实战四类服务方法》](https://xinchen.blog.csdn.net/article/details/111144884)
+5. [《gRPC学习之五：gRPC-Gateway实战》](https://xinchen.blog.csdn.net/article/details/111399854)
+6. [《gRPC学习之六：gRPC-Gateway集成swagger》](https://xinchen.blog.csdn.net/article/details/111406857)
+
 # 机器学习
 1. [《机器学习的开发环境准备》](https://blog.csdn.net/boling_cavalry/article/details/96628350)
 2. [《Docker下，五分钟极速体验机器学习》](https://blog.csdn.net/boling_cavalry/article/details/96718499)
+
+# 深度学习
+
+## DL4J实战特辑
+1. [《DL4J实战之一：准备》](https://blog.csdn.net/boling_cavalry/article/details/117898354)
+2. [《DL4J实战之二：鸢尾花分类》](https://blog.csdn.net/boling_cavalry/article/details/117905798)
+3. [《DL4J实战之三：经典卷积实例(LeNet-5)》](https://blog.csdn.net/boling_cavalry/article/details/118239403)
+4. [《DL4J实战之四：经典卷积实例(GPU版本)》](https://blog.csdn.net/boling_cavalry/article/details/118240038)
+5. [《DL4J实战之五：矩阵操作基本功》](https://blog.csdn.net/boling_cavalry/article/details/118442820)
+6. [《DL4J实战之六：图形化展示训练过程》](https://blog.csdn.net/boling_cavalry/article/details/118593750)
+
+## 深度学习工程化
+1. [《纯净Ubuntu16安装CUDA(9.1)和cuDNN》](https://blog.csdn.net/boling_cavalry/article/details/118065868)
+2. [《三分钟体验：SpringBoot用深度学习模型识别数字》](https://blog.csdn.net/boling_cavalry/article/details/118290933)
+3. [《SpringBoot用深度学习模型识别数字：开发详解》](https://blog.csdn.net/boling_cavalry/article/details/118353259)
+4. [《三分钟极速体验：Java版人脸检测》](https://blog.csdn.net/boling_cavalry/article/details/118862001)
+5. [《Java版人脸检测详解上篇：运行环境的Docker镜像(CentOS+JDK+OpenCV)》](https://blog.csdn.net/boling_cavalry/article/details/118876299)
+6. [《Java版人脸检测详解下篇：编码》](https://blog.csdn.net/boling_cavalry/article/details/118970439)
+
+# 多媒体
+## kurento
+1. [《Kurento实战之一：KMS部署和体验》](https://xinchen.blog.csdn.net/article/details/112070074)
+2. [《Kurento实战之二：快速部署和体验》](https://xinchen.blog.csdn.net/article/details/112385575)
+3. [《Kurento实战之三：知识点小导游》](https://xinchen.blog.csdn.net/article/details/112415314)
+4. [《Kurento实战之四：应用开发指南》](https://xinchen.blog.csdn.net/article/details/112504048)
+5. [《微信小程序+腾讯云直播的实时音视频实战笔记》](https://blog.csdn.net/boling_cavalry/article/details/116855410)
+6. [《Kurento实战之五：媒体播放》](https://blog.csdn.net/boling_cavalry/article/details/118055902)
+7. [《Kurento实战之六：云端录制》](https://blog.csdn.net/boling_cavalry/article/details/118065861)
 
 # 硬件
 

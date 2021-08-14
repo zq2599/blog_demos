@@ -1,0 +1,13 @@
+server:
+  #服务端口
+  port: 8081
+spring:
+  application:
+    name: hello-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: path_route
+          uri: http://127.0.0.1:8082
+          predicates:
+          - Path=/hello/**

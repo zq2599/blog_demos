@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolingcavalry.relatedoperation.mapper.UserMapper">
+
+    <select id="leftJoinSel" parameterType="int" resultMap="leftJoinResultMap">
+        select
+            u.id as user_id,
+            u.name as user_name,
+            u.age as user_age,
+            l.id as log_id,
+            l.user_id as log_user_id,
+            l.action as log_action,
+            l.create_time as log_create_time
+
+        from mybatis.user as u
+                 left join mybatis.log as l
+                           on u.id = l.user_id
+        where u.id = #{id}
+    </select>
+
+    <resultMap id="leftJoinResultMap" type="UserWithLogs">
+        <id property="id" column="user_id"/>
+
+        <result  property="name" column="user_name" jdbcType="VARCHAR"/>
+
+        <result property="age" column="user_age" jdbcType="INTEGER" />
+
+        <collection property="logs" ofType="Log">
+            <id property="id" column="log_id"/>
+            <result property="userId" column="log_user_id" jdbcType="INTEGER" />
+            <result property="action" column="log_action" jdbcType="VARCHAR" />
+            <result property="createTime" column="log_create_time" jdbcType="TIMESTAMP" />
+        </collection>
+    </resultMap>
+
+    <!--嵌套-->
+    <select id="nestedSel" parameterType="int" resultMap="nestedResultMap">
+        select
+            u.id as user_id,
+            u.name as user_name,
+            u.age as user_age
+        from mybatis.user as u
+        where u.id = #{id}
+    </select>
+
+    <!-- association节点的select属性会触发嵌套查询-->
+    <resultMap id="nestedResultMap" type="UserWithLogs">
+        <!-- column属性中的user_id，来自前面查询时的"u.id as user_id" -->
+        <id property="id" column="user_id"/>
+        <!-- column属性中的user_name，来自前面查询时的"u.name as user_name" -->
+        <result  property="name" column="user_name" jdbcType="VARCHAR"/>
+        <!-- column属性中的user_age，来自前面查询时的"u.age as user_age" -->
+        <result property="age" column="user_age" jdbcType="INTEGER" />
+        <!-- select属性，表示这里要执行嵌套查询，将user_id传给嵌套的查询 -->
+        <association property="logs" column="user_id" select="selectLogByUserId"></association>
+    </resultMap>
+
+
+    <select id="selectLogByUserId" parameterType="int" resultMap="log">
+        select
+            l.id,
+            l.user_id,
+            l.action,
+            l.create_time
+        from mybatis.log as l
+        where l.user_id = #{user_id}
+    </select>
+
+    <resultMap id="log" type="log">
+        <id property="id" column="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="action" jdbcType="VARCHAR" property="action"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+    </resultMap>
+
+
+
+</mapper>

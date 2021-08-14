@@ -1,5 +1,0 @@
-dashboards:
-- id: Filebeat-Logstash-Log-Dashboard
-  file: Filebeat-logstash-log.json
-- id: Filebeat-Logstash-Slowlog-Dashboard
-  file: Filebeat-logstash-slowlog.json

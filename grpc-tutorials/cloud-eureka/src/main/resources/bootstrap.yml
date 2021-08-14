@@ -1,0 +1,26 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: cloud-eureka
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 30
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+            defaultZone: http://192.168.50.5:8085/eureka/
+  server:
+    enable-self-preservation: false
+
+endpoints:
+ shutdown:
+  enabled: true

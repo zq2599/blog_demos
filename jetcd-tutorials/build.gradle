@@ -1,0 +1,152 @@
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+
+
+// gradle自身会用到的相关设置
+buildscript {
+    // 仓库
+    repositories {
+        // 本地
+        mavenLocal()
+        // 如果有私服就在此配置，如果没有请注释掉
+        maven {
+            url 'http://192.168.50.43:8081/repository/aliyun-proxy/'
+        }
+        // 阿里云
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        // 中央仓库
+        mavenCentral()
+        // grandle插件
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+
+    // 子模块会用到的变量
+    ext {
+        springBootVersion = '2.4.4'
+    }
+}
+
+// 插件
+plugins {
+    id 'java'
+    id 'java-library'
+    // 有这个声明，子模块可以使用org.springframework.boot插件而无需指定版本，但是apply=false表示当前模块不使用此插件
+    id 'org.springframework.boot' version "${springBootVersion}" apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+// gradle wrapper指定版本
+wrapper {
+    gradleVersion = '6.8.3'
+}
+
+// 取当前时间
+def buildTimeAndDate = OffsetDateTime.now()
+
+// 根据时间生成字符串变量
+ext {
+    projectVersion = project.version
+    buildDate = DateTimeFormatter.ISO_LOCAL_DATE.format(buildTimeAndDate)
+    buildTime = DateTimeFormatter.ofPattern('HH:mm:ss.SSSZ').format(buildTimeAndDate)
+}
+
+
+// 针对所有project的配置，包含根项目
+allprojects {
+    group 'com.bolingcavalry'
+    version '1.0-SNAPSHOT'
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'io.spring.dependency-management'
+
+    // 制作设置参数的一个闭包，后面compileJava和compileTestJava都会用到
+    def compileSetUp = {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+        options.encoding = 'UTF-8'
+        options.compilerArgs =  [
+                '-Xlint:all', '-Xlint:-processing'
+        ]
+    }
+
+
+    compileJava (compileSetUp)
+
+    compileTestJava (compileSetUp)
+
+    // Copy LICENSE
+    tasks.withType(Jar) {
+        from(project.rootDir) {
+            include 'LICENSE'
+            into 'META-INF'
+        }
+    }
+
+    // 生成jar文件时，MANIFEST.MF的内容如下
+    jar {
+        manifest {
+            attributes(
+                    'Created-By': "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})".toString(),
+                    'Built-By': 'travis',
+                    'Build-Date': buildDate,
+                    'Build-Time': buildTime,
+                    'Built-OS': "${System.properties['os.name']}",
+                    'Specification-Title': project.name,
+                    'Specification-Version': project.version,
+                    'Specification-Vendor': 'Will Zhao',
+                    'Implementation-Title': project.name,
+                    'Implementation-Version': project.version,
+                    'Implementation-Vendor': 'Will Zhao'
+            )
+        }
+    }
+
+    // 仓库
+    repositories {
+        // 本地
+        mavenLocal()
+        // 如果有私服就在此配置，如果没有请注释掉
+        maven {
+            url 'http://192.168.50.43:8081/repository/aliyun-proxy/'
+        }
+        // 阿里云
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        // 中央仓库
+        mavenCentral()
+        // grandle插件
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+}
+
+// 类似maven的dependencyManagement，这里将所有jar的版本指定好，子模块在依赖时可以不用指定版本
+allprojects { project ->
+    buildscript {
+        dependencyManagement {
+            imports {
+                mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+                mavenBom "org.junit:junit-bom:5.7.0"
+            }
+
+            dependencies {
+                dependency 'org.projectlombok:lombok:1.16.16'
+                dependency 'org.apache.commons:commons-lang3:3.11'
+                dependency 'commons-collections:commons-collections:3.2.2'
+                dependency 'io.etcd:jetcd-core:0.5.0'
+                dependency 'org.slf4j:slf4j-log4j12:1.7.30'
+            }
+        }
+    }
+}
+
+// 坐标信息
+group 'com.bolingcavalry'
+version '1.0-SNAPSHOT'

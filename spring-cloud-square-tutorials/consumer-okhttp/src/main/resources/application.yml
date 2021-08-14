@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: consumer-okhttp
+
+server:
+  port: 18081
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

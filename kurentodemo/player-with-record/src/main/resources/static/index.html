@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="img/kurento.png" type="image/png">
+
+<link rel="stylesheet"
+	href="webjars/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="webjars/ekko-lightbox/dist/ekko-lightbox.min.css">
+<link rel="stylesheet" href="webjars/demo-console/index.css">
+<link rel="stylesheet" href="css/kurento.css">
+
+<script src="webjars/jquery/dist/jquery.min.js"></script>
+<script src="webjars/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="webjars/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+<script src="/webjars/webrtc-adapter/release/adapter.js"></script>
+<script src="webjars/demo-console/index.js"></script>
+
+<script src="js/kurento-utils.js"></script>
+<script src="js/index.js"></script>
+<title>Kurento Tutorial: Play of a video through WebRTC</title>
+</head>
+<body>
+	<header>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-collapse"></button>
+					<a class="navbar-brand" href=".">Kurento Tutorial</a>
+				</div>
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a
+							href="https://github.com/Kurento/kurento-tutorial-java/tree/master/kurento-player"><span
+								class="glyphicon glyphicon-file"></span> Source Code</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div class="page-header">
+			<h1>Kurento Tutorial: Play of a video through WebRTC</h1>
+			<p>
+				This web application consists on a video play through <a
+					href="http://www.webrtc.org/">WebRTC</a>. The <a
+					href="img/pipeline.png" data-toggle="lightbox"
+					data-title="Play of a video through WebRTC"
+					data-footer="A PlayerEndpoint connected to a WebRtcEnpoint in receive-only mode">Media
+					Pipeline</a> is composed by a <i>PlayerEndpoints</i> directly connected
+				to a <i>WebRtcEndpoint</i> in receive-only mode. To run this demo
+				follow these steps:
+			</p>
+			<ol>
+				<li>Open this page with a browser compliant with WebRTC
+					(Chrome, Firefox).</li>
+				<li>Click on <i>Start</i> to play the video.
+				</li>
+				<li>Click on <i>Pause</i> to pause the video.
+				</li>
+				<li>Click on <i>Stop</i> to finish the playback.
+				</li>
+				<li>Click on <i>Seek</i> to perform a seek at the position
+					indicated in the previous text field (in milliseconds).
+				</li>
+				<li>Click on <i>Get Position</i> to get the playback position
+					in milliseconds.
+				</li>
+			</ol>
+		</div>
+		<div class="row">
+			<div class="col-md-5">
+				<div class="row">
+					<div class="col-md-12">
+						<a id="start" href="#" class="btn btn-success"><span
+							class="glyphicon glyphicon-play"></span> Start </a> <a id="pause"
+							href="#" class="btn btn-primary"><span id="pause-icon"
+							class="glyphicon glyphicon-pause"></span><span id="pause-text">
+								Pause </span></a> <a id="stop" href="#" class="btn btn-danger"><span
+							class="glyphicon glyphicon-stop"></span> Stop</a>
+						<a id="debugDot" href="#" class="btn btn-warning">
+							<span class="glyphicon glyphicon-eye-open"></span>
+							Debug DOT
+						</a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<input type="radio" name="mode" value="video-and-audio"
+							checked="checked"> Video and audio <input type="radio"
+							name="mode" value="video-only"> Video only <input
+							type="radio" name="mode" value="audio-only"> Audio only
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<input type="text" id="videourl"
+							value="http://files.openvidu.io/video/format/sintel.webm"
+							style="width: 100%">
+					</div>
+				</div>
+
+				<br>
+				<div class="row">
+					<div class="col-md-6">
+						<span> Is seekable </span>
+					</div>
+					<div class="col-md-6">
+						<input type="text" id="isSeekable" style="width: 100%" disabled>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<span>Seek init (ms)</span>
+					</div>
+					<div class="col-md-6">
+						<input type="text" id="initSeek" style="width: 100%" disabled>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<span> Seek end (ms)</span>
+					</div>
+					<div class="col-md-6">
+						<input type="text" id="endSeek" style="width: 100%" disabled>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<span> Video duration (ms)</span>
+					</div>
+					<div class="col-md-6">
+						<input type="text" id="duration" style="width: 100%" disabled>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-3">
+						<span> Go to</span>
+					</div>
+					<div class="col-md-9">
+						<input type="text" id="seekPosition" style="width: 50%"> <span>
+							ms</span> <a id="doSeek" href="#" class="btn btn-warning"><span
+							class="glyphicon glyphicon-forward"></span> Seek </a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-3">
+						<span> Video position</span>
+					</div>
+					<div class="col-md-9">
+						<input type="text" id="videoPosition" style="width: 50%" disabled><span>
+							ms</span> <a id="getPosition" href="#" class="btn btn-info"><span
+							class="glyphicon glyphicon-time"></span> Get Position </a>
+					</div>
+				</div>
+
+				<br> <label class="control-label" for="console">Console</label><br>
+				<br>
+				<div id="console" class="democonsole" style="height: 142px;">
+					<ul></ul>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div id="videoBig">
+					<video id="video" autoplay width="640px" height="480px"
+						poster="img/webrtc.png"></video>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="foot-fixed-bottom">
+			<div class="container text-center">
+				<hr>
+				<div class="row">&copy; 2014-2015 Kurento</div>
+				<div class="row">
+					<div class="col-md-4">
+						<a href="http://www.urjc.es"><img src="img/urjc.gif"
+							alt="Universidad Rey Juan Carlos" height="50px"></a>
+					</div>
+					<div class="col-md-4">
+						<a href="http://www.kurento.org"><img src="img/kurento.png"
+							alt="Kurento" height="50px"></a>
+					</div>
+					<div class="col-md-4">
+						<a href="http://www.naevatec.com"><img src="img/naevatec.png"
+							alt="Naevatec" height="50px"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

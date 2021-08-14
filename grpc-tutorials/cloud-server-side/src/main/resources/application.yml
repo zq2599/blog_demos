@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: cloud-server-side
+
+server:
+  port: 0
+grpc:
+  server:
+    port: 0
+eureka:
+  instance:
+    prefer-ip-address: true
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://192.168.50.5:8085/eureka/
