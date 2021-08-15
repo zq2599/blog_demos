@@ -10,7 +10,6 @@
         <module>gateway-nacos-config</module>
         <module>gateway-by-code</module>
         <module>gateway-by-loadbalance</module>
-        <module>gateway-dynamic</module>
         <module>gateway-dynamic-by-nacos</module>
     </modules>
 
