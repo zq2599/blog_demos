@@ -11,6 +11,7 @@
         <module>gateway-by-code</module>
         <module>gateway-by-loadbalance</module>
         <module>gateway-dynamic-by-nacos</module>
+        <module>circuitbreaker-gateway</module>
     </modules>
 
     <parent>
@@ -72,6 +73,27 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.16.16</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>mockserver</artifactId>
+                <version>1.15.3</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mock-server</groupId>
+                <artifactId>mockserver-client-java</artifactId>
+                <version>3.10.8</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.carrotsearch</groupId>
+                <artifactId>junit-benchmarks</artifactId>
+                <version>0.7.2</version>
+                <scope>test</scope>
             </dependency>
 
         </dependencies>
