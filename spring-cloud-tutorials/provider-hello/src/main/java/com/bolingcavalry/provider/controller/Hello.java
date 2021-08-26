@@ -36,6 +36,6 @@ public class Hello {
             Thread.sleep(500);
         }
 
-        return Constants.HELLO_PREFIX + " abc , " + dateStr();
+        return Constants.ACCOUNT_PREFIX + dateStr();
     }
 }

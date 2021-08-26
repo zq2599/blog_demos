@@ -15,5 +15,5 @@ spring:
             - name: CircuitBreaker
               args:
                 name: myCircuitBreaker
-#                fallbackUri: forward:/myfallback
+                fallbackUri: forward:/myfallback
 

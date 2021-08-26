@@ -8,4 +8,5 @@ package com.bolingcavalry.common;
 public interface Constants {
     String HELLO_PREFIX = "Hello World";
     String LB_PREFIX = "Load balance";
+    String ACCOUNT_PREFIX = "Account";
 }
