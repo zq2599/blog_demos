@@ -12,8 +12,7 @@ spring:
           predicates:
             - Path=/hello/**
           filters:
+            - name: CircuitBreakerStatePrinter
             - name: CircuitBreaker
               args:
                 name: myCircuitBreaker
-#                fallbackUri: forward:/myfallback
-#            - name: CircuitBreakerStatePrinter

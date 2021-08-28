@@ -21,35 +21,41 @@ import java.lang.reflect.Method;
  * @description TODO
  * @date 2021/8/28 9:32
  */
-public class StatePrinterGatewayFilter implements GatewayFilter, Ordered
-{
+//public class StatePrinterGatewayFilter implements GatewayFilter, Ordered {
+public class StatePrinterGatewayFilter implements GatewayFilter {
+
+    private ReactiveResilience4JCircuitBreakerFactory reactiveResilience4JCircuitBreakerFactory;
+
+    // 通过构造方法取得reactiveResilience4JCircuitBreakerFactory实例
     public StatePrinterGatewayFilter(ReactiveResilience4JCircuitBreakerFactory reactiveResilience4JCircuitBreakerFactory) {
         this.reactiveResilience4JCircuitBreakerFactory = reactiveResilience4JCircuitBreakerFactory;
     }
 
-    private ReactiveResilience4JCircuitBreakerFactory reactiveResilience4JCircuitBreakerFactory;
-
     private CircuitBreaker circuitBreaker = null;
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
-    {
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        // 这里没有考虑并发的情况，如果是生产环境，请您自行添加上锁的逻辑
         if (null==circuitBreaker) {
             CircuitBreakerRegistry circuitBreakerRegistry = null;
             try {
                 Method method = reactiveResilience4JCircuitBreakerFactory.getClass().getDeclaredMethod("getCircuitBreakerRegistry",(Class[]) null);
+                // 用反射将getCircuitBreakerRegistry方法设置为可访问
                 method.setAccessible(true);
+                // 用反射执行getCircuitBreakerRegistry方法，得到circuitBreakerRegistry
                 circuitBreakerRegistry = (CircuitBreakerRegistry)method.invoke(reactiveResilience4JCircuitBreakerFactory);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
 
+            // 得到所有断路器实例
             Seq<CircuitBreaker> seq = circuitBreakerRegistry.getAllCircuitBreakers();
+            // 用名字过滤，myCircuitBreaker来自路由配置中
             circuitBreaker = seq.filter(breaker -> breaker.getName().equals("myCircuitBreaker"))
                     .getOrNull();
         }
 
-        // 去断路器状态，再判空一次，因为上面的操作未必能取到circuitBreaker
+        // 取断路器状态，再判空一次，因为上面的操作未必能取到circuitBreaker
         String state = (null==circuitBreaker) ? "unknown" : circuitBreaker.getState().name();
 
         System.out.println("state : " + state);
@@ -58,9 +64,8 @@ public class StatePrinterGatewayFilter implements GatewayFilter, Ordered
         return chain.filter(exchange);
     }
 
-    @Override
-    public int getOrder()
-    {
-        return 10;
-    }
+//    @Override
+//    public int getOrder() {
+//        return 10;
+//    }
 }
