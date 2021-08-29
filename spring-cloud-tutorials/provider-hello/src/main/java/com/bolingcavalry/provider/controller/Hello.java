@@ -38,4 +38,10 @@ public class Hello {
 
         return Constants.ACCOUNT_PREFIX + dateStr();
     }
+
+    @GetMapping("/userinfo")
+    public String userInfo(@RequestParam("username") String username) {
+        return Constants.HELLO_PREFIX + " " + username + ", " + dateStr();
+    }
+
 }

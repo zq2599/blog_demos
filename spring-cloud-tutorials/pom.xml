@@ -12,6 +12,7 @@
         <module>gateway-by-loadbalance</module>
         <module>gateway-dynamic-by-nacos</module>
         <module>circuitbreaker-gateway</module>
+        <module>gateway-requestratelimiter</module>
     </modules>
 
     <parent>
