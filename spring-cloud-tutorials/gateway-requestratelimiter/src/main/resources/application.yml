@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: circuitbreaker-gateway
+  # redis配置
+  redis:
+    host: 192.168.50.43
+    port: 6379
+
   cloud:
     gateway:
       routes:
