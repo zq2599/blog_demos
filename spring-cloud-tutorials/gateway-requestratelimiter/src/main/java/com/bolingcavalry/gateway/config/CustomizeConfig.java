@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 /**
  * @author willzhao
  * @version 1.0
@@ -16,6 +18,6 @@ public class CustomizeConfig {
 
     @Bean
     KeyResolver userKeyResolver() {
-        return exchange -> Mono.just("1");
+        return exchange -> Mono.just(exchange.getRequest().getQueryParams().getFirst("username"));
     }
 }
