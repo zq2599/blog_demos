@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author zq2599@gmail.com
@@ -42,6 +43,12 @@ public class Hello {
     @GetMapping("/userinfo")
     public String userInfo(@RequestParam("username") String username) {
         return Constants.HELLO_PREFIX + " " + username + ", " + dateStr();
+    }
+
+    @PostMapping("/change")
+    public Map<String, Object> change(@RequestBody Map<String, Object> map) {
+        map.put("response-tag", dateStr());
+        return map;
     }
 
 }
