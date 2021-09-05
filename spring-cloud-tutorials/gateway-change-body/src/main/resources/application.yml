@@ -7,10 +7,7 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: path_route
+        - id: path_route_str
           uri: http://127.0.0.1:8082
           predicates:
-            - Path=/hello/**
-          filters:
-            - name: ChangeRequestBody
-#            - name: ChangeResponseBody
+            - Path=/hello/str

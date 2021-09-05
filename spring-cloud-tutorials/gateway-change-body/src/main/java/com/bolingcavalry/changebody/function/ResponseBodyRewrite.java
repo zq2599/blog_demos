@@ -1,6 +1,5 @@
 package com.bolingcavalry.changebody.function;
 
-import com.bolingcavalry.changebody.exception.ChangeRequestBodyException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
@@ -40,7 +39,7 @@ public class ResponseBodyRewrite implements RewriteFunction<String, String> {
             return Mono.just(objectMapper.writeValueAsString(map));
         } catch (Exception ex) {
             log.error("2. json process fail", ex);
-            return Mono.error(new ChangeRequestBodyException("2. json process fail", ex));
+            return Mono.error(new Exception("2. json process fail", ex));
         }
     }
 }

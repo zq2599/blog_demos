@@ -23,19 +23,12 @@ public class FilterConfig {
     public RouteLocator routes(RouteLocatorBuilder builder, ObjectMapper objectMapper) {
         return builder
                 .routes()
-//                .route("rewrite_request_upper",
-//                        r -> r.path("/hello/**")
-//                                .filters(f -> f.modifyRequestBody(
-//                                        String.class,
-//                                        String.class,
-//                                        new RequestBodyRewrite(objectMapper)))
-//                                .uri("http://127.0.0.1:8082"))
-
-                .route("rewrite_response_upper",
-                        r -> r.path("/hello/**")
+                .route("path_route_change",
+                        r -> r.path("/hello/change")
                                 .filters(f -> f
                                         .modifyRequestBody(String.class,String.class,new RequestBodyRewrite(objectMapper))
-                                        .modifyResponseBody(String.class, String.class, new ResponseBodyRewrite(objectMapper)))
+                                        .modifyResponseBody(String.class, String.class, new ResponseBodyRewrite(objectMapper))
+                                        )
                         .uri("http://127.0.0.1:8082"))
                 .build();
     }
