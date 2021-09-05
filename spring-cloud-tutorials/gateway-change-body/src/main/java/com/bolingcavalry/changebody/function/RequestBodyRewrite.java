@@ -39,6 +39,11 @@ public class RequestBodyRewrite implements RewriteFunction<String, String> {
         try {
             Map<String, Object> map = objectMapper.readValue(body, Map.class);
 
+            // 如果请求参数中不含user-id，就返回异常
+            if (!map.containsKey("user-id")) {
+                return Mono.error(new Exception("user-id参数不存在"));
+            }
+
             // 取得id
             int userId = (Integer)map.get("user-id");
 
