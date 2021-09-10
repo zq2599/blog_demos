@@ -1,5 +1,6 @@
 package com.bolingcavalry.changebody.function;
 
+import com.bolingcavalry.changebody.exception.MyGatewayException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
@@ -41,7 +42,8 @@ public class RequestBodyRewrite implements RewriteFunction<String, String> {
 
             // 如果请求参数中不含user-id，就返回异常
             if (!map.containsKey("user-id")) {
-                return Mono.error(new Exception("user-id参数不存在"));
+//                return Mono.error(new Exception("user-id参数不存在"));
+                return Mono.error(new MyGatewayException());
             }
 
             // 取得id

@@ -1,6 +1,15 @@
 server:
   #服务端口
   port: 8081
+  # 异常情况时候的配置
+  error:
+    # 控制返回异常信息
+    include-message: always
+    # 控制返回异常类型
+    include-exception: true
+    # 控制返回精确的错误堆栈
+    include-stacktrace: always
+
 spring:
   application:
     name: gateway-change-body
