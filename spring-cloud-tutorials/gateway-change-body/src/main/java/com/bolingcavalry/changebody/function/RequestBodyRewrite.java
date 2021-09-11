@@ -1,10 +1,12 @@
 package com.bolingcavalry.changebody.function;
 
+import com.bolingcavalry.changebody.exception.CustomizeInfoException;
 import com.bolingcavalry.changebody.exception.MyGatewayException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.factory.rewrite.RewriteFunction;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -42,8 +44,22 @@ public class RequestBodyRewrite implements RewriteFunction<String, String> {
 
             // 如果请求参数中不含user-id，就返回异常
             if (!map.containsKey("user-id")) {
+                  // http返回码是500
 //                return Mono.error(new Exception("user-id参数不存在"));
-                return Mono.error(new MyGatewayException());
+                  // http返回码和MyGatewayException的注解有关
+//                return Mono.error(new MyGatewayException());
+
+                CustomizeInfoException customizeInfoException = new CustomizeInfoException();
+                // 这里返回406，您可以按照业务需要自行调整
+                customizeInfoException.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+
+                // 这里按照业务需要自行设置code
+                customizeInfoException.setCode("010020003");
+
+                // 这里按照业务需要自行设置返回的message
+                customizeInfoException.setMessage("请确保请求参数中的user-id字段是有效的");
+
+                return Mono.error(customizeInfoException);
             }
 
             // 取得id
