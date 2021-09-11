@@ -14,6 +14,8 @@
         <module>circuitbreaker-gateway</module>
         <module>gateway-requestratelimiter</module>
         <module>gateway-change-body</module>
+        <module>jaeger-service-provider</module>
+        <module>jaeger-service-consumer</module>
     </modules>
 
     <parent>
@@ -75,6 +77,12 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.16.16</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.opentracing.contrib</groupId>
+                <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
+                <version>3.3.1</version>
             </dependency>
 
             <dependency>
