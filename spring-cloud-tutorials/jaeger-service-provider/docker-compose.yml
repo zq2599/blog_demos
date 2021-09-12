@@ -1,0 +1,38 @@
+version: '3.0'
+
+networks:
+  jaeger-tutorials-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
+
+services:
+  jaeger:
+    image: jaegertracing/all-in-one:1.26
+    container_name: jaeger
+    #选择网络
+    networks:
+      - jaeger-tutorials-net
+    #选择端口
+    ports:
+      - 16686:16686/tcp
+    restart: always
+  redis:
+    image: redis:6.2.5
+    container_name: redis
+    #选择网络
+    networks:
+      - jaeger-tutorials-net
+    restart: always
+  jaeger-service-provider:
+    image: bolingcavalry/jaeger-service-provider:0.0.1
+    container_name: jaeger-service-provider
+    #选择端口
+    ports:
+      - 8088:8080/tcp
+    #选择网络
+    networks:
+      - jaeger-tutorials-net
+    restart: always

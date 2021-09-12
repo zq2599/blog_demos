@@ -1,6 +1,8 @@
 package com.bolingcavalry.jaeger.provider.controller;
 
 import com.bolingcavalry.common.Constants;
+import com.bolingcavalry.jaeger.provider.util.RedisUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +18,9 @@ import java.util.Date;
 @RestController
 public class HelloController {
 
+    @Autowired
+    private RedisUtils redisUtils;
+
     private String dateStr(){
         return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
     }
@@ -26,7 +31,12 @@ public class HelloController {
      */
     @GetMapping("/hello")
     public String hello() {
-        return Constants.HELLO_PREFIX + ", " + dateStr();
+        // 生成当前时间
+        String timeStr = dateStr();
+        // 写入redis
+        redisUtils.set("Hello",  timeStr);
+        // 返回
+        return Constants.HELLO_PREFIX + ", " + timeStr;
     }
 
 }
