@@ -1,3 +1,3 @@
-server:
-  #服务端口
-  port: 8087
+spring:
+  application:
+    name: jaeger-service-provider
