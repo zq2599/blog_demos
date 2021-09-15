@@ -2,6 +2,9 @@ package com.bolingcavalry.jaeger.provider.controller;
 
 import com.bolingcavalry.common.Constants;
 import com.bolingcavalry.jaeger.provider.util.RedisUtils;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +19,22 @@ import java.util.Date;
  * @description 功能介绍
  */
 @RestController
+@Slf4j
 public class HelloController {
+
+    @Autowired
+    private Tracer tracer;
 
     @Autowired
     private RedisUtils redisUtils;
 
     private String dateStr(){
         return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+    }
+
+
+    private void mockBiz() {
+        log.info("hello");
     }
 
     /**
@@ -33,6 +45,18 @@ public class HelloController {
     public String hello() {
         // 生成当前时间
         String timeStr = dateStr();
+
+        Span span = tracer.buildSpan("mockBiz")
+                    .withTag("time-str", timeStr)
+                    .start();
+
+        span.log("normal span log");
+
+        mockBiz();
+
+        span.finish();
+
+
         // 写入redis
         redisUtils.set("Hello",  timeStr);
         // 返回
