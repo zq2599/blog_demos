@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: jaeger-service-consumer
+opentracing:
+  jaeger:
+    enabled: true
+    udp-sender:
+      host: jaeger
+      port: 6831

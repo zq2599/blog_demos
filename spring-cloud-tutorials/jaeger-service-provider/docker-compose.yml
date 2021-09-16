@@ -29,9 +29,16 @@ services:
   jaeger-service-provider:
     image: bolingcavalry/jaeger-service-provider:0.0.1
     container_name: jaeger-service-provider
+    #选择网络
+    networks:
+      - jaeger-tutorials-net
+    restart: always
+  jaeger-service-consumer:
+    image: bolingcavalry/jaeger-service-consumer:0.0.1
+    container_name: jaeger-consumer-provider
     #选择端口
     ports:
-      - 8088:8080/tcp
+      - 18080:8080/tcp
     #选择网络
     networks:
       - jaeger-tutorials-net
