@@ -32,9 +32,22 @@ public class HelloController {
         return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
     }
 
+    /**
+     * 模拟业务执行，耗时100毫秒
+     * @param parentSpan
+     */
+    private void mockBiz(Span parentSpan) {
+        // 基于指定span，创建其子span
+        Span span = tracer.buildSpan("biz").asChildOf(parentSpan).start();
 
-    private void mockBiz() {
         log.info("hello");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        span.finish();
     }
 
     /**
@@ -43,19 +56,27 @@ public class HelloController {
      */
     @GetMapping("/hello")
     public String hello() {
+        long startTime = System.currentTimeMillis();
+
         // 生成当前时间
         String timeStr = dateStr();
 
+        // 创建一个span，在创建的时候就添加一个tag
         Span span = tracer.buildSpan("mockBiz")
                     .withTag("time-str", timeStr)
                     .start();
 
+        // span日志
         span.log("normal span log");
 
-        mockBiz();
+        // 模拟一个耗时100毫秒的业务
+        mockBiz(span);
 
+        // 增加一个tag
+        span.setTag("tiem-used", System.currentTimeMillis()-startTime);
+
+        // span结束
         span.finish();
-
 
         // 写入redis
         redisUtils.set("Hello",  timeStr);
