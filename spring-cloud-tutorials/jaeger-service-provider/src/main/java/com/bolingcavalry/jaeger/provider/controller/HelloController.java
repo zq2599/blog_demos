@@ -38,7 +38,7 @@ public class HelloController {
      */
     private void mockBiz(Span parentSpan) {
         // 基于指定span，创建其子span
-        Span span = tracer.buildSpan("biz").asChildOf(parentSpan).start();
+        Span span = tracer.buildSpan("mockBizChild").asChildOf(parentSpan).start();
 
         log.info("hello");
         try {
@@ -57,6 +57,8 @@ public class HelloController {
     @GetMapping("/hello")
     public String hello() {
         long startTime = System.currentTimeMillis();
+
+        log.info("start hello from [{}]", startTime);
 
         // 生成当前时间
         String timeStr = dateStr();

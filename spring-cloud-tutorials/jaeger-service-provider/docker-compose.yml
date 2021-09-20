@@ -37,7 +37,7 @@ services:
     restart: always
   jaeger-service-consumer:
     image: bolingcavalry/jaeger-service-consumer:0.0.1
-    container_name: jaeger-consumer-provider
+    container_name: jaeger-service-consumer
     #选择端口
     ports:
       - 18080:8080/tcp

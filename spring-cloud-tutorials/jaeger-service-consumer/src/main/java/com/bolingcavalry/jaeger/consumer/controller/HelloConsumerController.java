@@ -32,7 +32,9 @@ public class HelloConsumerController {
     @GetMapping("/hello")
     public String hello() {
         String url = "http://jaeger-service-provider:8080/hello";
-//        String url = "http://localhost:8088/hello";
+
+        log.info("try http request");
+
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
         StringBuffer sb = new StringBuffer();
         HttpStatus statusCode = responseEntity.getStatusCode();

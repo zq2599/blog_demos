@@ -7,3 +7,5 @@ opentracing:
     udp-sender:
       host: jaeger
       port: 6831
+logging:
+  config: classpath:./logback.xml
