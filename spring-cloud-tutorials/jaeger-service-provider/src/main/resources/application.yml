@@ -28,6 +28,8 @@ opentracing:
     udp-sender:
       host: jaeger
       port: 6831
+    # 是否在log日志中打印span
+    log-spans: false
 
 logging:
   config: classpath:./logback.xml
