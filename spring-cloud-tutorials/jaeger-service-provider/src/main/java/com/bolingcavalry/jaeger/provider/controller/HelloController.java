@@ -1,6 +1,7 @@
 package com.bolingcavalry.jaeger.provider.controller;
 
 import com.bolingcavalry.common.Constants;
+import com.bolingcavalry.jaeger.provider.aop.MySpan;
 import com.bolingcavalry.jaeger.provider.util.RedisUtils;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
@@ -55,6 +56,7 @@ public class HelloController {
      * @return
      */
     @GetMapping("/hello")
+    @MySpan
     public String hello() {
         long startTime = System.currentTimeMillis();
 

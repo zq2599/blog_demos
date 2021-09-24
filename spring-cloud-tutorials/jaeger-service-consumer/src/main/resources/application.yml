@@ -7,11 +7,7 @@ opentracing:
     udp-sender:
       host: jaeger
       port: 6831
-    # 是否在log日志中打印span
-    log-spans: false
-    # 比例采样
-    probabilistic-sampler:
-      # 设置采样率为十分之一
-      sampling-rate: 0.1
+    # 上报到Jaeger的服务名，如果不配置就用spring.application.name
+    service-name: 服务提供者
 logging:
   config: classpath:./logback.xml
