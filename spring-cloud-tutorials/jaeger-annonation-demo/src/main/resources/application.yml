@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: jaeger-annonation-demo
+opentracing:
+  jaeger:
+    enabled: true
+    udp-sender:
+      host: 127.0.0.1
+      port: 6831
+server:
+  port: 18080

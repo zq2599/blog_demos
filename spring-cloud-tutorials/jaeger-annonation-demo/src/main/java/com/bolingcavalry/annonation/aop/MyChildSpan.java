@@ -1,4 +1,4 @@
-package com.bolingcavalry.jaeger.provider.aop;
+package com.bolingcavalry.annonation.aop;
 
 import java.lang.annotation.*;
 

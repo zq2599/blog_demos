@@ -16,6 +16,7 @@
         <module>gateway-change-body</module>
         <module>jaeger-service-provider</module>
         <module>jaeger-service-consumer</module>
+        <module>jaeger-annonation-demo</module>
     </modules>
 
     <parent>
