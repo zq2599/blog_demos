@@ -40,13 +40,22 @@ public class SpanAspect {
                 + signature.getName();
     }
 
-    @Around("@annotation(com.bolingcavalry.annonation.aop.MySpan)")
-    public Object traceSpan(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    @Around("@annotation(mySpan)")
+    public Object traceSpan(ProceedingJoinPoint proceedingJoinPoint, MySpan mySpan) throws Throwable {
+
         // 类名:方法名
         String operationDesc = getOperationDesc(proceedingJoinPoint);
 
+        // 看方法的注解中有没有设置name
+        String name = mySpan.spanName();
+
+        // 如果没有设置name，就给span一个默认name
+        if (StringUtils.isEmpty(name)) {
+            name = "span-aspect-" + operationDesc;
+        }
+
         // 创建一个span，在创建的时候就添加一个tag
-        Span span = tracer.buildSpan("span-aspect-" + operationDesc).start();
+        Span span = tracer.buildSpan(name).start();
 
         // span日志
         span.log("span log of " + operationDesc);
@@ -60,10 +69,18 @@ public class SpanAspect {
         return proceedingJoinPoint.proceed();
     }
 
-    @Around("@annotation(com.bolingcavalry.annonation.aop.MyChildSpan)")
-    public Object traceChildSpan(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    @Around("@annotation(myChildSpan)")
+    public Object traceChildSpan(ProceedingJoinPoint proceedingJoinPoint, MyChildSpan myChildSpan) throws Throwable {
         // 类名:方法名
         String operationDesc = getOperationDesc(proceedingJoinPoint);
+
+        // 看方法的注解中有没有设置name
+        String name = myChildSpan.spanName();
+
+        // 如果没有设置name，就给span一个默认name
+        if (StringUtils.isEmpty(name)) {
+            name = "child-span-aspect-" + operationDesc;
+        }
 
         // 从上下文中取得已存在的span
         Span parentSpan = tracer.activeSpan();
@@ -71,7 +88,7 @@ public class SpanAspect {
         if (null==parentSpan) {
             log.error("can not get span from context");
         } else {
-            Span span = tracer.buildSpan("child-span-aspect-" + operationDesc).asChildOf(parentSpan).start();
+            Span span = tracer.buildSpan(name).asChildOf(parentSpan).start();
 
             // span日志
             span.log("child span log of " + operationDesc);

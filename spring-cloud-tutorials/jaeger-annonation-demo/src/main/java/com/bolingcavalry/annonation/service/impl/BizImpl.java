@@ -4,7 +4,6 @@ import com.bolingcavalry.annonation.aop.MySpan;
 import com.bolingcavalry.annonation.service.Biz;
 import com.bolingcavalry.annonation.service.ChildBiz;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,15 +16,14 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class BizImpl implements Biz {
 
-    final
-    ChildBiz childBiz;
+    final ChildBiz childBiz;
 
     public BizImpl(ChildBiz childBiz) {
         this.childBiz = childBiz;
     }
 
     @Override
-    @MySpan
+    @MySpan(spanName = "aaabbb")
     public void mock() {
       log.info("mock");
       childBiz.mockChild();
