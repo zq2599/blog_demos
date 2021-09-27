@@ -8,15 +8,28 @@ networks:
         - subnet: 192.168.1.0/24
           gateway: 192.168.1.1
 
+volumes:
+  # 用于存储badger的数据
+  badger-data:
+
 services:
   jaeger:
     image: jaegertracing/all-in-one:1.26
     container_name: jaeger
     # 处理时钟漂移带来的计算出负数的问题
     command: ["--query.max-clock-skew-adjustment=100ms"]
-    #选择网络
+    # 选择网络
     networks:
       - jaeger-tutorials-net
+    # 持久化，请选择适合自己的目录
+    environment:
+      SPAN_STORAGE_TYPE: badger
+      BADGER_EPHEMERAL: ${BADGER_FLAG}
+      BADGER_DIRECTORY_VALUE: /badger/data
+      BADGER_DIRECTORY_KEY: /badger/key
+    # badger存储在本地卷（或者映射到本地某个目录）
+    volumes:
+      - badger-data:/badger
     #选择端口
     ports:
       - 16686:16686/tcp
