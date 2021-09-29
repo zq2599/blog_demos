@@ -770,6 +770,14 @@
 5. [《pinpoint插件开发之二：从零开始新建一个插件》](https://blog.csdn.net/boling_cavalry/article/details/78568073)
 6. [《分布式系统快速接入pinpoint1.8.3指南》](https://blog.csdn.net/boling_cavalry/article/details/102011341)
 
+## jaeger
+1. [《分布式调用链跟踪工具Jaeger？两分钟极速体验》](https://xinchen.blog.csdn.net/article/details/120243299)
+2. [《Jaeger开发入门(java版)》](https://xinchen.blog.csdn.net/article/details/120360141)
+3. [《Java应用日志如何与Jaeger的trace关联》](https://xinchen.blog.csdn.net/article/details/120389573)
+4. [《Jaeger的客户端采样配置》](https://xinchen.blog.csdn.net/article/details/120395628)
+5. [《极简！一个注解就能创建Jaeger的Span》](https://xinchen.blog.csdn.net/article/details/120475233)
+6. [《Jaeger知识点补充》](https://xinchen.blog.csdn.net/article/details/120394912)
+
 # 算法
 1. [《LeetCode第三题(Longest Substring Without Repeating Characters)三部曲之一：解题思路》](https://blog.csdn.net/boling_cavalry/article/details/86563586)
 2. [《LeetCode第三题(Longest Substring Without Repeating Characters)三部曲之二：编码实现》](https://blog.csdn.net/boling_cavalry/article/details/86654969)
