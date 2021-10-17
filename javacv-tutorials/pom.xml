@@ -12,6 +12,7 @@
         <module>face-detect-demo</module>
         <module>basic-demo</module>
         <module>ffmpeg-basic</module>
+        <module>yolo-demo</module>
     </modules>
 
     <properties>
