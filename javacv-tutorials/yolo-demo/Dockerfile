@@ -1,5 +1,5 @@
-# 基础镜像集成了openjdk8和opencv3.4.3
-FROM bolingcavalry/opencv3.4.3:0.0.3
+# 基础镜像集成了openjdk8和opencv4.5.3
+FROM bolingcavalry/opencv4.5.3:0.0.1
 
 # 创建目录
 RUN mkdir -p /app/images && mkdir -p /app/model

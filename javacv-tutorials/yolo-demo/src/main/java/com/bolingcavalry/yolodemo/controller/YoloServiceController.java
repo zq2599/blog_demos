@@ -164,6 +164,7 @@ public class YoloServiceController {
     public String upload(@RequestParam("fileName") MultipartFile file, Map<String, Object> map){
         log.info("文件 [{}], 大小 [{}]", file.getOriginalFilename(), file.getSize());
 
+        // 文件名称
         String originalFileName = file.getOriginalFilename();
 
         if (!upload(file, uploadPath, originalFileName)){
@@ -171,28 +172,11 @@ public class YoloServiceController {
             return "forward:/index";
         }
 
-        String realPath = uploadPath + "/" + originalFileName;
-
         // 读取文件到Mat
-        Mat src = imread(realPath);
+        Mat src = imread(uploadPath + "/" + originalFileName);
 
-        // 将图片转为四维blog，并且对尺寸做调整
-        Mat inputBlob = blobFromImage(src,
-                1 / 255.0,
-                new Size(width, height),
-                new Scalar(0.0),
-                true,
-                false,
-                CV_32F);
-
-        // 神经网络输入
-        net.setInput(inputBlob);
-
-        // 设置输出结果保存的容器
-        MatVector outs = new MatVector(outNames.size());
-
-        // 推理，结果保存在outs中
-        net.forward(outs, outNames);
+        // 执行推理
+        MatVector outs = doPredict(src);
 
         // 处理原始的推理结果，
         // 对检测到的每个目标，找出置信度最高的类别作为改目标的类别，
@@ -201,7 +185,6 @@ public class YoloServiceController {
 
         // 释放资源
         outs.releaseReference();
-        inputBlob.release();
 
         // 检测到的目标总数
         int detectNum = results.size();
@@ -216,26 +199,45 @@ public class YoloServiceController {
             map.put("fileName", originalFileName);
 
             return "forward:/index";
+        } else {
+            // 检测结果页面的提示信息
+            map.put("msg", "检测到" + results.size() + "个目标");
         }
 
-        // 总次数
-        long totalNums = net.getPerfProfile(new DoublePointer());
-        // 频率
-        double freq = getTickFrequency()/1000;
-        // 总次数除以频率就是总耗时
-        double t =  totalNums / freq;
+        // 计算出总耗时，并输出在图片的左上角
+        printTimeUsed(src);
 
-        // 将本次检测的总耗时打印在展示图像的左上角
-        putText(src,
-                String.format("Inference time : %.2f ms", t),
-                new Point(10, 20),
-                FONT_HERSHEY_SIMPLEX,
-                0.6,
-                new Scalar(255, 0, 0, 0),
-                1,
-                LINE_AA,
-                false);
+        // 将每一个被识别的对象在图片框出来，并在框的左上角标注该对象的类别
+        markEveryDetectObject(src, results);
 
+        // 将添加了标注的图片保持在磁盘上，并将图片信息写入map（给跳转页面使用）
+        saveMarkedImage(map, src);
+
+        return "forward:/index";
+    }
+
+    /**
+     * 将添加了标注的图片保持在磁盘上，并将图片信息写入map（给跳转页面使用）
+      * @param map
+     * @param src
+     */
+    private void saveMarkedImage(Map<String, Object> map, Mat src) {
+        // 新的图片文件名称
+        String newFileName = UUID.randomUUID() + ".png";
+
+        // 图片写到磁盘上
+        imwrite(uploadPath + "/" + newFileName, src);
+
+        // 文件名
+        map.put("fileName", newFileName);
+    }
+
+    /**
+     * 将每一个被识别的对象在图片框出来，并在框的左上角标注该对象的类别
+     * @param src
+     * @param results
+     */
+    private void markEveryDetectObject(Mat src, List<ObjectDetectionResult> results) {
         // 在图片上标出每个目标以及类别和置信度
         for(ObjectDetectionResult result : results) {
             log.info("类别[{}]，置信度[{}%]", result.getClassName(), result.getConfidence() * 100f);
@@ -261,20 +263,60 @@ public class YoloServiceController {
             // 添加内容到图片上
             putText(src, label, new Point(result.getX(), top-4), FONT_HERSHEY_SIMPLEX, 0.5, new Scalar(0, 255, 0, 0), 1, LINE_4, false);
         }
+    }
 
-        // 新的图片文件名称
-        String newFileName = UUID.randomUUID() + ".png";
+    /**
+     * 用神经网络执行推理
+     * @param src
+     * @return
+     */
+    private MatVector doPredict(Mat src) {
+        // 将图片转为四维blog，并且对尺寸做调整
+        Mat inputBlob = blobFromImage(src,
+                1 / 255.0,
+                new Size(width, height),
+                new Scalar(0.0),
+                true,
+                false,
+                CV_32F);
 
-        // 图片写到磁盘上
-        imwrite(uploadPath + "/" + newFileName, src);
+        // 神经网络输入
+        net.setInput(inputBlob);
 
-        // 检测结果页面的提示信息
-        map.put("msg", "检测到" + results.size() + "个目标");
+        // 设置输出结果保存的容器
+        MatVector outs = new MatVector(outNames.size());
 
-        // 文件名
-        map.put("fileName", newFileName);
+        // 推理，结果保存在outs中
+        net.forward(outs, outNames);
 
-        return "forward:/index";
+        // 释放资源
+        inputBlob.release();
+
+        return outs;
+    }
+
+    /**
+     * 计算出总耗时，并输出在图片的左上角
+     * @param src
+     */
+    private void printTimeUsed(Mat src) {
+        // 总次数
+        long totalNums = net.getPerfProfile(new DoublePointer());
+        // 频率
+        double freq = getTickFrequency()/1000;
+        // 总次数除以频率就是总耗时
+        double t =  totalNums / freq;
+
+        // 将本次检测的总耗时打印在展示图像的左上角
+        putText(src,
+                String.format("Inference time : %.2f ms", t),
+                new Point(10, 20),
+                FONT_HERSHEY_SIMPLEX,
+                0.6,
+                new Scalar(255, 0, 0, 0),
+                1,
+                LINE_AA,
+                false);
     }
 
     /**
