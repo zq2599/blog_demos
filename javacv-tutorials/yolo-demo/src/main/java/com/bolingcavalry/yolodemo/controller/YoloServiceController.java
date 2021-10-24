@@ -123,7 +123,7 @@ public class YoloServiceController {
     }
 
     /**
-     * 上次文件到指定目录
+     * 上传文件到指定目录
      * @param file 文件
      * @param path 文件存放路径
      * @param fileName 源文件名
@@ -385,7 +385,7 @@ public class YoloServiceController {
         FloatPointer confidencesPointer = new FloatPointer(confidences.size());
         confidencesPointer.put(confidences.get());
 
-        // 非极大抑制
+        // 非极大值抑制
         NMSBoxes(boxes, confidencesPointer, confidenceThreshold, nmsThreshold, indices, 1.f, 0);
 
         // 将检测结果放入BO对象中，便于业务处理
