@@ -38,6 +38,7 @@
 3. [《Docker下Java文件上传服务三部曲之二：服务端开发》](https://blog.csdn.net/boling_cavalry/article/details/79367520)
 4. [《Docker下Java文件上传服务三部曲之三：wireshark抓包分析》](https://blog.csdn.net/boling_cavalry/article/details/79380053)
 5. [《实战Redis序列化性能测试(Kryo和字符串)》](https://blog.csdn.net/boling_cavalry/article/details/80719683)
+6. [《JavaCPP快速入门(官方demo增强版)》](https://xinchen.blog.csdn.net/article/details/118636417)
 
 ## 畅游JVM世界
 1. [《极简，利用Docker仅两行命令就能下载和编译OpenJDK11》](https://blog.csdn.net/boling_cavalry/article/details/83353102)
@@ -133,8 +134,10 @@
 6. [客户端动态获取服务端地址](https://xinchen.blog.csdn.net/article/details/116479078)
 7. [基于eureka的注册发现](https://xinchen.blog.csdn.net/article/details/116635441)
 
-## javacv特辑
+## 视图邻域
 1. [Java版流媒体编解码和图像处理(JavaCPP+FFmpeg)](https://xinchen.blog.csdn.net/article/details/119062543)
+2. [《Ubuntu16桌面版编译和安装OpenCV4》](https://xinchen.blog.csdn.net/article/details/120964456)
+3. [《Ubuntu16桌面版编译OpenCV4的java库和so库》](https://xinchen.blog.csdn.net/article/details/121069372)
 
 # Spring领域
 
@@ -213,6 +216,20 @@
 6. [《Spring Cloud源码分析之Eureka篇第六章：服务注册》](https://blog.csdn.net/boling_cavalry/article/details/82861618)
 7. [《Spring Cloud源码分析之Eureka篇第七章：续约》](https://blog.csdn.net/boling_cavalry/article/details/82915355)
 8. [《Spring Cloud源码分析之Eureka篇第八章：服务注册名称的来历》](https://blog.csdn.net/boling_cavalry/article/details/82930728)
+
+## Spring Cloud Gateway从入门到提高
+. [《Spring Cloud Gateway实战之一：初探》](https://xinchen.blog.csdn.net/article/details/119490780)
+. [《Spring Cloud Gateway实战之二：更多路由配置方式》](https://xinchen.blog.csdn.net/article/details/119592175)
+. [《Spring Cloud Gateway实战之三：动态路由》](https://xinchen.blog.csdn.net/article/details/119705402)
+. [《Spring Cloud Gateway实战之四：内置predicate小结》](https://xinchen.blog.csdn.net/article/details/119724550)
+. [《Spring Cloud Gateway实战之五：内置filter》](https://xinchen.blog.csdn.net/article/details/119814985)
+. [《Spring Cloud Gateway的断路器(CircuitBreaker)功能》](https://xinchen.blog.csdn.net/article/details/119849436)
+. [《Spring Cloud Gateway自定义过滤器实战(观测断路器状态变化)》](https://xinchen.blog.csdn.net/article/details/119967617)
+. [《Spring Cloud Gateway限流实战》](https://xinchen.blog.csdn.net/article/details/119989069)
+. [《Spring Cloud Gateway修改请求和响应body的内容》](https://xinchen.blog.csdn.net/article/details/120096926)
+. [《Spring Cloud Gateway过滤器精确控制异常返回(分析篇)》](https://xinchen.blog.csdn.net/article/details/120114474)
+. [《Spring Cloud Gateway过滤器精确控制异常返回(实战，控制http返回码和message字段)》](https://xinchen.blog.csdn.net/article/details/120170949)
+. [《Spring Cloud Gateway过滤器精确控制异常返回(实战，完全定制返回body)》](https://xinchen.blog.csdn.net/article/details/120239199)
 
 ## spring-cloud-alibaba实战
 1. [《Docker下,两分钟极速体验Nacos》](https://blog.csdn.net/boling_cavalry/article/details/97617353)；
@@ -815,6 +832,10 @@
 # 机器学习
 1. [《机器学习的开发环境准备》](https://blog.csdn.net/boling_cavalry/article/details/96628350)
 2. [《Docker下，五分钟极速体验机器学习》](https://blog.csdn.net/boling_cavalry/article/details/96718499)
+3. [《来自Java程序员的Python新手入门小结》](https://xinchen.blog.csdn.net/article/details/120575494)
+4. [《NumPy学习笔记》](https://xinchen.blog.csdn.net/article/details/120608660)
+5. [《Ubuntu16安装Nvidia驱动(GTX1060显卡)》](https://xinchen.blog.csdn.net/article/details/120633388)
+6. [《Anaconda3+CUDA10.1+CUDNN7.6+TensorFlow2.6安装（Ubuntu16）》](https://xinchen.blog.csdn.net/article/details/120639465)
 
 # 深度学习
 
@@ -833,6 +854,9 @@
 4. [《三分钟极速体验：Java版人脸检测》](https://blog.csdn.net/boling_cavalry/article/details/118862001)
 5. [《Java版人脸检测详解上篇：运行环境的Docker镜像(CentOS+JDK+OpenCV)》](https://blog.csdn.net/boling_cavalry/article/details/118876299)
 6. [《Java版人脸检测详解下篇：编码》](https://blog.csdn.net/boling_cavalry/article/details/118970439)
+7. [《三分钟：极速体验JAVA版目标检测(YOLO4)》](https://xinchen.blog.csdn.net/article/details/120819464)
+8. [《制作JavaCV应用依赖的基础Docker镜像(CentOS7+JDK8+OpenCV4)》](https://xinchen.blog.csdn.net/article/details/120926346)
+9. [《超详细的编码实战，让你的springboot应用识别图片中的行人、汽车、狗子、喵星人（JavaCV+YOLO4）》](https://xinchen.blog.csdn.net/article/details/120929514)
 
 # 多媒体
 ## kurento
