@@ -13,6 +13,7 @@
         <module>basic-demo</module>
         <module>ffmpeg-basic</module>
         <module>yolo-demo</module>
+        <module>simple-grab-push</module>
     </modules>
 
     <properties>
