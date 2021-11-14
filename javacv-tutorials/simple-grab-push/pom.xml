@@ -13,16 +13,24 @@
     <artifactId>simple-grab-push</artifactId>
     <packaging>jar</packaging>
 
-<!--    <properties>-->
-<!--        <java.version>1.8</java.version>-->
-<!--        <maven.compiler.source>8</maven.compiler.source>-->
-<!--        <maven.compiler.target>8</maven.compiler.target>-->
-<!--        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>-->
-<!--        <springboot.version>2.4.8</springboot.version>-->
-<!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
-<!--        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>-->
-<!--        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>-->
-<!--    </properties>-->
+
+    <!--    <properties>-->
+    <!--        <java.version>1.8</java.version>-->
+    <!--        <maven.compiler.source>8</maven.compiler.source>-->
+    <!--        <maven.compiler.target>8</maven.compiler.target>-->
+    <!--        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>-->
+    <!--        <springboot.version>2.4.8</springboot.version>-->
+    <!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
+    <!--        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>-->
+    <!--        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>-->
+    <!--    </properties>-->
+
+
+    <properties>
+<!--        <javacpp.platform.dependencies>linux-x86_64</javacpp.platform.dependencies>-->
+        <javacpp.platform.dependencies>macosx-x86_64</javacpp.platform.dependencies>
+    </properties>
+
 
     <dependencyManagement>
         <dependencies>
@@ -36,6 +44,7 @@
         </dependencies>
     </dependencyManagement>
 
+
     <dependencies>
         <!--FreeMarker模板视图依赖-->
         <dependency>
@@ -43,15 +52,18 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,13 +72,60 @@
         </dependency>
 
 
+
+
+
+
+
+
+        <!-- 视频处理 -->
+        <!-- https://mvnrepository.com/artifact/org.bytedeco/javacv -->
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv</artifactId>
-            <version>1.0</version>
+            <version>1.5.6</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.bytedeco/javacpp -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacpp</artifactId>
+            <version>1.5.6</version>
         </dependency>
 
+
+<!--        <dependency>-->
+<!--            <groupId>org.bytedeco.javacpp-presets</groupId>-->
+<!--            <artifactId>opencv</artifactId>-->
+<!--            <version>3.4.3-1.4.3</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.bytedeco.javacpp-presets</groupId>-->
+<!--            <artifactId>opencv</artifactId>-->
+<!--            <version>3.4.3-1.4.3</version>-->
+<!--            <classifier>${javacpp.platform.dependencies}</classifier>-->
+<!--        </dependency>-->
+
+
+        <!-- https://mvnrepository.com/artifact/org.bytedeco.javacpp-presets/ffmpeg -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>4.4-1.5.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>4.4-1.5.6</version>
+            <classifier>${javacpp.platform.dependencies}</classifier>
+        </dependency>
+
+
         <!--
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv</artifactId>
+            <version>1.5.6</version>
+        </dependency>
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacpp</artifactId>
@@ -81,7 +140,9 @@
         </dependency>
         -->
 
+
     </dependencies>
+
 
     <build>
         <plugins>
@@ -102,5 +163,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
