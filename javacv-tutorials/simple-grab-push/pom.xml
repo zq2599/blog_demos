@@ -29,6 +29,12 @@
     <properties>
 <!--        <javacpp.platform.dependencies>linux-x86_64</javacpp.platform.dependencies>-->
         <javacpp.platform.dependencies>macosx-x86_64</javacpp.platform.dependencies>
+        <!-- javacpp当前版本 -->
+        <javacpp.version>1.5.6</javacpp.version>
+        <!-- opencv版本 -->
+        <opencv.version>4.5.3</opencv.version>
+        <!-- ffmpeg版本 -->
+        <ffmpeg.version>4.4</ffmpeg.version>
     </properties>
 
 
@@ -79,43 +85,36 @@
 
 
         <!-- 视频处理 -->
-        <!-- https://mvnrepository.com/artifact/org.bytedeco/javacv -->
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv</artifactId>
-            <version>1.5.6</version>
+            <version>${javacpp.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.bytedeco/javacpp -->
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacpp</artifactId>
-            <version>1.5.6</version>
-        </dependency>
-
-
-<!--        <dependency>-->
-<!--            <groupId>org.bytedeco.javacpp-presets</groupId>-->
-<!--            <artifactId>opencv</artifactId>-->
-<!--            <version>3.4.3-1.4.3</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.bytedeco.javacpp-presets</groupId>-->
-<!--            <artifactId>opencv</artifactId>-->
-<!--            <version>3.4.3-1.4.3</version>-->
-<!--            <classifier>${javacpp.platform.dependencies}</classifier>-->
-<!--        </dependency>-->
-
-
-        <!-- https://mvnrepository.com/artifact/org.bytedeco.javacpp-presets/ffmpeg -->
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>ffmpeg</artifactId>
-            <version>4.4-1.5.6</version>
+            <version>${javacpp.version}</version>
         </dependency>
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>ffmpeg</artifactId>
-            <version>4.4-1.5.6</version>
+            <version>${ffmpeg.version}-${javacpp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>${ffmpeg.version}-${javacpp.version}</version>
+            <classifier>${javacpp.platform.dependencies}</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>opencv</artifactId>
+            <version>${opencv.version}-${javacpp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>opencv</artifactId>
+            <version>${opencv.version}-${javacpp.version}</version>
             <classifier>${javacpp.platform.dependencies}</classifier>
         </dependency>
 

@@ -1,7 +1,10 @@
 package com.bolingcavalry.grabpush.controller;
 
 //import lombok.extern.slf4j.Slf4j;
+import org.bytedeco.ffmpeg.avcodec.AVPacket;
+import org.bytedeco.ffmpeg.global.avcodec;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.Java2DFrameConverter;
 //import org.springframework.web.bind.annotation.GetMapping;
@@ -30,32 +33,59 @@ public class GrabPushController {
 //    }
 
     public static void main(String[] args) throws Exception {
-//        File tempFile = new File("/Users/zhaoqin/temp/202111/14/", "100410A000.mp4");
-//        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(new FileInputStream(tempFile));
-
-        String url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
-        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(url);
+        String pullUrl = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+        String pushUrl = "rtmp://192.168.50.43:11935/live/livestream";
+        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(pullUrl);
+        grabber.setOption("rtsp_transport", "tcp");
         grabber.start();
-        Frame frame;
 
-        Java2DFrameConverter java2DFrameConverter = new Java2DFrameConverter();
 
-        String imageMat = "jpg";
+        /*
+        FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(pushUrl,
+                                        grabber.getImageWidth(),
+                                        grabber.getImageHeight(),
+                                        grabber.getAudioChannels());
 
-        for (int i = 0 ; i < 10 ; i++) {
-            frame = grabber.grabImage();
+        int v_rs = 25;
 
-            BufferedImage bufferedImage = java2DFrameConverter.getBufferedImage(frame);
+        recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264); // avcodec.AV_CODEC_ID_H264
+        recorder.setFormat("flv");
+        recorder.setFrameRate(v_rs);
+        recorder.setGopSize(v_rs);
 
-            String fileName = "/Users/zhaoqin/temp/202111/15/images/video-frame-" + i + "." + imageMat;
-            File output = new File(fileName);
+        recorder.start(grabber.getFormatContext());
 
-            ImageIO.write(bufferedImage, imageMat, output);
-            System.out.println("save [" + fileName + "]");
+        AVPacket avPacket;
+
+        while (null!=(avPacket= grabber.grabPacket())) {
+            recorder.recordPacket(avPacket);
         }
 
-        grabber.stop();
+        recorder.close();
+        grabber.close();
+        */
+
+
+        FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(pushUrl,
+                grabber.getImageWidth()*2,
+                grabber.getImageHeight()*2,
+                grabber.getAudioChannels());
+
+        int v_rs = 25;
+
+        recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264); // avcodec.AV_CODEC_ID_H264
+        recorder.setFormat("flv");
+        recorder.setFrameRate(v_rs);
+        recorder.setGopSize(v_rs);
+
+        recorder.start();
+
+        Frame frame;
+        while (null!=(frame=grabber.grab())) {
+            recorder.record(frame);
+        }
+
+        recorder.close();
+        grabber.close();
     }
-
-
 }
