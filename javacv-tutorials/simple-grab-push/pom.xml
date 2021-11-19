@@ -95,6 +95,7 @@
             <artifactId>javacpp</artifactId>
             <version>${javacpp.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>ffmpeg</artifactId>
@@ -117,6 +118,7 @@
             <version>${opencv.version}-${javacpp.version}</version>
             <classifier>${javacpp.platform.dependencies}</classifier>
         </dependency>
+
 
 
         <!--
