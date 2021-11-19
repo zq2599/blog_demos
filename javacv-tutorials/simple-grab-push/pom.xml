@@ -93,6 +93,11 @@
         </dependency>
         <dependency>
             <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+            <version>${javacpp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
             <artifactId>javacpp</artifactId>
             <version>${javacpp.version}</version>
         </dependency>
