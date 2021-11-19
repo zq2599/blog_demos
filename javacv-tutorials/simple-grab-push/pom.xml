@@ -28,7 +28,8 @@
 
     <properties>
 <!--        <javacpp.platform.dependencies>linux-x86_64</javacpp.platform.dependencies>-->
-        <javacpp.platform.dependencies>macosx-x86_64</javacpp.platform.dependencies>
+<!--        <javacpp.platform.dependencies>macosx-x86_64</javacpp.platform.dependencies>-->
+        <javacpp.platform.dependencies>windows-x86_64</javacpp.platform.dependencies>
         <!-- javacpp当前版本 -->
         <javacpp.version>1.5.6</javacpp.version>
         <!-- opencv版本 -->

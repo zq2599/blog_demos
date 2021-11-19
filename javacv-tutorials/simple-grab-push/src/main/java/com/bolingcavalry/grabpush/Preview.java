@@ -22,7 +22,8 @@ import javax.swing.*;
 public class Preview {
     public static void main(String[] args) throws Exception {
 //        InputStream in = new FileInputStream("/Users/zhaoqin/temp/202111/19/123.mp4");
-        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("/Users/zhaoqin/temp/202111/19/123.mp4");
+//        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("/Users/zhaoqin/temp/202111/19/123.mp4");
+        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("E:\\temp\\202107\\24\\test.mp4");
         grabber.start();
         CanvasFrame canvasFrame = new CanvasFrame("视频预览");
         canvasFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
