@@ -14,7 +14,7 @@ import org.bytedeco.javacv.Frame;
 /**
  * @author willzhao
  * @version 1.0
- * @description TODO
+ * @description 读取指定的mp4文件，推送到SRS服务器
  * @date 2021/11/19 8:49
  */
 @Slf4j
@@ -22,15 +22,19 @@ public class PushMp4 {
     /**
      * 本地MP4文件的完整路径(两分零五秒的视频)
      */
-//    private static final String MP4_FILE_PATH = "E:\\temp\\202111\\20\\sample-mp4-file.mp4";
-    private static final String MP4_FILE_PATH = "E:\\temp\\202111\\20\\Jellyfish_1080_10s_30MB.mp4";
+    private static final String MP4_FILE_PATH = "E:\\temp\\202111\\20\\sample-mp4-file.mp4";
 
     /**
      * SRS的推流地址
      */
     private static final String SRS_PUSH_ADDRESS = "rtmp://192.168.50.43:11935/live/livestream";
 
-
+    /**
+     * 读取指定的mp4文件，推送到SRS服务器
+     * @param sourceFilePath 视频文件的绝对路径
+     * @param PUSH_ADDRESS 推流地址
+     * @throws Exception
+     */
     private static void grabAndPush(String sourceFilePath, String PUSH_ADDRESS) throws Exception {
         // ffmepg日志级别
         avutil.av_log_set_level(avutil.AV_LOG_ERROR);
@@ -49,6 +53,7 @@ public class PushMp4 {
 
         log.info("帧抓取器初始化完成，耗时[{}]毫秒", System.currentTimeMillis()-startTime);
 
+        // grabber.start方法中，初始化的解码器信息存在放在grabber的成员变量oc中
         AVFormatContext avFormatContext = grabber.getFormatContext();
 
         // 文件内有几个媒体流（一般是视频流+音频流）
@@ -75,8 +80,11 @@ public class PushMp4 {
             log.info("流的索引[{}]，编码器类型[{}]，编码器ID[{}]", i, avCodecParameters.codec_type(), avCodecParameters.codec_id());
         }
 
+        // 视频宽度
         int frameWidth = grabber.getImageWidth();
+        // 视频高度
         int frameHeight = grabber.getImageHeight();
+        // 音频通道数量
         int audioChannels = grabber.getAudioChannels();
 
         log.info("视频宽度[{}]，视频高度[{}]，音频通道数[{}]",
@@ -162,8 +170,6 @@ public class PushMp4 {
     }
 
     public static void main(String[] args) throws Exception {
-        for(;;) {
-            grabAndPush(MP4_FILE_PATH, SRS_PUSH_ADDRESS);
-        }
+        grabAndPush(MP4_FILE_PATH, SRS_PUSH_ADDRESS);
     }
 }

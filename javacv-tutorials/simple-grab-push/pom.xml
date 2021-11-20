@@ -13,19 +13,6 @@
     <artifactId>simple-grab-push</artifactId>
     <packaging>jar</packaging>
 
-
-    <!--    <properties>-->
-    <!--        <java.version>1.8</java.version>-->
-    <!--        <maven.compiler.source>8</maven.compiler.source>-->
-    <!--        <maven.compiler.target>8</maven.compiler.target>-->
-    <!--        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>-->
-    <!--        <springboot.version>2.4.8</springboot.version>-->
-    <!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
-    <!--        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>-->
-    <!--        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>-->
-    <!--    </properties>-->
-
-
     <properties>
 <!--        <javacpp.platform.dependencies>linux-x86_64</javacpp.platform.dependencies>-->
 <!--        <javacpp.platform.dependencies>macosx-x86_64</javacpp.platform.dependencies>-->
@@ -38,138 +25,69 @@
         <ffmpeg.version>4.4</ffmpeg.version>
     </properties>
 
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${springboot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-
     <dependencies>
-        <!--FreeMarker模板视图依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
 
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
         </dependency>
 
-
-
-
-
-
-
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
+            <version>2.13.3</version>
+        </dependency>
 
         <!-- 视频处理 -->
+        <!--
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv</artifactId>
             <version>${javacpp.version}</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv-platform</artifactId>
             <version>${javacpp.version}</version>
         </dependency>
+
+        <!--
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacpp</artifactId>
             <version>${javacpp.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>ffmpeg</artifactId>
             <version>${ffmpeg.version}-${javacpp.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>ffmpeg</artifactId>
-            <version>${ffmpeg.version}-${javacpp.version}</version>
-            <classifier>${javacpp.platform.dependencies}</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>opencv</artifactId>
-            <version>${opencv.version}-${javacpp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>opencv</artifactId>
-            <version>${opencv.version}-${javacpp.version}</version>
-            <classifier>${javacpp.platform.dependencies}</classifier>
-        </dependency>
-
-
-
+        -->
         <!--
         <dependency>
             <groupId>org.bytedeco</groupId>
-            <artifactId>javacv</artifactId>
-            <version>1.5.6</version>
+            <artifactId>ffmpeg</artifactId>
+            <version>${ffmpeg.version}-${javacpp.version}</version>
+            <classifier>${javacpp.platform.dependencies}</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>opencv</artifactId>
+            <version>${opencv.version}-${javacpp.version}</version>
         </dependency>
         <dependency>
             <groupId>org.bytedeco</groupId>
-            <artifactId>javacpp</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.bytedeco.javacpp-presets</groupId>
-            <artifactId>opencv-platform</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.bytedeco.javacpp-presets</groupId>
-            <artifactId>ffmpeg-platform</artifactId>
+            <artifactId>opencv</artifactId>
+            <version>${opencv.version}-${javacpp.version}</version>
+            <classifier>${javacpp.platform.dependencies}</classifier>
         </dependency>
         -->
-
-
     </dependencies>
-
-
-    <build>
-        <plugins>
-            <!-- 如果父工程不是springboot，就要用以下方式使用插件，才能生成正常的jar -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.bolingcavalry.yolodemo.YoloDemoApplication</mainClass>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
-
 </project>
