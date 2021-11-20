@@ -14,15 +14,8 @@
     <packaging>jar</packaging>
 
     <properties>
-<!--        <javacpp.platform.dependencies>linux-x86_64</javacpp.platform.dependencies>-->
-<!--        <javacpp.platform.dependencies>macosx-x86_64</javacpp.platform.dependencies>-->
-        <javacpp.platform.dependencies>windows-x86_64</javacpp.platform.dependencies>
         <!-- javacpp当前版本 -->
         <javacpp.version>1.5.6</javacpp.version>
-        <!-- opencv版本 -->
-        <opencv.version>4.5.3</opencv.version>
-        <!-- ffmpeg版本 -->
-        <ffmpeg.version>4.4</ffmpeg.version>
     </properties>
 
     <dependencies>
@@ -30,64 +23,22 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-to-slf4j</artifactId>
             <version>2.13.3</version>
         </dependency>
 
-        <!-- 视频处理 -->
-        <!--
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>javacv</artifactId>
-            <version>${javacpp.version}</version>
-        </dependency>
-        -->
+        <!-- javacv相关依赖，一个就够了 -->
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv-platform</artifactId>
             <version>${javacpp.version}</version>
         </dependency>
-
-        <!--
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>javacpp</artifactId>
-            <version>${javacpp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>ffmpeg</artifactId>
-            <version>${ffmpeg.version}-${javacpp.version}</version>
-        </dependency>
-        -->
-        <!--
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>ffmpeg</artifactId>
-            <version>${ffmpeg.version}-${javacpp.version}</version>
-            <classifier>${javacpp.platform.dependencies}</classifier>
-        </dependency>
-
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>opencv</artifactId>
-            <version>${opencv.version}-${javacpp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>opencv</artifactId>
-            <version>${opencv.version}-${javacpp.version}</version>
-            <classifier>${javacpp.platform.dependencies}</classifier>
-        </dependency>
-        -->
     </dependencies>
 </project>

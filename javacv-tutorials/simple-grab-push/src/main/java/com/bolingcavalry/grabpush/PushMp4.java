@@ -22,7 +22,7 @@ public class PushMp4 {
     /**
      * 本地MP4文件的完整路径(两分零五秒的视频)
      */
-    private static final String MP4_FILE_PATH = "E:\\temp\\202111\\20\\sample-mp4-file.mp4";
+    private static final String MP4_FILE_PATH = "/Users/zhaoqin/temp/202111/20/sample-mp4-file.mp4";
 
     /**
      * SRS的推流地址
@@ -37,7 +37,7 @@ public class PushMp4 {
      */
     private static void grabAndPush(String sourceFilePath, String PUSH_ADDRESS) throws Exception {
         // ffmepg日志级别
-        avutil.av_log_set_level(avutil.AV_LOG_ERROR);
+        avutil.av_log_set_level(avutil.AV_LOG_INFO);
         FFmpegLogCallback.set();
 
         // 实例化帧抓取器对象，将文件路径传入
@@ -127,6 +127,7 @@ public class PushMp4 {
         Frame frame;
 
         startTime = System.currentTimeMillis();
+
         log.info("开始推流");
 
         long videoTS = 0;
@@ -135,26 +136,39 @@ public class PushMp4 {
         int audioFrameNum = 0;
         int dataFrameNum = 0;
 
+        // 假设一秒钟15帧，那么两帧间隔就是(1000/15)毫秒
+        int interVal = 1000/frameRate;
+        // 发送完一帧后sleep的时间，不能完全等于(1000/frameRate)，不然会卡顿，
+        // 要更小一些，这里取八分之一
+        interVal/=8;
+
         // 持续从视频源取帧
         while (null!=(frame=grabber.grab())) {
             videoTS = 1000 * (System.currentTimeMillis() - startTime);
 
+            // 时间戳
             recorder.setTimestamp(videoTS);
 
+            // 有图像，就把视频帧加一
             if (null!=frame.image) {
                 videoFrameNum++;
             }
 
+            // 有声音，就把音频帧加一
             if (null!=frame.samples) {
                 audioFrameNum++;
             }
 
+            // 有数据，就把数据帧加一
             if (null!=frame.data) {
                 dataFrameNum++;
             }
 
             // 取出的每一帧，都推送到SRS
             recorder.record(frame);
+
+            // 停顿一下再推送
+            Thread.sleep(interVal);
         }
 
         log.info("推送完成，视频帧[{}]，音频帧[{}]，数据帧[{}]，耗时[{}]秒",
