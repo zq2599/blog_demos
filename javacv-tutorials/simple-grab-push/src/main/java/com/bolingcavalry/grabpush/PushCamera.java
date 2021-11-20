@@ -20,7 +20,8 @@ import org.bytedeco.ffmpeg.global.avcodec;
  */
 public class PushCamera {
     public static void main(String[] args) throws InterruptedException, org.bytedeco.javacv.FrameRecorder.Exception, Exception {
-        recordCamera("E:\\temp\\202111\\19\\output.mp4", 25);//这里将地址换成你的远程视频服务器地址例如recordCamera("rtmp://192.168.30.21/live/record1",25);  即可
+//        recordCamera("E:\\temp\\202111\\19\\output.mp4", 25);//这里将地址换成你的远程视频服务器地址例如recordCamera("rtmp://192.168.30.21/live/record1",25);  即可
+        recordCamera("/Users/zhaoqin/temp/202111/19/output.mp4", 25);//这里将地址换成你的远程视频服务器地址例如recordCamera("rtmp://192.168.30.21/live/record1",25);  即可
     }
 
     /**

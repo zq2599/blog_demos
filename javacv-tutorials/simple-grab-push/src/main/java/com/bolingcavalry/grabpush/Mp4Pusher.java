@@ -15,14 +15,13 @@ import java.io.InputStream;
  * @description TODO
  * @date 2021/11/19 8:49
  */
-public class PushMp4 {
+public class Mp4Pusher {
     public static void main(String[] args) throws Exception {
-        String pushUrl = "rtmp://192.168.50.43:11935/live/livestream2";
-        InputStream in = new FileInputStream("E:\\temp\\202107\\24\\test.mp4");
-        // 不能用maximumSize=0，否则会立即退出
-        //FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(in, 0);
-        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(in);
+        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("/Users/zhaoqin/temp/202111/19/123.mp4");
+        String pushUrl = "rtmp://192.168.50.43:11935/live/livestream1";
         grabber.start();
+
+
         FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(pushUrl,
                 grabber.getImageWidth()*2,
                 grabber.getImageHeight()*2,
