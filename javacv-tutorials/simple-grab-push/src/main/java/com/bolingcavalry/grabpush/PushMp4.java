@@ -22,7 +22,8 @@ public class PushMp4 {
     /**
      * 本地MP4文件的完整路径(两分零五秒的视频)
      */
-    private static final String MP4_FILE_PATH = "/Users/zhaoqin/temp/202111/20/sample-mp4-file.mp4";
+//    private static final String MP4_FILE_PATH = "/Users/zhaoqin/temp/202111/20/sample-mp4-file.mp4";
+    private static final String MP4_FILE_PATH = "E:\\temp\\202111\\20\\sample-mp4-file.mp4";
 
     /**
      * SRS的推流地址

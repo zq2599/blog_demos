@@ -54,6 +54,6 @@ public class RecordCamera extends AbstractCameraApplication {
     }
 
     public static void main(String[] args) {
-        new RecordCamera(30.0).action(100);
+        new RecordCamera(30.0).action(1000);
     }
 }

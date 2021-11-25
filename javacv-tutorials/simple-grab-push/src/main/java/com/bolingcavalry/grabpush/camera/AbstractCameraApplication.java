@@ -122,7 +122,7 @@ public abstract class AbstractCameraApplication {
         Mat mat;
 
         // 超过指定时间就结束循环
-        while (System.currentTimeMillis()<endTime && (captureFrame = grabber.grab()) != null) {
+        while (System.currentTimeMillis()<endTime) {
             captureFrame = grabber.grab();
 
             if (null==captureFrame) {

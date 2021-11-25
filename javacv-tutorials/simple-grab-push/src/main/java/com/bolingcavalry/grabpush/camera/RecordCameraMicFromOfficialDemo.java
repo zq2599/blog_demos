@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.ffmpeg.global.avcodec;
 import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.bytedeco.javacv.Frame;
-import org.bytedeco.javacv.FrameRecorder;
 
 import javax.sound.sampled.*;
 import java.nio.ByteBuffer;
@@ -14,7 +13,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class RecordCameraMic extends AbstractCameraApplication {
+public class RecordCameraMicFromOfficialDemo extends AbstractCameraApplication {
 
 //    private static final String RECORD_ADDRESS = "/Users/zhaoqin/temp/202111/20/camera.mp4";
     private static final String RECORD_ADDRESS = "rtmp://192.168.50.43:11935/live/livestream";
@@ -25,7 +24,7 @@ public class RecordCameraMic extends AbstractCameraApplication {
 
     protected long startRecordTime = 0L;
 
-    public RecordCameraMic(double frameRate) {
+    public RecordCameraMicFromOfficialDemo(double frameRate) {
         super(frameRate);
     }
 
@@ -55,12 +54,26 @@ public class RecordCameraMic extends AbstractCameraApplication {
                     public void run() {
 
                         try {
-                            int nBytesRead = line.read(audioBytes, 0, line.available());
-                            int nSamplesRead = nBytesRead/2;
+                            int nBytesRead = 0;
+                            while (nBytesRead == 0) {
+                                nBytesRead = line.read(audioBytes, 0, line.available());
+                            }
+
+                            // Since we specified 16 bits in the AudioFormat,
+                            // we need to convert our read byte[] to short[]
+                            // (see source from FFmpegFrameRecorder.recordSamples for AV_SAMPLE_FMT_S16)
+                            // Let's initialize our short[] array
+                            int nSamplesRead = nBytesRead / 2;
                             short[] samples = new short[nSamplesRead];
+
+                            // Let's wrap our short[] into a ShortBuffer and
+                            // pass it to recordSamples
                             ByteBuffer.wrap(audioBytes).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(samples);
-                            ShortBuffer shortBuffer = ShortBuffer.wrap(samples, 0, nSamplesRead);
-                            recorder.recordSamples(sampleRate, numChannels, shortBuffer);
+                            ShortBuffer sBuff = ShortBuffer.wrap(samples, 0, nSamplesRead);
+
+                            // recorder is instance of
+                            // org.bytedeco.javacv.FFmpegFrameRecorder
+                            recorder.recordSamples(sampleRate, numChannels, sBuff);
                         } catch (Exception exception) {
                             log.error("get samples error", exception);
                         }
@@ -134,6 +147,6 @@ public class RecordCameraMic extends AbstractCameraApplication {
     }
 
     public static void main(String[] args) {
-        new RecordCameraMic(25).action(1000);
+        new RecordCameraMicFromOfficialDemo(25).action(1000);
     }
 }
