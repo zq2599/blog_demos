@@ -25,8 +25,8 @@ public class RecordCameraMic extends AbstractCameraApplication {
 
     protected long startRecordTime = 0L;
 
-    public RecordCameraMic(double frameRate) {
-        super(frameRate);
+    public RecordCameraMic(double frameRate, int cameraImageWidth, int cameraImageHeight) {
+        super(frameRate, cameraImageWidth, cameraImageHeight);
     }
 
 
@@ -134,6 +134,6 @@ public class RecordCameraMic extends AbstractCameraApplication {
     }
 
     public static void main(String[] args) {
-        new RecordCameraMic(25).action(1000);
+        new RecordCameraMic(25, 1280, 720).action(1000);
     }
 }

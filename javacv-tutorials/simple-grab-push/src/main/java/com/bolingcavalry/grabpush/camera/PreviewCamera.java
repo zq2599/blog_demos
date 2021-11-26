@@ -13,8 +13,8 @@ public class PreviewCamera extends AbstractCameraApplication {
      */
     protected CanvasFrame previewCanvas;
 
-    public PreviewCamera(double frameRate) {
-        super(frameRate);
+    public PreviewCamera(double frameRate, int cameraImageWidth, int cameraImageHeight) {
+        super(frameRate, cameraImageWidth, cameraImageHeight);
     }
 
     @Override
@@ -38,6 +38,6 @@ public class PreviewCamera extends AbstractCameraApplication {
     }
 
     public static void main(String[] args) {
-        new PreviewCamera(30.0).action(1000);
+        new PreviewCamera(30.0, 1280,720).action(1000);
     }
 }

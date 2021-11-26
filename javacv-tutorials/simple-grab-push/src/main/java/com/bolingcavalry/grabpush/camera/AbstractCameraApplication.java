@@ -43,14 +43,12 @@ public abstract class AbstractCameraApplication {
     /**
      * 摄像头视频的宽
      */
-    @Setter
     @Getter
     private int cameraImageWidth;
 
     /**
      * 摄像头视频的高
      */
-    @Setter
     @Getter
     private int cameraImageHeight;
 
@@ -59,8 +57,10 @@ public abstract class AbstractCameraApplication {
      */
     private OpenCVFrameConverter.ToIplImage openCVConverter = new OpenCVFrameConverter.ToIplImage();
 
-    public AbstractCameraApplication(double frameRate) {
+    public AbstractCameraApplication(double frameRate, int cameraImageWidth, int cameraImageHeight) {
         this.frameRate = frameRate;
+        this.cameraImageWidth = cameraImageWidth;
+        this.cameraImageHeight = cameraImageHeight;
     }
 
     /**
@@ -94,12 +94,16 @@ public abstract class AbstractCameraApplication {
     protected void initGrabber() throws Exception {
         grabber = new OpenCVFrameGrabber(CAMERA_INDEX);
 
+        // 摄像头有可能有多个分辨率，这里指定
+        // 可以指定宽高，也可以不指定反而调用grabber.getImageWidth去获取，
+        grabber.setImageWidth(cameraImageWidth);
+        grabber.setImageHeight(cameraImageHeight);
+
         // 开启抓取器
         grabber.start();
 
-        // 宽度和高度都来自抓取器
-        cameraImageWidth = grabber.getImageWidth();
-        cameraImageHeight = grabber.getImageHeight();
+//        cameraImageWidth = grabber.getImageWidth();
+//        cameraImageHeight = grabber.getImageHeight();
     }
 
     /**
@@ -147,7 +151,9 @@ public abstract class AbstractCameraApplication {
             output(openCVConverter.convert(mat));
 
             // 适当间隔，让肉感感受不到闪屏即可
-            Thread.sleep((int)interVal);
+            if(interVal>0) {
+                Thread.sleep((int) interVal);
+            }
         }
 
         log.info("输出结束");
