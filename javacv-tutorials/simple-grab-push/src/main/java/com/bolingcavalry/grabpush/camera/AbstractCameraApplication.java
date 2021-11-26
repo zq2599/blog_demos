@@ -19,10 +19,11 @@ import java.util.Date;
  * @author will
  * @email zq2599@gmail.com
  * @date 2021/11/19 8:07 上午
- * @description 功能介绍
+ * @description 摄像头应用的基础类，这里面定义了拉流和推流的基本流程，子类只需实现具体的业务方法即可
  */
 @Slf4j
 public abstract class AbstractCameraApplication {
+
     /**
      * 摄像头序号，如果只有一个摄像头，那就是0
      */
@@ -36,35 +37,28 @@ public abstract class AbstractCameraApplication {
     /**
      * 输出帧率
      */
-    @Setter
     @Getter
-    private double frameRate;
+    private final double frameRate = 30;
 
     /**
      * 摄像头视频的宽
      */
     @Getter
-    private int cameraImageWidth;
+    private final int cameraImageWidth = 1280;
 
     /**
      * 摄像头视频的高
      */
     @Getter
-    private int cameraImageHeight;
+    private final int cameraImageHeight = 720;
 
     /**
      * 转换器
      */
-    private OpenCVFrameConverter.ToIplImage openCVConverter = new OpenCVFrameConverter.ToIplImage();
-
-    public AbstractCameraApplication(double frameRate, int cameraImageWidth, int cameraImageHeight) {
-        this.frameRate = frameRate;
-        this.cameraImageWidth = cameraImageWidth;
-        this.cameraImageHeight = cameraImageHeight;
-    }
+    private final OpenCVFrameConverter.ToIplImage openCVConverter = new OpenCVFrameConverter.ToIplImage();
 
     /**
-     * 实例化、初始化输出操作相关资源
+     * 实例化、初始化输出操作相关的资源
      */
     protected abstract void initOutput() throws Exception;
 
@@ -115,7 +109,7 @@ public abstract class AbstractCameraApplication {
         // 添加水印时用到的时间工具
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        long endTime = System.currentTimeMillis() + 1000*grabSeconds;
+        long endTime = System.currentTimeMillis() + 1000L *grabSeconds;
 
         // 两帧输出之间的间隔时间，默认是1000除以帧率，子类可酌情修改
         int interVal = getInterval();
@@ -134,9 +128,10 @@ public abstract class AbstractCameraApplication {
                 break;
             }
 
+            // 将帧对象转为mat对象
             mat = openCVConverter.convertToMat(captureFrame);
 
-            // 在图片上添加水印
+            // 在图片上添加水印，水印内容是当前时间，位置是左上角
             opencv_imgproc.putText(mat,
                     simpleDateFormat.format(new Date()),
                     point,
@@ -152,7 +147,7 @@ public abstract class AbstractCameraApplication {
 
             // 适当间隔，让肉感感受不到闪屏即可
             if(interVal>0) {
-                Thread.sleep((int) interVal);
+                Thread.sleep(interVal);
             }
         }
 
@@ -161,7 +156,6 @@ public abstract class AbstractCameraApplication {
 
     /**
      * 释放所有资源
-     * @throws Exception
      */
     private void safeRelease() {
         try {
@@ -192,12 +186,13 @@ public abstract class AbstractCameraApplication {
         FFmpegLogCallback.set();
 
         // 加载检测
-        Loader.load(opencv_objdetect.class);
+//        Loader.load(opencv_objdetect.class);
 
         // 实例化、初始化帧抓取器
         initGrabber();
 
-        // 实例化、初始化窗口
+        // 实例化、初始化输出操作相关的资源，
+        // 具体怎么输出由子类决定，例如窗口预览、存视频文件等
         initOutput();
 
         log.info("初始化完成，耗时[{}]毫秒，帧率[{}]，图像宽度[{}]，图像高度[{}]",
@@ -223,5 +218,4 @@ public abstract class AbstractCameraApplication {
             safeRelease();
         }
     }
-
 }

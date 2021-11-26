@@ -15,10 +15,6 @@ public class RecordCamera extends AbstractCameraApplication {
 
     protected long startRecordTime = 0L;
 
-    public RecordCamera(double frameRate, int cameraImageWidth, int cameraImageHeight) {
-        super(frameRate, cameraImageWidth, cameraImageHeight);
-    }
-
     @Override
     protected void initOutput() throws Exception {
         // 实例化FFmpegFrameRecorder，将SRS的推送地址传入
@@ -94,6 +90,6 @@ public class RecordCamera extends AbstractCameraApplication {
     }
 
     public static void main(String[] args) {
-        new RecordCamera(30.0,1280,720).action(1000);
+        new RecordCamera().action(1000);
     }
 }

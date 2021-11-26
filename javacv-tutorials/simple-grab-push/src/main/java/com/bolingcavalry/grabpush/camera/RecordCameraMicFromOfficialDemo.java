@@ -24,11 +24,6 @@ public class RecordCameraMicFromOfficialDemo extends AbstractCameraApplication {
 
     protected long startRecordTime = 0L;
 
-    public RecordCameraMicFromOfficialDemo(double frameRate, int cameraImageWidth, int cameraImageHeight) {
-        super(frameRate, cameraImageWidth, cameraImageHeight);
-    }
-
-
     private void initAndStartAudioGrab() {
         AudioFormat audioFormat = new AudioFormat(44100.0F, 16, 2, true, false);
 
@@ -147,6 +142,6 @@ public class RecordCameraMicFromOfficialDemo extends AbstractCameraApplication {
     }
 
     public static void main(String[] args) {
-        new RecordCameraMicFromOfficialDemo(25, 1280, 720).action(1000);
+        new RecordCameraMicFromOfficialDemo().action(1000);
     }
 }
