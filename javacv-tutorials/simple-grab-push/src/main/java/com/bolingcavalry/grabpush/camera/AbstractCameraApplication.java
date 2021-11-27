@@ -1,16 +1,12 @@
 package com.bolingcavalry.grabpush.camera;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.ffmpeg.global.avutil;
-import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacv.*;
 import org.bytedeco.opencv.global.opencv_imgproc;
-import org.bytedeco.opencv.opencv_core.IplImage;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Scalar;
-import org.bytedeco.opencv.presets.opencv_objdetect;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -95,9 +91,6 @@ public abstract class AbstractCameraApplication {
 
         // 开启抓取器
         grabber.start();
-
-//        cameraImageWidth = grabber.getImageWidth();
-//        cameraImageHeight = grabber.getImageHeight();
     }
 
     /**
@@ -114,6 +107,7 @@ public abstract class AbstractCameraApplication {
         // 两帧输出之间的间隔时间，默认是1000除以帧率，子类可酌情修改
         int interVal = getInterval();
 
+        // 水印在图片上的位置
         org.bytedeco.opencv.opencv_core.Point point = new org.bytedeco.opencv.opencv_core.Point(15, 35);
 
         Frame captureFrame;
@@ -184,9 +178,6 @@ public abstract class AbstractCameraApplication {
         // 设置ffmepg日志级别
         avutil.av_log_set_level(avutil.AV_LOG_INFO);
         FFmpegLogCallback.set();
-
-        // 加载检测
-//        Loader.load(opencv_objdetect.class);
 
         // 实例化、初始化帧抓取器
         initGrabber();

@@ -9,7 +9,15 @@ import org.bytedeco.javacv.FrameRecorder;
 public class RecordCamera extends AbstractCameraApplication {
 
 //    private static final String RECORD_ADDRESS = "/Users/zhaoqin/temp/202111/20/camera.mp4";
-    private static final String RECORD_ADDRESS = "rtmp://192.168.50.43:11935/live/livestream";
+
+      // srs
+//    private static final String RECORD_ADDRESS = "rtmp://192.168.50.43:11935/live/livestream";
+
+      // 树莓派的nginx-rtmp-ffmpeg
+//    private static final String RECORD_ADDRESS = "rtmp://192.168.50.31:1935/livein";
+
+    // alfg/nginx-rtmp
+    private static final String RECORD_ADDRESS = "rtmp://192.168.50.43:21935/hls/camera";
 
     protected FrameRecorder recorder;
 
