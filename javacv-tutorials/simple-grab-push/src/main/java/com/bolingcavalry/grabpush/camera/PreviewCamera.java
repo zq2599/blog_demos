@@ -3,6 +3,7 @@ package com.bolingcavalry.grabpush.camera;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.Frame;
+
 import javax.swing.*;
 
 @Slf4j
@@ -27,7 +28,7 @@ public class PreviewCamera extends AbstractCameraApplication {
     }
 
     @Override
-    protected void releaseOutputResource() throws Exception {
+    protected void releaseOutputResource() {
         if (null!= previewCanvas) {
             previewCanvas.dispose();
         }
