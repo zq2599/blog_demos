@@ -78,11 +78,30 @@ public abstract class AbstractCameraApplication {
     }
 
     /**
+     * 实例化帧抓取器，默认OpenCVFrameGrabber对象，
+     * 子类可按需要自行覆盖
+     * @throws FFmpegFrameGrabber.Exception
+     */
+    protected void instanceGrabber() throws FrameGrabber.Exception {
+        grabber = new OpenCVFrameGrabber(CAMERA_INDEX);
+    }
+
+    /**
+     * 用帧抓取器抓取一帧，默认调用grab()方法，
+     * 子类可以按需求自行覆盖
+     * @return
+     */
+    protected Frame grabFrame() throws FrameGrabber.Exception {
+        return grabber.grab();
+    }
+
+    /**
      * 初始化帧抓取器
      * @throws Exception
      */
     protected void initGrabber() throws Exception {
-        grabber = new OpenCVFrameGrabber(CAMERA_INDEX);
+        // 实例化帧抓取器
+        instanceGrabber();
 
         // 摄像头有可能有多个分辨率，这里指定
         // 可以指定宽高，也可以不指定反而调用grabber.getImageWidth去获取，
@@ -115,7 +134,8 @@ public abstract class AbstractCameraApplication {
 
         // 超过指定时间就结束循环
         while (System.currentTimeMillis()<endTime) {
-            captureFrame = grabber.grab();
+            // 取一帧
+            captureFrame = grabFrame();
 
             if (null==captureFrame) {
                 log.error("帧对象为空");
