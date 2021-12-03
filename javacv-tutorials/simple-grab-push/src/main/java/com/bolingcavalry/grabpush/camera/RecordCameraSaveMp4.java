@@ -1,5 +1,7 @@
 package com.bolingcavalry.grabpush.camera;
 
+import com.bolingcavalry.grabpush.plugin.OutputPlugin;
+import com.bolingcavalry.grabpush.plugin.impl.AudioOutputPlugin;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.ffmpeg.global.avcodec;
 import org.bytedeco.javacv.FFmpegFrameRecorder;
@@ -18,6 +20,14 @@ import static org.bytedeco.ffmpeg.global.avutil.AV_PIX_FMT_YUV420P;
 @Slf4j
 public class RecordCameraSaveMp4 extends AbstractCameraApplication {
 
+    public RecordCameraSaveMp4() {
+        super();
+    }
+
+    public RecordCameraSaveMp4(OutputPlugin outputPlugin) {
+        this.outputPlugin = outputPlugin;
+    }
+
     // 存放视频文件的完整位置，请改为自己电脑的可用目录
     private static final String RECORD_FILE_PATH = "E:\\temp\\202111\\28\\camera-"
                                                  + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
@@ -25,6 +35,8 @@ public class RecordCameraSaveMp4 extends AbstractCameraApplication {
 
     // 帧录制器
     protected FrameRecorder recorder;
+
+    private OutputPlugin outputPlugin;
 
     @Override
     protected void initOutput() throws Exception {
@@ -49,23 +61,44 @@ public class RecordCameraSaveMp4 extends AbstractCameraApplication {
         // 视频质量，0表示无损
         recorder.setVideoQuality(0);
 
+        // 如果有插件，就执行插件的初始化操作
+        if (null!=outputPlugin) {
+            outputPlugin.doBeforeStart(recorder, RecordCameraSaveMp4.this);
+        }
+
         // 初始化
         recorder.start();
+
+        // 如果有插件，就执行插件的后初始化操作
+        if (null!=outputPlugin) {
+            outputPlugin.doAfterStart();
+        }
     }
 
     @Override
     protected void output(Frame frame) throws Exception {
         // 存盘
         recorder.record(frame);
+
+        // 如果有插件，就执行插件的输出操作
+        if (null!=outputPlugin) {
+            outputPlugin.output(frame);
+        }
     }
 
     @Override
     protected void releaseOutputResource() throws Exception {
+        // 如果有插件，就执行插件的资源释放操作
+        if (null!=outputPlugin) {
+            outputPlugin.releaseOutputResource();
+        }
+
         recorder.close();
     }
 
     public static void main(String[] args) {
         // 录制30秒视频
         new RecordCameraSaveMp4().action(30);
+//        new RecordCameraSaveMp4(new AudioOutputPlugin()).action(30);
     }
 }
