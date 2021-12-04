@@ -42,6 +42,9 @@ public class AudioService {
     // 该数组用于保存从数据线中取得的音频数据
     byte[] audioBytes;
 
+    // 定时任务的线程中会读此变量，而改变此变量的值是在主线程中，因此要用volatile保持可见性
+    private volatile boolean isFinish = false;
+
     /**
      * 帧录制器的音频参数设置
      * @param recorder
@@ -67,7 +70,7 @@ public class AudioService {
     }
 
     /**
-     * 音频采样服务设置
+     * 音频采样对象的初始化
      * @throws Exception
      */
     public void initSampleService() throws Exception {
@@ -99,6 +102,8 @@ public class AudioService {
      * 程序结束前，释放音频相关的资源
      */
     public void releaseOutputResource() {
+        // 结束的标志，避免采样的代码在whlie循环中不退出
+        isFinish = true;
         // 结束定时任务
         sampleTask.shutdown();
         // 停止数据线
@@ -116,15 +121,19 @@ public class AudioService {
         // 启动定时任务，每秒执行一次，采集音频数据给帧录制器
         sampleTask.scheduleAtFixedRate((Runnable) new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 try
                 {
                     int nBytesRead = 0;
 
-                    while (nBytesRead == 0) {
+                    while (nBytesRead == 0 && !isFinish) {
                         // 音频数据是从数据线中取得的
                         nBytesRead = line.read(audioBytes, 0, line.available());
+                    }
+
+                    // 如果nBytesRead<1，表示isFinish标志被设置true，此时该结束了
+                    if (nBytesRead<1) {
+                        return;
                     }
 
                     // 采样数据是16比特，也就是2字节，对应的数据类型就是short，
@@ -141,8 +150,7 @@ public class AudioService {
                     // 音频帧交给帧录制器输出
                     recorder.recordSamples(SAMPLE_RATE, CHANNEL_NUM, sBuff);
                 }
-                catch (FrameRecorder.Exception e)
-                {
+                catch (FrameRecorder.Exception e) {
                     e.printStackTrace();
                 }
             }

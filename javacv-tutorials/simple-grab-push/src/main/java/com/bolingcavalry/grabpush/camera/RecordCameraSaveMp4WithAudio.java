@@ -21,10 +21,6 @@ import static org.bytedeco.ffmpeg.global.avutil.AV_PIX_FMT_YUV420P;
 @Slf4j
 public class RecordCameraSaveMp4WithAudio extends AbstractCameraApplication {
 
-    public RecordCameraSaveMp4WithAudio(AudioService audioService) {
-        this.audioService = audioService;
-    }
-
     // 存放视频文件的完整位置，请改为自己电脑的可用目录
     private static final String RECORD_FILE_PATH = "E:\\temp\\202111\\28\\camera-"
                                                  + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
@@ -34,7 +30,7 @@ public class RecordCameraSaveMp4WithAudio extends AbstractCameraApplication {
     protected FrameRecorder recorder;
 
     // 音频服务类
-    private AudioService audioService;
+    private AudioService audioService = new AudioService();
 
     @Override
     protected void initOutput() throws Exception {
@@ -68,7 +64,7 @@ public class RecordCameraSaveMp4WithAudio extends AbstractCameraApplication {
         // 初始化
         recorder.start();
 
-        // 启动一个新线程
+        // 启动定时任务，采集音频帧给帧录制器
         audioService.startSample(getFrameRate());
     }
 
@@ -89,6 +85,6 @@ public class RecordCameraSaveMp4WithAudio extends AbstractCameraApplication {
 
     public static void main(String[] args) {
         // 录制30秒视频
-        new RecordCameraSaveMp4WithAudio(new AudioService()).action(10);
+        new RecordCameraSaveMp4WithAudio().action(30);
     }
 }
