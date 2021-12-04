@@ -1,5 +1,6 @@
 package com.bolingcavalry.grabpush.camera;
 
+import com.bolingcavalry.grabpush.extend.AudioService;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.ffmpeg.global.avcodec;
 import org.bytedeco.javacv.FFmpegFrameRecorder;
@@ -15,10 +16,14 @@ import static org.bytedeco.ffmpeg.global.avutil.AV_PIX_FMT_YUV420P;
  * @author will
  * @email zq2599@gmail.com
  * @date 2021/11/28 19:26
- * @description 将摄像头数据存储为mp4文件的应用
+ * @description 将摄像头和麦克风数据存储为mp4文件的应用
  */
 @Slf4j
-public class RecordCameraSaveMp4 extends AbstractCameraApplication {
+public class RecordCameraSaveMp4WithAudio extends AbstractCameraApplication {
+
+    public RecordCameraSaveMp4WithAudio(AudioService audioService) {
+        this.audioService = audioService;
+    }
 
     // 存放视频文件的完整位置，请改为自己电脑的可用目录
     private static final String RECORD_FILE_PATH = "E:\\temp\\202111\\28\\camera-"
@@ -28,13 +33,16 @@ public class RecordCameraSaveMp4 extends AbstractCameraApplication {
     // 帧录制器
     protected FrameRecorder recorder;
 
+    // 音频服务类
+    private AudioService audioService;
+
     @Override
     protected void initOutput() throws Exception {
         // 实例化FFmpegFrameRecorder
         recorder = new FFmpegFrameRecorder(RECORD_FILE_PATH,        // 存放文件的位置
                                            getCameraImageWidth(),   // 分辨率的宽，与视频源一致
                                            getCameraImageHeight(),  // 分辨率的高，与视频源一致
-                              0);                      // 音频通道，0表示无
+                                            0);                      // 音频通道，0表示无
 
         // 文件格式
         recorder.setFormat("mp4");
@@ -51,8 +59,17 @@ public class RecordCameraSaveMp4 extends AbstractCameraApplication {
         // 视频质量，0表示无损
         recorder.setVideoQuality(0);
 
+        // 设置帧录制器的音频相关参数
+        audioService.setRecorderParams(recorder);
+
+        // 音频采样相关的初始化操作
+        audioService.initSampleService();
+
         // 初始化
         recorder.start();
+
+        // 启动一个新线程
+        audioService.startSample(getFrameRate());
     }
 
     @Override
@@ -63,11 +80,15 @@ public class RecordCameraSaveMp4 extends AbstractCameraApplication {
 
     @Override
     protected void releaseOutputResource() throws Exception {
+        // 执行音频服务的资源释放操作
+        audioService.releaseOutputResource();
+
+        // 关闭帧录制器
         recorder.close();
     }
 
     public static void main(String[] args) {
         // 录制30秒视频
-        new RecordCameraSaveMp4().action(30);
+        new RecordCameraSaveMp4WithAudio(new AudioService()).action(10);
     }
 }
