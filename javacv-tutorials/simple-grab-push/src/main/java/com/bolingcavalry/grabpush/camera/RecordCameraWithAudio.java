@@ -25,11 +25,7 @@ public class RecordCameraWithAudio extends AbstractCameraApplication {
     protected long startRecordTime = 0L;
 
     // 音频服务类
-    private AudioService audioService;
-
-    public RecordCameraWithAudio(AudioService audioService) {
-        this.audioService = audioService;
-    }
+    private AudioService audioService= new AudioService();
 
     @Override
     protected void initOutput() throws Exception {
@@ -75,7 +71,7 @@ public class RecordCameraWithAudio extends AbstractCameraApplication {
         // 帧录制器开始初始化
         recorder.start();
 
-        // 启动一个新线程
+        // 启动定时任务，采集音频帧给帧录制器
         audioService.startSample(getFrameRate());
     }
 
@@ -104,10 +100,10 @@ public class RecordCameraWithAudio extends AbstractCameraApplication {
     @Override
     protected int getInterval() {
         // 相比本地预览，推流时两帧间隔时间更短
-        return super.getInterval()/4;
+        return super.getInterval()/8;
     }
 
     public static void main(String[] args) {
-        new RecordCameraWithAudio(new AudioService()).action(100);
+        new RecordCameraWithAudio().action(600);
     }
 }
