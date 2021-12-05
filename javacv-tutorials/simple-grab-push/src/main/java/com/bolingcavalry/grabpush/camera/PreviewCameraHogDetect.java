@@ -1,33 +1,24 @@
 package com.bolingcavalry.grabpush.camera;
 
 import lombok.extern.slf4j.Slf4j;
+import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.Frame;
+import org.bytedeco.javacv.OpenCVFrameConverter;
+import org.bytedeco.opencv.opencv_core.*;
+import org.bytedeco.opencv.opencv_objdetect.HOGDescriptor;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.io.File;
-import java.net.URL;
-import org.bytedeco.javacv.*;
-import org.bytedeco.javacpp.*;
-import org.bytedeco.javacpp.indexer.*;
-import org.bytedeco.opencv.opencv_core.*;
-import org.bytedeco.opencv.opencv_imgproc.*;
-import org.bytedeco.opencv.opencv_calib3d.*;
-import org.bytedeco.opencv.opencv_objdetect.*;
-import static org.bytedeco.opencv.global.opencv_core.*;
-import static org.bytedeco.opencv.global.opencv_imgcodecs.imread;
+import static org.bytedeco.opencv.global.opencv_core.CV_8UC1;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
-import static org.bytedeco.opencv.global.opencv_calib3d.*;
-import static org.bytedeco.opencv.global.opencv_objdetect.*;
 
 @Slf4j
-public class PreviewCameraFaceDetect extends AbstractCameraApplication {
+public class PreviewCameraHogDetect extends AbstractCameraApplication {
 
     /**
      * 本机窗口
@@ -39,7 +30,7 @@ public class PreviewCameraFaceDetect extends AbstractCameraApplication {
     String classifierName = null;
     private Mat grabbedImage;
     private Mat grayImage;
-    private CascadeClassifier classifier;
+    private HOGDescriptor hogDescriptor;
 
     @Override
     protected void initOutput() throws IOException {
@@ -48,17 +39,14 @@ public class PreviewCameraFaceDetect extends AbstractCameraApplication {
         previewCanvas.setAlwaysOnTop(true);
 
         if (null==classifierName) {
-            URL url = new URL("https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_alt.xml");
+            URL url = new URL("https://raw.github.com/opencv/opencv/master/data/hogcascades/hogcascade_pedestrians.xml");
             File file = Loader.cacheResource(url);
             classifierName = file.getAbsolutePath();
         }
 
-        // We can "cast" Pointer objects by instantiating a new object of the desired class.
-        classifier = new CascadeClassifier(classifierName);
-        if (classifier == null) {
-            log.error("Error loading classifier file [{}]", classifierName);
-            System.exit(1);
-        }
+        hogDescriptor = new HOGDescriptor();
+        hogDescriptor.setSVMDetector(new Mat(HOGDescriptor.getDefaultPeopleDetector()));
+
 
         grabbedImage = converter.convert(grabber.grab());
         int height = grabbedImage.rows();
@@ -74,8 +62,18 @@ public class PreviewCameraFaceDetect extends AbstractCameraApplication {
         cvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
 
         RectVector faces = new RectVector();
+        DoublePointer weights = new DoublePointer();
 
-        classifier.detectMultiScale(grayImage, faces);
+
+        hogDescriptor.detectMultiScale(grayImage, faces, weights,
+                0.5,
+                new Size(2, 2), //winSize
+                new Size(0, 0), //blocksize
+                1.05,
+                2,false);
+
+
+
 
         long total = faces.size();
 
@@ -90,8 +88,19 @@ public class PreviewCameraFaceDetect extends AbstractCameraApplication {
             rectangle(grabbedImage, new Point(x, y), new Point(x + w, y + h), Scalar.RED, 1, CV_AA, 0);
         }
 
+        for(int i=0;i<weights.limit();i++) {
+            System.out.println("weight : " + weights.get(i));
+
+        }
+
+
         // 预览窗口上显示当前帧
         previewCanvas.showImage(converter.convert(grabbedImage));
+    }
+
+    @Override
+    protected int getInterval() {
+        return 0;
     }
 
     @Override
@@ -102,6 +111,6 @@ public class PreviewCameraFaceDetect extends AbstractCameraApplication {
     }
 
     public static void main(String[] args) {
-        new PreviewCameraFaceDetect().action(1000);
+        new PreviewCameraHogDetect().action(1000);
     }
 }
