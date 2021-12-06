@@ -35,13 +35,17 @@ public class PreviewCameraWithDetect extends AbstractCameraApplication {
         previewCanvas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         previewCanvas.setAlwaysOnTop(true);
 
+        // 检测服务的初始化操作
         detectService.init();
     }
 
     @Override
     protected void output(Frame frame) {
-        // 预览窗口上显示当前帧
-        previewCanvas.showImage(detectService.convert(frame));
+        // 原始帧先交给检测服务处理，这个处理包括物体检测，再将检测结果标注在原始图片上，
+        // 然后转换为帧返回
+        Frame detectedFrame = detectService.convert(frame);
+        // 预览窗口上显示的帧是标注了检测结果的帧
+        previewCanvas.showImage(detectedFrame);
     }
 
     @Override
@@ -54,9 +58,14 @@ public class PreviewCameraWithDetect extends AbstractCameraApplication {
         detectService.releaseOutputResource();
     }
 
+    @Override
+    protected int getInterval() {
+        return super.getInterval()/8;
+    }
+
     public static void main(String[] args) {
-//        String modelPath = "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_alt.xml";
-        String modelPath = "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_upperbody.xml";
-        new PreviewCameraWithDetect(new HaarCascadeDetectService(modelPath)).action(1000);
+        String modelFileUrl = "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_alt.xml";
+//        String modelFileUrl = "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_upperbody.xml";
+        new PreviewCameraWithDetect(new HaarCascadeDetectService(modelFileUrl)).action(1000);
     }
 }

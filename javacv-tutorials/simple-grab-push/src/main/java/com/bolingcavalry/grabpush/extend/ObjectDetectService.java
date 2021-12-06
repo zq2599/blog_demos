@@ -17,7 +17,7 @@ import java.net.URL;
  * @date 2021/12/3 8:09
  */
 @Slf4j
-public class HaarCascadeDetectService implements DetectService {
+public class ObjectDetectService implements DetectService {
 
     /**
      * 每一帧原始图片的对象
@@ -39,18 +39,11 @@ public class HaarCascadeDetectService implements DetectService {
      */
     private OpenCVFrameConverter.ToMat converter = new OpenCVFrameConverter.ToMat();
 
-    /**
-     * 模型文件的下载地址
-     */
-    private String modelFileUrl;
-
-    /**
-     * 构造方法，在此指定模型文件的下载地址
-     * @param modelFileUrl
-     */
-    public HaarCascadeDetectService(String modelFileUrl) {
-        this.modelFileUrl = modelFileUrl;
+    public ObjectDetectService(String modelPath) {
+        this.modelPath = modelPath;
     }
+
+    private String modelPath;
 
     /**
      * 音频采样对象的初始化
@@ -58,14 +51,12 @@ public class HaarCascadeDetectService implements DetectService {
      */
     @Override
     public void init() throws Exception {
-        // 下载模型文件
-        URL url = new URL(modelFileUrl);
-        File file = Loader.cacheResource(url);
 
-        // 模型文件下载后的完整地址
+        URL url = new URL(modelPath);
+        File file = Loader.cacheResource(url);
         String classifierName = file.getAbsolutePath();
 
-        // 根据模型文件实例化分类器
+        // We can "cast" Pointer objects by instantiating a new object of the desired class.
         classifier = new CascadeClassifier(classifierName);
 
         if (classifier == null) {
