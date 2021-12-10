@@ -17,6 +17,8 @@
         <module>jaeger-service-provider</module>
         <module>jaeger-service-consumer</module>
         <module>jaeger-annonation-demo</module>
+        <module>gateway-dynamic-route</module>
+        <module>provider-for-test-user</module>
     </modules>
 
     <parent>
