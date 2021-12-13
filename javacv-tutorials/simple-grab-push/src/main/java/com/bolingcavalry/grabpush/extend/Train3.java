@@ -27,12 +27,12 @@ public class Train3 {
     /**
      * 调整后的文件宽度
      */
-    public static final int RESIZE_WIDTH = 64;
+    public static final int RESIZE_WIDTH = 164;
 
     /**
      * 调整后的文件高度
      */
-    public static final int RESIZE_HEIGHT = 64;
+    public static final int RESIZE_HEIGHT = 164;
 
     private static OpenCVFrameConverter.ToMat matConv = new OpenCVFrameConverter.ToMat();
 
@@ -53,8 +53,26 @@ public class Train3 {
 
         IntBuffer lablesBuf = lables.createBuffer();
 
-        int kindIndex = 1;
+
+        imageIndexMatMap.put(0, read(sources[0][0]));
+        imageIndexMatMap.put(1, read(sources[0][1]));
+        imageIndexMatMap.put(2, read(sources[1][0]));
+        imageIndexMatMap.put(3, read(sources[1][1]));
+        imageIndexMatMap.put(4, read(sources[2][0]));
+        imageIndexMatMap.put(5, read(sources[2][1]));
+
+        lablesBuf.put(0, 11);
+        lablesBuf.put(1, 11);
+        lablesBuf.put(2, 33);
+        lablesBuf.put(3, 33);
+        lablesBuf.put(4, 66);
+        lablesBuf.put(5, 66);
+
+        /*
+        int kindIndex = 0;
         int imageIndex = 0;
+
+        String base = "E:\\temp\\202112\\13\\";
 
         for(String[] oneOfFaces : sources) {
             for(String face : oneOfFaces) {
@@ -67,7 +85,7 @@ public class Train3 {
 
                 resize(faceMat, faceMat, new Size(RESIZE_WIDTH, RESIZE_HEIGHT));
 
-
+                opencv_imgcodecs.imwrite(base + imageIndex + ".png", faceMat);
 
 
 
@@ -78,6 +96,7 @@ public class Train3 {
 
             kindIndex++;
         }
+        */
 
 
         FaceRecognizer faceRecognizer = FisherFaceRecognizer.create();
@@ -87,24 +106,30 @@ public class Train3 {
         faceRecognizer.close();
     }
 
+    private Mat read(String path) {
+        Mat faceMat = opencv_imgcodecs.imread(path,IMREAD_GRAYSCALE);
+        resize(faceMat, faceMat, new Size(RESIZE_WIDTH, RESIZE_HEIGHT));
+        return faceMat;
+    }
+
 
 
     public static void main(String[] args) throws IOException {
-        String base = "E:\\temp\\202112\\12\\";
-        String[] kindDirNames = {"AndyLou", "DanielWu"};
+        String base = "E:\\temp\\202112\\13\\";
+        String[] kindDirNames = {"me", "wife", "dauter"};
         int kindNum = kindDirNames.length;
-        int oneKindPicNum = 520;
+        int oneKindPicNum = 2;
 
         String[][] sources = new String[kindNum][oneKindPicNum];
 
         for(int i=0;i<kindNum;i++) {
             for (int j=0;j<oneKindPicNum;j++) {
-                sources[i][j] = base + kindDirNames[i] + "\\face-" + (j+1) + ".jpg";
+                sources[i][j] = base + kindDirNames[i] + "\\" + (j+1) + ".png";
             }
         }
 
         Train3 train = new Train3();
-        train.train(sources, "E:\\temp\\202112\\12\\faceRecognizer.xml");
+        train.train(sources, base +"faceRecognizer.xml");
     }
 
 }
