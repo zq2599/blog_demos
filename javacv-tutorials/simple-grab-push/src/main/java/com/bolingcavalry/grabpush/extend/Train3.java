@@ -115,7 +115,7 @@ public class Train3 {
 
 
     public static void main(String[] args) throws IOException {
-        String base = "E:\\temp\\202112\\13\\";
+        String base = "E:\\temp\\202112\\15\\002\\";
         String[] kindDirNames = {"me", "wife", "dauter"};
         int kindNum = kindDirNames.length;
         int oneKindPicNum = 2;

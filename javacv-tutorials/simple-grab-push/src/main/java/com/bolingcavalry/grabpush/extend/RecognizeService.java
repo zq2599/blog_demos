@@ -1,7 +1,5 @@
 package com.bolingcavalry.grabpush.extend;
 
-import org.bytedeco.javacpp.DoublePointer;
-import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.opencv.global.opencv_imgcodecs;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Size;
@@ -17,7 +15,7 @@ import static org.bytedeco.opencv.global.opencv_imgproc.resize;
  * @description TODO
  * @date 2021/12/12 21:32
  */
-public class Recognize3 {
+public class RecognizeService {
 
     /**
      * 调整后的文件宽度
@@ -28,6 +26,45 @@ public class Recognize3 {
      * 调整后的文件高度
      */
     public static final int RESIZE_HEIGHT = 164;
+
+    private FaceRecognizer faceRecognizer;
+
+    // 推理结果的标签
+    private int[] plabel;
+
+    // 推理结果的置信度
+    private double[] pconfidence;
+
+    // 推理结果
+    private PredictRlt predictRlt;
+
+
+    public RecognizeService(String modelPath) {
+        plabel = new int[1];
+        pconfidence = new double[1];
+        predictRlt = new PredictRlt();
+        faceRecognizer = FisherFaceRecognizer.create();
+        faceRecognizer.read(modelPath);
+        faceRecognizer.setThreshold(2000);
+    }
+
+    /**
+     * 将Mat实例给模型去推理
+     * @param mat
+     * @return
+     */
+    public PredictRlt predict(Mat mat) {
+        // 调整到和训练一致的尺寸
+        resize(mat, mat, new Size(RESIZE_WIDTH, RESIZE_HEIGHT));
+        // 推理
+        faceRecognizer.predict(mat, plabel, pconfidence);
+
+        predictRlt.setLable(plabel[0]);
+        predictRlt.setConfidence(pconfidence[0]);
+
+        return predictRlt;
+    }
+
 
     private void recog(String recognizerModel, String file) {
 
@@ -47,8 +84,8 @@ public class Recognize3 {
     }
 
     public static void main(String[] args) {
-        String base = "E:\\temp\\202112\\15\\002\\";
-
-        new Recognize3().recog(base + "faceRecognizer.xml", base + "1.png");
+//        String base = "E:\\temp\\202112\\15\\002\\";
+//
+//        new PredictService().recog(base + "faceRecognizer.xml", base + "1.png");
     }
 }
