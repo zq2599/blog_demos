@@ -1,5 +1,6 @@
 package com.bolingcavalry.grabpush.extend;
 
+import com.bolingcavalry.grabpush.Constants;
 import org.bytedeco.opencv.global.opencv_imgcodecs;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Size;
@@ -16,16 +17,6 @@ import static org.bytedeco.opencv.global.opencv_imgproc.resize;
  * @date 2021/12/12 21:32
  */
 public class RecognizeService {
-
-    /**
-     * 调整后的文件宽度
-     */
-    public static final int RESIZE_WIDTH = 164;
-
-    /**
-     * 调整后的文件高度
-     */
-    public static final int RESIZE_HEIGHT = 164;
 
     private FaceRecognizer faceRecognizer;
 
@@ -55,7 +46,7 @@ public class RecognizeService {
      */
     public PredictRlt predict(Mat mat) {
         // 调整到和训练一致的尺寸
-        resize(mat, mat, new Size(RESIZE_WIDTH, RESIZE_HEIGHT));
+        resize(mat, mat, new Size(Constants.RESIZE_WIDTH, Constants.RESIZE_HEIGHT));
         // 推理
         faceRecognizer.predict(mat, plabel, pconfidence);
 
@@ -72,7 +63,7 @@ public class RecognizeService {
         faceRecognizer.read(recognizerModel);
 
         Mat faceMat = opencv_imgcodecs.imread(file,IMREAD_GRAYSCALE);
-        resize(faceMat, faceMat, new Size(RESIZE_WIDTH, RESIZE_HEIGHT));
+        resize(faceMat, faceMat, new Size(Constants.RESIZE_WIDTH, Constants.RESIZE_HEIGHT));
 
         int[] plabel = new int[1];
         double[] pconfidence = new double[1];

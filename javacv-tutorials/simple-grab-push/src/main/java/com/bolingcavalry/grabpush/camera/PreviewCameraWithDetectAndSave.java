@@ -1,6 +1,6 @@
 package com.bolingcavalry.grabpush.camera;
 
-import com.bolingcavalry.grabpush.extend.DetectAndRecognizeService;
+import com.bolingcavalry.grabpush.extend.DetectAndSaveService;
 import com.bolingcavalry.grabpush.extend.DetectService;
 import com.bolingcavalry.grabpush.extend.HaarCascadeDetectService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,7 @@ import org.bytedeco.javacv.Frame;
 import javax.swing.*;
 
 @Slf4j
-public class PreviewCameraWithIdentify extends AbstractCameraApplication {
+public class PreviewCameraWithDetectAndSave extends AbstractCameraApplication {
 
     /**
      * 本机窗口
@@ -26,7 +26,7 @@ public class PreviewCameraWithIdentify extends AbstractCameraApplication {
      * 不同的检测工具，可以通过构造方法传入
      * @param detectService
      */
-    public PreviewCameraWithIdentify(DetectService detectService) {
+    public PreviewCameraWithDetectAndSave(DetectService detectService) {
         this.detectService = detectService;
     }
 
@@ -67,8 +67,6 @@ public class PreviewCameraWithIdentify extends AbstractCameraApplication {
     public static void main(String[] args) {
         String modelFileUrl = "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_alt.xml";
 //        String modelFileUrl = "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_upperbody.xml";
-//        new PreviewCameraWithIdentify(new HaarCascadeDetectService(modelFileUrl)).action(1000);
-        String recognizeModelFilePath = "E:\\temp\\202112\\15\\003\\faceRecognizer.xml";
-        new PreviewCameraWithIdentify(new DetectAndRecognizeService(modelFileUrl,recognizeModelFilePath)).action(1000);
+        new PreviewCameraWithDetectAndSave(new DetectAndSaveService(modelFileUrl)).action(1000);
     }
 }
