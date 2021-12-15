@@ -47,7 +47,7 @@ public class RecognizeService {
     public PredictRlt predict(Mat mat) {
         // 调整到和训练一致的尺寸
         resize(mat, mat, new Size(Constants.RESIZE_WIDTH, Constants.RESIZE_HEIGHT));
-        // 推理
+        // 推理(这一行可能抛出异常导致程序退出)
         faceRecognizer.predict(mat, plabel, pconfidence);
 
         predictRlt.setLable(plabel[0]);
