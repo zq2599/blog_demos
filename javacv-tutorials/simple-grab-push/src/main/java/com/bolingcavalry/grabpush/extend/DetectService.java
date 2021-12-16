@@ -72,13 +72,24 @@ public interface DetectService {
         return converter.convert(grabbedImage);
     }
 
-
+    /**
+     *
+     * @param classifier 分类器
+     * @param converter 转换工具
+     * @param rawFrame 原始帧
+     * @param grabbedImage 原始图片的Mat对象
+     * @param grayImage 原始图片对应的灰度图片的Mat对象
+     * @param basePath 图片的基本路径
+     * @param maxFacePerFrame 一帧中最多的人脸数（假设等于2，那么一旦检测出的人脸数大于2，就认为本次检测不准确，放弃对当前帧的处理，返回原始对象，0表示不做限制）
+     * @return
+     */
     static Frame detectAndSave(CascadeClassifier classifier,
                               OpenCVFrameConverter.ToMat converter,
-                                Frame rawFrame,
-                                Mat grabbedImage,
-                                Mat grayImage,
-                                String basePath) {
+                              Frame rawFrame,
+                              Mat grabbedImage,
+                              Mat grayImage,
+                              String basePath,
+                              int maxFacePerFrame) {
 
         // 当前图片转为灰度图片
         cvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
@@ -94,6 +105,13 @@ public interface DetectService {
 
         // 如果没有检测到结果就提前返回
         if (total<1) {
+            return rawFrame;
+        }
+
+        // 如果入参明确说明的当前帧的人脸数不超过1，
+        // 那么一旦识别出的人脸数比1多，就证明识别有问题，放弃后续处理，直接返回原始帧，
+        // 在一个人对着摄像头截图用于训练时适合传入1，因为此时检测的结果如果大于1，显然是检测有问题
+        if (maxFacePerFrame>0 && total>maxFacePerFrame) {
             return rawFrame;
         }
 
@@ -169,12 +187,17 @@ public interface DetectService {
         // 如果有检测结果，就根据结果的数据构造矩形框，画在原图上
         for (long i = 0; i < total; i++) {
             Rect r = objects.get(i);
-            int x = r.x(), y = r.y(), w = r.width(), h = r.height();
-            rectangle(grabbedImage, new Point(x, y), new Point(x + w, y + h), Scalar.RED, 1, CV_AA, 0);
 
             predictRlt = recognizeService.predict(new Mat(grayImage, r));
 
-            content = String.format("label : %d, confidence : %f", predictRlt.getLable(), predictRlt.getConfidence());
+            if(predictRlt.getConfidence()>Constants.MAX_CONFIDENCE) {
+                continue;
+            }
+
+            int x = r.x(), y = r.y(), w = r.width(), h = r.height();
+            rectangle(grabbedImage, new Point(x, y), new Point(x + w, y + h), Scalar.RED, 1, CV_AA, 0);
+
+            content = String.format("label : %d, confidence : %.4f", predictRlt.getLable(), predictRlt.getConfidence());
 
             pos_x = Math.max(r.tl().x()-10, 0);
             pos_y = Math.max(r.tl().y()-10, 0);

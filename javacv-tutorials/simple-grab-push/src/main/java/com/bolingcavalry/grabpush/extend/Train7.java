@@ -116,7 +116,7 @@ public class Train7 {
 
     public static void main(String[] args) throws IOException {
         String base = "E:\\temp\\202112\\15\\003\\";
-        String[] dirs = {base + "wife", base + "dauter", base + "me"};
+        String[] dirs = {base + "wife", base + "me", base + "dauter"};
 
         Train7 train = new Train7();
         train.train(dirs, base + "faceRecognizer.xml");

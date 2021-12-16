@@ -10,5 +10,10 @@ public interface Constants {
      */
     int RESIZE_HEIGHT = 164;
 
+    /**
+     * 超过这个置信度就明显有问题了
+     */
+    double MAX_CONFIDENCE = 3000d;
+
     String IMG_TYPE = "jpg";
 }

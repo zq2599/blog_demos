@@ -86,12 +86,12 @@ public class DetectAndSaveService implements DetectService {
             grayImage = DetectService.buildGrayImage(grabbedImage);
         }
 
-        String basePath = "E:\\temp\\202112\\15\\003\\"
+        String basePath = "E:\\temp\\202112\\15\\003\\me\\"
                         + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
                         + "-";
 
         // 进行人脸识别，根据结果做处理得到预览窗口显示的帧
-        return DetectService.detectAndSave(classifier, converter, frame, grabbedImage, grayImage, basePath);
+        return DetectService.detectAndSave(classifier, converter, frame, grabbedImage, grayImage, basePath, 1);
     }
 
     /**
