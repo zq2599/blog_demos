@@ -32,7 +32,7 @@ public class PreviewCameraWithDetectAndSave extends AbstractCameraApplication {
 
     @Override
     protected void initOutput() throws Exception {
-        previewCanvas = new CanvasFrame("摄像头预览", CanvasFrame.getDefaultGamma() / grabber.getGamma());
+        previewCanvas = new CanvasFrame("摄像头预览，检测人脸并保存在硬盘", CanvasFrame.getDefaultGamma() / grabber.getGamma());
         previewCanvas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         previewCanvas.setAlwaysOnTop(true);
 
@@ -66,7 +66,10 @@ public class PreviewCameraWithDetectAndSave extends AbstractCameraApplication {
 
     public static void main(String[] args) {
         String modelFileUrl = "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_alt.xml";
-//        String modelFileUrl = "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_upperbody.xml";
-        new PreviewCameraWithDetectAndSave(new DetectAndSaveService(modelFileUrl)).action(1000);
+        new PreviewCameraWithDetectAndSave(
+                new DetectAndSaveService(
+                        modelFileUrl,
+                        "E:\\temp\\202112\\18\\001\\man\\"))
+                .action(1000);
     }
 }
