@@ -8,6 +8,8 @@ import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.Frame;
 
 import javax.swing.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class PreviewCameraWithIdentify extends AbstractCameraApplication {
@@ -32,7 +34,7 @@ public class PreviewCameraWithIdentify extends AbstractCameraApplication {
 
     @Override
     protected void initOutput() throws Exception {
-        previewCanvas = new CanvasFrame("摄像头预览", CanvasFrame.getDefaultGamma() / grabber.getGamma());
+        previewCanvas = new CanvasFrame("摄像头预览和身份识别", CanvasFrame.getDefaultGamma() / grabber.getGamma());
         previewCanvas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         previewCanvas.setAlwaysOnTop(true);
 
@@ -66,9 +68,17 @@ public class PreviewCameraWithIdentify extends AbstractCameraApplication {
 
     public static void main(String[] args) {
         String modelFileUrl = "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_alt.xml";
-//        String modelFileUrl = "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_upperbody.xml";
-//        new PreviewCameraWithIdentify(new HaarCascadeDetectService(modelFileUrl)).action(1000);
-        String recognizeModelFilePath = "E:\\temp\\202112\\15\\003\\faceRecognizer.xml";
-        new PreviewCameraWithIdentify(new DetectAndRecognizeService(modelFileUrl,recognizeModelFilePath)).action(1000);
+        String recognizeModelFilePath = "E:\\temp\\202112\\18\\001\\faceRecognizer.xml";
+
+        // 这里分类编号的身份的对应关系，和之前训练时候的设定要保持一致
+        Map<Integer, String> kindNameMap = new HashMap();
+        kindNameMap.put(1, "Man");
+        kindNameMap.put(2, "Woman");
+
+        // 检测服务
+        DetectService detectService = new DetectAndRecognizeService(modelFileUrl,recognizeModelFilePath, kindNameMap);
+
+        // 开始检测
+        new PreviewCameraWithIdentify(detectService).action(1000);
     }
 }

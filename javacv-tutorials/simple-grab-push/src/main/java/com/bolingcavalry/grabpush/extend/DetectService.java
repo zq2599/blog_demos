@@ -74,71 +74,7 @@ public interface DetectService {
 
 
 
-    /**
-     * 检测图片，将检测结果用矩形标注在原始图片上
-     * @param classifier 分类器
-     * @param converter Frame和mat的转换器
-     * @param rawFrame 原始视频帧
-     * @param grabbedImage 原始视频帧对应的mat
-     * @param grayImage 存放灰度图片的mat
-     * @return 标注了识别结果的视频帧
-     */
-    static Frame detectAndRecoginze(CascadeClassifier classifier,
-                        OpenCVFrameConverter.ToMat converter,
-                        Frame rawFrame,
-                        Mat grabbedImage,
-                        Mat grayImage,
-                        RecognizeService recognizeService) {
 
-        // 当前图片转为灰度图片
-        cvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
-
-        // 存放检测结果的容器
-        RectVector objects = new RectVector();
-
-        // 开始检测
-        classifier.detectMultiScale(grayImage, objects);
-
-        // 检测结果总数
-        long total = objects.size();
-
-        // 如果没有检测到结果，就用原始帧返回
-        if (total<1) {
-            return rawFrame;
-        }
-
-        PredictRlt predictRlt;
-        int pos_x;
-        int pos_y;
-        String content;
-
-        // 如果有检测结果，就根据结果的数据构造矩形框，画在原图上
-        for (long i = 0; i < total; i++) {
-            Rect r = objects.get(i);
-
-            predictRlt = recognizeService.predict(new Mat(grayImage, r));
-
-            if(predictRlt.getConfidence()>Constants.MAX_CONFIDENCE) {
-                continue;
-            }
-
-            int x = r.x(), y = r.y(), w = r.width(), h = r.height();
-            rectangle(grabbedImage, new Point(x, y), new Point(x + w, y + h), Scalar.RED, 1, CV_AA, 0);
-
-            content = String.format("label : %d, confidence : %.4f", predictRlt.getLable(), predictRlt.getConfidence());
-
-            pos_x = Math.max(r.tl().x()-10, 0);
-            pos_y = Math.max(r.tl().y()-10, 0);
-
-            putText(grabbedImage, content, new Point(pos_x, pos_y), FONT_HERSHEY_PLAIN, 1.0, new Scalar(0,255,0,2.0));
-        }
-
-        // 释放检测结果资源
-        objects.close();
-
-        // 将标注过的图片转为帧，返回
-        return converter.convert(grabbedImage);
-    }
 
 
     /**

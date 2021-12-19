@@ -13,7 +13,7 @@ public interface Constants {
     /**
      * 超过这个置信度就明显有问题了
      */
-    double MAX_CONFIDENCE = 3000d;
+    double MAX_CONFIDENCE = 50d;
 
     String IMG_TYPE = "jpg";
 }

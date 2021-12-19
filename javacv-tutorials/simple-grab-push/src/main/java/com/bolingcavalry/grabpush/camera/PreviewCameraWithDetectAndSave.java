@@ -69,7 +69,7 @@ public class PreviewCameraWithDetectAndSave extends AbstractCameraApplication {
         new PreviewCameraWithDetectAndSave(
                 new DetectAndSaveService(
                         modelFileUrl,
-                        "E:\\temp\\202112\\18\\001\\man\\"))
+                        "E:\\temp\\202112\\18\\001\\woman\\"))
                 .action(1000);
     }
 }

@@ -29,6 +29,9 @@ public class RecognizeService {
     // 推理结果
     private PredictRlt predictRlt;
 
+    // 用于推理的图片尺寸，要和训练时的尺寸保持一致
+    private Size size= new Size(Constants.RESIZE_WIDTH, Constants.RESIZE_HEIGHT);
+
 
     public RecognizeService(String modelPath) {
         plabel = new int[1];
@@ -36,7 +39,7 @@ public class RecognizeService {
         predictRlt = new PredictRlt();
         faceRecognizer = FisherFaceRecognizer.create();
         faceRecognizer.read(modelPath);
-        faceRecognizer.setThreshold(2000);
+        faceRecognizer.setThreshold(Constants.MAX_CONFIDENCE);
     }
 
     /**
@@ -46,37 +49,27 @@ public class RecognizeService {
      */
     public PredictRlt predict(Mat mat) {
         // 调整到和训练一致的尺寸
-        resize(mat, mat, new Size(Constants.RESIZE_WIDTH, Constants.RESIZE_HEIGHT));
-        // 推理(这一行可能抛出异常导致程序退出)
-        faceRecognizer.predict(mat, plabel, pconfidence);
+        resize(mat, mat, size);
 
+        boolean isFinish = false;
+
+        try {
+            // 推理(这一行可能抛出RuntimeException异常，因此要补货，否则会导致程序退出)
+            faceRecognizer.predict(mat, plabel, pconfidence);
+            isFinish = true;
+        } catch (RuntimeException runtimeException) {
+            runtimeException.printStackTrace();
+        }
+
+        // 如果发生过异常，就提前返回
+        if (!isFinish) {
+            return null;
+        }
+
+        // 将推理结果写入返回对象中
         predictRlt.setLable(plabel[0]);
         predictRlt.setConfidence(pconfidence[0]);
 
         return predictRlt;
-    }
-
-
-    private void recog(String recognizerModel, String file) {
-
-        FaceRecognizer faceRecognizer = FisherFaceRecognizer.create();
-        faceRecognizer.read(recognizerModel);
-
-        Mat faceMat = opencv_imgcodecs.imread(file,IMREAD_GRAYSCALE);
-        resize(faceMat, faceMat, new Size(Constants.RESIZE_WIDTH, Constants.RESIZE_HEIGHT));
-
-        int[] plabel = new int[1];
-        double[] pconfidence = new double[1];
-
-        faceRecognizer.setThreshold(1500);
-        faceRecognizer.predict(faceMat, plabel, pconfidence);
-
-        System.out.println("lable [" + plabel[0] + "], confidence [" + pconfidence[0] + "]");
-    }
-
-    public static void main(String[] args) {
-//        String base = "E:\\temp\\202112\\15\\002\\";
-//
-//        new PredictService().recog(base + "faceRecognizer.xml", base + "1.png");
     }
 }
