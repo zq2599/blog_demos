@@ -1,6 +1,5 @@
 package com.bolingcavalry.grabpush.extend;
 
-import com.bolingcavalry.grabpush.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacv.Frame;
@@ -13,7 +12,6 @@ import java.net.URL;
 import java.util.Map;
 
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
-import static org.bytedeco.opencv.global.opencv_imgproc.FONT_HERSHEY_PLAIN;
 
 /**
  * @author willzhao

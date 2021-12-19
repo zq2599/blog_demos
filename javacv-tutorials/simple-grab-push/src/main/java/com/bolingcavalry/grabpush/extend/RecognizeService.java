@@ -13,7 +13,7 @@ import static org.bytedeco.opencv.global.opencv_imgproc.resize;
 /**
  * @author willzhao
  * @version 1.0
- * @description TODO
+ * @description 把人脸识别的服务集中在这里
  * @date 2021/12/12 21:32
  */
 public class RecognizeService {
@@ -37,8 +37,12 @@ public class RecognizeService {
         plabel = new int[1];
         pconfidence = new double[1];
         predictRlt = new PredictRlt();
+
+        // 识别类的实例化，与训练时相同
         faceRecognizer = FisherFaceRecognizer.create();
+        // 加载的是训练时生成的模型
         faceRecognizer.read(modelPath);
+        // 设置门限，这个可以根据您自身的情况不断调整
         faceRecognizer.setThreshold(Constants.MAX_CONFIDENCE);
     }
 
