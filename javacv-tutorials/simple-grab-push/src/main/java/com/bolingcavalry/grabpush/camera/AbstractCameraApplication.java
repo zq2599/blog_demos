@@ -5,11 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.ffmpeg.global.avutil;
 import org.bytedeco.javacv.*;
 import org.bytedeco.opencv.global.opencv_imgproc;
+import org.bytedeco.opencv.opencv_core.IplImage;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Scalar;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static org.bytedeco.opencv.global.opencv_core.cvFlip;
 
 /**
  * @author will
@@ -130,6 +133,7 @@ public abstract class AbstractCameraApplication {
         org.bytedeco.opencv.opencv_core.Point point = new org.bytedeco.opencv.opencv_core.Point(15, 35);
 
         Frame captureFrame;
+        IplImage img;
         Mat mat;
 
         // 超过指定时间就结束循环
@@ -142,8 +146,14 @@ public abstract class AbstractCameraApplication {
                 break;
             }
 
-            // 将帧对象转为mat对象
-            mat = openCVConverter.convertToMat(captureFrame);
+            // 将帧对象转为IplImage对象
+            img = openCVConverter.convert(captureFrame);
+
+            // 镜像翻转
+            cvFlip(img, img, 1);
+
+            // IplImage转mat
+            mat = new Mat(img);
 
             // 在图片上添加水印，水印内容是当前时间，位置是左上角
             opencv_imgproc.putText(mat,
