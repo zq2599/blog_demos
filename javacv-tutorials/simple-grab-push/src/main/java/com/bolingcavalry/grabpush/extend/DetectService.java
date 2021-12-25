@@ -71,11 +71,6 @@ public interface DetectService {
         return converter.convert(grabbedImage);
     }
 
-
-
-
-
-
     /**
      * 初始化操作，例如模型下载
      * @throws Exception
