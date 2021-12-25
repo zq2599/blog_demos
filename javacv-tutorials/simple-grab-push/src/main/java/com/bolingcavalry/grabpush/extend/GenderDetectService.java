@@ -1,14 +1,23 @@
 package com.bolingcavalry.grabpush.extend;
 
+import com.bolingcavalry.grabpush.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.bytedeco.javacpp.Loader;
+import org.bytedeco.javacpp.indexer.Indexer;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
 
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import static org.bytedeco.opencv.global.opencv_core.NORM_MINMAX;
+import static org.bytedeco.opencv.global.opencv_core.normalize;
+import static org.bytedeco.opencv.global.opencv_dnn.blobFromImage;
 import static org.bytedeco.opencv.global.opencv_dnn.readNetFromCaffe;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
@@ -53,25 +62,48 @@ public class GenderDetectService implements DetectService {
     private String genderProtoFileUrl;
 
     /**
-     * 模型文件的下载地址
+     * 性别识别模型文件的下载地址
      */
     private String genderModelFileUrl;
 
     /**
-     * 神经网络对象
+     * 年龄识别proto文件的下载地址
      */
-    private Net net;
+    private String ageProtoFileUrl;
+
+    /**
+     * 年龄识别模型文件的下载地址
+     */
+    private String ageModelFileUrl;
+
+    /**
+     * 推理性别的神经网络对象
+     */
+    private Net genderNet;
+
+    /**
+     * 推理年龄的神经网络对象
+     */
+    private Net ageNet;
 
     /**
      * 构造方法，在此指定proto和模型文件的下载地址
      * @param classifierModelFileUrl
      * @param genderProtoFileUrl
      * @param genderModelFileUrl
+     * @param ageProtoFileUrl
+     * @param ageModelFileUrl
      */
-    public GenderDetectService(String classifierModelFileUrl, String genderProtoFileUrl, String genderModelFileUrl) {
+    public GenderDetectService(String classifierModelFileUrl,
+                               String genderProtoFileUrl,
+                               String genderModelFileUrl,
+                               String ageProtoFileUrl,
+                               String ageModelFileUrl) {
         this.classifierModelFileUrl = classifierModelFileUrl;
         this.genderProtoFileUrl = genderProtoFileUrl;
         this.genderModelFileUrl = genderModelFileUrl;
+        this.ageProtoFileUrl = ageProtoFileUrl;
+        this.ageModelFileUrl = ageModelFileUrl;
     }
 
     /**
@@ -81,9 +113,11 @@ public class GenderDetectService implements DetectService {
     @Override
     public void init() throws Exception {
         // 根据模型文件实例化分类器
-        classifier = new CascadeClassifier(DetectService.download(classifierModelFileUrl));
-        // 实例化神经网络
-        net = readNetFromCaffe(DetectService.download(genderProtoFileUrl), DetectService.download(genderModelFileUrl));
+        classifier = new CascadeClassifier(download(classifierModelFileUrl));
+        // 实例化推理性别的神经网络
+        genderNet = readNetFromCaffe(download(genderProtoFileUrl), download(genderModelFileUrl));
+        // 实例化推理年龄的神经网络
+        ageNet = readNetFromCaffe(download(ageProtoFileUrl), download(ageModelFileUrl));
     }
 
     @Override
@@ -97,7 +131,7 @@ public class GenderDetectService implements DetectService {
         }
 
         // 进行人脸识别，根据结果做处理得到预览窗口显示的帧
-        return DetectService.detect(classifier, converter, frame, grabbedImage, grayImage);
+        return detectAndPredictGenderAge(classifier, converter, frame, grabbedImage, grayImage, genderNet, ageNet);
     }
 
     /**
@@ -118,6 +152,26 @@ public class GenderDetectService implements DetectService {
         }
     }
 
+    /**
+     * 远程下载文件到本地，再返回本地文件路径
+     * @param remotePath
+     * @return 下载到本地后的本地文件地址
+     */
+    static String download(String remotePath) {
+        log.info("正在下载 : {}", remotePath);
+        File file = null;
+
+        try {
+            file = Loader.cacheResource(new URL(remotePath));
+            log.info("下载完成");
+        } catch (MalformedURLException malformedURLException) {
+            malformedURLException.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+        return null==file ? null : file.getAbsolutePath();
+    }
 
     /**
      * 检测图片，将检测结果用矩形标注在原始图片上
@@ -126,17 +180,17 @@ public class GenderDetectService implements DetectService {
      * @param rawFrame 原始视频帧
      * @param grabbedImage 原始视频帧对应的mat
      * @param grayImage 存放灰度图片的mat
-     * @param genderPredictNet 预测性别的神经网络
-     * @param kindNameMap 每个分类编号对应的名称
+     * @param genderNet 预测性别的神经网络
+     * @param ageNet 预测性别的神经网络
      * @return 标注了识别结果的视频帧
      */
-    static Frame detectAndPredictGender(CascadeClassifier classifier,
+    static Frame detectAndPredictGenderAge(CascadeClassifier classifier,
                                     OpenCVFrameConverter.ToMat converter,
                                     Frame rawFrame,
                                     Mat grabbedImage,
                                     Mat grayImage,
-                                    Net genderPredictNet,
-                                    Map<Integer, String> kindNameMap) {
+                                    Net genderNet,
+                                    Net ageNet) {
 
         // 当前图片转为灰度图片
         cvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
@@ -155,16 +209,49 @@ public class GenderDetectService implements DetectService {
             return rawFrame;
         }
 
-        PredictRlt predictRlt;
         int pos_x;
         int pos_y;
-        int lable;
-        double confidence;
         String content;
+
+        Mat faceMat;
+
+        //推理时的入参
+        Mat inputBlob;
+
+        // 推理结果
+        Mat prob;
+
+        // 索引
+        Indexer indexer;
+
+        boolean male = true;
 
         // 如果有检测结果，就根据结果的数据构造矩形框，画在原图上
         for (long i = 0; i < total; i++) {
             Rect r = objects.get(i);
+
+            // 人脸对应的Mat实例
+            faceMat = new Mat(grayImage, r);
+            // 缩放到神经网络所需的尺寸
+            resize(faceMat, faceMat, new Size(Constants.CNN_PREIDICT_IMG_WIDTH, Constants.CNN_PREIDICT_IMG_HEIGHT));
+            // 归一化
+            normalize(faceMat, faceMat, 0, Math.pow(2, rawFrame.imageDepth), NORM_MINMAX, -1, null);
+            // 转为推理时所需的的blob类型
+            inputBlob = blobFromImage(faceMat);
+            // 为神经网络设置入参
+            genderNet.setInput(inputBlob, "data", 1.0, null);      //set the network input
+            // 推理
+            prob = genderNet.forward("prob");
+
+            indexer = prob.createIndexer();
+            // 比较两种性别的概率，概率大的作为当前头像的性别
+            male = indexer.getDouble(0,0) > indexer.getDouble(0,1);
+
+
+            content = String.format("%s", male ?  "male" : "female");
+
+
+
 
 //            predictRlt = recognizeService.predict(new Mat(grayImage, r));
 
@@ -194,7 +281,7 @@ public class GenderDetectService implements DetectService {
             pos_x = Math.max(r.tl().x()-10, 0);
             pos_y = Math.max(r.tl().y()-10, 0);
 
-//            putText(grabbedImage, content, new Point(pos_x, pos_y), FONT_HERSHEY_PLAIN, 1.5, new Scalar(0,255,0,2.0));
+            putText(grabbedImage, content, new Point(pos_x, pos_y), FONT_HERSHEY_PLAIN, 1.5, new Scalar(0,255,0,2.0));
         }
 
         // 释放检测结果资源

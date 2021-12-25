@@ -15,5 +15,15 @@ public interface Constants {
      */
     double MAX_CONFIDENCE = 50d;
 
+    /**
+     * 卷积神经网络推理使用的图片宽度
+     */
+    int CNN_PREIDICT_IMG_WIDTH = 256;
+
+    /**
+     * 卷积神经网络推理使用的图片高度
+     */
+    int CNN_PREIDICT_IMG_HEIGHT = 256;
+
     String IMG_TYPE = "jpg";
 }

@@ -1,15 +1,9 @@
 package com.bolingcavalry.grabpush.extend;
 
-import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import static org.bytedeco.opencv.global.opencv_core.CV_8UC1;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
@@ -29,25 +23,6 @@ public interface DetectService {
      */
     static Mat buildGrayImage(Mat src) {
         return new Mat(src.rows(), src.cols(), CV_8UC1);
-    }
-
-    /**
-     * 远程下载文件到本地，再返回本地文件路径
-     * @param remotePath
-     * @return 下载到本地后的本地文件地址
-     */
-    static String download(String remotePath) {
-        File file = null;
-
-        try {
-            file = Loader.cacheResource(new URL(remotePath));
-        } catch (MalformedURLException malformedURLException) {
-            malformedURLException.printStackTrace();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-
-        return null==file ? null : file.getAbsolutePath();
     }
 
     /**
