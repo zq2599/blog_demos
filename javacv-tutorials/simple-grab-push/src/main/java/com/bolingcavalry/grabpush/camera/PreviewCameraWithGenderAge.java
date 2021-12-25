@@ -1,8 +1,8 @@
 package com.bolingcavalry.grabpush.camera;
 
+import com.bolingcavalry.grabpush.extend.AgeDetectService;
 import com.bolingcavalry.grabpush.extend.DetectService;
 import com.bolingcavalry.grabpush.extend.GenderDetectService;
-import com.bolingcavalry.grabpush.extend.HaarCascadeDetectService;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.Frame;
@@ -65,13 +65,19 @@ public class PreviewCameraWithGenderAge extends AbstractCameraApplication {
     }
 
     public static void main(String[] args) {
+        String base = "E:\\temp\\202112\\25\\opencv\\";
+        /*
         DetectService detectService = new GenderDetectService(
-                "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_alt.xml",
-                "https://raw.githubusercontent.com/GilLevi/AgeGenderDeepLearning/master/gender_net_definitions/deploy.prototxt",
-                "https://raw.githubusercontent.com/GilLevi/AgeGenderDeepLearning/master/models/gender_net.caffemodel",
-                "https://raw.githubusercontent.com/GilLevi/AgeGenderDeepLearning/master/age_net_definitions/deploy.prototxt",
-                "https://raw.githubusercontent.com/GilLevi/AgeGenderDeepLearning/master/models/age_net.caffemodel"
-        );
+                base + "haarcascade_frontalface_alt.xml",
+                base + "gender\\deploy.prototxt",
+                base + "gender\\gender_net.caffemodel");
+
+        */
+
+        DetectService detectService = new AgeDetectService(
+                base + "haarcascade_frontalface_alt.xml",
+                base + "age\\deploy.prototxt",
+                base + "age\\age_net.caffemodel");
 
         new PreviewCameraWithGenderAge(detectService).action(1000);
     }
