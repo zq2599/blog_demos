@@ -25,5 +25,16 @@ public interface Constants {
      */
     int CNN_PREIDICT_IMG_HEIGHT = 256;
 
+
+    /**
+     * 卷积神经网络推理使用的图片宽度
+     */
+    int CAFFE_MASK_MODEL_IMG_WIDTH = 160;
+
+    /**
+     * 卷积神经网络推理使用的图片高度
+     */
+    int CAFFE_MASK_MODEL_IMG_HEIGHT = 160;
+
     String IMG_TYPE = "jpg";
 }

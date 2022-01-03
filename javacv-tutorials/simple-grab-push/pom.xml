@@ -34,6 +34,17 @@
             <version>2.13.3</version>
         </dependency>
 
+        <!-- 网络请求库 -->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+        </dependency>
+        <!-- JSON处理库 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
         <!-- javacv相关依赖，一个就够了 -->
         <dependency>
             <groupId>org.bytedeco</groupId>
