@@ -27,12 +27,14 @@ public class BaiduCloudService {
 
     static final String URL_TEMPLATE = "https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token=%s";
 
-    String token = "24.95015c0adbe833131d88247452b0dd17.2592000.1643117359.282335-25415527";
+    String token;
 
     ObjectMapper mapper = new ObjectMapper();
 
     public BaiduCloudService(String token) {
         this.token = token;
+
+        // 重要：反序列化的时候，字符的字段如果比类的字段多，下面这个设置可以确保反序列化成功
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
     }
 
@@ -97,12 +99,12 @@ public class BaiduCloudService {
     }
 
     public static void main(String[] args) {
-//        String imagePath = "E:\\temp\\202201\\01\\pic\\1.jpeg";
+        String imagePath = "E:\\temp\\202201\\01\\pic\\1.jpeg";
         // 图片在本地的位置
-        String imagePath = "E:\\temp\\202201\\01\\pic\\2.png";
+//        String imagePath = "E:\\temp\\202201\\01\\pic\\2.png";
 
         // 百度云的token，是通过此接口得到的：https://aip.baidubce.com/oauth/2.0/token
-        String token = "24.95015c0adbe833131d88247452b0dd17.2592000.1643117359.282335-25415527";
+        String token = "24.cea0b26a4191b380fe4259c4777e9e40.2592000.1643799009.282335-25415527";
 
         // 实例化服务对象
         BaiduCloudService service = new BaiduCloudService(token);
@@ -113,6 +115,7 @@ public class BaiduCloudService {
         // 向百度服务发请求，检测人脸
         FaceDetectResponse faceDetectResponse = service.detect(imageBase64);
 
+        // 输出检测结果
         System.out.println(faceDetectResponse);
     }
 
