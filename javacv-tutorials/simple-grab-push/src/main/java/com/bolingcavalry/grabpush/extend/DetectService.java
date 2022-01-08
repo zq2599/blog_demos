@@ -6,6 +6,7 @@ import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
 
 import static org.bytedeco.opencv.global.opencv_core.CV_8UC1;
+import static org.bytedeco.opencv.global.opencv_core.CV_8UC4;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
 /**
@@ -23,6 +24,15 @@ public interface DetectService {
      */
     static Mat buildGrayImage(Mat src) {
         return new Mat(src.rows(), src.cols(), CV_8UC1);
+    }
+
+    /**
+     * 根据传入的MAT构造相同尺寸的MAT，存放RGBA图片用于以后的检测
+     * @param src 原始图片的MAT对象
+     * @return 相同尺寸的RGBA图片的MAT对象
+     */
+    static Mat buildRgbaImage(Mat src) {
+        return new Mat(src.rows(), src.cols(), CV_8UC4);
     }
 
     /**
