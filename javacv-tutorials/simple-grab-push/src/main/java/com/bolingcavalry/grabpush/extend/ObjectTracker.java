@@ -1,5 +1,6 @@
 package com.bolingcavalry.grabpush.extend;
 
+import lombok.extern.slf4j.Slf4j;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -15,13 +16,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
-
 /**
  * @author willzhao
  * @version 1.0
  * @description TODO
  * @date 2022/1/8 21:21
  */
+@Slf4j
 public class ObjectTracker {
 
     private Mat hsv, hue, mask, prob;
@@ -99,7 +100,7 @@ public class ObjectTracker {
 
     }
 
-    public RotatedRect objectTracking(Mat mRgba) {
+    public Rect objectTracking(Mat mRgba) {
 
         rgba2Hsv(mRgba);
 
@@ -114,14 +115,61 @@ public class ObjectTracker {
         // 追踪目标
         rotatedRect = Video.CamShift(prob, trackRect, new TermCriteria(TermCriteria.EPS, 10, 1));
 
+        // 转为Rect对象
+        Rect camShiftRect = rotatedRect.boundingRect();
+
+        // 比较追踪前和追踪后的数据，如果出现太大偏差，就认为追踪失败
+        if (lostTrace(trackRect, camShiftRect)) {
+            log.info("lost trace!");
+            trackRect = null;
+            return null;
+        }
+
         // 将本次最终到的目标作为下次追踪的对象
-        trackRect = rotatedRect.boundingRect();
+        trackRect = camShiftRect;
 
-        rotatedRect.angle = -rotatedRect.angle;
+        return camShiftRect;
+    }
 
-        Imgproc.rectangle(prob, trackRect.tl(), trackRect.br(), new Scalar(255, 255, 0, 255), 6);
+    private static final double LOST_GATE = 0.8d;
 
-        return rotatedRect;
+    /**
+     * 变化率的绝对值
+     * @param last 变化前
+     * @param current 变化后
+     * @return
+     */
+    private static double changeRate(int last, int current) {
+        return Math.abs((double)(current-last)/(double) last);
+    }
+
+    /**
+     * 本次和上一次宽度或者高度的变化率，一旦超过阈值就认为跟踪失败
+     * @param lastRect
+     * @param currentRect
+     * @return
+     */
+    private static boolean lostTrace(Rect lastRect, Rect currentRect) {
+        // 0不能做除数，如果发现0就认跟丢了
+        if (lastRect.width<1 || lastRect.height<1) {
+            return true;
+        }
+
+        double widthChangeRate = changeRate(lastRect.width, currentRect.width);
+
+        if (widthChangeRate>LOST_GATE) {
+            log.info("1. lost trace, old [{}], new [{}], rate [{}]", lastRect.width, currentRect.width, widthChangeRate);
+            return true;
+        }
+
+        double heightChangeRate = changeRate(lastRect.height, currentRect.height);
+
+        if (heightChangeRate>LOST_GATE) {
+            log.info("2. lost trace, old [{}], new [{}], rate [{}]", lastRect.height, currentRect.height, heightChangeRate);
+            return true;
+        }
+
+        return false;
     }
 
 }
