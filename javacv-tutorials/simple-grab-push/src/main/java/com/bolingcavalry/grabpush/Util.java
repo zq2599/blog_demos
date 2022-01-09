@@ -43,8 +43,14 @@ public class Util {
      * @return
      */
     public static org.opencv.core.Mat buildJavacvBGR2OpenCVRGBA(Mat javacvBGR, Mat javacvRGBA) {
-        cvtColor(javacvBGR, javacvRGBA, CV_BGR2RGBA);
-        return new org.opencv.core.Mat(javacvRGBA.address());
+        try {
+            cvtColor(javacvBGR, javacvRGBA, CV_BGR2RGBA);
+            return new org.opencv.core.Mat(javacvRGBA.address());
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+
+        return null;
     }
 
     /**

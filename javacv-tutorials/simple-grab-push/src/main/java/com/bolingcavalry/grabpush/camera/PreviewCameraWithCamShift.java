@@ -2,7 +2,6 @@ package com.bolingcavalry.grabpush.camera;
 
 import com.bolingcavalry.grabpush.extend.CamShiftDetectService;
 import com.bolingcavalry.grabpush.extend.DetectService;
-import com.bolingcavalry.grabpush.extend.HaarCascadeDetectService;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.Frame;

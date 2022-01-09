@@ -135,6 +135,13 @@ public class CamShiftDetectService implements DetectService {
 
             // 得到opencv的mat，其格式是RGBA
             org.opencv.core.Mat openCVRGBAMat = Util.buildJavacvBGR2OpenCVRGBA(grabbedImage, mRgba);
+
+            // 在buildJavacvBGR2OpenCVRGBA方法内部，有可能在执行native方法的是否发生异常，要做针对性处理
+            if (null==openCVRGBAMat) {
+                objects.close();
+                return frame;
+            }
+
             // 如果第一次追踪，要实例化objectTracker
             if (null==objectTracker) {
                 objectTracker = new ObjectTracker(openCVRGBAMat);
@@ -160,6 +167,11 @@ public class CamShiftDetectService implements DetectService {
         // 得到opencv的mat，其格式是RGBA
         org.opencv.core.Mat openCVRGBAMat = Util.buildJavacvBGR2OpenCVRGBA(grabbedImage, mRgba);
 
+        // 在buildJavacvBGR2OpenCVRGBA方法内部，有可能在执行native方法的是否发生异常，要做针对性处理
+        if (null==openCVRGBAMat) {
+            return frame;
+        }
+
         // 基于上一次的检测结果开始跟踪
         org.opencv.core.Rect rotatedRect = objectTracker.objectTracking(openCVRGBAMat);
 
@@ -171,11 +183,11 @@ public class CamShiftDetectService implements DetectService {
         }
 
         // 代码能走到这里，表示跟踪成功，拿到的新的一帧上的目标的位置，此时就在新位置上
-        Util.rectOnImage(grabbedImage, rotatedRect.x, rotatedRect.y, rotatedRect.width, rotatedRect.width);
+//        Util.rectOnImage(grabbedImage, rotatedRect.x, rotatedRect.y, rotatedRect.width, rotatedRect.height);
+        // 矩形框的整体向下放一些(总高度的五分之一)，另外跟踪得到的高度过大，画出的矩形框把脖子也框上了，这里改用宽度作为高度
+        Util.rectOnImage(grabbedImage, rotatedRect.x, rotatedRect.y + rotatedRect.height/5, rotatedRect.width, rotatedRect.width);
         return converter.convert(grabbedImage);
     }
-
-
 
     /**
      * 程序结束前，释放人脸识别的资源
