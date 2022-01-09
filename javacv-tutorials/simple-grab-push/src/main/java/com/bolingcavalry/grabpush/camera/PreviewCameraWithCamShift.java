@@ -6,11 +6,16 @@ import com.bolingcavalry.grabpush.extend.HaarCascadeDetectService;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.Frame;
+import org.opencv.core.Core;
 
 import javax.swing.*;
 
 @Slf4j
 public class PreviewCameraWithCamShift extends AbstractCameraApplication {
+    // 静态代码块定义，会在程序开始运行时先被调用初始化
+    static {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // 得保证先执行该语句，用于加载库，才能调用其他操作库的语句，
+    }
 
     /**
      * 本机窗口

@@ -26,14 +26,7 @@ public interface DetectService {
         return new Mat(src.rows(), src.cols(), CV_8UC1);
     }
 
-    /**
-     * 根据传入的MAT构造相同尺寸的MAT，存放RGBA图片用于以后的检测
-     * @param src 原始图片的MAT对象
-     * @return 相同尺寸的RGBA图片的MAT对象
-     */
-    static Mat buildRgbaImage(Mat src) {
-        return new Mat(src.rows(), src.cols(), CV_8UC4);
-    }
+
 
     /**
      * 检测图片，将检测结果用矩形标注在原始图片上

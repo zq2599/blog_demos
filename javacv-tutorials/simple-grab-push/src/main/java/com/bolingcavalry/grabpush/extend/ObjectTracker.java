@@ -1,6 +1,5 @@
 package com.bolingcavalry.grabpush.extend;
 
-import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -12,7 +11,6 @@ import org.opencv.core.Scalar;
 import org.opencv.core.TermCriteria;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.video.Video;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
