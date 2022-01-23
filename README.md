@@ -74,6 +74,7 @@
 14. [《kubernetes下的jenkins如何设置maven》](https://blog.csdn.net/boling_cavalry/article/details/104849839)
 15. [《kubernetes下jenkins实战maven项目编译构建》](https://blog.csdn.net/boling_cavalry/article/details/104875452)
 16. [《Nexus3常用功能备忘》](https://xinchen.blog.csdn.net/article/details/105458882)
+17. [《我把自己的java库发布到了maven中央仓库，从此可以像Jackson、Spring的jar一样使用它了》](https://xinchen.blog.csdn.net/article/details/121240721)
 
 ## 玩转Gradle
 1. [Gradle构建多模块SpringBoot应用](https://xinchen.blog.csdn.net/article/details/115049633)
@@ -230,6 +231,7 @@
 . [《Spring Cloud Gateway过滤器精确控制异常返回(分析篇)》](https://xinchen.blog.csdn.net/article/details/120114474)
 . [《Spring Cloud Gateway过滤器精确控制异常返回(实战，控制http返回码和message字段)》](https://xinchen.blog.csdn.net/article/details/120170949)
 . [《Spring Cloud Gateway过滤器精确控制异常返回(实战，完全定制返回body)》](https://xinchen.blog.csdn.net/article/details/120239199)
+. [《Spring Cloud Gateway编码实现任意地址跳转》](https://xinchen.blog.csdn.net/article/details/121805244)
 
 ## spring-cloud-alibaba实战
 1. [《Docker下,两分钟极速体验Nacos》](https://blog.csdn.net/boling_cavalry/article/details/97617353)；
@@ -867,6 +869,26 @@
 5. [《微信小程序+腾讯云直播的实时音视频实战笔记》](https://blog.csdn.net/boling_cavalry/article/details/116855410)
 6. [《Kurento实战之五：媒体播放》](https://blog.csdn.net/boling_cavalry/article/details/118055902)
 7. [《Kurento实战之六：云端录制》](https://blog.csdn.net/boling_cavalry/article/details/118065861)
+
+## JavaCV特辑
+1. [《JavaCV推流实战(MP4文件)》](https://xinchen.blog.csdn.net/article/details/121434969)
+2. [《JavaCV的摄像头实战之一：基础》](https://xinchen.blog.csdn.net/article/details/121572093)
+3. [《JavaCV的摄像头实战之二：本地窗口预览》](https://xinchen.blog.csdn.net/article/details/121587043)
+4. [《JavaCV的摄像头实战之三：保存为mp4文件》](https://xinchen.blog.csdn.net/article/details/121597278)
+5. [《JavaCV的摄像头实战之四：抓图》](https://xinchen.blog.csdn.net/article/details/121624255)
+6. [《JavaCV的摄像头实战之五：推流》](https://xinchen.blog.csdn.net/article/details/121647316)
+7. [《JavaCV的摄像头实战之六：保存为mp4文件(有声音)》](https://xinchen.blog.csdn.net/article/details/121713539)
+8. [《JavaCV的摄像头实战之七：推流(带声音)》](https://xinchen.blog.csdn.net/article/details/121713559)
+9. [《JavaCV的摄像头实战之八：人脸检测》](https://xinchen.blog.csdn.net/article/details/121730985)
+10. [《JavaCV人脸识别三部曲之一：视频中的人脸保存为图片》](https://xinchen.blog.csdn.net/article/details/122008998)
+11. [《JavaCV人脸识别三部曲之二：训练》](https://xinchen.blog.csdn.net/article/details/122016154)
+12. [《JavaCV人脸识别三部曲之三：识别和预览》](https://xinchen.blog.csdn.net/article/details/122021850)
+13. [《JavaCV的摄像头实战之十二：性别检测》](https://xinchen.blog.csdn.net/article/details/122098821)
+14. [《JavaCV的摄像头实战之十三：年龄检测》](https://xinchen.blog.csdn.net/article/details/122151728)
+15. [《最简单的人脸检测（免费调用百度AI开放平台接口）》](https://xinchen.blog.csdn.net/article/details/122285751)
+16. [《JavaCV的摄像头实战之十四：口罩检测》](https://xinchen.blog.csdn.net/article/details/122375869)
+17. [《Java版人脸跟踪三部曲之一：极速体验》](https://xinchen.blog.csdn.net/article/details/122391898)
+18. [《Java版人脸跟踪三部曲之二：开发设计》](https://xinchen.blog.csdn.net/article/details/122528833)
 
 # 硬件
 
