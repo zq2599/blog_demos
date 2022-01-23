@@ -2,14 +2,15 @@ package com.bolingcavalry.grabpush.extend;
 
 import com.bolingcavalry.grabpush.Util;
 import lombok.extern.slf4j.Slf4j;
-import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.OpenCVFrameConverter;
-import org.bytedeco.opencv.opencv_core.*;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.Rect;
+import org.bytedeco.opencv.opencv_core.RectVector;
 import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
 import java.io.File;
-import java.net.URL;
-import static org.bytedeco.opencv.global.opencv_imgproc.*;
+import static org.bytedeco.opencv.global.opencv_imgproc.CV_BGR2GRAY;
+import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
 
 /**
  * @author willzhao
@@ -38,7 +39,7 @@ public class CamShiftDetectService implements DetectService {
     /**
      * 模型文件的下载地址
      */
-    private String modelFileUrl;
+    private String modelFilePath;
 
     /**
      * 存放RGBA图片Mat
@@ -62,10 +63,10 @@ public class CamShiftDetectService implements DetectService {
 
     /**
      * 构造方法，在此指定模型文件的下载地址
-     * @param modelFileUrl
+     * @param modelFilePath
      */
-    public CamShiftDetectService(String modelFileUrl) {
-        this.modelFileUrl = modelFileUrl;
+    public CamShiftDetectService(String modelFilePath) {
+        this.modelFilePath = modelFilePath;
     }
 
     /**
@@ -74,13 +75,9 @@ public class CamShiftDetectService implements DetectService {
      */
     @Override
     public void init() throws Exception {
-        // 下载模型文件
-        URL url = new URL(modelFileUrl);
-
-        File file = Loader.cacheResource(url);
-
+        log.info("开始加载模型文件");
         // 模型文件下载后的完整地址
-        String classifierName = file.getAbsolutePath();
+        String classifierName = new File(modelFilePath).getAbsolutePath();
 
         // 根据模型文件实例化分类器
         classifier = new CascadeClassifier(classifierName);
@@ -89,6 +86,8 @@ public class CamShiftDetectService implements DetectService {
             log.error("Error loading classifier file [{}]", classifierName);
             System.exit(1);
         }
+
+        log.info("模型文件加载完毕，初始化完成");
     }
 
 

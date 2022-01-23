@@ -69,7 +69,8 @@ public class PreviewCameraWithCamShift extends AbstractCameraApplication {
     }
 
     public static void main(String[] args) {
-        String modelFileUrl = "https://raw.github.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_alt.xml";
-        new PreviewCameraWithCamShift(new CamShiftDetectService(modelFileUrl)).action(1000);
+        String modelFilePath = System.getProperty("model.file.path");
+        log.info("模型文件本地路径：{}", modelFilePath);
+        new PreviewCameraWithCamShift(new CamShiftDetectService(modelFilePath)).action(1000);
     }
 }

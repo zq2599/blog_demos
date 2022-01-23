@@ -1,15 +1,7 @@
 package com.bolingcavalry.grabpush.extend;
 
 import lombok.extern.slf4j.Slf4j;
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfFloat;
-import org.opencv.core.MatOfInt;
-import org.opencv.core.Rect;
-import org.opencv.core.RotatedRect;
-import org.opencv.core.Scalar;
-import org.opencv.core.TermCriteria;
+import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.video.Video;
 import java.util.Collections;
@@ -80,7 +72,7 @@ public class ObjectTracker {
     }
 
     public void createTrackedObject(Mat mRgba, Rect region) {
-
+//        hist.release();
         //将rgb摄像头帧转化成hsv空间的
         rgba2Hsv(mRgba);
 
@@ -97,16 +89,20 @@ public class ObjectTracker {
         // 将hist矩阵进行数组范围归一化，都归一化到0~255
         Core.normalize(hist, hist, 0, 255, Core.NORM_MINMAX);
         trackRect = region;
-
     }
 
     public Rect objectTracking(Mat mRgba) {
-
-        rgba2Hsv(mRgba);
+        try {
+           // 实测此处可能抛出异常，要注意捕获，避免程序退出
+           rgba2Hsv(mRgba);
+        } catch (CvException cvException) {
+            log.error("cvtColor exception", cvException);
+            trackRect = null;
+            return null;
+        }
 
         updateHueImage();
         // 计算直方图的反投影。
-        // Imgproc.calcBackProject(hueList, new MatOfInt(0), hist, prob, ranges, 255);
         Imgproc.calcBackProject(hueList, new MatOfInt(0), hist, prob, ranges, 1.0);
 
         // 计算两个数组的按位连接（dst = src1 & src2）计算两个数组或数组和标量的每个元素的逐位连接。
