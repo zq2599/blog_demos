@@ -17,74 +17,93 @@ import java.util.Vector;
 @Slf4j
 public class ObjectTracker {
 
-    private Mat hsv, hue, mask, prob;
+    // [0.0, 256.0]表示直方图能表示像素值从0.0到256的像素
+    private static final MatOfFloat RANGES = new MatOfFloat(0f, 256f);
+
+    private Mat mask;
+
+    // 保存用来追踪的每一帧的反向投影图
+    private Mat prob;
+
+    // 保存最近一次确认的头像的位置，每当新的一帧到来时，都从这个位置开始追踪（也就是反向投影图做CamShift计算的起始位置）
     private Rect trackRect;
-    private RotatedRect rotatedRect;
+
+    // 直方图
     private Mat hist;
-    private List<Mat> hsvList, hueList;
-    private MatOfFloat ranges;
+
 
     public ObjectTracker(Mat rgba) {
         hist = new Mat();
         trackRect = new Rect();
-        rotatedRect = new RotatedRect();
-        hsvList = new Vector<>();
-        hueList = new Vector<>();
-
-        hsv = new Mat(rgba.size(), CvType.CV_8UC3);
         mask = new Mat(rgba.size(), CvType.CV_8UC1);
-        hue = new Mat(rgba.size(), CvType.CV_8UC1);
-
         prob = new Mat(rgba.size(), CvType.CV_8UC1);
-
-        ranges = new MatOfFloat(0f, 256f);
     }
 
-    private void rgba2Hsv(Mat rgba) {
+    /**
+     * 将摄像头传来的图片提取出hue通道，放入hueList中
+     * 将摄像头传来的RGB颜色空间的图片转为HSV颜色空间，
+     * 然后检查HSV三个通道的值是否在指定范围内，mask中记录了检查结果
+     * 再将hsv中的hue提取出来
+     * @param rgba
+     */
+    private List<Mat> rgba2Hue(Mat rgba) {
+        // 实例化Mat，显然，hsv是三通道，hue是hsv三通道其中的一个，所以hue是一通道
+        Mat hsv = new Mat(rgba.size(), CvType.CV_8UC3);
+        Mat hue = new Mat(rgba.size(), CvType.CV_8UC1);
 
+        // 1. 先转换
+        // 转换颜色空间，RGB到HSV
         Imgproc.cvtColor(rgba, hsv, Imgproc.COLOR_RGB2HSV);
 
-        //inRange函数的功能是检查输入数组每个元素大小是否在2个给定数值之间，可以有多通道,mask保存0通道的最小值，也就是h分量
-        //这里利用了hsv的3个通道，比较h,0~180,s,smin~256,v,min(vmin,vmax),max(vmin,vmax)。如果3个通道都在对应的范围内，则
-        //mask对应的那个点的值全为1(0xff)，否则为0(0x00).
         int vMin = 65, vMax = 256, sMin = 55;
+        //inRange函数的功能是检查输入数组每个元素大小是否在2个给定数值之间，可以有多通道,mask保存0通道的最小值，也就是h分量
+        //这里利用了hsv的3个通道，比较h,0~180,s,smin~256,v,min(vmin,vmax),max(vmin,vmax)。如果3个通道都在对应的范围内，
+        //则mask对应的那个点的值全为1(0xff)，否则为0(0x00).
         Core.inRange(
                 hsv,
                 new Scalar(0, sMin, Math.min(vMin, vMax)),
                 new Scalar(180, 256, Math.max(vMin, vMax)),
                 mask
         );
-    }
 
-    private void updateHueImage() {
-        hsvList.clear();
+        // 2. 再提取
+        List<Mat> hsvList = new Vector<>();
+        // 将hsv中的hue提取到hueList中
         hsvList.add(hsv);
 
+        // 准备好hueList，用于接收通道
         // hue初始化为与hsv大小深度一样的矩阵，色调的度量是用角度表示的，红绿蓝之间相差120度，反色相差180度
         hue.create(hsv.size(), hsv.depth());
 
-        hueList.clear();
+        List<Mat> hueList = new Vector<>();
         hueList.add(hue);
+
         MatOfInt from_to = new MatOfInt(0, 0);
 
-        // 将hsv第一个通道(也就是色调)的数复制到hue中，0索引数组
+        // 提取操作：将hsv第一个通道(也就是色调)的数复制到hue中，0索引数组
         Core.mixChannels(hsvList, hueList, from_to);
+
+        return hueList;
     }
+
 
     public void createTrackedObject(Mat mRgba, Rect region) {
 //        hist.release();
+
         //将rgb摄像头帧转化成hsv空间的
-        rgba2Hsv(mRgba);
+        List<Mat> hueList = rgba2Hue(mRgba);
+        // 将hsv中的hue提取到hueList中
+        //updateHueImage();
 
-        updateHueImage();
-
+        // 人脸区域的mask
         Mat tempMask = mask.submat(region);
 
-        // MatOfFloat ranges = new MatOfFloat(0f, 256f);
+        // histSize表示这个直方图分成多少份（即多少个直方柱），就是 bin的个数
         MatOfInt histSize = new MatOfInt(25);
-
+        // 只要头像区域的数据
         List<Mat> images = Collections.singletonList(hueList.get(0).submat(region));
-        Imgproc.calcHist(images, new MatOfInt(0), tempMask, hist, histSize, ranges);
+        // 计算头像的hue直方图，结果在hist中
+        Imgproc.calcHist(images, new MatOfInt(0), tempMask, hist, histSize, RANGES);
 
         // 将hist矩阵进行数组范围归一化，都归一化到0~255
         Core.normalize(hist, hist, 0, 255, Core.NORM_MINMAX);
@@ -92,24 +111,24 @@ public class ObjectTracker {
     }
 
     public Rect objectTracking(Mat mRgba) {
+        // 新的图片，提取hue
+        List<Mat> hueList;
         try {
            // 实测此处可能抛出异常，要注意捕获，避免程序退出
-           rgba2Hsv(mRgba);
+            hueList = rgba2Hue(mRgba);
         } catch (CvException cvException) {
             log.error("cvtColor exception", cvException);
             trackRect = null;
             return null;
         }
 
-        updateHueImage();
-        // 计算直方图的反投影。
-        Imgproc.calcBackProject(hueList, new MatOfInt(0), hist, prob, ranges, 1.0);
-
+        // 用头像直方图在新图片的hue通道数据中计算反向投影。
+        Imgproc.calcBackProject(hueList, new MatOfInt(0), hist, prob, RANGES, 1.0);
         // 计算两个数组的按位连接（dst = src1 & src2）计算两个数组或数组和标量的每个元素的逐位连接。
         Core.bitwise_and(prob, mask, prob, new Mat());
 
-        // 追踪目标
-        rotatedRect = Video.CamShift(prob, trackRect, new TermCriteria(TermCriteria.EPS, 10, 1));
+        // 在反向投影上进行CamShift计算，返回值就是密度最大处，即追踪结果
+        RotatedRect rotatedRect = Video.CamShift(prob, trackRect, new TermCriteria(TermCriteria.EPS, 10, 1));
 
         // 转为Rect对象
         Rect camShiftRect = rotatedRect.boundingRect();
