@@ -17,6 +17,11 @@ import java.util.Vector;
 @Slf4j
 public class ObjectTracker {
 
+    /**
+     * 上一个矩形和当前矩形的差距达到多少的时候，才算跟丢，您可以自行调整
+     */
+    private static final double LOST_GATE = 0.8d;
+
     // [0.0, 256.0]表示直方图能表示像素值从0.0到256的像素
     private static final MatOfFloat RANGES = new MatOfFloat(0f, 256f);
 
@@ -67,8 +72,8 @@ public class ObjectTracker {
         );
 
         // 2. 再提取
+        // 把hsv的数据放入hsvList中，用于稍后提取出其中的hue
         List<Mat> hsvList = new Vector<>();
-        // 将hsv中的hue提取到hueList中
         hsvList.add(hsv);
 
         // 准备好hueList，用于接收通道
@@ -78,6 +83,7 @@ public class ObjectTracker {
         List<Mat> hueList = new Vector<>();
         hueList.add(hue);
 
+        // 描述如何提取：从目标的0位置提取到目的地的0位置
         MatOfInt from_to = new MatOfInt(0, 0);
 
         // 提取操作：将hsv第一个通道(也就是色调)的数复制到hue中，0索引数组
@@ -86,14 +92,17 @@ public class ObjectTracker {
         return hueList;
     }
 
-
+    /**
+     * 当外部调用方确定了人脸在图片中的位置后，就可以调用createTrackedObject开始跟踪，
+     * 该方法中会先生成人脸的hue的直方图，用于给后续帧生成反向投影
+     * @param mRgba
+     * @param region
+     */
     public void createTrackedObject(Mat mRgba, Rect region) {
-//        hist.release();
+        hist.release();
 
-        //将rgb摄像头帧转化成hsv空间的
+        //将摄像头的视频帧转化成hsv，然后再提取出其中的hue通道
         List<Mat> hueList = rgba2Hue(mRgba);
-        // 将hsv中的hue提取到hueList中
-        //updateHueImage();
 
         // 人脸区域的mask
         Mat tempMask = mask.submat(region);
@@ -107,9 +116,19 @@ public class ObjectTracker {
 
         // 将hist矩阵进行数组范围归一化，都归一化到0~255
         Core.normalize(hist, hist, 0, 255, Core.NORM_MINMAX);
+
+        // 这个trackRect记录了人脸最后一次出现的位置，后面新的帧到来时，就从trackRect位置开始做CamShift计算
         trackRect = region;
     }
 
+    /**
+     * 在开始跟踪后，每当摄像头新的一帧到来时，外部就会调用objectTracking，将新的帧传入，
+     * 此时，会用前面准备好的人脸hue直方图，将新的帧计算出反向投影图，
+     * 再在反向投影图上执行CamShift计算，找到密度最大处，即人脸在新的帧上的位置，
+     * 将这个位置作为返回值，返回
+     * @param mRgba 新的一帧
+     * @return 人脸在新的一帧上的位置
+     */
     public Rect objectTracking(Mat mRgba) {
         // 新的图片，提取hue
         List<Mat> hueList;
@@ -146,7 +165,6 @@ public class ObjectTracker {
         return camShiftRect;
     }
 
-    private static final double LOST_GATE = 0.8d;
 
     /**
      * 变化率的绝对值
