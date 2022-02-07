@@ -29,9 +29,9 @@ public  class BasicAuthHandler implements NginxJavaRingHandler {
         }
 
         // authorization应该是 : Basic xfeep:hello!，所以这里先将"Basic "去掉，然后再用":"分割
-        String[] up = new String(DatatypeConverter.parseBase64Binary(auth.substring("Basic ".length())), DEFAULT_ENCODING).split(":");
+        String[] up = auth.substring("Basic ".length()).split(":");
 
-        // 只是为了演示用是，所以账号和密码的检查逻辑在代码中是写死的，
+        // 只是为了演示，所以账号和密码的检查逻辑在代码中是写死的，
         // 如果账号等于"xfeep"，并且密码等于"hello!"，就返回PHASE_DONE，这样nginx-clojure就会继续执行后面的content handler
         if (up[0].equals("xfeep") && up[1].equals("hello!")) {
             return PHASE_DONE;

@@ -2,8 +2,8 @@
 
 PROJECT_PATH=`pwd`/..
 # NGINX路径
-#NGINX_PATH='/Users/zhaoqin1/temp/202202/02/001/nginx-clojure-0.5.2'
-NGINX_PATH='/Users/zhaoqin/baidu-sync/temp/202202/07/001/nginx-clojure-0.5.2'
+NGINX_PATH='/Users/zhaoqin1/temp/202202/02/001/nginx-clojure-0.5.2'
+#NGINX_PATH='/Users/zhaoqin/baidu-sync/temp/202202/07/001/nginx-clojure-0.5.2'
 
 # 构建文件名
 JAR_FILE_NANE='handler-demo-1.0-SNAPSHOT.jar'
@@ -27,6 +27,8 @@ cd ${NGINX_PATH}
 
 echo '停止nginx'
 ./nginx -s stop
+
+sleep 2
 
 echo '启动nginx'
 ./nginx
