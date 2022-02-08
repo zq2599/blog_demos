@@ -11,6 +11,7 @@
         <module>helloworld</module>
         <module>simple-hello</module>
         <module>handler-demo</module>
+        <module>filter-demo</module>
     </modules>
     <packaging>pom</packaging>
 
