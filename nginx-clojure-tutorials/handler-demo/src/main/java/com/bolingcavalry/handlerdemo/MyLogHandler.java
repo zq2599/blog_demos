@@ -55,9 +55,13 @@ public class MyLogHandler implements NginxJavaRingHandler, Configurable {
         NginxClojureRT.log.info("MyLogHandler, logUserAgent [" + logUserAgent + "], filePath [" + filePath + "]");
     }
 
+    // 下面这段代码来自官方demo，实测发现这段代码在打印日志的逻辑中并未发挥作用，
+    // 不论是否删除，日志输出的内容都是相同的
+    /*
     @Override
     public String[] variablesNeedPrefetch() {
         return new String[] { "remote_addr", "remote_user", "time_local", "request", "status", "body_bytes_sent",
                 "http_referer", "http_user_agent" };
     }
+    */
 }
