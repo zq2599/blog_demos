@@ -2,7 +2,8 @@
 
 PROJECT_PATH=`pwd`/..
 # NGINX路径
-NGINX_PATH='/Users/zhaoqin1/temp/202202/02/001/nginx-clojure-0.5.2'
+#NGINX_PATH='/Users/zhaoqin1/temp/202202/02/001/nginx-clojure-0.5.2'
+NGINX_PATH='/Users/zhaoqin/baidusync/temp/202202/07/001/nginx-clojure-0.5.2'
 
 # simple-hello构建文件名
 SIMPLE_HELLO_JAR_FILE_NANE='simple-hello-1.0-SNAPSHOT.jar'
