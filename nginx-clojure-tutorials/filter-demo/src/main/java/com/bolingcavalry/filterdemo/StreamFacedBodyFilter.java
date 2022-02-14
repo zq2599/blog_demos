@@ -21,18 +21,8 @@ public class StreamFacedBodyFilter implements NginxJavaBodyFilter {
 
     @Override
     public Object[] doFilter(Map<String, Object> request, InputStream bodyChunk, boolean isLast) throws IOException {
-        BufferedReader reader = new BufferedReader((new InputStreamReader(bodyChunk, MiniConstants.DEFAULT_ENCODING)));
-
-
-        String line = reader.readLine();
-
-        while((line = reader.readLine()) != null) {
-            // 打印一行日志，用于验证功能是否正常
-            NginxClojureRT.getLog().info("isLast [%s], first line of response chunk: %s",  String.valueOf(isLast), line);
-
-            break;
-        }
-
+        // 这里仅将二进制文件长度打印到日志，您可以按照业务实际情况自行修改
+        NginxClojureRT.log.info("isLast [%s], total [%s]", String.valueOf(isLast), String.valueOf(bodyChunk.available()));
 
         // NginxChainWrappedInputStream的成员变量index记录的读取的位置，本次用完后要重置位置，因为doFilter之外的代码中可能也会读取bodyChunk
         ((NginxChainWrappedInputStream)bodyChunk).rewind();
