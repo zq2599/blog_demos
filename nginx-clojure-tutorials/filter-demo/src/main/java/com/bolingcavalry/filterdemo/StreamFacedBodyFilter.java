@@ -1,14 +1,10 @@
 package com.bolingcavalry.filterdemo;
 
-import nginx.clojure.MiniConstants;
 import nginx.clojure.NginxChainWrappedInputStream;
 import nginx.clojure.NginxClojureRT;
 import nginx.clojure.java.NginxJavaBodyFilter;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Map;
 
 /**
