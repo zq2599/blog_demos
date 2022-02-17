@@ -12,6 +12,7 @@
         <module>simple-hello</module>
         <module>handler-demo</module>
         <module>filter-demo</module>
+        <module>shared-map-demo</module>
     </modules>
     <packaging>pom</packaging>
 
