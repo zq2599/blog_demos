@@ -35,7 +35,7 @@ echo '将新的jar复制到nginx目录'
 cp simple-hello/target/${SIMPLE_HELLO_JAR_FILE_NANE} ${NGINX_PATH}/jars/
 cp handler-demo/target/${HANDLER_DEMO_JAR_FILE_NANE} ${NGINX_PATH}/jars/
 cp filter-demo/target/${FILTER_DEMO_JAR_FILE_NANE} ${NGINX_PATH}/jars/
-cp filter-demo/target/${FILTER_DEMO_JAR_FILE_NANE} ${NGINX_PATH}/jars/
+cp shared-map-demo/target/${FILTER_DEMO_JAR_FILE_NANE} ${NGINX_PATH}/jars/
 
 echo '进入nginx目录'
 cd ${NGINX_PATH}
