@@ -28,8 +28,7 @@ public class SharedMapSaveCounter implements NginxJavaRingHandler {
 
     @Override
     public Object[] invoke(Map<String, Object> map) throws IOException {
-        // TODO 改成从map中缺德url，参考rewrite的demo
-        String uri = "aaa";
+        String uri = (String)map.get("uri");
 
         // 尝试在共享内存中新建key，并将其值初始化为1，
         // 如果初始化成功，返回值就是0，
@@ -40,12 +39,14 @@ public class SharedMapSaveCounter implements NginxJavaRingHandler {
         // 此时要做的就是加一，
         // 如果relt等于0，就把rlt改成1，表示访问总数已经等于1了
         if (0==rlt) {
-            rlt = 1;
+            rlt++;
         } else {
             // 原子性加一，这样并发的时候也会顺序执行
             rlt = smap.atomicAddInt(uri, 1);
+            rlt++;
         }
 
+        // 返回的body内容，要体现出JVM的身份，以及share map中的计数
         String body = "From "
                 + tag
                 + ", total request count [ "
