@@ -1,11 +1,10 @@
 package com.bolingcavalry.service.impl;
 
 import io.quarkus.logging.Log;
+
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 
 @RequestScoped
-@SessionScoped
 public class RequestScopeBean {
 
     /**
