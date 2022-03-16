@@ -2,12 +2,9 @@ package com.bolingcavalry;
 
 import com.bolingcavalry.service.TryLookupIfProperty;
 import com.bolingcavalry.service.impl.TryLookupIfPropertyAlpha;
-import com.bolingcavalry.service.impl.TryLookupIfPropertyBeta;
-import com.bolingcavalry.service.impl.TryLookupIfPropertyDefault;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.enterprise.inject.Instance;
@@ -24,7 +21,7 @@ public class BeanInstanceSwitchTest {
 
     @BeforeAll
     public static void setUp() {
-        System.setProperty("service.beta.enabled", "false");
+        System.setProperty("service.alpha.enabled", "true");
     }
 
     @Inject
@@ -32,7 +29,7 @@ public class BeanInstanceSwitchTest {
 
     @Test
     public void testTryLookupIfProperty() {
-        Assertions.assertEquals("from " + TryLookupIfPropertyDefault.class.getSimpleName(),
+        Assertions.assertEquals("from " + TryLookupIfPropertyAlpha.class.getSimpleName(),
                                 service.get().hello());
     }
 }

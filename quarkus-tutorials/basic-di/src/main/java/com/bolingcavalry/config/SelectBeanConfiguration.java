@@ -1,7 +1,8 @@
-package com.bolingcavalry.service.impl;
+package com.bolingcavalry.config;
 
 import com.bolingcavalry.service.TryLookupIfProperty;
-import io.quarkus.arc.DefaultBean;
+import com.bolingcavalry.service.impl.TryLookupIfPropertyAlpha;
+import com.bolingcavalry.service.impl.TryLookupIfPropertyBeta;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -9,7 +10,7 @@ public class SelectBeanConfiguration {
 
     @LookupIfProperty(name = "service.alpha.enabled", stringValue = "true")
     @ApplicationScoped
-    public TryLookupIfProperty tryLookupIfPropertyAlpah() {
+    public TryLookupIfProperty tryLookupIfPropertyAlpha() {
         return new TryLookupIfPropertyAlpha();
     }
 
@@ -18,11 +19,4 @@ public class SelectBeanConfiguration {
     public TryLookupIfProperty tryLookupIfPropertyBeta() {
         return new TryLookupIfPropertyBeta();
     }
-
-    @ApplicationScoped
-    @DefaultBean
-    public TryLookupIfProperty tryLookupIfPropertyDefault() {
-        return new TryLookupIfPropertyDefault();
-    }
-
 }
