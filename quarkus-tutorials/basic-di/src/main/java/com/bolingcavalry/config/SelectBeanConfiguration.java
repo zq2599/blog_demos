@@ -29,7 +29,7 @@ public class SelectBeanConfiguration {
     }
 
     @Produces
-    @IfBuildProfile("prod")
+    @IfBuildProfile("test")
     public TryIfBuildProfile tryIfBuildProfileProd() {
         return new TryIfBuildProfileProd();
     }

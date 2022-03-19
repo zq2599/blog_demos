@@ -16,7 +16,7 @@ import javax.inject.Inject;
  * @author will
  * @email zq2599@gmail.com
  * @date 2022/3/15 8:37 PM
- * @description 功能介绍
+ * @description 条件启用bean的configuration类，对应的单元测试
  */
 @QuarkusTest
 public class BeanInstanceSwitchTest {
