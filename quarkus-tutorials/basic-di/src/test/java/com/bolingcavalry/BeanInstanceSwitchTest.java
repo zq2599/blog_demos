@@ -30,7 +30,7 @@ public class BeanInstanceSwitchTest {
     Instance<TryLookupIfProperty> service;
 
     @Inject
-    Instance<TryIfBuildProfile> tryIfBuildProfile;
+    TryIfBuildProfile tryIfBuildProfile;
 
     @Test
     public void testTryLookupIfProperty() {
@@ -41,6 +41,6 @@ public class BeanInstanceSwitchTest {
     @Test
     public void tryIfBuildProfile() {
         Assertions.assertEquals("from " + TryIfBuildProfileProd.class.getSimpleName(),
-                tryIfBuildProfile.get().hello());
+                tryIfBuildProfile.hello());
     }
 }
