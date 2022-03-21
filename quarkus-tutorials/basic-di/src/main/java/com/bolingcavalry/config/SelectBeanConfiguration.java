@@ -9,7 +9,6 @@ import com.bolingcavalry.service.impl.TryLookupIfPropertyBeta;
 import io.quarkus.arc.DefaultBean;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.quarkus.arc.profile.IfBuildProfile;
-import io.quarkus.arc.properties.IfBuildProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
