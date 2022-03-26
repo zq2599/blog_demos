@@ -1,9 +1,6 @@
 package com.bolingcavalry;
 
-import com.bolingcavalry.service.impl.DependentClientA;
-import com.bolingcavalry.service.impl.HelloDependent;
-import com.bolingcavalry.service.impl.HelloInstanceA;
-import com.bolingcavalry.service.impl.HelloInstanceB;
+import com.bolingcavalry.service.impl.*;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,12 +13,15 @@ public class DependentTest {
     @Inject
     DependentClientA dependentClientA;
 
+    @Inject
+    DependentClientB dependentClientB;
+
     @Test
     public void testSelectHelloInstanceA() {
         Class<HelloDependent> clazz = HelloDependent.class;
 
-        Assertions.assertEquals(clazz.getSimpleName(),
-                dependentClientA.doHello());
+        Assertions.assertEquals(clazz.getSimpleName(), dependentClientA.doHello());
+        Assertions.assertEquals(clazz.getSimpleName(), dependentClientB.doHello());
     }
 
 }
