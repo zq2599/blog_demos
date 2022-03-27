@@ -1,6 +1,6 @@
 package com.bolingcavalry.interceptor.demo;
 
-import com.bolingcavalry.interceptor.define.TrackParams;
+import com.bolingcavalry.interceptor.define.ContextData;
 import io.quarkus.logging.Log;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -12,10 +12,10 @@ import javax.enterprise.context.ApplicationScoped;
  * @description 模拟业务逻辑中的异常抛出，这里方法中直接抛出一个异常
  */
 @ApplicationScoped
-@TrackParams
-public class TrackParamsDemo {
+@ContextData
+public class ContextDataDemo {
 
-    public void hello(String name, int id) {
-        Log.infov("Hello {0}, your id is {1}", name, id);
+    public void hello() {
+        Log.info("Hello world!");
     }
 }

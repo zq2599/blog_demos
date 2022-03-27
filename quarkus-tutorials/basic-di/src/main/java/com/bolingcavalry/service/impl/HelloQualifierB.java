@@ -1,6 +1,7 @@
 package com.bolingcavalry.service.impl;
 
 import com.bolingcavalry.service.HelloQualifier;
+
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped

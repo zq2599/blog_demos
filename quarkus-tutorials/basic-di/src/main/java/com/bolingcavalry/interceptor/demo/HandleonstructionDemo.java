@@ -2,10 +2,8 @@ package com.bolingcavalry.interceptor.demo;
 
 import com.bolingcavalry.interceptor.define.HandleConstruction;
 import io.quarkus.logging.Log;
-import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 /**
  * @author will

@@ -1,6 +1,5 @@
 package com.bolingcavalry.interceptor.impl;
 
-import com.bolingcavalry.interceptor.define.HandleError;
 import io.quarkus.arc.Priority;
 import io.quarkus.logging.Log;
 import org.jboss.logging.Logger;

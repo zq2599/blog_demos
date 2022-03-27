@@ -1,6 +1,7 @@
 package com.bolingcavalry.service.impl;
 
 import com.bolingcavalry.service.HelloService;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 

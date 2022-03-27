@@ -1,7 +1,5 @@
 package com.bolingcavalry.service.impl;
 
-import com.bolingcavalry.service.HelloService;
-
 /**
  * @author will
  * @email zq2599@gmail.com

@@ -1,5 +1,6 @@
 package com.bolingcavalry;
 
+import com.bolingcavalry.interceptor.demo.ContextDataDemo;
 import com.bolingcavalry.interceptor.demo.HandleErrorDemo;
 import com.bolingcavalry.interceptor.demo.HandleonstructionDemo;
 import com.bolingcavalry.interceptor.demo.TrackParamsDemo;
@@ -20,6 +21,9 @@ public class InterceptorTest {
     @Inject
     TrackParamsDemo trackParamsDemo;
 
+    @Inject
+    ContextDataDemo contextDataDemo;
+
     @Test
     public void testHandleError() {
         handleErrorDemo.executeThrowError();
@@ -33,5 +37,10 @@ public class InterceptorTest {
     @Test
     public void testTrackParams() {
         trackParamsDemo.hello("Tom", 101);
+    }
+
+    @Test
+    public void testContextData() {
+        contextDataDemo.hello();
     }
 }
