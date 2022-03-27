@@ -1,6 +1,6 @@
-package com.bolingcavalry.interceptor;
+package com.bolingcavalry.interceptor.impl;
 
-import com.bolingcavalry.interceptor.meta.HandleError;
+import com.bolingcavalry.interceptor.define.HandleError;
 import io.quarkus.arc.Priority;
 import io.quarkus.logging.Log;
 import org.jboss.logging.Logger;
@@ -16,8 +16,8 @@ import javax.interceptor.InvocationContext;
  * @date 2022/3/26 22:36
  * @description HandleError的实现
  */
-@HandleError
-@Interceptor
+//@HandleError
+//@Interceptor
 @Priority(Interceptor.Priority.APPLICATION +1)
 public class HandleMethodInterceptorB {
 

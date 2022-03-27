@@ -1,4 +1,4 @@
-package com.bolingcavalry.interceptor.meta;
+package com.bolingcavalry.interceptor.define;
 
 import javax.interceptor.InterceptorBinding;
 import java.lang.annotation.ElementType;

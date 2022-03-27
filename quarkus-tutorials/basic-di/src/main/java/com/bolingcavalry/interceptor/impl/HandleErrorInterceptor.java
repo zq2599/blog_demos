@@ -1,11 +1,9 @@
-package com.bolingcavalry.interceptor;
+package com.bolingcavalry.interceptor.impl;
 
-import com.bolingcavalry.interceptor.meta.HandleError;
+import com.bolingcavalry.interceptor.define.HandleError;
 import io.quarkus.arc.Priority;
 import io.quarkus.logging.Log;
-import org.jboss.logging.Logger;
 
-import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
@@ -21,13 +19,11 @@ import javax.interceptor.InvocationContext;
 @Priority(Interceptor.Priority.APPLICATION +1)
 public class HandleErrorInterceptor {
 
-    @Inject
-    Logger logger;
-
     @AroundInvoke
     Object execute(InvocationContext context) {
 
         try {
+            // 注意proceed方法的含义：调用下一个拦截器，直到最后一个才会执行被拦截的方法
             return context.proceed();
         } catch (Exception exception) {
             Log.errorf(exception,

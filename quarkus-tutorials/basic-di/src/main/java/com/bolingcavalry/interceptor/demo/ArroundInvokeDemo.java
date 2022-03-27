@@ -1,8 +1,8 @@
-package com.bolingcavalry.service.impl;
+package com.bolingcavalry.interceptor.demo;
 
-import com.bolingcavalry.interceptor.meta.HandleConstruction;
-import com.bolingcavalry.interceptor.meta.HandleError;
-import com.bolingcavalry.interceptor.meta.HandleMethod;
+import com.bolingcavalry.interceptor.define.HandleConstruction;
+import com.bolingcavalry.interceptor.define.HandleError;
+import com.bolingcavalry.interceptor.define.HandleMethod;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;

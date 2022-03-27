@@ -1,6 +1,6 @@
-package com.bolingcavalry.interceptor;
+package com.bolingcavalry.interceptor.impl;
 
-import com.bolingcavalry.interceptor.meta.HandleMethod;
+import com.bolingcavalry.interceptor.define.HandleMethod;
 import io.quarkus.arc.Priority;
 import org.jboss.logging.Logger;
 
