@@ -2,6 +2,7 @@ package com.bolingcavalry;
 
 import com.bolingcavalry.interceptor.demo.HandleErrorDemo;
 import com.bolingcavalry.interceptor.demo.HandleonstructionDemo;
+import com.bolingcavalry.interceptor.demo.TrackParamsDemo;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,9 @@ public class InterceptorTest {
     @Inject
     HandleonstructionDemo handleonstructionDemo;
 
+    @Inject
+    TrackParamsDemo trackParamsDemo;
+
     @Test
     public void testHandleError() {
         handleErrorDemo.executeThrowError();
@@ -26,4 +30,8 @@ public class InterceptorTest {
         handleonstructionDemo.hello();
     }
 
+    @Test
+    public void testTrackParams() {
+        trackParamsDemo.hello("Tom", 101);
+    }
 }
