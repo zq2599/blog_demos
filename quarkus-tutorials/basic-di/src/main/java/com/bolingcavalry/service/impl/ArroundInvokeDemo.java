@@ -1,8 +1,12 @@
 package com.bolingcavalry.service.impl;
 
+import com.bolingcavalry.interceptor.meta.HandleConstruction;
 import com.bolingcavalry.interceptor.meta.HandleError;
+import com.bolingcavalry.interceptor.meta.HandleMethod;
+import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 /**
  * @author will
@@ -11,8 +15,22 @@ import javax.enterprise.context.ApplicationScoped;
  * @description 模拟业务逻辑中的异常抛出，这里方法中直接抛出一个异常
  */
 @ApplicationScoped
-//@HandleError
+@HandleConstruction
+@HandleError
 public class ArroundInvokeDemo {
+
+    @Inject
+    Logger logger;
+//
+//    public ArroundInvokeDemo() {
+//        super();
+////        logger.infov("construction of %s", ArroundInvokeDemo.class.getSimpleName());
+//    }
+
+    @HandleMethod
+    public void executeNormal() {
+        logger.info("start executeNormal");
+    }
 
     public void executeThrowError() {
         throw new IllegalArgumentException("this is business logic exception");

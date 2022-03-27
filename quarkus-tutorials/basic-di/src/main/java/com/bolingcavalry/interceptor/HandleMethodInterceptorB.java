@@ -19,7 +19,7 @@ import javax.interceptor.InvocationContext;
 @HandleError
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION +1)
-public class HandleErrorInterceptor {
+public class HandleMethodInterceptorB {
 
     @Inject
     Logger logger;

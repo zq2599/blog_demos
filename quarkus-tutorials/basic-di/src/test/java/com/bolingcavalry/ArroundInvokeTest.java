@@ -17,8 +17,13 @@ public class ArroundInvokeTest {
     ArroundInvokeDemo arroundInvokeDemo;
 
     @Test
-    public void testSelectHelloInstanceA() {
+    public void testHandleError() {
         arroundInvokeDemo.executeThrowError();
+    }
+
+    @Test
+    public void testIntercepNormalMethod() {
+        arroundInvokeDemo.executeNormal();
     }
 
 }
