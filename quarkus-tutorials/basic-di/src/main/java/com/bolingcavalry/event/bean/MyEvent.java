@@ -39,4 +39,12 @@ public class MyEvent {
     public int getNum() {
         return consumeNum.get();
     }
+
+    @Override
+    public String toString() {
+        return "MyEvent{" +
+                "source='" + source + '\'' +
+                ", consumeNum=" + getNum() +
+                '}';
+    }
 }
