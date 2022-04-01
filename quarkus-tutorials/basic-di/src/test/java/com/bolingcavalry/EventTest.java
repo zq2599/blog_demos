@@ -18,8 +18,6 @@ public class EventTest {
     @Inject
     MyProducer myProducer;
 
-    @Inject
-    MyConsumer myConsumer;
 
     @Test
     public void testSync() {
@@ -27,4 +25,10 @@ public class EventTest {
     }
 
 
+    @Test
+    public void testAsync() throws InterruptedException {
+        Assertions.assertEquals(0, myProducer.asyncProduce("testAsync"));
+        // 如果不等待的话，主线程结束的时候会中断正在消费事件的子线程，导致子线程报错
+        Thread.sleep(150);
+    }
 }
