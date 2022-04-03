@@ -50,6 +50,5 @@ public class EventTest {
         // TwoChannelConsumer.allEvent消费时计数加1，
         // 所以最终计数是2
         Assertions.assertEquals(2, twoChannelWithTwoEvent.produceNormal("normal"));
-
     }
 }

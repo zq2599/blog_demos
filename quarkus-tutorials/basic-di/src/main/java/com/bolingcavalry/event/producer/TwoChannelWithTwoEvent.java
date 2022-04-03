@@ -12,7 +12,7 @@ import javax.inject.Inject;
  * @author will
  * @email zq2599@gmail.com
  * @date 2022/4/3 10:16
- * @description 功能介绍
+ * @description 用同一个事件结构体TwoChannelEvent，分别发送不同业务类型的事件
  */
 @ApplicationScoped
 public class TwoChannelWithTwoEvent {

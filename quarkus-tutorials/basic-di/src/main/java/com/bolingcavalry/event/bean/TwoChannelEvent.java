@@ -42,7 +42,7 @@ public class TwoChannelEvent {
 
     @Override
     public String toString() {
-        return "MyEvent{" +
+        return "TwoChannelEvent{" +
                 "source='" + source + '\'' +
                 ", consumeNum=" + getNum() +
                 '}';
