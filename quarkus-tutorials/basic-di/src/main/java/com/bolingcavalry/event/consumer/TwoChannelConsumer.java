@@ -10,6 +10,12 @@ import io.quarkus.logging.Log;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.ObservesAsync;
+import javax.enterprise.inject.spi.EventMetadata;
+import javax.enterprise.inject.spi.InjectionPoint;
+import java.lang.annotation.Annotation;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author will
@@ -44,9 +50,22 @@ public class TwoChannelConsumer {
     /**
      * 如果不用注解修饰，所有TwoChannelEvent类型的事件都会在此被消费
      * @param event
+     * @param eventMetadata
      */
-    public void allEvent(@Observes TwoChannelEvent event) {
+    public void allEvent(@Observes TwoChannelEvent event, EventMetadata eventMetadata) {
         Log.infov("receive event (no Qualifier), {0}", event);
+
+        // 打印事件类型
+        Log.infov("event type : {0}", eventMetadata.getType());
+
+        // 获取该事件的所有注解
+        Set<Annotation> qualifiers = eventMetadata.getQualifiers();
+
+        // 将事件的所有注解逐个打印
+        if (null!=qualifiers) {
+            qualifiers.forEach(annotation -> Log.infov("qualify : {0}", annotation));
+        }
+
         // 计数加一
         event.addNum();
     }
