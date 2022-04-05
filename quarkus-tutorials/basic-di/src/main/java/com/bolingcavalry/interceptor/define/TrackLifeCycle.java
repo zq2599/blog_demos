@@ -11,5 +11,5 @@ import static java.lang.annotation.ElementType.TYPE;
 @InterceptorBinding
 @Target({TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface TrackConstruct {
+public @interface TrackLifeCycle {
 }
