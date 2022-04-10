@@ -2,15 +2,13 @@ package com.bolingcavalry.config;
 
 import com.bolingcavalry.service.TryIfBuildProfile;
 import com.bolingcavalry.service.TryLookupIfProperty;
-import com.bolingcavalry.service.impl.TryIfBuildProfileDefault;
-import com.bolingcavalry.service.impl.TryIfBuildProfileProd;
-import com.bolingcavalry.service.impl.TryLookupIfPropertyAlpha;
-import com.bolingcavalry.service.impl.TryLookupIfPropertyBeta;
+import com.bolingcavalry.service.impl.*;
 import io.quarkus.arc.DefaultBean;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.quarkus.arc.profile.IfBuildProfile;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 
 public class SelectBeanConfiguration {
@@ -37,5 +35,14 @@ public class SelectBeanConfiguration {
     @DefaultBean
     public TryIfBuildProfile tryIfBuildProfileDefault() {
         return new TryIfBuildProfileDefault();
+    }
+
+    @ApplicationScoped
+    public ResourceManager getResourceManager() {
+        return new ResourceManager();
+    }
+
+    public void closeResource(@Disposes ResourceManager resourceManager) {
+        resourceManager.closeAll();
     }
 }
