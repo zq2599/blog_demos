@@ -1,20 +1,21 @@
 package com.bolingcavalry;
 
-import com.bolingcavalry.service.impl.ResourceManager;
 import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.RepeatedTest;
 
-import javax.inject.Inject;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
 public class DisposeTest {
 
-    @Inject
-    ResourceManager resourceManager;
-
-    @Test
+    @RepeatedTest(3)
     public void test() {
-        resourceManager.open();
+        given()
+                .when().get("/resourcemanager")
+                .then()
+                .statusCode(200)
+                // 检查body内容
+                .body(is("success"));
     }
 }

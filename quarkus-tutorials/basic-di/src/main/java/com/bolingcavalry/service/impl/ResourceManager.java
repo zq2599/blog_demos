@@ -12,7 +12,7 @@ import io.quarkus.logging.Log;
 public class ResourceManager {
 
     public ResourceManager () {
-        Log.info("create instance");
+        Log.info("create instance, " + this.getClass().getSimpleName());
     }
 
     /**
