@@ -24,10 +24,14 @@ public class AccountBalanceService {
      * @param value
      * @throws InterruptedException
      */
-    public void deposit(int value) throws InterruptedException {
+    public void deposit(int value) {
         Log.infov("start deposit, balance [{0}], deposit value [{1}]", accountBalance.get(), value);
         // 模拟耗时的操作
-        Thread.sleep(100);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Log.infov("end deposit, balance [{0}]",accountBalance.addAndGet(value));
     }
 
@@ -36,10 +40,14 @@ public class AccountBalanceService {
      * @param value
      * @throws InterruptedException
      */
-    public void deduct(int value) throws InterruptedException {
+    public void deduct(int value) {
         Log.infov("start deduct, balance [{0}], deduct value [{1}]", accountBalance.get(), value);
         // 模拟耗时的操作
-        Thread.sleep(100);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Log.infov("end deduct, balance [{0}]",accountBalance.addAndGet(value*-1));
     }
 
