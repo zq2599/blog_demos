@@ -19,6 +19,12 @@ public class AccountBalanceService {
      */
     @Lock(value = Lock.Type.READ, time = 5, unit = TimeUnit.SECONDS)
     public int get() {
+        // 模拟耗时的操作
+        try {
+            Thread.sleep(80);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return accountBalance;
     }
 

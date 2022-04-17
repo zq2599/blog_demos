@@ -28,18 +28,10 @@ public class LockTest {
             for (int i=0;i<COUNT;i++) {
                 // 读取账号余额
                 Log.infov("current balance {0}", account.get());
-
-                // 等待50毫秒
-                try {
-                    Thread.sleep(80);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
 
             latch.countDown();
         }).start();
-
 
         // 这是个存钱的线程，循环存10次，每次存2元
         new Thread(() -> {
