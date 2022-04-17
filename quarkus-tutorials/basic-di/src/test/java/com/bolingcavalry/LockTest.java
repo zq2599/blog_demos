@@ -1,9 +1,6 @@
 package com.bolingcavalry;
 
-import com.bolingcavalry.annonation.MyQualifier;
-import com.bolingcavalry.service.HelloQualifier;
 import com.bolingcavalry.service.impl.AccountBalanceService;
-import com.bolingcavalry.service.impl.HelloQualifierA;
 import io.quarkus.logging.Log;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Assertions;
@@ -19,8 +16,9 @@ public class LockTest {
     AccountBalanceService account;
 
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(3);
+        int initValue = account.get();
 
         final int COUNT = 10;
 
@@ -29,11 +27,11 @@ public class LockTest {
 
             for (int i=0;i<COUNT;i++) {
                 // 读取账号余额
-                Log.infov("current balance {0}", account);
+                Log.infov("current balance {0}", account.get());
 
                 // 等待50毫秒
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(80);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -46,7 +44,7 @@ public class LockTest {
         // 这是个存钱的线程，循环存10次，每次存2元
         new Thread(() -> {
             for (int i=0;i<COUNT;i++) {
-                account.deposit(1);
+                account.deposit(2);
             }
             latch.countDown();
         }).start();
@@ -54,11 +52,15 @@ public class LockTest {
         // 这是个取钱的线程，循环取10次，每取1元
         new Thread(() -> {
             for (int i=0;i<COUNT;i++) {
-                account.deposit(1);
+                account.deduct(1);
             }
             latch.countDown();
         }).start();
 
-        Log.infov("finally, current balance {0}", account);
+        latch.await();
+
+        int finalValue = account.get();
+        Log.infov("finally, current balance {0}", finalValue);
+        Assertions.assertEquals(initValue + COUNT, finalValue);
     }
 }
