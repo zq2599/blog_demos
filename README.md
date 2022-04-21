@@ -250,19 +250,19 @@
 8. [《Spring Cloud源码分析之Eureka篇第八章：服务注册名称的来历》](https://blog.csdn.net/boling_cavalry/article/details/82930728)
 
 ## Spring Cloud Gateway从入门到提高
-. [《Spring Cloud Gateway实战之一：初探》](https://xinchen.blog.csdn.net/article/details/119490780)
-. [《Spring Cloud Gateway实战之二：更多路由配置方式》](https://xinchen.blog.csdn.net/article/details/119592175)
-. [《Spring Cloud Gateway实战之三：动态路由》](https://xinchen.blog.csdn.net/article/details/119705402)
-. [《Spring Cloud Gateway实战之四：内置predicate小结》](https://xinchen.blog.csdn.net/article/details/119724550)
-. [《Spring Cloud Gateway实战之五：内置filter》](https://xinchen.blog.csdn.net/article/details/119814985)
-. [《Spring Cloud Gateway的断路器(CircuitBreaker)功能》](https://xinchen.blog.csdn.net/article/details/119849436)
-. [《Spring Cloud Gateway自定义过滤器实战(观测断路器状态变化)》](https://xinchen.blog.csdn.net/article/details/119967617)
-. [《Spring Cloud Gateway限流实战》](https://xinchen.blog.csdn.net/article/details/119989069)
-. [《Spring Cloud Gateway修改请求和响应body的内容》](https://xinchen.blog.csdn.net/article/details/120096926)
-. [《Spring Cloud Gateway过滤器精确控制异常返回(分析篇)》](https://xinchen.blog.csdn.net/article/details/120114474)
-. [《Spring Cloud Gateway过滤器精确控制异常返回(实战，控制http返回码和message字段)》](https://xinchen.blog.csdn.net/article/details/120170949)
-. [《Spring Cloud Gateway过滤器精确控制异常返回(实战，完全定制返回body)》](https://xinchen.blog.csdn.net/article/details/120239199)
-. [《Spring Cloud Gateway编码实现任意地址跳转》](https://xinchen.blog.csdn.net/article/details/121805244)
+1. [《Spring Cloud Gateway实战之一：初探》](https://xinchen.blog.csdn.net/article/details/119490780)
+2. [《Spring Cloud Gateway实战之二：更多路由配置方式》](https://xinchen.blog.csdn.net/article/details/119592175)
+3. [《Spring Cloud Gateway实战之三：动态路由》](https://xinchen.blog.csdn.net/article/details/119705402)
+4. [《Spring Cloud Gateway实战之四：内置predicate小结》](https://xinchen.blog.csdn.net/article/details/119724550)
+5. [《Spring Cloud Gateway实战之五：内置filter》](https://xinchen.blog.csdn.net/article/details/119814985)
+6. [《Spring Cloud Gateway的断路器(CircuitBreaker)功能》](https://xinchen.blog.csdn.net/article/details/119849436)
+7. [《Spring Cloud Gateway自定义过滤器实战(观测断路器状态变化)》](https://xinchen.blog.csdn.net/article/details/119967617)
+8. [《Spring Cloud Gateway限流实战》](https://xinchen.blog.csdn.net/article/details/119989069)
+9. [《Spring Cloud Gateway修改请求和响应body的内容》](https://xinchen.blog.csdn.net/article/details/120096926)
+10. [《Spring Cloud Gateway过滤器精确控制异常返回(分析篇)》](https://xinchen.blog.csdn.net/article/details/120114474)
+11. [《Spring Cloud Gateway过滤器精确控制异常返回(实战，控制http返回码和message字段)》](https://xinchen.blog.csdn.net/article/details/120170949)
+12. [《Spring Cloud Gateway过滤器精确控制异常返回(实战，完全定制返回body)》](https://xinchen.blog.csdn.net/article/details/120239199)
+13. [《Spring Cloud Gateway编码实现任意地址跳转》](https://xinchen.blog.csdn.net/article/details/121805244)
 
 ## spring-cloud-alibaba实战
 1. [《Docker下,两分钟极速体验Nacos》](https://blog.csdn.net/boling_cavalry/article/details/97617353)；
