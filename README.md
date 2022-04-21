@@ -23,6 +23,27 @@
 
 # Java领域
 
+## 云原生技术，Quarkus专辑
+### quarkus通用技术
+1. [《quarkus实战之一：准备工作》](https://xinchen.blog.csdn.net/article/details/122985638)
+2. [《quarkus实战之二：应用的创建、构建、部署》](https://xinchen.blog.csdn.net/article/details/123036523)
+3. [《quarkus实战之三：开发模式(Development mode)》](https://xinchen.blog.csdn.net/article/details/123196706)
+4. [《quarkus实战之四：远程热部署》](https://xinchen.blog.csdn.net/article/details/123196853)
+5. [《quarkus实战之五：细说maven插件》](https://xinchen.blog.csdn.net/article/details/123268091)
+6. [《quarkus实战之六：配置》](https://xinchen.blog.csdn.net/article/details/123303111)
+6. [《quarkus实战之七：使用配置》](https://xinchen.blog.csdn.net/article/details/123307704)
+8. [《quarkus实战之八：profile》](https://xinchen.blog.csdn.net/article/details/123321509)
+
+### quarkus核心技术：依赖注入专辑
+1. [《quarkus依赖注入之一：创建bean》](https://xinchen.blog.csdn.net/article/details/123752182)
+2. [《quarkus依赖注入之二：bean的作用域》](https://xinchen.blog.csdn.net/article/details/123754648)
+3. [《quarkus依赖注入之三：用注解选择注入bean》](https://xinchen.blog.csdn.net/article/details/123861906)
+4. [《quarkus依赖注入之四：选择注入bean的高级手段》](https://xinchen.blog.csdn.net/article/details/123939148)
+5. [《quarkus依赖注入之五：拦截器(Interceptor)》](https://xinchen.blog.csdn.net/article/details/124055982)
+6. [《quarkus依赖注入之六：发布和消费事件》](https://xinchen.blog.csdn.net/article/details/124069627)
+7. [《quarkus依赖注入之七：生命周期回调》](https://xinchen.blog.csdn.net/article/details/124114602)
+8. [《quarkus依赖注入之八：装饰器（Decorator）》](https://xinchen.blog.csdn.net/article/details/124234802)
+
 ## 基础知识
 1. [《CentOS7安装JDK8》](https://blog.csdn.net/boling_cavalry/article/details/79840049)
 2. [《Ubuntu下安装OpenJDK10》](https://blog.csdn.net/boling_cavalry/article/details/83213608)
@@ -31,6 +52,7 @@
 5. [《实战限流（guava的RateLimiter）》](https://blog.csdn.net/boling_cavalry/article/details/75174486)
 6. [《java.util.Optional学习笔记》](https://blog.csdn.net/boling_cavalry/article/details/77610629)
 7. [《org.springframework.util.StopWatch：简洁的耗时统计小工具》](https://blog.csdn.net/boling_cavalry/article/details/78231032)
+8. [《体验IntelliJ IDEA的远程开发（Remote Development）》](https://xinchen.blog.csdn.net/article/details/123598992)
 
 ## 进阶实战
 1. [《Java实战操作MongoDB集群（副本集）》](https://blog.csdn.net/boling_cavalry/article/details/78238163)
@@ -134,6 +156,15 @@
 5. [双向流](https://xinchen.blog.csdn.net/article/details/116354293)
 6. [客户端动态获取服务端地址](https://xinchen.blog.csdn.net/article/details/116479078)
 7. [基于eureka的注册发现](https://xinchen.blog.csdn.net/article/details/116635441)
+
+## Java扩展Nginx专辑
+1. [《Java扩展Nginx之一：你好，nginx-clojure》](https://xinchen.blog.csdn.net/article/details/122764774)
+2. [《Java扩展Nginx之二：编译nginx-clojure源码》](https://xinchen.blog.csdn.net/article/details/122773081)
+3. [《Java扩展Nginx之三：基础配置项》](https://xinchen.blog.csdn.net/article/details/122779437)
+4. [《Java扩展Nginx之四：远程调试》](https://xinchen.blog.csdn.net/article/details/122782310)
+5. [《Java扩展Nginx之五：五大handler(系列最核心)》](https://xinchen.blog.csdn.net/article/details/122788726)
+6. [《Java扩展Nginx之六：两大filter》](https://xinchen.blog.csdn.net/article/details/122825530)
+7. [《Java扩展Nginx之七：共享内存》](https://xinchen.blog.csdn.net/article/details/123015410)
 
 ## 视图邻域
 1. [Java版流媒体编解码和图像处理(JavaCPP+FFmpeg)](https://xinchen.blog.csdn.net/article/details/119062543)
@@ -420,6 +451,7 @@
 16. [《极速安装和体验k8s(Minikube)》](https://blog.csdn.net/boling_cavalry/article/details/90547822)
 17. [《Linux安装minikube指南》](https://blog.csdn.net/boling_cavalry/article/details/91304127)
 18. [《kubespray2.11安装kubernetes1.15》](https://blog.csdn.net/boling_cavalry/article/details/103106314)
+19. [《极速安装kubernetes-1.22.0（三台CentOS7服务器）》](https://xinchen.blog.csdn.net/article/details/122893949)
 
 ## kubernetes进阶实战
 1. [《kubernetes下的Nginx加Tomcat三部曲之一：极速体验》](https://blog.csdn.net/boling_cavalry/article/details/79215453)
@@ -438,6 +470,7 @@
 14. [《K8S环境快速部署Kafka(K8S外部可访问)》](https://xinchen.blog.csdn.net/article/details/105466163)
 15. [《K8S的Kafka监控(Prometheus+Grafana)》](https://xinchen.blog.csdn.net/article/details/105466788)
 16. [《Kubernetes的Group、Version、Resource学习小记》](https://xinchen.blog.csdn.net/article/details/113715847)
+17. [《Kubernetes亲和性学习笔记》](https://xinchen.blog.csdn.net/article/details/123189528)
 
 ## kubernetes官方java客户端特辑
 1. [《Kubernetes官方java客户端之一：准备》](https://blog.csdn.net/boling_cavalry/article/details/107480015)
@@ -816,6 +849,7 @@
 # Mac
 1. [《Mac下vagrant从安装到体验》](https://blog.csdn.net/boling_cavalry/article/details/99702719)
 2. [《Vagrant定制个性化CentOS7模板》](https://blog.csdn.net/boling_cavalry/article/details/102240871)
+3. [《Java程序员的MacBookPro(14寸M1)配置备忘录》](https://xinchen.blog.csdn.net/article/details/124139180)
 
 # golang
 1. [《Ubuntu16安装Go语言环境》](https://blog.csdn.net/boling_cavalry/article/details/82904868)
@@ -889,6 +923,7 @@
 16. [《JavaCV的摄像头实战之十四：口罩检测》](https://xinchen.blog.csdn.net/article/details/122375869)
 17. [《Java版人脸跟踪三部曲之一：极速体验》](https://xinchen.blog.csdn.net/article/details/122391898)
 18. [《Java版人脸跟踪三部曲之二：开发设计》](https://xinchen.blog.csdn.net/article/details/122528833)
+19. [《Java版人脸跟踪三部曲之三：编码实战》](https://xinchen.blog.csdn.net/article/details/122678517)
 
 # 硬件
 
