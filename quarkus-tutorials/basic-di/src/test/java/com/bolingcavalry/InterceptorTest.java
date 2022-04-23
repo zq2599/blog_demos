@@ -43,4 +43,9 @@ public class InterceptorTest {
     public void testContextData() {
         contextDataDemo.hello();
     }
+
+    @Test
+    public void testStaticInterceptor() {
+        TrackParamsDemo.staticHello("Jerry");
+    }
 }

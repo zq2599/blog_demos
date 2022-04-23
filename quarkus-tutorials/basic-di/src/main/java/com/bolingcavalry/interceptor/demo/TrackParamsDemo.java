@@ -18,4 +18,8 @@ public class TrackParamsDemo {
     public void hello(String name, int id) {
         Log.infov("Hello {0}, your id is {1}", name, id);
     }
+
+    public static void staticHello(String name) {
+        Log.infov("Hello {0}, from static method", name);
+    }
 }
