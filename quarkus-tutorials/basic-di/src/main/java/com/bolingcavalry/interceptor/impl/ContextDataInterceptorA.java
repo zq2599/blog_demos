@@ -19,6 +19,7 @@ import javax.interceptor.InvocationContext;
 @Priority(Interceptor.Priority.APPLICATION + 1)
 public class ContextDataInterceptorA extends BaseContextDataInterceptor {
 
+    @Override
     @AroundInvoke
     Object execute(InvocationContext context) throws Exception {
         return super.execute(context);
