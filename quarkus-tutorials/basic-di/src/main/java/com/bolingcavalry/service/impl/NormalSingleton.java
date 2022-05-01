@@ -11,10 +11,10 @@ import javax.inject.Singleton;
 public class NormalSingleton {
 
     public NormalSingleton() {
-        Log.info("Construction from " + this.getClass().getSimpleName());
+        Log.info("Construction from " + this.getClass().getSimpleName() + "\n");
     }
 
     public String ping() {
-        return "ping from NormalSingleton";
+        return "ping from NormalSingleton\n";
     }
 }

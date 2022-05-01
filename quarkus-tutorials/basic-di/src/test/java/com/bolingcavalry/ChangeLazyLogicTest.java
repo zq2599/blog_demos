@@ -19,9 +19,9 @@ class ChangeLazyLogicTest {
 
     @Test
     void ping() {
-        Log.info("start invoke normalSingleton.ping");
+        Log.info("start invoke normalSingleton.ping\n");
         normalSingleton.ping();
-        Log.info("start invoke normalApplicationScoped.ping");
+        Log.info("start invoke normalApplicationScoped.ping\n");
         normalApplicationScoped.ping();
     }
 }
