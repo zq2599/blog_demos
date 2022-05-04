@@ -2,7 +2,6 @@ package com.bolingcavalry;
 
 import com.bolingcavalry.db.entity.Fruit;
 import com.bolingcavalry.db.service.FruitService;
-import io.quarkus.logging.Log;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.*;
 
@@ -47,7 +46,6 @@ public class FruitServiceTest {
     @DisplayName("getSingle")
     @Order(2)
     public void testGetSingle() {
-        List<Fruit> list = fruitService.get();
         Fruit fruit = fruitService.getSingle(EXIST_FIRST_ID);
         // 判定非空
         Assertions.assertNotNull(fruit);
