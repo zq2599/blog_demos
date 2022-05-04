@@ -26,6 +26,7 @@ public class FruitService {
         return entityManager.find(Fruit.class, id);
     }
 
+    @Transactional
     public void create(Fruit fruit) {
         entityManager.persist(fruit);
     }
