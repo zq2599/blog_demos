@@ -1,0 +1,6 @@
+spring:
+    flink:
+        examples:
+            wordcount:
+                nc-host: 192.168.56.2
+                nc-port: 8888

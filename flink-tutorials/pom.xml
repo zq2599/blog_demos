@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.4.5</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>org.example</groupId>
+  <artifactId>flink-tutorials</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <modules>
+    <module>single-springboot-job</module>
+  </modules>
+
+  <name>flink-tutorials</name>
+
+  <url>https://github.com/zq2599</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+
+    <springboot.version>2.4.5</springboot.version>
+    <flink.version>1.14.0</flink.version>
+    <scala.binary.version>2.12</scala.binary.version>
+
+    <mybatis.version>3.5.7</mybatis.version>
+    <mybatis-spring.version>2.0.6</mybatis-spring.version>
+    <mybatis-spring-boot-starter.version>2.1.4</mybatis-spring-boot-starter.version>
+    <commons-lang3.version>3.11</commons-lang3.version>
+    <guava.version>30.0-jre</guava.version>
+    <jackson.version>2.12.3</jackson.version>
+    <mysql.version>8.0.25</mysql.version>
+
+  </properties>
+
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- spring-cloud-dependencies -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>2020.0.3</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- commons-lang3 -->
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons-lang3.version}</version>
+      </dependency>
+
+      <!-- guava -->
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
+      </dependency>
+
+      <!-- mybatis -->
+      <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis</artifactId>
+        <version>${mybatis.version}</version>
+      </dependency>
+
+      <!-- mybatis-spring -->
+      <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis-spring</artifactId>
+        <version>${mybatis-spring.version}</version>
+      </dependency>
+
+      <!-- mybatis-spring-boot-starter -->
+      <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+        <version>${mybatis-spring-boot-starter.version}</version>
+      </dependency>
+
+      <!-- flink-java -->
+      <dependency>
+        <groupId>org.apache.flink</groupId>
+        <artifactId>flink-java</artifactId>
+        <version>${flink.version}</version>
+      </dependency>
+
+      <!-- flink-streaming-java -->
+      <dependency>
+        <groupId>org.apache.flink</groupId>
+        <artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
+        <version>${flink.version}</version>
+      </dependency>
+
+      <!-- flink-clients -->
+      <dependency>
+        <groupId>org.apache.flink</groupId>
+        <artifactId>flink-clients_${scala.binary.version}</artifactId>
+        <version>${flink.version}</version>
+      </dependency>
+
+      <!-- flink-connector-kafka -->
+      <dependency>
+        <groupId>org.apache.flink</groupId>
+        <artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
+        <version>${flink.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <resources>
+      <!-- 处理src/main/java包下的资源文件 -->
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+          <include>**/*.ftl</include>
+          <include>**/*.jpg</include>
+          <include>**/*.properties</include>
+          <include>**/*.yaml</include>
+          <include>**/*.yml</include>
+        </includes>
+        <!-- false:不进行maven属性替换 -->
+        <filtering>false</filtering>
+      </resource>
+      <!-- 处理src/main/resources下面的资源文件 -->
+      <resource>
+        <directory>src/main/resources</directory>
+        <!-- true:进行maven属性替换 -->
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+
+
+
+</project>

@@ -1,0 +1,6 @@
+spring:
+    flink:
+        examples:
+            wordcount:
+                nc-host: localhost
+                nc-port: 7777

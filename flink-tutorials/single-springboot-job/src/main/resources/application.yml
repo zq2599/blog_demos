@@ -1,0 +1,28 @@
+#SpringBoot自动配置开启debug模式
+debug: false
+
+#应用日志配置
+logging:
+    config: classpath:log4j2-spring.xml
+    file: 
+        name: ${spring.application.name}
+        path: /var/log/${spring.application.name}
+
+#Spring上下文初始化程序
+context:
+    initializer:
+        classes: com.penglecode.flink.common.initializer.DefaultSpringAppPreInitializer
+
+#SpringBoot应用的名称
+spring:
+    application:
+        name: flink-springboot.examples
+    #配置文件激活配置
+    #Spring国际化配置
+    messages:
+        basename: config/i18n/messages
+        cache-duration: -1
+        encoding: UTF-8
+    config:
+        activate:
+            on-profile: dev
