@@ -16,13 +16,12 @@ context:
 #SpringBoot应用的名称
 spring:
     application:
-        name: flink-springboot.examples
+        name: single-springboot-job
     #配置文件激活配置
     #Spring国际化配置
     messages:
         basename: config/i18n/messages
         cache-duration: -1
         encoding: UTF-8
-    config:
-        activate:
-            on-profile: dev
+    profiles:
+        active: dev
