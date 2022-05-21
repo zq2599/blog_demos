@@ -7,7 +7,7 @@ import java.util.List;
 import org.hibernate.annotations.Cache;
 @Entity
 @Table(name = "country")
-@NamedQuery(name = "Country.findAll", query = "SELECT c FROM Country c ORDER BY c.name")
+@Cacheable
 public class Country {
 
     @Id
@@ -19,7 +19,7 @@ public class Country {
     private String name;
 
     @OneToMany
-    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+//    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
     List<City> cities;
 
     public Country() {

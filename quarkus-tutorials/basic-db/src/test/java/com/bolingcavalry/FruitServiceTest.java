@@ -91,15 +91,4 @@ public class FruitServiceTest {
         // 记录数应该应该等于删除前的数量减一
         Assertions.assertEquals(numBeforeDelete-1, fruitService.get().size());
     }
-
-
-    @DisplayName("cache")
-    @RepeatedTest(10000)
-    public void testCache() {
-        Fruit fruit = fruitService.getSingle(EXIST_FIRST_ID);
-        // 判定非空
-        Assertions.assertNotNull(fruit);
-        // import.sql中的第一条记录
-        Assertions.assertEquals("Cherry", fruit.getName());
-    }
 }

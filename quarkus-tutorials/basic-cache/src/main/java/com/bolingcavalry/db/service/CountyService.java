@@ -16,9 +16,13 @@ public class CountyService {
     @Inject
     EntityManager entityManager;
 
-    public List<Country> get() {
-        return entityManager.createNamedQuery("Country.findAll", Country.class)
-                .getResultList();
+//    public List<Country> get() {
+//        return entityManager.createNamedQuery("Country.findAll", Country.class)
+//                .getResultList();
+//    }
+
+    public Country getSingle(Integer id) {
+        return entityManager.find(Country.class, id);
     }
 
     /*
