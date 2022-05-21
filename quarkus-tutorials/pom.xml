@@ -9,6 +9,7 @@
     <module>basic-di</module>
       <module>basic-db</module>
       <module>multi-db-demo</module>
+      <module>basic-cache</module>
   </modules>
   <packaging>pom</packaging>
   <properties>

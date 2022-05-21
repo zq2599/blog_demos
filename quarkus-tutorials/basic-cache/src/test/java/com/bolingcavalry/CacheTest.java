@@ -1,7 +1,7 @@
 package com.bolingcavalry;
 
-import com.bolingcavalry.db.entity.Fruit;
-import com.bolingcavalry.db.service.FruitService;
+import com.bolingcavalry.db.entity.Country;
+import com.bolingcavalry.db.service.CountyService;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.*;
 
@@ -10,12 +10,14 @@ import java.util.List;
 
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class FruitServiceTest {
+public class CacheTest {
 
     /**
      * import.sql中导入的记录数量，这些是应用启动是导入的
      */
-    private static final int EXIST_RECORDS_SIZE = 3;
+    private static final int EXIST_CITY_RECORDS_SIZE = 3;
+    private static final int EXIST_COUNTRY_RECORDS_SIZE = 1;
+
 
     /**
      * import.sql中，第一条记录的id
@@ -29,19 +31,35 @@ public class FruitServiceTest {
     private static final int ID_SEQUENCE_INIT_VALUE = 10;
 
     @Inject
-    FruitService fruitService;
+    CountyService countyService;
 
     @Test
     @DisplayName("list")
-    @Order(1)
-    public void testGet() {
-        List<Fruit> list = fruitService.get();
+    @Order(2)
+    public void testGetCity() {
+        List<Country> countries = countyService.get();
         // 判定非空
-        Assertions.assertNotNull(list);
-        // import.sql中新增3条记录
-        Assertions.assertEquals(EXIST_RECORDS_SIZE, list.size());
+        Assertions.assertNotNull(countries);
+        // import.sql中新增1条country记录
+        Assertions.assertEquals(EXIST_COUNTRY_RECORDS_SIZE, countries.size());
+        // import.sql中新增1条city记录
+        Assertions.assertEquals(EXIST_CITY_RECORDS_SIZE, countries.get(0).getCities().size());
     }
 
+    @Test
+    @DisplayName("testGet")
+    @Order(2)
+    public void testGetCountry() {
+        List<Country> countries = countyService.get();
+        // 判定非空
+        Assertions.assertNotNull(countries);
+        // import.sql中新增1条country记录
+        Assertions.assertEquals(EXIST_COUNTRY_RECORDS_SIZE, countries.size());
+        // import.sql中新增1条city记录
+        Assertions.assertEquals(EXIST_CITY_RECORDS_SIZE, countries.get(0).getCities().size());
+    }
+
+    /*
     @Test
     @DisplayName("getSingle")
     @Order(2)
@@ -52,6 +70,7 @@ public class FruitServiceTest {
         // import.sql中的第一条记录
         Assertions.assertEquals("Cherry", fruit.getName());
     }
+
 
     @Test
     @DisplayName("update")
@@ -92,14 +111,14 @@ public class FruitServiceTest {
         Assertions.assertEquals(numBeforeDelete-1, fruitService.get().size());
     }
 
-
-    @DisplayName("cache")
-    @RepeatedTest(10000)
-    public void testCache() {
-        Fruit fruit = fruitService.getSingle(EXIST_FIRST_ID);
-        // 判定非空
-        Assertions.assertNotNull(fruit);
-        // import.sql中的第一条记录
-        Assertions.assertEquals("Cherry", fruit.getName());
-    }
+*/
+//    @DisplayName("cache")
+//    @RepeatedTest(1)
+//    public void testCache() {
+//        Fruit fruit = fruitService.getSingle(EXIST_FIRST_ID);
+//        // 判定非空
+//        Assertions.assertNotNull(fruit);
+//        // import.sql中的第一条记录
+//        Assertions.assertEquals("Cherry", fruit.getName());
+//    }
 }
