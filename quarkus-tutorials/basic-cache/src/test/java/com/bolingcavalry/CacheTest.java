@@ -103,10 +103,19 @@ public class CacheTest {
         Assertions.assertEquals(numBeforeDelete-1, cityService.get().size());
     }
 
-    @DisplayName("cacheGetCity")
+    @DisplayName("cacheEntity")
+    @Order(6)
+    @RepeatedTest(10000)
+    public void testCacheEntity() {
+        City city = cityService.getSingle(EXIST_FIRST_ID);
+        // 判定非空
+        Assertions.assertNotNull(city);
+    }
+
+    @DisplayName("cacheSQL")
     @Order(7)
-    @RepeatedTest(10)
-    public void testGetCity() {
+    @RepeatedTest(10000)
+    public void testCacheSQL() {
         List<City> cities = cityService.get();
         // 判定非空
         Assertions.assertNotNull(cities);
@@ -114,10 +123,10 @@ public class CacheTest {
         Assertions.assertEquals(EXIST_CITY_RECORDS_SIZE, cities.size());
     }
 
-    @DisplayName("catchFindOneCountry")
+    @DisplayName("cacheOne2Many")
     @Order(8)
-    @RepeatedTest(10)
-    public void testGetCountry() {
+    @RepeatedTest(10000)
+    public void testCacheOne2Many() {
         Country country = countyService.getSingle(EXIST_FIRST_ID);
         // 判定非空
         Assertions.assertNotNull(country);

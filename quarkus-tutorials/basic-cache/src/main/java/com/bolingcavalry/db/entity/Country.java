@@ -4,7 +4,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.List;
-import org.hibernate.annotations.Cache;
 @Entity
 @Table(name = "country")
 @Cacheable
@@ -19,7 +18,7 @@ public class Country {
     private String name;
 
     @OneToMany
-//    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
     List<City> cities;
 
     public Country() {
