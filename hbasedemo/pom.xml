@@ -9,7 +9,7 @@
   <url>http://maven.apache.org</url>
   <properties>
     <!-- spring版本号 -->
-    <spring.version>4.0.2.RELEASE</spring.version>
+    <spring.version>5.2.22.RELEASE</spring.version>
   </properties>
   <dependencies>
     <dependency>
