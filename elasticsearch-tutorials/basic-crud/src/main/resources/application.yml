@@ -1,0 +1,3 @@
+elasticsearch:
+  # 多个IP逗号隔开
+  hosts: 127.0.0.1:9200
