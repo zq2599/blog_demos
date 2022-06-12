@@ -1,5 +1,6 @@
 elasticsearch:
   username: elastic
   passwd: 123456
+  apikey: ZVVWMVY0RUJ1Y0dJeHBiZXJHdUo6WXloU1RoOUVUejJMS0JrMy1JeTJldw==
   # 多个IP逗号隔开
   hosts: 127.0.0.1:9200

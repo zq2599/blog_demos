@@ -4,12 +4,14 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 
 @Service
 public class ESService {
 
-    @Autowired
+//    @Resource(name="clientByPasswd")
+    @Resource(name="clientByApiKey")
     private ElasticsearchClient elasticsearchClient;
 
     public void addIndex(String name) throws IOException {

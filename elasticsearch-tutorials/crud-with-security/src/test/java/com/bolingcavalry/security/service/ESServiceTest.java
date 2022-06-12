@@ -23,8 +23,4 @@ class ESServiceTest {
         Assertions.assertFalse(esService.indexExists(indexName));
     }
 
-    @Test
-    void indexExists() throws Exception{
-        esService.indexExists("a");
-    }
 }
