@@ -10,6 +10,7 @@
     <modules>
         <module>basic-crud</module>
         <module>crud-with-security</module>
+        <module>object-from-json</module>
     </modules>
     <packaging>pom</packaging>
     <name>elasticsearch-tutorials</name>

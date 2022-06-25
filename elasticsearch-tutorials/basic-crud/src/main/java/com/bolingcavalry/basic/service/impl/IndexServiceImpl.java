@@ -6,6 +6,7 @@ import co.elastic.clients.elasticsearch.indices.IndexSettings;
 import co.elastic.clients.util.ObjectBuilder;
 import com.bolingcavalry.basic.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -19,11 +20,13 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public void addIndex(String name) throws IOException {
+        ApplicationContext applicationContext;
         elasticsearchClient.indices().create(c -> c.index(name));
     }
 
     @Override
     public boolean indexExists(String name) throws IOException {
+        ApplicationContext a;
         return elasticsearchClient.indices().exists(b -> b.index(name)).value();
     }
 
