@@ -6,9 +6,7 @@ import co.elastic.clients.elasticsearch.indices.IndexSettings;
 import co.elastic.clients.util.ObjectBuilder;
 import com.bolingcavalry.basic.bean.Product;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,6 +14,7 @@ import java.util.function.Function;
 
 @Slf4j
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductServiceTest {
 
     private final static String INDEX_NAME = "product006";
@@ -26,8 +25,47 @@ class ProductServiceTest {
     @Autowired
     ProductService productService;
 
+    /**
+     * 是否已经执行过初始化操作的标志
+     */
+    private static boolean isInited = false;
+
+    /**
+     * 根据指定文档ID从ES查询数据，并逐字段检查是否符合预期
+     * @param id
+     * @param name
+     * @param desc
+     * @param price
+     */
+    private void check(String id, String name, String desc, int price) {
+        // 根据文档id从ES查找文档
+        Product product = null;
+
+        try {
+            product = productService.search(INDEX_NAME, id);
+        } catch (Exception exception) {
+            log.error("search document [" + id + "] error", exception);
+        }
+
+        log.info("query result : {}", product);
+
+        // 逐个字段检查
+        Assertions.assertNotNull(product);
+        Assertions.assertEquals(id, product.getId());
+        Assertions.assertEquals(name, product.getName());
+        Assertions.assertEquals(desc, product.getDescription());
+        Assertions.assertEquals(price, product.getPrice());
+    }
+
     @BeforeEach
     void init() throws Exception {
+        // 初始化操作只要一次就行了
+        if(isInited) {
+            return;
+        }
+
+        isInited = true;
+
         // 如果索引存在，就删掉
         if (indexService.indexExists(INDEX_NAME)) {
             indexService.delIndex(INDEX_NAME);
@@ -59,6 +97,8 @@ class ProductServiceTest {
     }
 
     @Test
+    @Order(1)
+    @DisplayName("fluent style新建单个文档")
     void createByFluentDSL() throws Exception {
         String id = "1";
         String name = "name-1";
@@ -73,6 +113,8 @@ class ProductServiceTest {
     }
 
     @Test
+    @Order(2)
+    @DisplayName("builder pattern新建单个文档")
     void createByBuilderPattern() throws Exception {
         String id = "2";
         String name = "name-2";
@@ -86,25 +128,37 @@ class ProductServiceTest {
         check(id, name, desc, price);
     }
 
-    /**
-     * 根据指定文档ID从ES查询数据，并逐字段检查是否符合预期
-     * @param id
-     * @param name
-     * @param desc
-     * @param price
-     */
-    private void check(String id, String name, String desc, int price) throws Exception {
+    @Test
+    @Order(3)
+    @DisplayName("用JSON字符串新建单个文档")
+    void createByJSON() throws Exception {
+        String id = "3";
+        String name = "name-3";
+        String desc = "description-3";
+        int price = 103;
 
-        // 根据文档id从ES查找文档
-        Product product = productService.search(INDEX_NAME, id);
+        // 新增一个文档
+        productService.createByFluentDSL(INDEX_NAME, new Product(id, name, desc, price));
 
-        log.info("query result : {}", product);
+        // 验证是否符合预期
+        check(id, name, desc, price);
+    }
 
-        // 逐个字段检查
-        Assertions.assertNotNull(product);
-        Assertions.assertEquals(id, product.getId());
-        Assertions.assertEquals(name, product.getName());
-        Assertions.assertEquals(desc, product.getDescription());
-        Assertions.assertEquals(price, product.getPrice());
+    @Test
+    @Order(4)
+    @DisplayName("异步新建单个文档")
+    void createAnsync() throws Exception {
+        String id = "4";
+        // 原始JSON，注意，里面的单引号在JSON中不合法，这里为了提高可读性，先用单引号，后面替换成双引号
+        String jsonContent = "{'id':'4','name':'name-4','description':'description-4','price':104}";
+
+        // 将字符串中的单引号替换成双引号，才是正常的JSON
+        jsonContent = jsonContent.replace('\'', '"');
+
+        // 新增一个文档
+        productService.createByJSON(INDEX_NAME, id, jsonContent);
+
+        // 验证是否符合预期
+        check(id, "name-4", "description-4", 104);
     }
 }

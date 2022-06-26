@@ -10,6 +10,7 @@ import com.bolingcavalry.basic.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.StringReader;
 import java.util.function.BiConsumer;
 
 /**
@@ -26,6 +27,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ElasticsearchAsyncClient elasticsearchAsyncClient;
+
+    @Override
+    public Product search(String index, String id) throws Exception {
+
+        GetResponse<Product> response = elasticsearchClient.get(g -> g
+                        .index(index)
+                        .id(id),
+                Product.class
+        );
+
+        return response.found() ? response.source() : null;
+    }
 
     @Override
     public IndexResponse createByFluentDSL(String index, Product product) throws Exception {
@@ -48,23 +61,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product search(String index, String id) throws Exception {
-
-        GetResponse<Product> response = elasticsearchClient.get(g -> g
-                .index(index)
-                .id(id),
-                Product.class
-        );
-
-        return response.found() ? response.source() : null;
-    }
-
-
-    public void createAnsync(String index, Product product, BiConsumer<IndexResponse, Exception> action) {
+    public void createAnsync(String index, Product product, BiConsumer<IndexResponse, Throwable> action) {
         elasticsearchAsyncClient.index(i -> i
                 .index(index)
                 .id(product.getId())
                 .document(product)
-        ).whenComplete(null);
+        ).whenComplete(action);
+    }
+
+    @Override
+    public IndexResponse createByJSON(String index, String id, String jsonContent) throws Exception {
+        return elasticsearchClient.index(i -> i
+                .index(index)
+                .id(id)
+                .withJson(new StringReader(jsonContent))
+        );
     }
 }
