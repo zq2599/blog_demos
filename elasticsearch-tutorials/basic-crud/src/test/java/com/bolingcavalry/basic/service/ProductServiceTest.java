@@ -88,6 +88,7 @@ class ProductServiceTest {
 
         // // 构建mapping时，builder用到的lambda
         Function<TypeMapping.Builder, ObjectBuilder<TypeMapping>> mappingFn = mBuilder -> mBuilder
+                .properties("id", keywordProperty)
                 .properties("name", keywordProperty)
                 .properties("description", textProperty)
                 .properties("price", integerProperty);
