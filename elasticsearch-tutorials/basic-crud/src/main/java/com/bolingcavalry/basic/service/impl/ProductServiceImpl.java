@@ -2,15 +2,16 @@ package com.bolingcavalry.basic.service.impl;
 
 import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch.core.GetResponse;
-import co.elastic.clients.elasticsearch.core.IndexRequest;
-import co.elastic.clients.elasticsearch.core.IndexResponse;
+import co.elastic.clients.elasticsearch.core.*;
 import com.bolingcavalry.basic.bean.Product;
 import com.bolingcavalry.basic.service.ProductService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.StringReader;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 /**
@@ -19,6 +20,7 @@ import java.util.function.BiConsumer;
  * @author: za2599@gmail.com
  * @create: 2022-06-26 11:18
  **/
+@Slf4j
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -29,13 +31,18 @@ public class ProductServiceImpl implements ProductService {
     private ElasticsearchAsyncClient elasticsearchAsyncClient;
 
     @Override
-    public Product search(String index, String id) throws Exception {
+    public Product search(String index, String id) {
 
-        GetResponse<Product> response = elasticsearchClient.get(g -> g
-                        .index(index)
-                        .id(id),
-                Product.class
-        );
+        GetResponse<Product> response = null;
+
+        try {
+            response = elasticsearchClient.get(g -> g
+                            .index(index)
+                            .id(id),
+                    Product.class);
+        } catch (Exception exception) {
+            log.error("query [" + index + "] by id [" + id + "] error", exception);
+        }
 
         return response.found() ? response.source() : null;
     }
@@ -76,5 +83,46 @@ public class ProductServiceImpl implements ProductService {
                 .id(id)
                 .withJson(new StringReader(jsonContent))
         );
+    }
+
+    @Override
+    public BulkResponse bulkCreate(String index, List<Product> products) throws Exception {
+        BulkRequest.Builder br = new BulkRequest.Builder();
+
+        // 将每一个product对象都放入builder中
+        products.stream()
+                .forEach(product -> br
+                        .operations(op -> op
+                                .index(idx -> idx
+                                        .index(index)
+                                        .id(product.getId())
+                                        .document(product))));
+
+        return elasticsearchClient.bulk(br.build());
+    }
+
+    @Override
+    public BulkResponse bulkDelete(String index, List<String> docIds) throws Exception {
+        BulkRequest.Builder br = new BulkRequest.Builder();
+
+        // 将每一个product对象都放入builder中
+        docIds.stream()
+                .forEach(id -> br
+                        .operations(op -> op
+                                .delete(d -> d
+                                        .index(index)
+                                        .id(id))));
+
+        return elasticsearchClient.bulk(br.build());
+    }
+
+    @Override
+    public ObjectNode getObjectNode(String index, String id) throws Exception {
+        GetResponse<ObjectNode> response = elasticsearchClient.get(g -> g
+                                          .index(index)
+                                          .id(id),
+                                          ObjectNode.class);
+
+        return response.found() ? response.source() : null;
     }
 }

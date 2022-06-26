@@ -1,8 +1,11 @@
 package com.bolingcavalry.basic.service;
 
+import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import com.bolingcavalry.basic.bean.Product;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.List;
 import java.util.function.BiConsumer;
 
 /**
@@ -20,7 +23,7 @@ public interface ProductService {
      * @return
      * @throws Exception
      */
-    Product search(String index, String id) throws Exception;
+    Product search(String index, String id);
 
     /**
      * 新增一个文档
@@ -54,4 +57,30 @@ public interface ProductService {
      * @return
      */
     IndexResponse createByJSON(String index, String id, String jsonContent) throws Exception;
+
+    /**
+     * 批量增加文档
+     * @param index 索引
+     * @param products 要增加的对象集合
+     * @return 批量操作的结果
+     * @throws Exception
+     */
+    BulkResponse bulkCreate(String index, List<Product> products) throws Exception;
+
+    /**
+     * 批量删除文档
+     * @param index 索引
+     * @param docIds 要删除的文档id集合
+     * @return
+     * @throws Exception
+     */
+    BulkResponse bulkDelete(String index, List<String> docIds) throws Exception;
+
+    /**
+     * 在指定索引中查找指定id的文档，返回类型是ObjectNode
+     * @param index 索引
+     * @param id 文档id
+     * @return ObjectNode类型的查找结果
+     */
+    ObjectNode getObjectNode(String index, String id) throws Exception ;
 }
