@@ -65,21 +65,46 @@ class ProductServiceTest {
         String desc = "description-1";
         int price = 101;
 
-        Product product = new Product(id, name, desc, price);
-
         // 新增一个文档
-        productService.create(INDEX_NAME, product);
-
-        // 根据id从ES查找记录
-        Product queryRlt = productService.search(INDEX_NAME, id);
-
-        log.info("query result : {}", queryRlt);
+        productService.createByFluentDSL(INDEX_NAME, new Product(id, name, desc, price));
 
         // 验证是否符合预期
-        Assertions.assertNotNull(queryRlt);
-        Assertions.assertEquals(id, queryRlt.getId());
-        Assertions.assertEquals(name, queryRlt.getName());
-        Assertions.assertEquals(desc, queryRlt.getDescription());
-        Assertions.assertEquals(price, queryRlt.getPrice());
+        check(id, name, desc, price);
+    }
+
+    @Test
+    void createByBuilderPattern() throws Exception {
+        String id = "2";
+        String name = "name-2";
+        String desc = "description-2";
+        int price = 102;
+
+        // 新增一个文档
+        productService.createByBuilderPattern(INDEX_NAME, new Product(id, name, desc, price));
+
+        // 验证是否符合预期
+        check(id, name, desc, price);
+    }
+
+    /**
+     * 根据指定文档ID从ES查询数据，并逐字段检查是否符合预期
+     * @param id
+     * @param name
+     * @param desc
+     * @param price
+     */
+    private void check(String id, String name, String desc, int price) throws Exception {
+
+        // 根据文档id从ES查找文档
+        Product product = productService.search(INDEX_NAME, id);
+
+        log.info("query result : {}", product);
+
+        // 逐个字段检查
+        Assertions.assertNotNull(product);
+        Assertions.assertEquals(id, product.getId());
+        Assertions.assertEquals(name, product.getName());
+        Assertions.assertEquals(desc, product.getDescription());
+        Assertions.assertEquals(price, product.getPrice());
     }
 }

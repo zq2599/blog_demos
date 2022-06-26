@@ -1,5 +1,6 @@
 package com.bolingcavalry.basic.config;
 
+import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
@@ -44,7 +45,14 @@ public class ClientConfig {
         HttpHost[] httpHosts = toHttpHost();
         RestClient restClient = RestClient.builder(httpHosts).build();
         RestClientTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
-        // And create the API client
         return new ElasticsearchClient(transport);
+    }
+
+    @Bean
+    public ElasticsearchAsyncClient elasticsearchAsyncClient() {
+        HttpHost[] httpHosts = toHttpHost();
+        RestClient restClient = RestClient.builder(httpHosts).build();
+        RestClientTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
+        return new ElasticsearchAsyncClient(transport);
     }
 }

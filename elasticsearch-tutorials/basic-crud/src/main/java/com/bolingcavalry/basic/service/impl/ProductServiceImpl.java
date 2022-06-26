@@ -1,12 +1,16 @@
 package com.bolingcavalry.basic.service.impl;
 
+import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.GetResponse;
+import co.elastic.clients.elasticsearch.core.IndexRequest;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import com.bolingcavalry.basic.bean.Product;
 import com.bolingcavalry.basic.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.function.BiConsumer;
 
 /**
  * @program: elasticsearch-tutorials
@@ -20,13 +24,27 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ElasticsearchClient elasticsearchClient;
 
+    @Autowired
+    private ElasticsearchAsyncClient elasticsearchAsyncClient;
+
     @Override
-    public IndexResponse create(String index, Product product) throws Exception {
+    public IndexResponse createByFluentDSL(String index, Product product) throws Exception {
         return elasticsearchClient.index(i -> i
                 .index(index)
                 .id(product.getId())
                 .document(product)
         );
+    }
+
+    @Override
+    public IndexResponse createByBuilderPattern(String index, Product product) throws Exception {
+        IndexRequest.Builder<Product> indexReqBuilder = new IndexRequest.Builder<>();
+
+        indexReqBuilder.index(index);
+        indexReqBuilder.id(product.getId());
+        indexReqBuilder.document(product);
+
+        return elasticsearchClient.index(indexReqBuilder.build());
     }
 
     @Override
@@ -39,5 +57,14 @@ public class ProductServiceImpl implements ProductService {
         );
 
         return response.found() ? response.source() : null;
+    }
+
+
+    public void createAnsync(String index, Product product, BiConsumer<IndexResponse, Exception> action) {
+        elasticsearchAsyncClient.index(i -> i
+                .index(index)
+                .id(product.getId())
+                .document(product)
+        ).whenComplete(null);
     }
 }

@@ -17,7 +17,15 @@ public interface ProductService {
      * @param product 文档对象
      * @return
      */
-    IndexResponse create(String index, Product product) throws Exception;
+    IndexResponse createByFluentDSL(String index, Product product) throws Exception;
+
+    /**
+     * 新增一个文档
+     * @param index 索引名
+     * @param product 文档对象
+     * @return
+     */
+    IndexResponse createByBuilderPattern(String index, Product product) throws Exception;
 
     /**
      * 根据文档id查找文档
