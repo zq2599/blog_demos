@@ -61,7 +61,24 @@ public class Tools {
         }
     }
 
+    public static void printStr(List<String> list) {
+        for (String val : list) {
+            System.out.println(val);
+        }
+    }
+
     public static void printOneLine(List<Integer> list) {
+        for (int i=0;i<list.size();i++) {
+            System.out.print(list.get(i));
+            if (i<list.size()-1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.print("\n");
+    }
+
+    public static void printOneLine(String prefix, List<Integer> list) {
+        System.out.print(prefix + " ");
         for (int i=0;i<list.size();i++) {
             System.out.print(list.get(i));
             if (i<list.size()-1) {
