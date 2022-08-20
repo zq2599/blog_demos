@@ -87,4 +87,23 @@ public class Tools {
         }
         System.out.print("\n");
     }
+
+    public static void print(TreeNode treeNode) {
+        if(null==treeNode) {
+            System.out.println("treeNode is null");
+            return;
+        }
+
+        System.out.print(treeNode.val);
+
+        System.out.print(", ");
+
+        if (null!=treeNode.left) {
+            print(treeNode.left);
+        }
+
+        if (null!=treeNode.right) {
+            print(treeNode.right);
+        }
+    }
 }
