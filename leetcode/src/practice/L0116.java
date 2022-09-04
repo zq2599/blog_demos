@@ -11,6 +11,7 @@ import java.util.List;
  **/
 public class L0116 {
 
+    /*
     List<List<Node>> res = new ArrayList<>();
 
     public Node connect(Node root) {
@@ -41,6 +42,45 @@ public class L0116 {
 
         travel(root.left, depth+1);
         travel(root.right, depth+1);
+    }
+     */
+
+    public Node connect(Node root) {
+        if (null==root) {
+            return null;
+        }
+
+        // 思路是当前层为下一层做事
+        // 在每一层中，head执向最左侧
+        Node head;
+
+        // 顾名思义，表示当前正在处理的节点
+        Node current;
+
+        head = root;
+        current = root;
+
+        // 第一层while，每循环一次，表示表示处理一层
+        while (null!=head.left) {
+
+            // 第二层while，每循环一次，表示表示处理当前层的一个元素
+            while (null!=current) {
+                current.left.next = current.right;
+
+                if (null!=current.next) {
+                    current.right.next = current.next.left;
+                }
+
+                current = current.next;
+            }
+
+            // 第二层while结束，意味着一层已经完成了，接下来进入下一层，
+            // head指向自己的左节点即可
+            head = head.left;
+            current = head;
+        }
+
+        return root;
     }
 
     public static void main(String[] args) {
