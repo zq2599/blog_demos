@@ -19,6 +19,7 @@ public class L0297 {
 
     private void serializeDfs(TreeNode root) {
         if(null==root) {
+//            serializeRes.append("n,");
             serializeRes.append(",");
             return;
         }
@@ -37,6 +38,7 @@ public class L0297 {
             return null;
         }
 
+//        if ("n".equals(deserializeArray[deserializeOffset])) {
         if ("".equals(deserializeArray[deserializeOffset])) {
             deserializeOffset++;
             return null;
@@ -78,6 +80,7 @@ public class L0297 {
 
 
     public static void main(String[] args) {
+        /*
         TreeNode t1 = new TreeNode(1);
         TreeNode t2 = new TreeNode(2);
         TreeNode t3 = new TreeNode(3);
@@ -92,5 +95,18 @@ public class L0297 {
         System.out.println(str);
         TreeNode treeNode = new L0297().deserialize(str);
         Tools.print(treeNode);
+         */
+
+        TreeNode t1 = new TreeNode(1);
+        TreeNode t2 = new TreeNode(2);
+        TreeNode t3 = new TreeNode(3);
+        t1.left = t2;
+        t1.right = t3;
+        String str = new L0297().serialize(t1);
+        System.out.println(str);
+
+        String[] array = "1,2,n,n,3,n,n,".split(",");
+        System.out.println(array);
+
     }
 }
