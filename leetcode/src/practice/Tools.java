@@ -54,6 +54,17 @@ public class Tools {
             }
         }
     }
+    public static void print(String prefix, int[] array) {
+        System.out.print(prefix + " [");
+        for(int i=0;i<array.length;i++) {
+            System.out.print(array[i]);
+            if((array.length-1)!=i){
+                System.out.print(", ");
+            }
+        }
+        System.out.print("]\n");
+    }
+
 
     public static void print(List<Integer> list) {
         for (Integer val : list) {
