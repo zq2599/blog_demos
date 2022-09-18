@@ -9,6 +9,10 @@ package practice;
 public class L0125 {
 
     public boolean isPalindrome(String s) {
+
+
+
+
         // 特殊情况处理
         if (s.length()<1) {
             return true;

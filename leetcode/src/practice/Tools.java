@@ -54,6 +54,31 @@ public class Tools {
             }
         }
     }
+
+    public static void print(char[] array) {
+        for(int i=0;i<array.length;i++) {
+            System.out.print(array[i]);
+            if((array.length-1)!=i){
+                System.out.print(", ");
+            }
+        }
+    }
+
+    public static void print(int[][] array) {
+        for(int i=0;i<array.length;i++) {
+
+            for (int j=0;j<array.length;j++) {
+                System.out.print(array[i][j]);
+                if((array.length-1)!=j){
+                    System.out.print(", ");
+                } else {
+                    System.out.print("\n");
+                }
+            }
+        }
+    }
+
+
     public static void print(String prefix, int[] array) {
         System.out.print(prefix + " [");
         for(int i=0;i<array.length;i++) {
