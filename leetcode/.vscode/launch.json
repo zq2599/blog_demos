@@ -1,0 +1,910 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch L0038",
+            "request": "launch",
+            "mainClass": "practice.L0038",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0003",
+            "request": "launch",
+            "mainClass": "book.L0003",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0801",
+            "request": "launch",
+            "mainClass": "interview.L0801",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1617",
+            "request": "launch",
+            "mainClass": "interview.L1617",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1716",
+            "request": "launch",
+            "mainClass": "interview.L1716",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1724",
+            "request": "launch",
+            "mainClass": "interview.L1724",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0001",
+            "request": "launch",
+            "mainClass": "lcs.L0001",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0063",
+            "request": "launch",
+            "mainClass": "offer.L0063",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L10_1",
+            "request": "launch",
+            "mainClass": "offer.L10_1",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0115",
+            "request": "launch",
+            "mainClass": "offer2.L0115",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0001(1)",
+            "request": "launch",
+            "mainClass": "practice.L0001",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0004",
+            "request": "launch",
+            "mainClass": "practice.L0004",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0005",
+            "request": "launch",
+            "mainClass": "practice.L0005",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0007",
+            "request": "launch",
+            "mainClass": "practice.L0007",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0008",
+            "request": "launch",
+            "mainClass": "practice.L0008",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0009",
+            "request": "launch",
+            "mainClass": "practice.L0009",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0013",
+            "request": "launch",
+            "mainClass": "practice.L0013",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0014",
+            "request": "launch",
+            "mainClass": "practice.L0014",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0017",
+            "request": "launch",
+            "mainClass": "practice.L0017",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0020",
+            "request": "launch",
+            "mainClass": "practice.L0020",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0021",
+            "request": "launch",
+            "mainClass": "practice.L0021",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0022",
+            "request": "launch",
+            "mainClass": "practice.L0022",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0026",
+            "request": "launch",
+            "mainClass": "practice.L0026",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0036",
+            "request": "launch",
+            "mainClass": "practice.L0036",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0039",
+            "request": "launch",
+            "mainClass": "practice.L0039",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0040",
+            "request": "launch",
+            "mainClass": "practice.L0040",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0045",
+            "request": "launch",
+            "mainClass": "practice.L0045",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0046",
+            "request": "launch",
+            "mainClass": "practice.L0046",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0047",
+            "request": "launch",
+            "mainClass": "practice.L0047",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0048",
+            "request": "launch",
+            "mainClass": "practice.L0048",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0053",
+            "request": "launch",
+            "mainClass": "practice.L0053",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0055",
+            "request": "launch",
+            "mainClass": "practice.L0055",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0066",
+            "request": "launch",
+            "mainClass": "practice.L0066",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0069",
+            "request": "launch",
+            "mainClass": "practice.L0069",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0077",
+            "request": "launch",
+            "mainClass": "practice.L0077",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0078",
+            "request": "launch",
+            "mainClass": "practice.L0078",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0079",
+            "request": "launch",
+            "mainClass": "practice.L0079",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0083",
+            "request": "launch",
+            "mainClass": "practice.L0083",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0089",
+            "request": "launch",
+            "mainClass": "practice.L0089",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0090",
+            "request": "launch",
+            "mainClass": "practice.L0090",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0093",
+            "request": "launch",
+            "mainClass": "practice.L0093",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0094",
+            "request": "launch",
+            "mainClass": "practice.L0094",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0095",
+            "request": "launch",
+            "mainClass": "practice.L0095",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0101",
+            "request": "launch",
+            "mainClass": "practice.L0101",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0102",
+            "request": "launch",
+            "mainClass": "practice.L0102",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0104",
+            "request": "launch",
+            "mainClass": "practice.L0104",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0105",
+            "request": "launch",
+            "mainClass": "practice.L0105",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0106",
+            "request": "launch",
+            "mainClass": "practice.L0106",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0108",
+            "request": "launch",
+            "mainClass": "practice.L0108",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0112",
+            "request": "launch",
+            "mainClass": "practice.L0112",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0113",
+            "request": "launch",
+            "mainClass": "practice.L0113",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0116",
+            "request": "launch",
+            "mainClass": "practice.L0116",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0117",
+            "request": "launch",
+            "mainClass": "practice.L0117",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0118",
+            "request": "launch",
+            "mainClass": "practice.L0118",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0121",
+            "request": "launch",
+            "mainClass": "practice.L0121",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0122",
+            "request": "launch",
+            "mainClass": "practice.L0122",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0123",
+            "request": "launch",
+            "mainClass": "practice.L0123",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0125",
+            "request": "launch",
+            "mainClass": "practice.L0125",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0131",
+            "request": "launch",
+            "mainClass": "practice.L0131",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L01408",
+            "request": "launch",
+            "mainClass": "practice.L01408",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0141",
+            "request": "launch",
+            "mainClass": "practice.L0141",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0142",
+            "request": "launch",
+            "mainClass": "practice.L0142",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0144",
+            "request": "launch",
+            "mainClass": "practice.L0144",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0145",
+            "request": "launch",
+            "mainClass": "practice.L0145",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0152",
+            "request": "launch",
+            "mainClass": "practice.L0152",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0160",
+            "request": "launch",
+            "mainClass": "practice.L0160",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0169",
+            "request": "launch",
+            "mainClass": "practice.L0169",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0188",
+            "request": "launch",
+            "mainClass": "practice.L0188",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0190",
+            "request": "launch",
+            "mainClass": "practice.L0190",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0198",
+            "request": "launch",
+            "mainClass": "practice.L0198",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0206",
+            "request": "launch",
+            "mainClass": "practice.L0206",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0213",
+            "request": "launch",
+            "mainClass": "practice.L0213",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0216",
+            "request": "launch",
+            "mainClass": "practice.L0216",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0217",
+            "request": "launch",
+            "mainClass": "practice.L0217",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0226",
+            "request": "launch",
+            "mainClass": "practice.L0226",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0234",
+            "request": "launch",
+            "mainClass": "practice.L0234",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0236",
+            "request": "launch",
+            "mainClass": "practice.L0236",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0242",
+            "request": "launch",
+            "mainClass": "practice.L0242",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0279",
+            "request": "launch",
+            "mainClass": "practice.L0279",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0283",
+            "request": "launch",
+            "mainClass": "practice.L0283",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0297",
+            "request": "launch",
+            "mainClass": "practice.L0297",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0300",
+            "request": "launch",
+            "mainClass": "practice.L0300",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0306",
+            "request": "launch",
+            "mainClass": "practice.L0306",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0306of2",
+            "request": "launch",
+            "mainClass": "practice.L0306of2",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0309",
+            "request": "launch",
+            "mainClass": "practice.L0309",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0322",
+            "request": "launch",
+            "mainClass": "practice.L0322",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0338",
+            "request": "launch",
+            "mainClass": "practice.L0338",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0344",
+            "request": "launch",
+            "mainClass": "practice.L0344",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0349",
+            "request": "launch",
+            "mainClass": "practice.L0349",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0350",
+            "request": "launch",
+            "mainClass": "practice.L0350",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0354",
+            "request": "launch",
+            "mainClass": "practice.L0354",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0363",
+            "request": "launch",
+            "mainClass": "practice.L0363",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0387",
+            "request": "launch",
+            "mainClass": "practice.L0387",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0415",
+            "request": "launch",
+            "mainClass": "practice.L0415",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0448",
+            "request": "launch",
+            "mainClass": "practice.L0448",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0461",
+            "request": "launch",
+            "mainClass": "practice.L0461",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0509",
+            "request": "launch",
+            "mainClass": "practice.L0509",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0543",
+            "request": "launch",
+            "mainClass": "practice.L0543",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0617",
+            "request": "launch",
+            "mainClass": "practice.L0617",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0622",
+            "request": "launch",
+            "mainClass": "practice.L0622",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0636",
+            "request": "launch",
+            "mainClass": "practice.L0636",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0655",
+            "request": "launch",
+            "mainClass": "practice.L0655",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0673",
+            "request": "launch",
+            "mainClass": "practice.L0673",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0704",
+            "request": "launch",
+            "mainClass": "practice.L0704",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0714",
+            "request": "launch",
+            "mainClass": "practice.L0714",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0876",
+            "request": "launch",
+            "mainClass": "practice.L0876",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0912",
+            "request": "launch",
+            "mainClass": "practice.L0912",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0918",
+            "request": "launch",
+            "mainClass": "practice.L0918",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0919",
+            "request": "launch",
+            "mainClass": "practice.L0919",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0952",
+            "request": "launch",
+            "mainClass": "practice.L0952",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1184",
+            "request": "launch",
+            "mainClass": "practice.L1184",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1331",
+            "request": "launch",
+            "mainClass": "practice.L1331",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1422",
+            "request": "launch",
+            "mainClass": "practice.L1422",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1464",
+            "request": "launch",
+            "mainClass": "practice.L1464",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1608",
+            "request": "launch",
+            "mainClass": "practice.L1608",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1624",
+            "request": "launch",
+            "mainClass": "practice.L1624",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1636",
+            "request": "launch",
+            "mainClass": "practice.L1636",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1640",
+            "request": "launch",
+            "mainClass": "practice.L1640",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1652",
+            "request": "launch",
+            "mainClass": "practice.L1652",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch MyLinkedList",
+            "request": "launch",
+            "mainClass": "practice.MyLinkedList",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch QuickSort",
+            "request": "launch",
+            "mainClass": "practice.QuickSort",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch Test001",
+            "request": "launch",
+            "mainClass": "practice.Test001",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution",
+            "request": "launch",
+            "mainClass": "question001.Solution",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution(1)",
+            "request": "launch",
+            "mainClass": "question002.Solution",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution1",
+            "request": "launch",
+            "mainClass": "question003.Solution1",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution2",
+            "request": "launch",
+            "mainClass": "question003.Solution2",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch Solution3",
+            "request": "launch",
+            "mainClass": "question003.Solution3",
+            "projectName": "leetcode_d4710210"
+        }
+    ]
+}
