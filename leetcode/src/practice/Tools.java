@@ -51,6 +51,8 @@ public class Tools {
             System.out.print(array[i]);
             if((array.length-1)!=i){
                 System.out.print(", ");
+            }else {
+                System.out.print("\n");
             }
         }
     }
