@@ -23,6 +23,7 @@ public class Tools {
         System.out.print(listNode.val);
 
         if (null==listNode.next) {
+            System.out.println("");
             return;
         }
 
