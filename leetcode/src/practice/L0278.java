@@ -17,15 +17,23 @@ public class L0278 {
 
 
     public int firstBadVersion(int n) {
-        return 0;
+        int start = 1;
+        int middle;
+
+        while (start<n) {
+            middle = start + (n-start)/2;
+
+            if(isBadVersion(middle)) {
+                n = middle;
+            } else {
+                start = middle+1;
+            }
+        }
+
+        return start;
     }
 
-
-
-
-
-
     public static void main(String[] args) {
-
+        System.out.println(new L0278().firstBadVersion(5));
     }
 }
