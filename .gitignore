@@ -10,3 +10,4 @@ jetcd-tutorials/.gradle/*
 .DS_Store
 grpc-tutorials/.gradle/*
 leetcode/out
+leetcode/.vscode/settings.json
