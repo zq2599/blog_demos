@@ -6,6 +6,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch L1367",
+            "request": "launch",
+            "mainClass": "practice.L1367",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0572",
+            "request": "launch",
+            "mainClass": "practice.L0572",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0100",
+            "request": "launch",
+            "mainClass": "practice.L0100",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1784",
+            "request": "launch",
+            "mainClass": "practice.L1784",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
             "name": "Launch L0998",
             "request": "launch",
             "mainClass": "practice.L0998",
