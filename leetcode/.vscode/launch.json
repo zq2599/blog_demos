@@ -6,6 +6,83 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch L0393",
+            "request": "launch",
+            "mainClass": "practice.L0393",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1309",
+            "request": "launch",
+            "mainClass": "practice.L1309",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch Codec",
+            "request": "launch",
+            "mainClass": "practice.Codec",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0109",
+            "request": "launch",
+            "mainClass": "interview.L0109",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0820",
+            "request": "launch",
+            "mainClass": "practice.L0820",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0394",
+            "request": "launch",
+            "mainClass": "practice.L0394",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0804",
+            "request": "launch",
+            "mainClass": "practice.L0804",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0921",
+            "request": "launch",
+            "mainClass": "practice.L0921",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch RLEIterator",
+            "request": "launch",
+            "mainClass": "practice.RLEIterator",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L1313",
+            "request": "launch",
+            "mainClass": "practice.L1313",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
+            "name": "Launch L0443",
+            "request": "launch",
+            "mainClass": "practice.L0443",
+            "projectName": "leetcode_d4710210"
+        },
+        {
+            "type": "java",
             "name": "Launch L1367",
             "request": "launch",
             "mainClass": "practice.L1367",
