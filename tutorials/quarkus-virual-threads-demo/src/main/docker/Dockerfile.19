@@ -1,0 +1,14 @@
+FROM openjdk:19
+
+ENV LANGUAGE='en_US:en'
+
+# 执行工作目录
+WORKDIR application
+
+COPY --chown=185 target/*.jar ./
+
+RUN mkdir config
+
+EXPOSE 8080
+USER 185
+ENTRYPOINT ["java", "-jar", "--enable-preview", "quarkus-virual-threads-demo-1.0-SNAPSHOT-runner.jar"]
