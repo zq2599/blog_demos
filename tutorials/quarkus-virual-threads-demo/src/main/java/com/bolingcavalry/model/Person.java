@@ -9,6 +9,16 @@ public class Person {
     private Gender gender;
     private Integer externalId;
 
+    public String getThreadInfo() {
+        return threadInfo;
+    }
+
+    public void setThreadInfo(String threadInfo) {
+        this.threadInfo = threadInfo;
+    }
+
+    private String threadInfo;
+
     public Person() {
     }
 
@@ -18,6 +28,7 @@ public class Person {
         this.age = age;
         this.gender = gender;
         this.externalId = externalId;
+        this.threadInfo = Thread.currentThread().toString();
     }
 
     public Long getId() {
@@ -66,6 +77,6 @@ public class Person {
                 row.getString("name"),
                 row.getInteger("age"),
                 Gender.valueOf(row.getString("gender")),
-                null);
+                row.getInteger("external_id"));
     }
 }

@@ -19,7 +19,7 @@ public class PersonRepositoryAsyncAwait {
 
     public Person findById(Long id) {
         RowSet<Row> rowSet = pgPool
-           .preparedQuery("SELECT id, name, age, gender FROM person WHERE id = $1")
+           .preparedQuery("SELECT id, name, age, gender, external_id FROM person WHERE id = $1")
            .executeAndAwait(Tuple.of(id));
         List<Person> persons = iterateAndCreate(rowSet);
         return persons.size() == 0 ? null : persons.get(0);
