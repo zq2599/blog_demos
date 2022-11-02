@@ -24,17 +24,28 @@
 # Java领域
 
 ## 云原生技术，Quarkus专辑
-### quarkus通用技术
+
+## quarkus长篇连载
+### 综合实战
 1. [《quarkus实战之一：准备工作》](https://xinchen.blog.csdn.net/article/details/122985638)
 2. [《quarkus实战之二：应用的创建、构建、部署》](https://xinchen.blog.csdn.net/article/details/123036523)
 3. [《quarkus实战之三：开发模式(Development mode)》](https://xinchen.blog.csdn.net/article/details/123196706)
 4. [《quarkus实战之四：远程热部署》](https://xinchen.blog.csdn.net/article/details/123196853)
 5. [《quarkus实战之五：细说maven插件》](https://xinchen.blog.csdn.net/article/details/123268091)
 6. [《quarkus实战之六：配置》](https://xinchen.blog.csdn.net/article/details/123303111)
-6. [《quarkus实战之七：使用配置》](https://xinchen.blog.csdn.net/article/details/123307704)
+7. [《quarkus实战之七：使用配置》](https://xinchen.blog.csdn.net/article/details/123307704)
 8. [《quarkus实战之八：profile》](https://xinchen.blog.csdn.net/article/details/123321509)
 
-### quarkus核心技术：依赖注入专辑
+
+### 虚拟线程
+1. [支持JDK19虚拟线程的web框架，之一：体验](https://blog.csdn.net/boling_cavalry/article/details/127354737)
+2. [支持JDK19虚拟线程的web框架，之二：完整开发一个支持虚拟线程的quarkus应用](https://blog.csdn.net/boling_cavalry/article/details/127457880)
+3. [支持JDK19虚拟线程的web框架，之三：观察运行中的虚拟线程](https://xinchen.blog.csdn.net/article/details/127472917)
+4. [支持JDK19虚拟线程的web框架，之四：看源码，了解quarkus如何支持虚拟线程](https://xinchen.blog.csdn.net/article/details/127592248)
+5. [支持JDK19虚拟线程的web框架，之五（终篇）：兴风作浪的ThreadLocal](https://blog.csdn.net/boling_cavalry/article/details/127592728)
+
+
+### 依赖注入
 1. [《quarkus依赖注入之一：创建bean》](https://xinchen.blog.csdn.net/article/details/123752182)
 2. [《quarkus依赖注入之二：bean的作用域》](https://xinchen.blog.csdn.net/article/details/123754648)
 3. [《quarkus依赖注入之三：用注解选择注入bean》](https://xinchen.blog.csdn.net/article/details/123861906)
@@ -43,6 +54,18 @@
 6. [《quarkus依赖注入之六：发布和消费事件》](https://xinchen.blog.csdn.net/article/details/124069627)
 7. [《quarkus依赖注入之七：生命周期回调》](https://xinchen.blog.csdn.net/article/details/124114602)
 8. [《quarkus依赖注入之八：装饰器（Decorator）》](https://xinchen.blog.csdn.net/article/details/124234802)
+9. [《quarkus依赖注入之九：bean读写锁》](https://xinchen.blog.csdn.net/article/details/124336520)
+10. [《quarkus依赖注入之十：学习和改变bean懒加载规则》](https://xinchen.blog.csdn.net/article/details/124524910)
+11. [《quarkus依赖注入之十一：拦截器高级特性上篇(属性设置和重复使用)》](https://xinchen.blog.csdn.net/article/details/124540964)
+12. [《quarkus依赖注入之十二：禁用类级别拦截器》](https://xinchen.blog.csdn.net/article/details/124581260)
+13. [《quarkus依赖注入之十三：其他重要知识点大串讲(终篇)》](https://xinchen.blog.csdn.net/article/details/124644543)
+
+
+### 数据库
+1. [《quarkus数据库篇之一：比官方demo更简单的基础操作》](https://xinchen.blog.csdn.net/article/details/124766017)
+2. [《quarkus数据库篇之二：无需数据库也能运行增删改查(dev模式)》](https://xinchen.blog.csdn.net/article/details/124860825)
+3. [《quarkus数据库篇之三：单应用同时操作多个数据库》](https://xinchen.blog.csdn.net/article/details/124895407)
+4. [《quarkus数据库篇之四：本地缓存》](https://xinchen.blog.csdn.net/article/details/124958726)
 
 ## 基础知识
 1. [《CentOS7安装JDK8》](https://blog.csdn.net/boling_cavalry/article/details/79840049)
@@ -53,6 +76,10 @@
 6. [《java.util.Optional学习笔记》](https://blog.csdn.net/boling_cavalry/article/details/77610629)
 7. [《org.springframework.util.StopWatch：简洁的耗时统计小工具》](https://blog.csdn.net/boling_cavalry/article/details/78231032)
 8. [《体验IntelliJ IDEA的远程开发（Remote Development）》](https://xinchen.blog.csdn.net/article/details/123598992)
+9. [《20天等待，申请终于通过，安装和体验IntelliJ IDEA新UI预览版》](https://xinchen.blog.csdn.net/article/details/125401366)
+10. [《浏览器上写代码，4核8G微软服务器免费用，Codespaces真香》](https://xinchen.blog.csdn.net/article/details/125014702)
+11. [《Codespaces个性化后台服务器配置指南》](https://xinchen.blog.csdn.net/article/details/125110236)
+12. [《桌面版vscode用免费的微软4核8G服务器做远程开发（编译运行都在云上，还能自由创建docker服务）》](https://xinchen.blog.csdn.net/article/details/125126658)
 
 ## 进阶实战
 1. [《Java实战操作MongoDB集群（副本集）》](https://blog.csdn.net/boling_cavalry/article/details/78238163)
@@ -165,6 +192,7 @@
 5. [《Java扩展Nginx之五：五大handler(系列最核心)》](https://xinchen.blog.csdn.net/article/details/122788726)
 6. [《Java扩展Nginx之六：两大filter》](https://xinchen.blog.csdn.net/article/details/122825530)
 7. [《Java扩展Nginx之七：共享内存》](https://xinchen.blog.csdn.net/article/details/123015410)
+8. [《精选版：用Java扩展Nginx（nginx-clojure 入门）》](https://xinchen.blog.csdn.net/article/details/126456209)
 
 ## 视图邻域
 1. [Java版流媒体编解码和图像处理(JavaCPP+FFmpeg)](https://xinchen.blog.csdn.net/article/details/119062543)
@@ -414,6 +442,10 @@
 91. [《ARM架构下的Docker环境，OpenJDK官方没有8版本镜像，如何完美解决？》](https://blog.csdn.net/boling_cavalry/article/details/101855126)
 92. [《Docker部署flink备忘》](https://blog.csdn.net/boling_cavalry/article/details/105015546)
 93. [《用GitHub Actions制作Docker镜像》](https://xinchen.blog.csdn.net/article/details/115476859)
+94. [《Docker下elasticsearch8部署、扩容、基本操作实战(含kibana)》](https://xinchen.blog.csdn.net/article/details/125196035)
+95. [《docker-compose快速部署elasticsearch-8.x集群+kibana》](https://xinchen.blog.csdn.net/article/details/125232858)
+96. [《群晖DS218+部署PostgreSQL(docker)》](https://xinchen.blog.csdn.net/article/details/124701835)
+
 
 # kubernetes
 
@@ -471,6 +503,7 @@
 15. [《K8S的Kafka监控(Prometheus+Grafana)》](https://xinchen.blog.csdn.net/article/details/105466788)
 16. [《Kubernetes的Group、Version、Resource学习小记》](https://xinchen.blog.csdn.net/article/details/113715847)
 17. [《Kubernetes亲和性学习笔记》](https://xinchen.blog.csdn.net/article/details/123189528)
+18. [《极速安装kubernetes-1.22.0（三台CentOS7服务器）》](https://blog.csdn.net/boling_cavalry/article/details/122893949)
 
 ## kubernetes官方java客户端特辑
 1. [《Kubernetes官方java客户端之一：准备》](https://blog.csdn.net/boling_cavalry/article/details/107480015)
@@ -834,6 +867,17 @@
 1. [《LeetCode第三题(Longest Substring Without Repeating Characters)三部曲之一：解题思路》](https://blog.csdn.net/boling_cavalry/article/details/86563586)
 2. [《LeetCode第三题(Longest Substring Without Repeating Characters)三部曲之二：编码实现》](https://blog.csdn.net/boling_cavalry/article/details/86654969)
 3. [《LeetCode第三题(Longest Substring Without Repeating Characters)三部曲之三：两次优化》](https://blog.csdn.net/boling_cavalry/article/details/86655675)
+4. [《LeetCode46全排列(回溯入门)》](https://xinchen.blog.csdn.net/article/details/125966575)
+5. [《LeetCode952三部曲之一：解题思路和初级解法(137ms，超39%)》](https://xinchen.blog.csdn.net/article/details/126070288)
+6. [《LeetCode952三部曲之二：小幅度优化(137ms -＞ 122ms，超39% -＞ 超51%)》](https://xinchen.blog.csdn.net/article/details/126090112)
+7. [《LeetCode952三部曲之三：再次优化(122ms -＞ 96ms，超51% -＞ 超91%)》](https://xinchen.blog.csdn.net/article/details/126215652)
+8. [《LeetCode买卖股票之一：基本套路(122)》](https://xinchen.blog.csdn.net/article/details/126558167)
+9. [《LeetCode297：hard级别中最简单的存在，java版，用时击败98%，内存击败百分之九十九》](https://xinchen.blog.csdn.net/article/details/126693144)
+10. [《LeetCode279:完全平方数，动态规划解法超过46%，作弊解法却超过97%》](https://xinchen.blog.csdn.net/article/details/126922180)
+11. [《LeetCode155:最小栈，最简单的中等难度题，时间击败100%，内存也低于官方》](https://xinchen.blog.csdn.net/article/details/127042047)
+12. [《LeetCode98：验证二叉搜索树，居然有这么简单的中等难度，白捡(用时击败100%)》](https://xinchen.blog.csdn.net/article/details/127145854)
+
+
 
 # Linux
 1. [《Ubuntu16环境安装和使用NFS》](https://blog.csdn.net/boling_cavalry/article/details/79498346)
@@ -850,6 +894,9 @@
 1. [《Mac下vagrant从安装到体验》](https://blog.csdn.net/boling_cavalry/article/details/99702719)
 2. [《Vagrant定制个性化CentOS7模板》](https://blog.csdn.net/boling_cavalry/article/details/102240871)
 3. [《Java程序员的MacBookPro(14寸M1)配置备忘录》](https://xinchen.blog.csdn.net/article/details/124139180)
+
+# Windows
+1. [《win11安装ubuntu(by wsl2)》](https://xinchen.blog.csdn.net/article/details/126312959)
 
 # golang
 1. [《Ubuntu16安装Go语言环境》](https://blog.csdn.net/boling_cavalry/article/details/82904868)
