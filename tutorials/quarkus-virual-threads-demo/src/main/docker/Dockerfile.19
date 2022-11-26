@@ -11,4 +11,5 @@ RUN mkdir config
 
 EXPOSE 8080
 USER 185
-ENTRYPOINT ["java", "-jar", "--enable-preview", "quarkus-virual-threads-demo-1.0-SNAPSHOT-runner.jar"]
+
+ENTRYPOINT ["java", "-jar", "quarkus-virual-threads-demo-1.0-SNAPSHOT-runner.jar"]
