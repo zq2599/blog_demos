@@ -12,13 +12,14 @@ import javax.ws.rs.PathParam;
 @Path("/pool/persons")
 public class PoolPersonResource {
 
-    @Inject
-    PersonRepositoryAsyncAwait personRepository;
+//    @Inject
+//    PersonRepositoryAsyncAwait personRepository;
 
     @GET
     @Path("/{id}")
     public Person getPersonById(@PathParam("id") Long id) {
-        return personRepository.findById(id);
+        return new Person();
+//        return personRepository.findById(id);
     }
 
 }
