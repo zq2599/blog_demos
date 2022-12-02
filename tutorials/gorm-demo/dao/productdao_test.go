@@ -173,3 +173,84 @@ func TestProductDao_FirstByCode(t *testing.T) {
 		})
 	}
 }
+
+func TestProductDao_FindIdsByCode(t *testing.T) {
+	type args struct {
+		code string
+	}
+	tests := []struct {
+		name       string
+		productDao *ProductDao
+		args       args
+	}{
+		// TODO: Add test cases.
+		{
+			name:       "根据code查询t_product表的记录的id",
+			productDao: &ProductDao{},
+			args:       args{code: "a102"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+
+			dbRes, got := tt.productDao.FindIdsByCode(tt.args.code)
+
+			a := assert.New(t)
+
+			// gorm返回的对象必须非空
+			a.NotNil(dbRes)
+
+			// error必须为空
+			a.Nil(dbRes.Error)
+
+			// gorm返回的对象必须非空
+			a.NotNil(got)
+
+			// 记录数大于0
+			a.Greater(len(got), 0)
+
+			// 每一个id都应该大于0
+			for _, v := range got {
+				a.Greater(v.Id, uint(0))
+			}
+
+			fmt.Printf("got: %v\n", got)
+		})
+	}
+}
+
+func TestProductDao_UpdatePriceByCode(t *testing.T) {
+	type args struct {
+		code  string
+		price uint
+	}
+	tests := []struct {
+		name       string
+		productDao *ProductDao
+		args       args
+	}{
+		// TODO: Add test cases.
+		{
+			name:       "根据code更新t_product表的记录的price字段",
+			productDao: &ProductDao{},
+			args:       args{code: "a102", price: 666},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			dbRes := tt.productDao.UpdatePriceByCode(tt.args.code, tt.args.price)
+
+			a := assert.New(t)
+
+			// gorm返回的对象必须非空
+			a.NotNil(dbRes)
+
+			// error必须为空
+			a.Nil(dbRes.Error)
+
+			// 影响的记录数大于0
+			a.Greater(dbRes.RowsAffected, int64(0))
+
+		})
+	}
+}

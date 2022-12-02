@@ -73,3 +73,16 @@ func (productDao *ProductDao) FirstByCode(code string) (*gorm.DB, *entity.Produc
 	dbRes := db.Where("code=?", code).First(result)
 	return dbRes, result
 }
+
+// 根据code查找，返回所有结果的id字段
+func (productDao *ProductDao) FindIdsByCode(code string) (*gorm.DB, []entity.Id) {
+	var result []entity.Id
+	dbRes := db.Model(&entity.Product{}).Where("code=?", code).Find(&result)
+	return dbRes, result
+}
+
+// 根据code更新price字段
+func (productDao *ProductDao) UpdatePriceByCode(code string, price uint) *gorm.DB {
+	dbRes := db.Model(&entity.Product{}).Where("code=?", code).Update("price", price)
+	return dbRes
+}
