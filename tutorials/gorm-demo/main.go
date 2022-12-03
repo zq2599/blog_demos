@@ -2,32 +2,39 @@ package main
 
 import (
 	"fmt"
-	"time"
-
-	"gorm-demo/dao"
-	"gorm-demo/entity"
 )
 
 func main() {
-	// 初始化
-	productDao := &dao.ProductDao{}
+	test001()
+}
 
-	fmt.Println("start check table")
+type Person struct {
+	name string
+}
 
-	// 确保表存在
-	if err := productDao.CheckTable(); err != nil {
-		fmt.Printf("1. err: %v\n", err)
-		return
+func test001() {
+	p0 := &Person{"p0"}
+	p1 := &Person{"p1"}
+
+	var array = []*Person{p0, p1}
+
+	for _, v := range array {
+		fmt.Printf("*v: %v\n", *v)
 	}
 
-	fmt.Println("start insert")
+	fmt.Println("start test002")
+	test002(array)
+	fmt.Println("finish test002")
 
-	// 新增一条记录
-	productDao.Insert(&entity.Product{
-		Code:   "D66",
-		Price:  100,
-		Remark: fmt.Sprintf("1. %v", time.Now().Format("2006-01-02 15:04:05")),
-	})
+	for _, v := range array {
+		fmt.Printf("*v: %v\n", *v)
+	}
+}
 
-	fmt.Println("finish insert")
+func test002(array []*Person) {
+	for _, v := range array {
+		fmt.Printf("*v: %v\n", *v)
+		v.name = fmt.Sprintf("%s-change", v.name)
+		fmt.Printf("*v: %v\n", *v)
+	}
 }
