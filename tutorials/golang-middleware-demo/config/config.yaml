@@ -1,0 +1,19 @@
+config:
+  models:
+    - model1:
+      name: Contract1
+      schema: 'schema/contract_schema1.json'
+    - model2:
+      name: Contract2
+      schema: 'schema/contract_schema2.json'
+  acls:
+    - acl1:
+      model: Contract1
+      role: wx-org1.chainmaker.org
+      operation: create
+      action: ALLOW
+    - acl2:
+      model: Contract2
+      role: wx-org2.chainmaker.org
+      operation: create
+      action: forbid    
