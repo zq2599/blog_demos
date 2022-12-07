@@ -18,12 +18,17 @@ var wu = &websocket.Upgrader{ReadBufferSize: 512,
 	WriteBufferSize: 512, CheckOrigin: func(r *http.Request) bool { return true }}
 
 func myws(w http.ResponseWriter, r *http.Request) {
+	// 将http连接升级为websocket连接
 	ws, err := wu.Upgrade(w, r, nil)
 	if err != nil {
 		return
 	}
+	// 每个websocket连接都有一个connection对象
 	c := &connection{sc: make(chan []byte, 256), ws: ws, data: &Data{}}
+	// 写入h.r管道
 	h.r <- c
+	// 开一个协程，循环读c.sc，一旦读到数据，就立即写到websocket中，
+	// 所以，如果想给前端发送数据，只要写入到c.sc即可
 	go c.writer()
 	c.reader()
 	defer func() {
