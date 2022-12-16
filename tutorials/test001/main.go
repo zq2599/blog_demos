@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"strconv"
 	"test001/swagger"
 	"time"
 
@@ -17,7 +18,7 @@ const TEST_TOPIC = "bridge-quickstart-topic"
 
 const TEST_GROUP = "client-sdk-group"
 
-const CONSUMER_NAME = "client-sdk-consumer"
+const CONSUMER_NAME = "client-sdk-consumer-002"
 
 // strimzi bridge地址
 const BASE_PATH = "http://42.193.162.141:31331"
@@ -89,7 +90,7 @@ func CreateConsumer(group string, consumerName string) (*swagger.CreatedConsumer
 		group,
 		swagger.Consumer{
 			Name:                     consumerName,
-			AutoOffsetReset:          "latestaa",
+			AutoOffsetReset:          "latest",
 			FetchMinBytes:            16,
 			ConsumerRequestTimeoutMs: 300 * 1000,
 			EnableAutoCommit:         false,
@@ -102,6 +103,7 @@ func CreateConsumer(group string, consumerName string) (*swagger.CreatedConsumer
 	}
 
 	log.Printf("CreateConsumer response : %v, body [%v]", response, getBodyStr(response.Body))
+	log.Printf("consumer : %v", consumer)
 	return &consumer, nil
 }
 
@@ -153,20 +155,25 @@ func Offset(consumerGroup string, consumerName string) error {
 }
 
 func main() {
-	/*
-		topics, err := getAllTopics()
-		if err != nil {
-			return
-		}
 
-		fmt.Printf("topics: %v\n", topics)
+	//topics, err := getAllTopics()
+	//if err != nil {
+	//	return
+	//}
+	//
+	//fmt.Printf("topics: %v\n", topics)
 
-		for i := 0; i < 10; i++ {
-			sendAsync("message from go client " + strconv.Itoa(i))
-		}
-	*/
+	for i := 0; i < 10; i++ {
+		sendAsync("message from go client " + strconv.Itoa(i))
+	}
 
 	// 创建consumer
-	CreateConsumer(TEST_GROUP, CONSUMER_NAME)
+	//CreateConsumer(TEST_GROUP, CONSUMER_NAME)
 
+	//err := Subsciribe(TEST_TOPIC, TEST_GROUP, CONSUMER_NAME)
+	//if err != nil {
+	//	fmt.Printf("err : %v\n", err)
+	//}
+
+	Poll(TEST_GROUP, CONSUMER_NAME)
 }

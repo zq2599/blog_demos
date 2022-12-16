@@ -569,7 +569,8 @@ func (a *ConsumersApiService) Poll(ctx context.Context, groupid string, name str
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/vnd.kafka.json.v2+json", "application/vnd.kafka.binary.v2+json", "application/vnd.kafka.v2+json"}
+	//localVarHttpHeaderAccepts := []string{"application/vnd.kafka.json.v2+json", "application/vnd.kafka.binary.v2+json", "application/vnd.kafka.v2+json"}
+	localVarHttpHeaderAccepts := []string{"application/vnd.kafka.json.v2+json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)

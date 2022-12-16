@@ -317,7 +317,12 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 			return err
 		}
 		return nil
-	} else if strings.Contains(contentType, "application/json") || strings.Contains(contentType, "application/vnd.kafka.v2+json") {
+	} else if strings.Contains(contentType, "application/json") ||
+		strings.Contains(contentType, "application/vnd.kafka.v2+json") ||
+		strings.Contains(contentType, "application/vnd.kafka.json.v2+json") {
+
+		fmt.Printf("*********************:%v\n", string(b))
+
 		if err = json.Unmarshal(b, v); err != nil {
 			return err
 		}
