@@ -1,5 +1,5 @@
 {
-  "image": "go:1.19",
+  "image": "ghcr.io/devcontainers/features/go:1.19",
   "features": {
   }
 }
