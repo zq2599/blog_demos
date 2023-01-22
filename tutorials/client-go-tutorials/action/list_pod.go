@@ -1,43 +1,17 @@
-package main
+package action
 
 import (
 	"context"
-	"flag"
 	"fmt"
-	"path/filepath"
 
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
-	"k8s.io/client-go/util/homedir"
 )
 
-func main() {
-	var kubeconfig *string
+type ListPod struct{}
 
-	// 试图取到当前账号的家目录
-	if home := homedir.HomeDir(); home != "" {
-		// 如果能取到，就把家目录下的.kube/config作为默认配置文件
-		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
-	} else {
-		// 如果取不到，就没有默认配置文件，必须通过kubeconfig参数来指定
-		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
-	}
-	flag.Parse()
-
-	// 加载配置文件
-	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	// 用clientset类来执行后续的查询操作
-	clientset, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		panic(err.Error())
-	}
-
+func (listPod ListPod) DoAction(clientset *kubernetes.Clientset) error {
 	namespace := "kube-system"
 
 	// 查询pod列表
@@ -52,7 +26,7 @@ func main() {
 
 	// 如果没有pod就返回了
 	if nums < 1 {
-		return
+		return nil
 	}
 
 	// 遍历列表中的每个pod
@@ -73,4 +47,5 @@ func main() {
 		}
 	}
 
+	return nil
 }
