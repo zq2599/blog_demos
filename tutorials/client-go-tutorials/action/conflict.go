@@ -12,12 +12,15 @@ import (
 	v1 "k8s.io/api/apps/v1"
 	apiv1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/util/retry"
 )
 
 const (
-	DP_NAME         string = "demo-deployment"
+	// deployment的名称
+	DP_NAME string = "demo-deployment"
+	// 用于更新的标签的名字
 	LABEL_CUSTOMIZE string = "biz-version"
 )
 
@@ -40,12 +43,14 @@ func (conflict Confilct) DoAction(clientset *kubernetes.Clientset) error {
 	// 一旦创建成功，就一定到删除再返回
 	defer delete(clientset, DP_NAME)
 
-	testNum := 10
+	testNum := 5
 
 	waitGroup := sync.WaitGroup{}
 	waitGroup.Add(testNum)
 
 	fmt.Println("在协程中并发更新自定义标签")
+
+	startTime := time.Now().UnixMilli()
 
 	for i := 0; i < testNum; i++ {
 
@@ -53,20 +58,18 @@ func (conflict Confilct) DoAction(clientset *kubernetes.Clientset) error {
 			// 避免进程卡死
 			defer waitGroup.Done()
 
-			err := updateByGetAndUpdate(clientsetA, DP_NAME)
+			// err := updateByGetAndUpdate(clientsetA, DP_NAME)
 
-			/*
-				var retryParam = wait.Backoff{
-					Steps:    10,
-					Duration: 10 * time.Millisecond,
-					Factor:   1.0,
-					Jitter:   0.1,
-				}
+			var retryParam = wait.Backoff{
+				Steps:    5,
+				Duration: 10 * time.Millisecond,
+				Factor:   1.0,
+				Jitter:   0.1,
+			}
 
-				err := retry.RetryOnConflict(retryParam, func() error {
-					return updateByGetAndUpdate(clientset, DP_NAME)
-				})
-			*/
+			err := retry.RetryOnConflict(retryParam, func() error {
+				return updateByGetAndUpdate(clientset, DP_NAME)
+			})
 
 			if err != nil {
 				fmt.Printf("err: %v\n", err)
@@ -86,7 +89,7 @@ func (conflict Confilct) DoAction(clientset *kubernetes.Clientset) error {
 		return err
 	}
 
-	fmt.Printf("自定义标签的最终值为: %v\n", deployment.Labels[LABEL_CUSTOMIZE])
+	fmt.Printf("自定义标签的最终值为: %v，耗时%v毫秒\n", deployment.Labels[LABEL_CUSTOMIZE], time.Now().UnixMilli()-startTime)
 
 	return nil
 }
@@ -185,6 +188,7 @@ func updateByGetAndUpdate(clientset *kubernetes.Clientset, name string) error {
 		return errors.New("未取得自定义标签")
 	}
 
+	// 将字符串类型转为int型
 	val, err := strconv.Atoi(currentVal)
 
 	if err != nil {
@@ -192,6 +196,7 @@ func updateByGetAndUpdate(clientset *kubernetes.Clientset, name string) error {
 		currentVal = "101"
 	}
 
+	// 将int型的label加一，再转为字符串
 	deployment.Labels[LABEL_CUSTOMIZE] = strconv.Itoa(val + 1)
 
 	_, err = clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Update(context.TODO(), deployment, metav1.UpdateOptions{})
