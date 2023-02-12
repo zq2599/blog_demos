@@ -25,15 +25,18 @@ func Test_fib(t *testing.T) {
 	}
 }
 
-var result int
-
 func BenchmarkFib(b *testing.B) {
-	var r int
 	for n := 0; n < b.N; n++ {
-		r = fib(30)
+		fib(30)
 	}
+}
 
-	result = r
+func BenchmarkParallelFib(b1 *testing.B) {
+	b1.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			fib(30)
+		}
+	})
 }
 
 const (
