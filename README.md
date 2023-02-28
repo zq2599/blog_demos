@@ -320,6 +320,15 @@
 3. [使用Zookeeper注册中心](https://xinchen.blog.csdn.net/article/details/109147843)
 4. [管理控制台dubbo-admin](https://xinchen.blog.csdn.net/article/details/109267151)
 
+## java云原生系列
+1. [strimzi实战之一：简介和准备](https://xinchen.blog.csdn.net/article/details/127705101)
+2. [strimzi实战之二：部署和消息功能初体验](https://xinchen.blog.csdn.net/article/details/127707552)
+4. [strimzi实战之三：prometheus+grafana监控（按官方文档搞不定监控？不妨看看本文，已经踩过坑了）](https://xinchen.blog.csdn.net/article/details/127724405)
+4. [Strimzi Kafka Bridge(桥接)实战之一：简介和部署](https://xinchen.blog.csdn.net/article/details/127832731)
+5. [Strimzi Kafka Bridge(桥接)实战之二：生产和发送消息](https://xinchen.blog.csdn.net/article/details/127924065)
+6. [Strimzi Kafka Bridge(桥接)实战之三：自制sdk(golang版本)](https://xinchen.blog.csdn.net/article/details/127938106)
+
+
 # Docker
 
 ## 基础知识
@@ -463,6 +472,7 @@
 11. [《kubernetes部署metrics-server》](https://blog.csdn.net/boling_cavalry/article/details/105006295)
 12. [《Kubernetes的Local Persistent Volumes使用小记》](https://blog.csdn.net/boling_cavalry/article/details/106453727)
 13. [《开发阶段，将SpringBoot应用快速部署到K8S》](https://blog.csdn.net/boling_cavalry/article/details/106594392)
+14. [快速搭建云原生开发环境（k8s+pv+prometheus+grafana）](https://xinchen.blog.csdn.net/article/details/127601664)
 
 ## kubernetes安装部署
 1. [《kubeadm搭建kubernetes集群之一：构建标准化镜像》](https://blog.csdn.net/boling_cavalry/article/details/78694206)
@@ -519,6 +529,10 @@
 3. [client-go实战之三：Clientset](https://xinchen.blog.csdn.net/article/details/113788269)
 4. [client-go实战之四：dynamicClient](https://xinchen.blog.csdn.net/article/details/113795523)
 5. [client-go实战之五：DiscoveryClient](https://xinchen.blog.csdn.net/article/details/113800054)
+6. [client-go实战之六:时隔两年，刷新版本继续实战](https://xinchen.blog.csdn.net/article/details/128686327)
+7. [client-go实战之七：准备一个工程管理后续实战的代码](https://xinchen.blog.csdn.net/article/details/128749438)
+8. [client-go实战之八:更新资源时的冲突错误处理](https://xinchen.blog.csdn.net/article/details/128745382)
+9. [client-go实战之九：手写一个kubernetes的controller](https://xinchen.blog.csdn.net/article/details/128753781)
 
 ## Operator实战特辑
 1. [kubebuilder实战之一：准备工作](https://xinchen.blog.csdn.net/article/details/113035349)
@@ -903,6 +917,9 @@
 2. [《golang实战之flag包》](https://blog.csdn.net/boling_cavalry/article/details/87901677)
 3. [《用golang官方Docker镜像运行项目》](https://blog.csdn.net/boling_cavalry/article/details/87904485)
 4. [《vim设置go语法高亮》](https://blog.csdn.net/boling_cavalry/article/details/88598828)
+5. [云端golang开发，无需本地配置，能上网就能开发和运行](https://xinchen.blog.csdn.net/article/details/128879768)
+6. [Go语言基准测试(benchmark)三部曲之一：基础篇](https://xinchen.blog.csdn.net/article/details/128986489)
+7. [Go语言基准测试(benchmark)三部曲之二：内存篇](https://xinchen.blog.csdn.net/article/details/128997452)
 
 ## gRPC特辑
 1. [《gRPC学习之一：在CentOS7部署和设置GO》](https://xinchen.blog.csdn.net/article/details/110790538)
