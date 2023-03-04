@@ -32,7 +32,7 @@ func main() {
 
 	var product Product
 
-	db.First(&product, "code = ?", FIRST_PRODUCT_CODE)
+	db.Debug().First(&product, "code = ?", FIRST_PRODUCT_CODE)
 
 	fmt.Printf("product: %+v\n", product)
 

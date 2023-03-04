@@ -44,5 +44,6 @@ func newSliceWithCap(n int) []int {
 }
 
 func main() {
-	fmt.Printf("fib(10): %v\n", fib(10))
+	start := time.Now()
+	fmt.Printf("fib(50): %v, use [%v]ms\n", fib(50), time.Since(start).Milliseconds())
 }
