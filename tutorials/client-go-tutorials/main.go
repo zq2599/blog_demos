@@ -4,6 +4,7 @@ import (
 	"client-go-tutorials/action"
 	"flag"
 	"fmt"
+	"log"
 	"path/filepath"
 
 	"k8s.io/client-go/kubernetes"
@@ -28,7 +29,7 @@ func main() {
 
 	flag.Parse()
 
-	fmt.Println("解析命令完毕，开始加载配置文件")
+	log.Println("解析命令完毕，开始加载配置文件")
 
 	// 加载配置文件
 	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
@@ -42,7 +43,7 @@ func main() {
 		panic(err.Error())
 	}
 
-	fmt.Printf("加载配置文件完毕，即将执行业务 [%v]\n", *actionFlag)
+	log.Printf("加载配置文件完毕，即将执行业务 [%v]\n", *actionFlag)
 
 	var actionInterface action.Action
 
@@ -54,12 +55,15 @@ func main() {
 	case "conflict":
 		conflict := action.Confilct{}
 		actionInterface = &conflict
+	case "label":
+		label := action.Lable{}
+		actionInterface = &label
 	}
 
 	err = actionInterface.DoAction(clientset)
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 	} else {
-		fmt.Println("执行完成")
+		log.Println("执行完成")
 	}
 }
