@@ -69,8 +69,8 @@ func (lable Lable) DoAction(clientset *kubernetes.Clientset) error {
 	// 验证，应该查到app=other的pod
 	listPods(clientset, selector, "用Requirement创建，In操作")
 
-	// 第二种：Parse方法
-	parsedSelector, _ := labels.Parse("bind-service=none,app notin (not_exists)")
+	// 第二种：labels.Parse方法
+	parsedSelector, err := labels.Parse("bind-service=none,app notin (not_exists)")
 
 	if err != nil {
 		log.Println("3. create equalRequirement fail, ", err)
@@ -79,6 +79,30 @@ func (lable Lable) DoAction(clientset *kubernetes.Clientset) error {
 
 	// 验证，应该查到app=other的pod
 	listPods(clientset, parsedSelector, "用Parse创建")
+
+	// 第三种：labels.SelectorFromSet方法
+	setSelector := labels.SelectorFromSet(labels.Set(map[string]string{"app": "nginx"}))
+
+	// 验证，应该查到app=nginx的pod
+	listPods(clientset, setSelector, "用SelectorFromSet创建")
+
+	// 第四种：metav1.LabelSelectorAsSelector方法
+	// 适用于当前环境已有资源对象的场景，可以取出LabelSelector对象来转换成labels.Selector
+	// 先创建一个LabelSelector
+	labelSelector := &metav1.LabelSelector{
+		MatchLabels: map[string]string{"app": "other"},
+	}
+
+	// 将LabelSelector转为labels.Selector
+	convertSelector, err := metav1.LabelSelectorAsSelector(labelSelector)
+
+	if err != nil {
+		log.Println("4. create equalRequirement fail, ", err)
+		return err
+	}
+
+	// 验证，应该查到app=nginx的pod
+	listPods(clientset, convertSelector, "用LabelSelector转换")
 
 	return nil
 }

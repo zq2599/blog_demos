@@ -12,8 +12,8 @@
             "mode": "auto",
             // "program": "${fileDirname}"
             "program": "${workspaceFolder}",
-            "args": [
-                "-action=label"]
+            "args": ["-action=controller"]
+            // "args": ["-action=label"]
         }
     ]
 }

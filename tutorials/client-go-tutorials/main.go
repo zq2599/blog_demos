@@ -55,6 +55,9 @@ func main() {
 	case "conflict":
 		conflict := action.Confilct{}
 		actionInterface = &conflict
+	case "controller":
+		controllerDemo := action.ControllerDemo{}
+		actionInterface = &controllerDemo
 	case "label":
 		label := action.Lable{}
 		actionInterface = &label
