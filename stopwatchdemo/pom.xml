@@ -10,7 +10,7 @@
 
     <properties>
         <!-- spring版本号 -->
-        <spring.version>4.0.2.RELEASE</spring.version>
+        <spring.version>5.2.24.RELEASE</spring.version>
         <!-- fastjson版本号 -->
         <fastjson.version>1.2.39</fastjson.version>
     </properties>
