@@ -1,0 +1,70 @@
+- name: 部署node_exporter
+  hosts: working001
+  gather_facts: False
+  vars_files:
+  - vars.yml  
+  tasks:
+  - name: 停止残留的node_exporter
+    ignore_errors: yes
+    systemd:
+      name: node_exporter
+      state: stopped
+    become: yes
+
+  - name: 清理可能的node_exporter service残留文件
+    file:
+      path: /etc/systemd/system/node_exporter.service
+      state: absent
+    become: yes
+
+  - name: 清理可能的node_exporter残留文件夹
+    file:
+      path: '{{node_exporter_base_path}}'
+      state: absent
+
+  - name: 新建部署文件夹
+    file:
+      path: '{{node_exporter_base_path}}'
+      state: directory
+      mode: '0755'
+
+  - name: 下载并解压文件node_exporter-{{node_exporter_version}}.linux-amd64.tar.gz
+    ansible.builtin.unarchive:
+      src: '{{node_exporter_url}}/v{{node_exporter_version}}/node_exporter-{{node_exporter_version}}.linux-amd64.tar.gz'
+      dest: '{{node_exporter_base_path}}'
+      remote_src: yes
+
+  - name: 生成systemd的service文件
+    shell: |
+      tee /etc/systemd/system/node_exporter.service <<-'EOF'
+      [Unit]
+      Description=Node exporter Server
+      Documentation=https://prometheus.io/docs/introduction/overview/
+      After=network-online.target
+      [Service]
+      User=prometheus
+      Restart=on-failure
+      ExecStart={{node_exporter_deploy_path}}/node_exporter --web.listen-address=:9100
+      [Install]
+      WantedBy=multi-user.target
+      
+      EOF
+    become: yes
+
+  - name: 刷新服务配置
+    systemd:
+      daemon_reload: true
+    become: yes
+
+  - name: 将node_exporter服务设置为自启动
+    systemd:
+      name: node_exporter
+      enabled: true
+      masked: no
+    become: yes      
+
+  - name: 启动node_exporter
+    systemd:
+      state: started
+      name: node_exporter
+    become: yes      

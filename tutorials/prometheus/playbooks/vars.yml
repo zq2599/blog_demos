@@ -1,0 +1,10 @@
+prometheus_user_home: /home/prometheus
+prometheus_base_path: '{{prometheus_user_home}}/prometheus'
+prometheus_url: https://github.com/prometheus/prometheus/releases/download
+prometheus_version: 2.37.7
+prometheus_deploy_path: '{{prometheus_base_path}}/prometheus-{{prometheus_version}}.linux-amd64'
+
+node_exporter_base_path: '{{prometheus_user_home}}/node_exporter'
+node_exporter_url: https://github.com/prometheus/node_exporter/releases/download
+node_exporter_version: 1.5.0
+node_exporter_deploy_path: '{{node_exporter_base_path}}/node_exporter-{{node_exporter_version}}.linux-amd64'

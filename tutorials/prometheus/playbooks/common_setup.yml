@@ -1,0 +1,35 @@
+- name: 部署前的准备工作(通用)
+  hosts: prometheus-group
+  gather_facts: True
+  vars_files:
+  - vars.yml  
+  tasks:
+  - name: update apt
+    apt:
+      update_cache: yes
+      cache_valid_time: 86400
+    become: yes
+  
+  - name: get timelocal
+    shell: ls -l /etc/localtime | awk '{print $11}'
+    register: timelocal
+ 
+  - name: delete loacltime
+    shell: rm -f /etc/localtime
+    when: timelocal.stdout != "/usr/share/zoneinfo/Asia/Shanghai"
+    become: yes
+ 
+  - name: create asia time
+    shell: ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    when: timelocal.stdout != "/usr/share/zoneinfo/Asia/Shanghai"
+    become: yes
+
+  - name: 安装时钟同步工具
+    apt:
+      name: ntpdate
+      state: present
+    become: yes
+
+  - name: 同步时钟
+    command: ntpdate ntp.aliyun.com
+    become: yes
