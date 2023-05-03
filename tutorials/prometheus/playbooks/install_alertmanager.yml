@@ -1,0 +1,70 @@
+- name: 部署alertmanager
+  hosts: alertmanager
+  gather_facts: True
+  vars_files:
+  - vars.yml  
+  tasks:
+  - name: 停止残留的alertmanager
+    ignore_errors: yes
+    systemd:
+      name: alertmanager
+      state: stopped
+    become: yes
+
+  - name: 清理可能的alertmanager service残留文件
+    file:
+      path: /etc/systemd/system/alertmanager.service
+      state: absent
+    become: yes
+
+  - name: 清理可能的alertmanager残留文件夹
+    file:
+      path: '{{alertmanager_base_path}}'
+      state: absent
+
+  - name: 新建部署文件夹
+    file:
+      path: '{{alertmanager_base_path}}'
+      state: directory
+      mode: '0755'
+
+  - name: 下载并解压文件alertmanager-{{alertmanager_version}}.linux-amd64.tar.gz
+    ansible.builtin.unarchive:
+      src: '{{alertmanager_url}}/v{{alertmanager_version}}/alertmanager-{{alertmanager_version}}.linux-amd64.tar.gz'
+      dest: '{{alertmanager_base_path}}'
+      remote_src: yes
+
+  - name: 生成systemd的service文件
+    shell: |
+      tee /etc/systemd/system/alertmanager.service <<-'EOF'
+      [Unit]
+      Description=Alert manager Server
+      Documentation=https://prometheus.io/docs/introduction/overview/
+      After=network-online.target
+      [Service]
+      User=prometheus
+      Restart=on-failure
+      ExecStart={{alertmanager_deploy_path}}/alertmanager --config.file={{alertmanager_deploy_path}}/alertmanager.yml --storage.path={{alertmanager_base_path}}/data
+      [Install]
+      WantedBy=multi-user.target
+      
+      EOF
+    become: yes
+
+  - name: 刷新服务配置
+    systemd:
+      daemon_reload: true
+    become: yes
+
+  - name: 将alertmanager服务设置为自启动
+    systemd:
+      name: alertmanager
+      enabled: true
+      masked: no
+    become: yes      
+
+  - name: 启动alertmanager
+    systemd:
+      state: started
+      name: alertmanager
+    become: yes      

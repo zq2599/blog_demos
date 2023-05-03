@@ -15,6 +15,8 @@ alerting:
 rule_files:
   # - "first_rules.yml"
   # - "second_rules.yml"
+  # 包括指定目录下所有rules后缀的文件
+  - /home/prometheus/prometheus/rules/*.rules
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
@@ -28,7 +30,7 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
-   # 新增任务，从应用服务器采集数据 
+  # 新增任务，从应用服务器采集数据 
   - job_name: "node-resource-working001"
     # 抓取时间间隔
     scrape_interval: 15s
@@ -36,4 +38,5 @@ scrape_configs:
     scrape_timeout: 10s
     # 抓取地址
     static_configs:
-      - targets: ["192.168.25.128:9100"] 
+      - targets: ["192.168.50.134:9100"] 
+

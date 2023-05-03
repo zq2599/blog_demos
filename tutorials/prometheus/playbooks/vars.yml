@@ -8,3 +8,8 @@ node_exporter_base_path: '{{prometheus_user_home}}/node_exporter'
 node_exporter_url: https://github.com/prometheus/node_exporter/releases/download
 node_exporter_version: 1.5.0
 node_exporter_deploy_path: '{{node_exporter_base_path}}/node_exporter-{{node_exporter_version}}.linux-amd64'
+
+alertmanager_base_path: '{{prometheus_user_home}}/alertmanager'
+alertmanager_url: https://github.com/prometheus/alertmanager/releases/download
+alertmanager_version: 0.25.0
+alertmanager_deploy_path: '{{alertmanager_base_path}}/alertmanager-{{alertmanager_version}}.linux-amd64'

@@ -1,0 +1,20 @@
+# 告警规则分组，每一个组下有多个告警规则
+groups:
+# 组名
+- name: cpuAlertGroup
+  # 告警规则数组
+  rules:
+  # 下面是一个具体的告警规则，名为hostCPUUsageTooHigh
+  - alert: hostCPUUsageTooHigh
+    # 基于PromQL的具体规则，这里是CPU使用率高于50%
+    expr: (1 - sum(increase(node_cpu_seconds_total{mode="idle"}[1m])) by (instance) / sum(increase(node_cpu_seconds_total[1m])) by (instance) ) * 100 > 50
+    # 持续时间，实际情况满足expr后，规则从inactive
+    for: 30s
+    # 给规则自身设置标签
+    labels:
+      biz_type: cpu_usage
+    annotations:
+      # 告警内容摘要，可以用表达式获取变量的值
+      summary: "Instance {{ $labels.instance }} CPU usgae high"
+      # 告警内容详情，可以用表达式获取变量的值
+      description: "{{ $labels.instance }} CPU usage above 50% (current : {{ $value }})"
