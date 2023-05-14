@@ -3,24 +3,71 @@
 package handler
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
+	"io"
+	"net/http"
 	"webhook/biz/model"
+	"webhook/biz/util"
 
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
+)
+
+const (
+	LARK_URL = "https://open.feishu.cn/open-apis/bot/v2/hook/12345678-1234-1234-1234-123456789012"
 )
 
 // Ping .
 func AlertmanagerWebhook(ctx context.Context, c *app.RequestContext) {
 	var notification model.Notification
+
+	// 绑定对象
 	err := c.BindAndValidate(&notification)
 	if err != nil {
 		c.JSON(consts.StatusBadRequest, utils.H{
 			"error": err.Error(),
 		})
+
+		return
 	}
 
+	hlog.Info("收到alertmanager告警：\n%s", notification)
+
+	// 根据alertmanager的请求构造飞书消息的请求数据结构
+	larkRequest, _ := util.TransformToLarkRequest(notification)
+
+	// 向飞书服务器发送POST请求，将飞书服务器返回的内容转为对象
+	bytesData, _ := json.Marshal(larkRequest)
+	req, _ := http.NewRequest("POST", LARK_URL, bytes.NewReader(bytesData))
+	req.Header.Add("content-type", "application/json")
+	res, err := http.DefaultClient.Do(req)
+	// 飞书服务器可能通信失败
+	if err != nil {
+		hlog.Error("请求飞书服务器失败：%s", err)
+		c.JSON(consts.StatusInternalServerError, utils.H{
+			"error": err.Error(),
+		})
+
+		return
+	}
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+	var larkResponse model.LarkResponse
+	err = json.Unmarshal([]byte(body), &larkResponse)
+	// 飞书服务器返回的包可能有问题
+	if err != nil {
+		hlog.Error("获取飞书服务器响应失败：%s", err)
+		c.JSON(consts.StatusInternalServerError, utils.H{
+			"error": err.Error(),
+		})
+
+		return
+	}
+	hlog.Info("向飞书服务器发送消息成功")
 	c.JSON(consts.StatusOK, utils.H{
 		"message": "successful receive alert notification message!",
 	})
