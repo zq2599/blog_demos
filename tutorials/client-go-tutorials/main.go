@@ -61,6 +61,9 @@ func main() {
 	case "label":
 		label := action.Lable{}
 		actionInterface = &label
+	case "index":
+		index := action.Index{}
+		actionInterface = &index
 	}
 
 	err = actionInterface.DoAction(clientset)
