@@ -2,6 +2,7 @@ package main
 
 import (
 	"client-go-tutorials/action"
+	"client-go-tutorials/query"
 	"flag"
 	"fmt"
 	"log"
@@ -61,9 +62,12 @@ func main() {
 	case "label":
 		label := action.Lable{}
 		actionInterface = &label
-	case "index":
-		index := action.Index{}
-		actionInterface = &index
+	case "query-from-remote":
+		queryFromRemote := query.QueryFromRemote{}
+		actionInterface = &queryFromRemote
+	case "query-from-local-cache":
+		queryFromLocalCache := query.QueryFromLocalCache{}
+		actionInterface = &queryFromLocalCache
 	}
 
 	err = actionInterface.DoAction(clientset)
