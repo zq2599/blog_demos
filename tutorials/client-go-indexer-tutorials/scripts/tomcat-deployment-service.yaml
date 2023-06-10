@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: indexer-tutorials
+  name:  tomcat-deployment-nautilus
+  labels:
+    name: webdep
+    app: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: webpod
+      app: demo
+  template:
+    metadata:
+      name: webpod
+      labels:
+        name: webpod
+        app: demo
+        # 这是个自定义lable，指定了tomcat的语言类型是c语言
+        language: java
+    spec:
+      containers:
+        - name: tomcat-container-nautilus
+          image: tomcat:11.0
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: indexer-tutorials
+  name: tomcat-service-nautilus
+spec:
+  type: NodePort
+  selector:
+    name: webpod
+    app: demo
+  ports:
+      # By default and for convenience, the `targetPort` is set to the same value as the `port` field.
+    - port: 80
+      targetPort: 8080
+      # Optional field
+      # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)
+      nodePort: 32227
