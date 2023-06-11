@@ -8,6 +8,7 @@ import (
 
 func main() {
 	r := gin.Default()
+	basic.DoInit()
 
 	// 用于提供基本功能的路由组
 	basicGroup := r.Group("/basic")
