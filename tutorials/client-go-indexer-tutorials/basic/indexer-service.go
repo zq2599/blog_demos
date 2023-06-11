@@ -23,6 +23,7 @@ import (
 const (
 	NAMESPACE      = "indexer-tutorials"
 	PARAM_LANGUAGE = "language"
+	PARAM_OBJ_KEY  = "obj_key"
 
 	LANGUAGE_C = "c"
 
@@ -149,5 +150,25 @@ func GetAllLanguange(c *gin.Context) {
 
 // getAllClassType 返回所有分类方式，这里应该是按服务类型和按语言类型两种(演示5. GetIndexers方法)
 func GetAllClassType(c *gin.Context) {
+
+}
+
+// GetObjByObjKey 根据对象的key返回(演示Store.Get方法)
+func GetObjByObjKey(c *gin.Context) {
+	objKey := c.Query(PARAM_OBJ_KEY)
+
+	rawObj, exists, err := INDEXER.GetByKey(objKey)
+
+	if err != nil {
+		c.String(500, fmt.Sprintf("0. get pod failed, %v", err))
+	} else if !exists {
+		c.String(500, fmt.Sprintf("0. get empty pod, %v", err))
+	} else {
+		if v, ok := rawObj.(*v1.Pod); ok {
+			c.JSON(200, v)
+		} else {
+			c.String(500, "0. convert interface to pod failed")
+		}
+	}
 
 }

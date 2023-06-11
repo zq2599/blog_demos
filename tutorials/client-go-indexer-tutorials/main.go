@@ -28,5 +28,8 @@ func main() {
 	// 返回所有分类方式，这里应该是按服务类型和按语言类型两种(演示5. GetIndexers方法)
 	basicGroup.GET("get_all_class_type", basic.GetAllClassType)
 
+	// 返回对象的key，返回对应的对象(演示Store.GetByKey方法)
+	basicGroup.GET("get_obj_by_obj_key", basic.GetObjByObjKey)
+
 	r.Run(":18080")
 }
