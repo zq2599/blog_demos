@@ -27,7 +27,7 @@ const (
 
 	LANGUAGE_C = "c"
 
-	INDEXER_LANGUAGE = "pod_name"
+	INDEXER_LANGUAGE = "indexer_language"
 
 	LABEL_LANGUAGE = "language"
 )
@@ -115,60 +115,106 @@ func language(c *gin.Context) string {
 	return c.DefaultQuery(PARAM_LANGUAGE, LANGUAGE_C)
 }
 
-// getObjKeysByLanguageName 查询指定语言的所有对象的key(演示2. IndexKeys方法)
+// objKey 辅助方法，从请求参数中获取对象key
+func objKey(c *gin.Context) string {
+	return c.DefaultQuery(PARAM_OBJ_KEY, "")
+}
+
+// getObjKeysByLanguageName a. 查询指定语言的所有对象的key(演示2. IndexKeys方法)
 func GetObjKeysByLanguageName(c *gin.Context) {
 	language := language(c)
 
 	v, err := INDEXER.IndexKeys(INDEXER_LANGUAGE, language)
 
 	if err != nil {
-		c.String(500, fmt.Sprintf("2. get pod failed, %v", err))
+		c.String(500, fmt.Sprintf("a. get pod failed, %v", err))
 	} else if nil == v || len(v) < 1 {
-		c.String(500, fmt.Sprintf("2. get empty pod, %v", err))
+		c.String(500, fmt.Sprintf("a. get empty pod, %v", err))
 	} else {
 		m := make(map[string][]string)
 		m["language"] = v
 		c.JSON(200, m)
 	}
-
 }
 
-// getObjByLanguageName 查询指定语言的所有对象(演示4. ByIndex方法)
-func GetObjByLanguageName(c *gin.Context) {
-
-}
-
-// getAllObjByOneName 根据某个对象的key，获取同语言类型的所有对象(演示1. Index方法)
-func GetAllObjByOneName(c *gin.Context) {
-
-}
-
-// getAllClassType 返回所有语言类型(演示3. ListIndexFuncValues方法)
-func GetAllLanguange(c *gin.Context) {
-
-}
-
-// getAllClassType 返回所有分类方式，这里应该是按服务类型和按语言类型两种(演示5. GetIndexers方法)
-func GetAllClassType(c *gin.Context) {
-
-}
-
-// GetObjByObjKey 根据对象的key返回(演示Store.Get方法)
+// GetObjByObjKey b. 根据对象的key返回(演示Store.Get方法)
 func GetObjByObjKey(c *gin.Context) {
-	objKey := c.Query(PARAM_OBJ_KEY)
-
-	rawObj, exists, err := INDEXER.GetByKey(objKey)
+	rawObj, exists, err := INDEXER.GetByKey(objKey(c))
 
 	if err != nil {
-		c.String(500, fmt.Sprintf("0. get pod failed, %v", err))
+		c.String(500, fmt.Sprintf("b. get pod failed, %v", err))
 	} else if !exists {
-		c.String(500, fmt.Sprintf("0. get empty pod, %v", err))
+		c.String(500, fmt.Sprintf("b. get empty pod, %v", err))
 	} else {
 		if v, ok := rawObj.(*v1.Pod); ok {
 			c.JSON(200, v)
 		} else {
-			c.String(500, "0. convert interface to pod failed")
+			c.String(500, "b. convert interface to pod failed")
 		}
 	}
+}
 
+// getObjByLanguageName c. 查询指定语言的所有对象(演示4. ByIndex方法)
+func GetObjByLanguageName(c *gin.Context) {
+	v, err := INDEXER.ByIndex(INDEXER_LANGUAGE, language(c))
+
+	if err != nil {
+		c.String(500, fmt.Sprintf("c. get pod failed, %v", err))
+	} else if v == nil {
+		c.String(500, fmt.Sprintf("c. get empty pod, %v", err))
+	} else {
+		m := make(map[string][]interface{})
+		m["language"] = v
+		c.JSON(200, m)
+	}
+}
+
+// getAllObjByOneName d. 根据某个对象的key，获取同语言类型的所有对象(演示1. Index方法)
+func GetAllObjByOneName(c *gin.Context) {
+	// 注意，Index方法的第二个入参是对象，所以这里要先根据对象key查询到对象，然后再调用Index方法
+	rawObj, exists, err := INDEXER.GetByKey(objKey(c))
+
+	if err != nil {
+		c.String(500, fmt.Sprintf("d1. get pod failed, %v", err))
+	} else if !exists {
+		c.String(500, fmt.Sprintf("d1. get empty pod, %v", err))
+	} else {
+		// 先得到pod对象，再根据pod对象查询同类型的所有对象
+		if podObj, ok := rawObj.(*v1.Pod); ok {
+			rawArray, err := INDEXER.Index(INDEXER_LANGUAGE, podObj)
+
+			if err != nil {
+				c.String(500, fmt.Sprintf("d2. get pod failed, %v", err))
+			} else if len(rawArray) < 1 {
+				c.String(500, fmt.Sprintf("d2. get empty pod, %v", err))
+			} else {
+				m := make(map[string][]interface{})
+				m["language"] = rawArray
+				c.JSON(200, m)
+			}
+		} else {
+			c.String(500, "d1. convert interface to pod failed")
+		}
+	}
+}
+
+// getAllClassType e. 返回所有语言类型(演示3. ListIndexFuncValues方法)
+func GetAllLanguange(c *gin.Context) {
+	languages := INDEXER.ListIndexFuncValues(INDEXER_LANGUAGE)
+
+	m := make(map[string][]string)
+	m["language"] = languages
+
+	c.JSON(200, m)
+}
+
+// getAllClassType f. 返回所有分类方式，这里应该是按服务类型和按语言类型两种(演示5. GetIndexers方法)
+func GetAllClassType(c *gin.Context) {
+	indexers := INDEXER.GetIndexers()
+	// indexers是个map，其value是cache.IndexFunc类型，无法被序列化，所以这里只返回key
+	names := make([]string, 0)
+	for key, _ := range indexers {
+		names = append(names, key)
+	}
+	c.JSON(200, names)
 }
