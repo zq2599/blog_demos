@@ -18,8 +18,10 @@ spec:
       labels:
         app: nginx-app
         type: front-end
-        # 这是个自定义lable，指定了nginx的语言类型是c语言
+        # 这是第一个业务自定义label，指定了mysql的语言类型是c语言
         language: c
+        # 这是第二个业务自定义label，指定了这个pod属于哪一类服务，nginx属于web类
+        business-service-type: web
     spec:
       containers:
         - name: nginx-container
