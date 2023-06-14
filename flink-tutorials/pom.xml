@@ -37,7 +37,7 @@
     <mybatis-spring.version>2.0.6</mybatis-spring.version>
     <mybatis-spring-boot-starter.version>2.1.4</mybatis-spring-boot-starter.version>
     <commons-lang3.version>3.11</commons-lang3.version>
-    <guava.version>30.0-jre</guava.version>
+    <guava.version>32.0.0-jre</guava.version>
     <jackson.version>2.12.3</jackson.version>
     <mysql.version>8.0.25</mysql.version>
 
