@@ -1,10 +1,10 @@
 ### 变量，这是一个pod的对象key，和pod是一对一的关系
-@obj_key=indexer-tutorials/nginx-deployment-87945df85-vzjgv
+@obj_key=indexer-tutorials/nginx-deployment-696cc4bc86-2rqcg
 
 ### 测试用例a. 查询指定语言的所有对象的key(演示2. IndexKeys方法)
 GET http://192.168.50.76:18080/basic/get_obj_keys_by_language_name?language=c
 
-### 测试用例b. 返回对象的key，返回对应的对象(演示Store.GetByKey方法)
+### 测试用例b. 指定对象的key，返回对应的对象(演示Store.GetByKey方法)
 GET http://192.168.50.76:18080/basic/get_obj_by_obj_key?obj_key={{obj_key}}
 
 ### 测试用例c. 查询指定语言的所有对象(演示4. ByIndex方法)

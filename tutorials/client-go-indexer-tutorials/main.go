@@ -8,6 +8,8 @@ import (
 
 func main() {
 	r := gin.Default()
+
+	// kubernetes相关的初始化操作
 	basic.DoInit()
 
 	// 用于提供基本功能的路由组

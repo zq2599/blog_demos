@@ -27,19 +27,23 @@ const (
 
 	LANGUAGE_C = "c"
 
-	INDEXER_LANGUAGE = "indexer_language"
+	INDEXER_LANGUAGE              = "indexer_language"
+	INDEXER_BUSINESS_SERVICE_TYPE = "indexer_business_service_type"
 
-	LABEL_LANGUAGE = "language"
+	LABEL_LANGUAGE              = "language"
+	LABEL_BUSINESS_SERVICE_TYPE = "business-service-type"
 )
 
 var ClientSet *kubernetes.Clientset
 var once sync.Once
 var INDEXER cache.Indexer
 
+// DoInit Indexer相关的初始化操作，这里确保只执行一次
 func DoInit() {
 	once.Do(initIndexer)
 }
 
+// initIndexer 这里是真正的初始化逻辑
 func initIndexer() {
 	log.Println("开始初始化Indexer")
 
@@ -81,6 +85,19 @@ func initIndexer() {
 			}
 
 			labelValue := object.GetLabels()[LABEL_LANGUAGE]
+			if labelValue == "" {
+				return []string{}, nil
+			}
+			return []string{labelValue}, nil
+		},
+		INDEXER_BUSINESS_SERVICE_TYPE: func(obj interface{}) ([]string, error) {
+			var object metav1.Object
+			object, err = meta.Accessor(obj)
+			if err != nil {
+				return []string{}, nil
+			}
+
+			labelValue := object.GetLabels()[LABEL_BUSINESS_SERVICE_TYPE]
 			if labelValue == "" {
 				return []string{}, nil
 			}
