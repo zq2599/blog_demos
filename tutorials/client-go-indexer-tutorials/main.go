@@ -2,6 +2,7 @@ package main
 
 import (
 	"client-go-indexer-tutorials/basic"
+	"client-go-indexer-tutorials/remote"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,6 +33,10 @@ func main() {
 
 	// f. 返回所有分类方式，这里应该是按服务类型和按语言类型两种(演示5. GetIndexers方法)
 	basicGroup.GET("get_all_class_type", basic.GetAllClassType)
+
+	remoteGroup := r.Group("/remote")
+	// g. 使用clientset远程查询
+	remoteGroup.GET("get_obj_by_obj_key_remote_query", remote.GetObjByObjKey)
 
 	r.Run(":18080")
 }

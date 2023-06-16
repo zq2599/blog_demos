@@ -132,8 +132,8 @@ func language(c *gin.Context) string {
 	return c.DefaultQuery(PARAM_LANGUAGE, LANGUAGE_C)
 }
 
-// objKey 辅助方法，从请求参数中获取对象key
-func objKey(c *gin.Context) string {
+// ObjKey 辅助方法，从请求参数中获取对象key
+func ObjKey(c *gin.Context) string {
 	return c.DefaultQuery(PARAM_OBJ_KEY, "")
 }
 
@@ -156,7 +156,7 @@ func GetObjKeysByLanguageName(c *gin.Context) {
 
 // GetObjByObjKey b. 根据对象的key返回(演示Store.Get方法)
 func GetObjByObjKey(c *gin.Context) {
-	rawObj, exists, err := INDEXER.GetByKey(objKey(c))
+	rawObj, exists, err := INDEXER.GetByKey(ObjKey(c))
 
 	if err != nil {
 		c.String(500, fmt.Sprintf("b. get pod failed, %v", err))
@@ -189,7 +189,7 @@ func GetObjByLanguageName(c *gin.Context) {
 // getAllObjByOneName d. 根据某个对象的key，获取同语言类型的所有对象(演示1. Index方法)
 func GetAllObjByOneName(c *gin.Context) {
 	// 注意，Index方法的第二个入参是对象，所以这里要先根据对象key查询到对象，然后再调用Index方法
-	rawObj, exists, err := INDEXER.GetByKey(objKey(c))
+	rawObj, exists, err := INDEXER.GetByKey(ObjKey(c))
 
 	if err != nil {
 		c.String(500, fmt.Sprintf("d1. get pod failed, %v", err))

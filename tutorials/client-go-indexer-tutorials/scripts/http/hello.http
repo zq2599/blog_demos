@@ -1,5 +1,7 @@
 ### 变量，这是一个pod的对象key，和pod是一对一的关系
-@obj_key=indexer-tutorials/nginx-deployment-696cc4bc86-2rqcg
+@namespace=indexer-tutorials
+@pod_name=nginx-deployment-696cc4bc86-2rqcg
+@obj_key={{namespace}}/{{pod_name}}
 
 ### 测试用例a. 查询指定语言的所有对象的key(演示2. IndexKeys方法)
 GET http://192.168.50.76:18080/basic/get_obj_keys_by_language_name?language=c
@@ -18,3 +20,6 @@ GET http://192.168.50.76:18080/basic/get_all_languange
 
 ### 测试用例f. 返回所有分类方式，这里应该是按服务类型和按语言类型两种(演示5. GetIndexers方法)
 GET http://192.168.50.76:18080/basic/get_all_class_type
+
+### 测试用例g. 指定对象的key，返回对应的对象(演示clientSet远程调用api-server服务查询)
+GET http://192.168.50.76:18080/remote/get_obj_by_obj_key_remote_query?pod_name={{pod_name}}
