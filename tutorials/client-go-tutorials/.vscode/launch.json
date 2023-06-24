@@ -12,7 +12,7 @@
             "mode": "auto",
             // "program": "${fileDirname}"
             "program": "${workspaceFolder}",
-            "args": ["-action=controller"]
+            "args": ["-action=meta-demo"]
             // "args": ["-action=label"]
         }
     ]

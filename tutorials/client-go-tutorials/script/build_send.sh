@@ -7,7 +7,7 @@ CUR_DIR=`pwd`
 
 echo '当前目录：'$CUR_DIR
 echo '清理残留文件'
-rm -rf $CUR_DIR/OUTPUT_FILE
+rm -rf $CUR_DIR/$OUTPUT_FILE
 echo '开始构建'
 go build
 echo '构建完成，推送到kubernetes机器'

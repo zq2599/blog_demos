@@ -1,0 +1,6 @@
+### 变量
+@namespace=client-go-tutorials
+@label_app=nginx-app
+
+### 测试用例，指定namespace和label查询所有的pod名称
+GET http://192.168.50.76:18080/query_pods_by_label_app?namespace={{namespace}}&label_app={{label_app}}

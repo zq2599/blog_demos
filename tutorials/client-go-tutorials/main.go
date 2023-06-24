@@ -68,6 +68,9 @@ func main() {
 	case "query-from-local-cache":
 		queryFromLocalCache := query.QueryFromLocalCache{}
 		actionInterface = &queryFromLocalCache
+	case "meta-demo":
+		metaDemo := action.MetaDemo{}
+		actionInterface = &metaDemo
 	}
 
 	err = actionInterface.DoAction(clientset)
