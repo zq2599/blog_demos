@@ -20,7 +20,7 @@ import (
 )
 
 const (
-	TEST_NAMESPACE       = "client-go-tutorial"
+	TEST_NAMESPACE       = "client-go-tutorials"
 	TEST_POD_NAME_PREFIX = "nginx-pod-"
 	TEST_IMAGE           = "nginx:latest"
 	TEST_LABEL_APP       = "nginx-app"
@@ -28,9 +28,9 @@ const (
 )
 
 // 用于保存web响应的body
-type ResponsePodNames struct {
+type ResponseNames struct {
 	Message string   `json:"message"`
-	Pods    []string `json:"pods"`
+	Names    []string `json:"names"`
 }
 
 // 1. 定义suite数据结构
@@ -128,7 +128,7 @@ func createPod(context context.Context, client kubernetes.Interface, num int) {
 // 8. 辅助方法，解析web响应，检查结果是否符合预期
 func check(suite *suite.Suite, body string, expectNum int) {
 	suite.NotNil(body)
-	response := &ResponsePodNames{}
+	response := &ResponseNames{}
 
 	err := json.Unmarshal([]byte(body), response)
 
@@ -136,5 +136,5 @@ func check(suite *suite.Suite, body string, expectNum int) {
 		log.Fatalf("unmarshal response error, %s", err.Error())
 	}
 
-	suite.EqualValues(expectNum, len(response.Pods))
+	suite.EqualValues(expectNum, len(response.Names))
 }

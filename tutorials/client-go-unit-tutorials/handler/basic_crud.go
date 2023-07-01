@@ -65,6 +65,6 @@ func QueryPodsByLabelApp(context *gin.Context) {
 		names = append(names, v.GetName())
 	}
 
-	rlt["pods"] = names
+	rlt["names"] = names
 	context.JSON(http.StatusOK, rlt)
 }

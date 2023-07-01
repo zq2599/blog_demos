@@ -1,13 +1,20 @@
 package main
 
 import (
-	initrouter "client-go-unit-tutorials/init_router"
+	"client-go-unit-tutorials/initor"
 	kubernetesservice "client-go-unit-tutorials/kubernetes_service"
 )
 
 func main() {
+	// 初始化kubernetes相关配置
 	kubernetesservice.DoInit()
 
-	router := initrouter.InitRouter()
+	// 初始化数据库
+	initor.InitDB()
+
+	// 初始化controller
+	initor.InitController()
+
+	router := initor.InitRouter()
 	_ = router.Run(":18080")
 }
