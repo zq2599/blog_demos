@@ -8,7 +8,6 @@ import (
 
 const (
 	PATH_QUERY_PODS_BY_LABEL_APP = "/query_pods_by_label_app"
-	PATH_QUERY_EVENT_COUNT       = "/query_event_count"
 )
 
 func InitRouter() *gin.Engine {

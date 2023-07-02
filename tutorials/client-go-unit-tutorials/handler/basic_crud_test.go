@@ -4,10 +4,8 @@ import (
 	"client-go-unit-tutorials/handler"
 	"client-go-unit-tutorials/initor"
 	kubernetesservice "client-go-unit-tutorials/kubernetes_service"
-	"client-go-unit-tutorials/model"
 	"client-go-unit-tutorials/unittesthelper"
 	"context"
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -28,7 +26,7 @@ type MySuite struct {
 	router    *gin.Engine
 }
 
-// 2. 定义初始化
+// 2. 单元测试的初始化操作
 func (mySuite *MySuite) SetupTest() {
 	client := fake.NewSimpleClientset()
 	kubernetesservice.SetClient(client)
@@ -38,7 +36,7 @@ func (mySuite *MySuite) SetupTest() {
 	mySuite.router = initor.InitRouter()
 
 	// 初始化数据，创建namespace
-	if err := unittesthelper.CreateNamespace(mySuite.ctx, client, unittesthelper.TEST_NAMESPACE); err != nil {
+	if err := kubernetesservice.CreateNamespace(mySuite.ctx, client, unittesthelper.TEST_NAMESPACE); err != nil {
 		log.Fatalf("create namespace error, %s", err.Error())
 	}
 
@@ -46,23 +44,23 @@ func (mySuite *MySuite) SetupTest() {
 	unittesthelper.CreatePod(mySuite.ctx, client, 3)
 }
 
-// 3. 定义结束
+// 3. 定义测试完成后的收尾工作，例如清理一些资源
 func (mySuite *MySuite) TearDownTest() {
 
 	// 删除namespace
-	if err := unittesthelper.DeleteNamespace(mySuite.ctx, kubernetesservice.GetClient(), unittesthelper.TEST_NAMESPACE); err != nil {
+	if err := kubernetesservice.DeleteNamespace(mySuite.ctx, kubernetesservice.GetClient(), unittesthelper.TEST_NAMESPACE); err != nil {
 		log.Fatalf("delete namespace error, %s", err.Error())
 	}
 
 	mySuite.cancel()
 }
 
-// 4. 启动测试
+// 4. 启动测试集
 func TestBasicCrud(t *testing.T) {
 	suite.Run(t, new(MySuite))
 }
 
-// 5. 定义测试集合
+// 5. 定义测试集
 func (mySuite *MySuite) TestBasicCrud() {
 	// 5.1 若有需要，执行monkey.Patch
 	// 5.2 若执行了monkey.Patch，需要执行defer monkey.UnpatchAll()
@@ -84,26 +82,10 @@ func (mySuite *MySuite) TestBasicCrud() {
 			return
 		}
 
-		// 检查结果
+		// 检查返回码
 		mySuite.EqualValues(http.StatusOK, code)
 
-		//
-		check(&mySuite.Suite, body, unittesthelper.TEST_POD_NUM)
-
-		log.Printf("response : %s", body)
+		// 检查结果
+		unittesthelper.Check(&mySuite.Suite, body, unittesthelper.TEST_POD_NUM)
 	})
-}
-
-// 8. 辅助方法，解析web响应，检查结果是否符合预期
-func check(suite *suite.Suite, body string, expectNum int) {
-	suite.NotNil(body)
-	response := &model.ResponseNames{}
-
-	err := json.Unmarshal([]byte(body), response)
-
-	if err != nil {
-		log.Fatalf("unmarshal response error, %s", err.Error())
-	}
-
-	suite.EqualValues(expectNum, len(response.Names))
 }

@@ -1,6 +1,7 @@
 package kubernetesservice
 
 import (
+	"context"
 	"flag"
 	"log"
 	"path/filepath"
@@ -9,6 +10,11 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
+
+	v1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/apimachinery/pkg/selection"
 )
 
 var CLIENT_SET kubernetes.Interface
@@ -58,3 +64,89 @@ func initInKubernetesEnv() {
 
 	log.Println("kubernetes服务初始化成功")
 }
+
+// QueryPodNameByLabelApp 根据指定的namespace和label值搜索
+func QueryPodNameByLabelApp(context context.Context, namespace, app string) ([]string, error) {
+	log.Printf("QueryPodNameByLabelApp, namespace [%s], app [%s]", namespace, app)
+
+	equalRequirement, err := labels.NewRequirement("app", selection.Equals, []string{app})
+
+	if err != nil {
+		return nil, err
+	}
+
+	selector := labels.NewSelector().Add(*equalRequirement)
+
+	// 查询pod列表
+	pods, err := CLIENT_SET.
+		CoreV1().
+		Pods(namespace).
+		List(context, metav1.ListOptions{
+			// 传入的selector在这里用到
+			LabelSelector: selector.String(),
+		})
+
+	if err != nil {
+		return nil, err
+	}
+
+	names := make([]string, 0)
+
+	for _, v := range pods.Items {
+		names = append(names, v.GetName())
+	}
+
+	return names, nil
+}
+
+// CreateNamespace 单元测试的辅助工具，用于创建namespace
+func CreateNamespace(context context.Context, client kubernetes.Interface, name string) error {
+	namespaceObj := &v1.Namespace{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: name,
+		},
+	}
+
+	_, err := client.CoreV1().Namespaces().Create(context, namespaceObj, metav1.CreateOptions{})
+	return err
+}
+
+// DeleteeNamespace 单元测试的辅助工具，用于创建namespace
+func DeleteNamespace(context context.Context, client kubernetes.Interface, name string) error {
+	err := client.CoreV1().Namespaces().Delete(context, name, metav1.DeleteOptions{})
+	return err
+}
+
+/*
+// CreateDeployment 单元测试的辅助工具，用于创建namespace
+func CreateDeployment(context context.Context, client kubernetes.Interface, namespace, name, image, app string, replicas int32) error {
+	_, err := client.AppsV1().Deployments(namespace).Create(context, &apps.Deployment{
+		TypeMeta: metav1.TypeMeta{
+			Kind:       "Deployment",
+			APIVersion: "apps/v1",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      name,
+			Namespace: namespace,
+			Labels: map[string]string{
+				"app": app,
+			},
+		},
+		Spec: apps.DeploymentSpec{
+			Replicas: &replicas,
+			Template: v1.PodTemplateSpec{
+				Spec: v1.PodSpec{
+					Containers: []v1.Container{
+						{
+							Image: image,
+						},
+					},
+				},
+			},
+		},
+	}, metav1.CreateOptions{})
+
+	return err
+
+}
+*/
