@@ -1,0 +1,6 @@
+### 变量
+@namespace=client-go-tutorials
+@pod_name=nginx-deployment-78f6b696d9-j98xj
+
+### 测试用例，指定namespace和label查询所有的pod名称
+GET http://192.168.50.76:18080/query_type_meta_by_pod_name?namespace={{namespace}}&pod_name={{pod_name}}
