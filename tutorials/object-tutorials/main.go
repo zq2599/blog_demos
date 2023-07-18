@@ -1,19 +1,3 @@
-/*
-Copyright 2017 The Kubernetes Authors.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
 package main
 
 import (
@@ -40,14 +24,17 @@ const (
 	NAMESPACE = "client-go-tutorials"
 )
 
-// Controller demonstrates how to implement a controller with client-go.
+// 自定义controller数据结构，嵌入了真实的控制器
 type Controller struct {
-	indexer  cache.Indexer
-	queue    workqueue.RateLimitingInterface
+	// 本地缓存，关注的对象都会同步到这里
+	indexer cache.Indexer
+	// 消息队列，用来触发对真实对象的处理事件
+	queue workqueue.RateLimitingInterface
+	// 实际运行运行的控制器
 	informer cache.Controller
 }
 
-// NewController creates a new Controller.
+// NewController 简单封装了数据结构的实例化
 func NewController(queue workqueue.RateLimitingInterface, indexer cache.Indexer, informer cache.Controller) *Controller {
 	return &Controller{
 		informer: informer,
@@ -56,8 +43,9 @@ func NewController(queue workqueue.RateLimitingInterface, indexer cache.Indexer,
 	}
 }
 
+// processNextItem 不间断从队列中取得数据并处理
 func (c *Controller) processNextItem() bool {
-	// Wait until there is a new item in the working queue
+	// 注意，队列里面不是对象，而是key，这是个阻塞队列，会一直等待
 	key, quit := c.queue.Get()
 	if quit {
 		return false
@@ -67,20 +55,26 @@ func (c *Controller) processNextItem() bool {
 	// parallel.
 	defer c.queue.Done(key)
 
-	// Invoke the method containing the business logic
+	// 注意，这里的syncToStdout应该是业务代码，处理对象变化的事件
 	err := c.syncToStdout(key.(string))
-	// Handle the error if something went wrong during the execution of the business logic
+
+	// 如果前面的业务逻辑遇到了错误，就在此处理
 	c.handleErr(err, key)
+
+	// 外面的调用逻辑是：返回true就继续调用processNextItem方法
 	return true
 }
 
+// syncToStdout 这是业务逻辑代码，被调用意味着key对应的对象有变化(新增或者修改)
 func (c *Controller) syncToStdout(key string) error {
+	// 从本地缓存中取出完整的对象
 	obj, exists, err := c.indexer.GetByKey(key)
 	if err != nil {
 		klog.Errorf("Fetching object with key %s from store failed with %v", key, err)
 		return err
 	}
 
+	// 如果不存在，就表示这是个删除事件
 	if !exists {
 		fmt.Printf("Pod %s does not exist anymore\n", key)
 	} else {
@@ -92,6 +86,8 @@ func (c *Controller) syncToStdout(key string) error {
 
 		klog.Infof("kind [%s], apiversion [%s]", objType.GetKind(), objType.GetAPIVersion())
 
+		// 这里无视了obj具体是什么类型的对象(deployment、pod这些都有可能)，
+		// 用meta.Accessor转换出metav1.Object对象后就能获取该对象的所有meta信息
 		objMeta, err := meta.Accessor(obj)
 
 		if err != nil {
@@ -99,6 +95,7 @@ func (c *Controller) syncToStdout(key string) error {
 			return err
 		}
 
+		// 打印对象的meta信息，验证meta.Accessor返回的对象是否符合预期
 		klog.Infof("name [%s], namespace [%s], lable app [%s]",
 			objMeta.GetName(),
 			objMeta.GetNamespace(),
@@ -109,7 +106,7 @@ func (c *Controller) syncToStdout(key string) error {
 	return nil
 }
 
-// handleErr checks if an error happened and makes sure we will retry later.
+// handleErr 如果前面的业务逻辑执行出现错误，就在此集中处理错误，本例中主要是重试次数的控制
 func (c *Controller) handleErr(err error, key interface{}) {
 	if err == nil {
 		// Forget about the #AddRateLimited history of the key on every successful synchronization.
@@ -119,7 +116,7 @@ func (c *Controller) handleErr(err error, key interface{}) {
 		return
 	}
 
-	// This controller retries 5 times if something goes wrong. After that, it stops trying.
+	// 如果重试次数未超过5次，就继续重试
 	if c.queue.NumRequeues(key) < 5 {
 		klog.Infof("Error syncing pod %v: %v", key, err)
 
@@ -129,13 +126,14 @@ func (c *Controller) handleErr(err error, key interface{}) {
 		return
 	}
 
+	// 代码走到这里，意味着有错误并且重试超过了5次，应该立即丢弃
 	c.queue.Forget(key)
-	// Report to an external entity that, even after several retries, we could not successfully process this key
+	// 这种连续五次重试还未成功的错误，交给全局处理逻辑
 	runtime.HandleError(err)
 	klog.Infof("Dropping pod %q out of the queue: %v", key, err)
 }
 
-// Run begins watching and syncing.
+// Run 开始常规的控制器模式（持续响应资源变化事件）
 func (c *Controller) Run(threadiness int, stopCh chan struct{}) {
 	defer runtime.HandleCrash()
 
