@@ -4,11 +4,11 @@ import (
 	"flag"
 	"path/filepath"
 
-	v1 "k8s.io/api/core/v1"
+	"k8s.io/klog/v2"
+
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
-	"k8s.io/klog/v2"
 )
 
 const (
@@ -41,11 +41,9 @@ func main() {
 		klog.Fatal(err)
 	}
 
-	stop := make(chan struct{})
-	defer close(stop)
+	StartController(clientset, "pods", NAMESPACE, make(chan struct{}))
+	// StartController(clientset, "services", NAMESPACE, make(chan struct{}))
 
-	// CreateAndStartController(clientset, "pods", NAMESPACE, stop)
-	CreateAndStartController(clientset.CoreV1().RESTClient(), &v1.Service{}, "services", NAMESPACE, stop)
-
+	// Wait forever
 	select {}
 }
