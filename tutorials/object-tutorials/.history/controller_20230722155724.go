@@ -25,6 +25,15 @@ type Controller struct {
 	informer cache.Controller
 }
 
+// NewController 简单封装了数据结构的实例化
+func NewController(queue workqueue.RateLimitingInterface, indexer cache.Indexer, informer cache.Controller) *Controller {
+	return &Controller{
+		informer: informer,
+		indexer:  indexer,
+		queue:    queue,
+	}
+}
+
 // processNextItem 不间断从队列中取得数据并处理
 func (c *Controller) processNextItem() bool {
 	// 注意，队列里面不是对象，而是key，这是个阻塞队列，会一直等待
@@ -125,7 +134,6 @@ func (c *Controller) Run(threadiness int, stopCh chan struct{}) {
 	go c.informer.Run(stopCh)
 
 	// Wait for all involved caches to be synced, before processing items from the queue is started
-	// 刚开始启动，从api-server一次性全量同步所有数据
 	if !cache.WaitForCacheSync(stopCh, c.informer.HasSynced) {
 		runtime.HandleError(fmt.Errorf("timed out waiting for caches to sync"))
 		return
@@ -146,18 +154,11 @@ func (c *Controller) runWorker() {
 	}
 }
 
-// CreateAndStartController 为了便于外部使用，这里将controller的创建和启动封装在一起
 func CreateAndStartController(c cache.Getter, objType objectruntime.Object, resource string, namespace string, stopCh chan struct{}) {
-	// ListWatcher用于获取数据并监听资源的事件
 	podListWatcher := cache.NewListWatchFromClient(c, resource, NAMESPACE, fields.Everything())
 
-	// 限速队列，里面存的是有事件发生的对象的身份信息，而非对象本身
 	queue := workqueue.NewRateLimitingQueue(workqueue.DefaultControllerRateLimiter())
 
-	// 创建本地缓存并对指定类型的资源开始监听
-	// 注意，如果业务上有必要，其实可以将新增、修改、删除等事件放入不同队列，然后分别做针对性处理，
-	// 但是，controller对应的模式，主要是让status与spec达成一致，也就是说增删改等事件，对应的都是查到实际情况，令其与期望情况保持一致，
-	// 因此，多数情况下增删改用一个队列即可，里面放入变化的对象的身份，至于处理方式只有一种：查到实际情况，令其与期望情况保持一致
 	indexer, informer := cache.NewIndexerInformer(podListWatcher, objType, 0, cache.ResourceEventHandlerFuncs{
 		AddFunc: func(obj interface{}) {
 			key, err := cache.MetaNamespaceKeyFunc(obj)

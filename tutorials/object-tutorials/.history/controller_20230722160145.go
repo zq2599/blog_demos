@@ -155,9 +155,6 @@ func CreateAndStartController(c cache.Getter, objType objectruntime.Object, reso
 	queue := workqueue.NewRateLimitingQueue(workqueue.DefaultControllerRateLimiter())
 
 	// 创建本地缓存并对指定类型的资源开始监听
-	// 注意，如果业务上有必要，其实可以将新增、修改、删除等事件放入不同队列，然后分别做针对性处理，
-	// 但是，controller对应的模式，主要是让status与spec达成一致，也就是说增删改等事件，对应的都是查到实际情况，令其与期望情况保持一致，
-	// 因此，多数情况下增删改用一个队列即可，里面放入变化的对象的身份，至于处理方式只有一种：查到实际情况，令其与期望情况保持一致
 	indexer, informer := cache.NewIndexerInformer(podListWatcher, objType, 0, cache.ResourceEventHandlerFuncs{
 		AddFunc: func(obj interface{}) {
 			key, err := cache.MetaNamespaceKeyFunc(obj)
