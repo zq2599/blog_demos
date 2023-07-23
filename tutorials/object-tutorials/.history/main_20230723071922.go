@@ -44,7 +44,7 @@ func main() {
 	stop := make(chan struct{})
 	defer close(stop)
 
-	CreateAndStartController(clientset.CoreV1().RESTClient(), &v1.Pod{}, "pods", NAMESPACE, stop)
+	CreateAndStartController(clientset, "pods", NAMESPACE, stop)
 	CreateAndStartController(clientset.CoreV1().RESTClient(), &v1.Service{}, "services", NAMESPACE, stop)
 
 	select {}

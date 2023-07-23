@@ -76,21 +76,17 @@ func (c *Controller) syncToStdout(key string) error {
 		}
 
 		// 取得资源的所有属性
-		labels := objMeta.GetLabels()
-
-		if labels == nil {
+		if labels := objMeta.GetLabels(); labels == nil {
 			klog.Infof("name [%s], namespace [%s], label is empty", objMeta.GetName(), objMeta.GetNamespace())
 			return nil
 		}
 
-		// 遍历每个属性，打印出来
-		for key, value := range labels {
-			klog.Infof("name [%s], namespace [%s], key [%s], value [%s]",
-				objMeta.GetName(),
-				objMeta.GetNamespace(),
-				key,
-				value)
-		}
+		// 打印对象的meta信息，验证meta.Accessor返回的对象是否符合预期
+		klog.Infof("name [%s], namespace [%s], lable app [%s]",
+			objMeta.GetName(),
+			objMeta.GetNamespace(),
+			objMeta.GetLabels()["app"])
+
 	}
 	return nil
 }

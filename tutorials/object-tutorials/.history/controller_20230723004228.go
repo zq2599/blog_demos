@@ -47,12 +47,6 @@ func (c *Controller) processNextItem() bool {
 	return true
 }
 
-// runWorker 这是个无限循环，不断地从队列取出数据处理
-func (c *Controller) runWorker() {
-	for c.processNextItem() {
-	}
-}
-
 // syncToStdout 这是业务逻辑代码，被调用意味着key对应的对象有变化(新增或者修改)
 func (c *Controller) syncToStdout(key string) error {
 	// 从本地缓存中取出完整的对象
@@ -66,6 +60,14 @@ func (c *Controller) syncToStdout(key string) error {
 	if !exists {
 		fmt.Printf("Pod %s does not exist anymore\n", key)
 	} else {
+		objType, err := meta.TypeAccessor(obj)
+		if err != nil {
+			klog.Errorf("get type accessor error, [%s], failed with %v", key, err)
+			return err
+		}
+
+		klog.Infof("kind [%s], apiversion [%s]", objType.GetKind(), objType.GetAPIVersion())
+
 		// 这里无视了obj具体是什么类型的对象(deployment、pod这些都有可能)，
 		// 用meta.Accessor转换出metav1.Object对象后就能获取该对象的所有meta信息
 		objMeta, err := meta.Accessor(obj)
@@ -75,22 +77,12 @@ func (c *Controller) syncToStdout(key string) error {
 			return err
 		}
 
-		// 取得资源的所有属性
-		labels := objMeta.GetLabels()
+		// 打印对象的meta信息，验证meta.Accessor返回的对象是否符合预期
+		klog.Infof("name [%s], namespace [%s], lable app [%s]",
+			objMeta.GetName(),
+			objMeta.GetNamespace(),
+			objMeta.GetLabels()["app"])
 
-		if labels == nil {
-			klog.Infof("name [%s], namespace [%s], label is empty", objMeta.GetName(), objMeta.GetNamespace())
-			return nil
-		}
-
-		// 遍历每个属性，打印出来
-		for key, value := range labels {
-			klog.Infof("name [%s], namespace [%s], key [%s], value [%s]",
-				objMeta.GetName(),
-				objMeta.GetNamespace(),
-				key,
-				value)
-		}
 	}
 	return nil
 }
@@ -146,6 +138,12 @@ func (c *Controller) Run(threadiness int, stopCh chan struct{}) {
 
 	<-stopCh
 	klog.Info("Stopping Pod controller")
+}
+
+// runWorker 这是个无限循环，不断地从队列取出数据处理
+func (c *Controller) runWorker() {
+	for c.processNextItem() {
+	}
 }
 
 // CreateAndStartController 为了便于外部使用，这里将controller的创建和启动封装在一起

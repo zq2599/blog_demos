@@ -83,7 +83,6 @@ func (c *Controller) syncToStdout(key string) error {
 			return nil
 		}
 
-		// 遍历每个属性，打印出来
 		for key, value := range labels {
 			klog.Infof("name [%s], namespace [%s], key [%s], value [%s]",
 				objMeta.GetName(),

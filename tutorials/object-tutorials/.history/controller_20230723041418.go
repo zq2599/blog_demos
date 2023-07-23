@@ -83,14 +83,16 @@ func (c *Controller) syncToStdout(key string) error {
 			return nil
 		}
 
-		// 遍历每个属性，打印出来
-		for key, value := range labels {
-			klog.Infof("name [%s], namespace [%s], key [%s], value [%s]",
-				objMeta.GetName(),
-				objMeta.GetNamespace(),
-				key,
-				value)
+		for _, v := range labels {
+
 		}
+
+		// 打印对象的meta信息，验证meta.Accessor返回的对象是否符合预期
+		klog.Infof("name [%s], namespace [%s], lable app [%s]",
+			objMeta.GetName(),
+			objMeta.GetNamespace(),
+			objMeta.GetLabels()["app"])
+
 	}
 	return nil
 }
