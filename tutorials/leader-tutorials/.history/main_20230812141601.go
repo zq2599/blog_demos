@@ -99,17 +99,15 @@ func main() {
 
 	stop := make(chan struct{})
 
-	defer func() {
-		close(stop)
-		cancel()
-	}()
+	defer cancel()
+	defer close(stop)
 
 	processIndentify = uuid.New().String()
 
-	go startLeaderElection(ctx, clientset, stop)
+	go startLeaderElection(ctx, id, clientset, stop)
 
 	// 这里可以继续做其他事情
-	klog.Infof("other business will be execute here [%s]", processIndentify)
+	klog.Infof("other business will be execute here [%s]", id)
 
 	select {}
 }

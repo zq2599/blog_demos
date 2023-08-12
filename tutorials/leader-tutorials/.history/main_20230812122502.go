@@ -23,9 +23,7 @@ const (
 	NAMESPACE = "client-go-tutorials"
 )
 
-var processIndentify string
-
-func startLeaderElection(ctx context.Context, clientset *kubernetes.Clientset, stop chan struct{}) {
+func startLeaderElection(context context.Context, id string, clientset *kubernetes.Clientset, stop chan struct{}) {
 	// 创建锁对象
 	lock := &resourcelock.LeaseLock{
 		LeaseMeta: metav1.ObjectMeta{
@@ -34,12 +32,12 @@ func startLeaderElection(ctx context.Context, clientset *kubernetes.Clientset, s
 		},
 		Client: clientset.CoordinationV1(),
 		LockConfig: resourcelock.ResourceLockConfig{
-			Identity: processIndentify,
+			Identity: id,
 		},
 	}
 
 	// 启动选主操作
-	leaderelection.RunOrDie(ctx, leaderelection.LeaderElectionConfig{
+	leaderelection.RunOrDie(context, leaderelection.LeaderElectionConfig{
 		Lock:            lock,
 		ReleaseOnCancel: true,
 		LeaseDuration:   10 * time.Second,
@@ -47,19 +45,19 @@ func startLeaderElection(ctx context.Context, clientset *kubernetes.Clientset, s
 		RetryPeriod:     2 * time.Second,
 		Callbacks: leaderelection.LeaderCallbacks{
 			OnStartedLeading: func(ctx context.Context) {
-				klog.Infof("Leader election success [%s]", processIndentify)
+				klog.Infof("Leader election success [%s]", id)
 				// 就像抢分布式锁一样，当前进程选举成功的时候，这的代码就会被执行，
 				// 所以，在这里填写抢锁成功的业务逻辑吧，本例中就是监听service变化，然后修改pod的label
 				CreateAndStartController(clientset.CoreV1().RESTClient(), &v1.Service{}, "services", NAMESPACE, stop)
 			},
 			OnStoppedLeading: func() {
 				// 失去了leader时的逻辑
-				klog.Infof("leader lost: %s", processIndentify)
+				klog.Infof("leader lost: %s", id)
 				os.Exit(0)
 			},
 			OnNewLeader: func(identity string) {
 				// 收到通知，知道最终的选举结果
-				if identity == processIndentify {
+				if identity == id {
 					// I just got the lock
 					return
 				}
@@ -67,6 +65,7 @@ func startLeaderElection(ctx context.Context, clientset *kubernetes.Clientset, s
 			},
 		},
 	})
+
 }
 
 func main() {
@@ -95,21 +94,57 @@ func main() {
 		klog.Fatal(err)
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-
 	stop := make(chan struct{})
+	defer close(stop)
 
-	defer func() {
-		close(stop)
-		cancel()
+	id := uuid.New().String()
+
+	go func() {
+
+		lock := &resourcelock.LeaseLock{
+			LeaseMeta: metav1.ObjectMeta{
+				Name:      "leader-tutorials",
+				Namespace: NAMESPACE,
+			},
+			Client: clientset.CoordinationV1(),
+			LockConfig: resourcelock.ResourceLockConfig{
+				Identity: id,
+			},
+		}
+
+		leaderelection.RunOrDie(context.TODO(), leaderelection.LeaderElectionConfig{
+			Lock:            lock,
+			ReleaseOnCancel: true,
+			LeaseDuration:   10 * time.Second,
+			RenewDeadline:   5 * time.Second,
+			RetryPeriod:     2 * time.Second,
+			Callbacks: leaderelection.LeaderCallbacks{
+				OnStartedLeading: func(ctx context.Context) {
+					klog.Infof("Leader election success [%s]", id)
+					// 就像抢分布式锁一样，当前进程选举成功的时候，这的代码就会被执行，
+					// 所以，在这里填写抢锁成功的业务逻辑吧，本例中就是监听service变化，然后修改pod的label
+					CreateAndStartController(clientset.CoreV1().RESTClient(), &v1.Service{}, "services", NAMESPACE, stop)
+				},
+				OnStoppedLeading: func() {
+					// 失去了leader时的逻辑
+					klog.Infof("leader lost: %s", id)
+					os.Exit(0)
+				},
+				OnNewLeader: func(identity string) {
+					// 收到通知，知道最终的选举结果
+					if identity == id {
+						// I just got the lock
+						return
+					}
+					klog.Infof("new leader elected: %s", identity)
+				},
+			},
+		})
+
 	}()
 
-	processIndentify = uuid.New().String()
-
-	go startLeaderElection(ctx, clientset, stop)
-
 	// 这里可以继续做其他事情
-	klog.Infof("other business will be execute here [%s]", processIndentify)
+	klog.Infof("other business will be execute here [%s]", id)
 
 	select {}
 }

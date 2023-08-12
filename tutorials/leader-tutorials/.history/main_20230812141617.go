@@ -99,10 +99,8 @@ func main() {
 
 	stop := make(chan struct{})
 
-	defer func() {
-		close(stop)
-		cancel()
-	}()
+	defer cancel()
+	defer close(stop)
 
 	processIndentify = uuid.New().String()
 
