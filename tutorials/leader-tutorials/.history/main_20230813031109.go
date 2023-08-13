@@ -82,7 +82,6 @@ func startLeaderElection(ctx context.Context, clientset *kubernetes.Clientset, s
 		Callbacks: leaderelection.LeaderCallbacks{
 			OnStartedLeading: func(ctx context.Context) {
 				klog.Infof("[%s]当前进程是leader，只有leader才能执行的业务逻辑立即开始", processIndentify)
-				// 在这里写入选主成功的代码，
 				// 就像抢分布式锁一样，当前进程选举成功的时候，这的代码就会被执行，
 				// 所以，在这里填写抢锁成功的业务逻辑吧，本例中就是监听service变化，然后修改pod的label
 				CreateAndStartController(ctx, clientset, &v1.Service{}, "services", NAMESPACE, stop)

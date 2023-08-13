@@ -63,7 +63,7 @@ func (c *Controller) runWorker() {
 	}
 }
 
-// updatePodsLabel 这是业务逻辑代码，一旦service发生变化，就修改pod的label，将service的变化事件记录进去
+// updatePodsLabel 这是业务逻辑代码，被调用意味着key对应的对象有变化(新增或者修改)
 func (c *Controller) updatePodsLabel(key string) error {
 	// 开始进入controller的业务逻辑
 	klog.Infof("[%s]这里是controller的业务逻辑，key [%s]", processIndentify, key)
