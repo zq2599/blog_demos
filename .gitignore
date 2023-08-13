@@ -11,8 +11,4 @@ jetcd-tutorials/.gradle/*
 grpc-tutorials/.gradle/*
 leetcode/out
 leetcode/.vscode/*
-blog_demos/tutorials/gorm-tutorials/test.db
-blog_demos/tutorials/object-tutorials/.history
-blog_demos/tutorials/leader-tutorials/.history
-blog_demos/tutorials/object-tutorials/.history/*
-blog_demos/tutorials/leader-tutorials/.history/*
+tutorials/gorm-tutorials/test.db
