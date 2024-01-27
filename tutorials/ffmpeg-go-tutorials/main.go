@@ -6,12 +6,12 @@ import (
 )
 
 const (
-	BasePath = "/Users/zhaoqin/temp/202401/27"
+	BasePath = "/Users/will/temp/202401/27"
 )
 
 func main() {
 	// 视频的位置(请按照您的实际情况修改)
-	inputPath := BasePath + "/input/in1.mp4"
+	inputPath := BasePath + "/input/test.mp4"
 	// 输出文件的位置(请按照您的实际情况修改)
 	outputPath := BasePath + "/output/" + time.Now().Format("20060102150405") + ".jpg"
 
