@@ -9,7 +9,7 @@
   <url>http://maven.apache.org</url>
   <properties>
     <!-- spring版本号 -->
-    <spring.version>6.0.8</spring.version>
+    <spring.version>6.0.16</spring.version>
   </properties>
   <dependencies>
     <!-- spring核心包 -->
@@ -101,13 +101,13 @@
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-core</artifactId>
-      <version>1.0.9</version>
+      <version>1.2.13</version>
     </dependency>
 
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.0.9</version>
+      <version>1.2.13</version>
     </dependency>
 
   </dependencies>

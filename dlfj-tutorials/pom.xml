@@ -32,7 +32,7 @@
         <maven-shade-plugin.version>2.4.3</maven-shade-plugin.version>
         <jcommon.version>1.0.23</jcommon.version>
         <jfreechart.version>1.0.13</jfreechart.version>
-        <logback.version>1.1.7</logback.version>
+        <logback.version>1.2.13</logback.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <springboot.version>2.4.8</springboot.version>
     </properties>
