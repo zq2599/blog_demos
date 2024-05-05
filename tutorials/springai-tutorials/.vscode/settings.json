@@ -1,4 +1,5 @@
 {
-    "java.dependency.packagePresentation": "hierarchical",
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.dependency.packagePresentation": "flat",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "automatic"
 }

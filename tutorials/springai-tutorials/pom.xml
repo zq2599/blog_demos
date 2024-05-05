@@ -5,6 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>hello-openai</module>
+        <module>ollama-chat</module>
     </modules>
 
     <parent>
