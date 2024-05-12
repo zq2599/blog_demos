@@ -11,6 +11,7 @@ package com.bolingcavalry.ollamachat.controller;
 import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.ollama.OllamaChatClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import reactor.core.publisher.Flux;
 
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 @RestController
 public class ChatController {
@@ -54,5 +56,12 @@ public class ChatController {
         Thread.sleep(5000);
 
         return "ok";
+    }
+
+    @GetMapping(value = "/ai/streamresp", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux<String> streamResp(@RequestParam(value = "message", defaultValue = "假设你是秦国的司马错，你如何制定消灭苴国、巴国、蜀国的战略？") String message) throws InterruptedException {
+        Prompt prompt = new Prompt(new UserMessage(message));
+        Flux<ChatResponse> chatResp = chatClient.stream(prompt);
+        return chatResp.map(chatObj -> chatObj.getResult().getOutput().getContent());
     }
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reactive Flux Display</title>
+    <script src="https://unpkg.com/rxjs@^7/dist/bundles/rxjs.umd.min.js"></script>
+    <script th:src="@{/js/custom.js}"></script>
+</head>
+<body>
+    <div>
+        <input type="text" id="inputField" placeholder="Enter something...">
+        <button id="sendButton">Submit</button>
+        <div id="displayArea"></div>
+    </div>
+    <script>
+        // 自定义的JavaScript代码将放在这里
+        document.getElementById('sendButton').addEventListener('click', function() {
+    const inputField = document.getElementById('inputField');
+    const displayArea = document.getElementById('displayArea');
+    
+    const input = inputField.value;
+    if (input) {
+        displayArea.textContent = ""
+        const url = `/ai/streamresp?message=${encodeURIComponent(input)}`;
+        
+        fetch(url)
+            .then(response => {
+                if (response.ok) return response.body.pipeThrough(new TextDecoderStream()).pipeTo(new WritableStream({
+                    write(chunk) {
+                        displayArea.textContent += chunk.replace(/data:/g, "").trim();
+                    }
+                }));
+            })
+            .catch(error => console.error('Error:', error));
+    }
+});
+    </script>
+</body>
+</html>
