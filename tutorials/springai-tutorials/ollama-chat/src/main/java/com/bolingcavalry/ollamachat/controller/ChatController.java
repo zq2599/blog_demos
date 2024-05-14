@@ -59,7 +59,7 @@ public class ChatController {
     }
 
     @GetMapping(value = "/ai/streamresp", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	public Flux<String> streamResp(@RequestParam(value = "message", defaultValue = "假设你是秦国的司马错，你如何制定消灭苴国、巴国、蜀国的战略？") String message) throws InterruptedException {
+	public Flux<String> streamResp(@RequestParam(value = "message", defaultValue = "Hello!") String message) throws InterruptedException {
         Prompt prompt = new Prompt(new UserMessage(message));
         Flux<ChatResponse> chatResp = chatClient.stream(prompt);
         return chatResp.map(chatObj -> chatObj.getResult().getOutput().getContent());

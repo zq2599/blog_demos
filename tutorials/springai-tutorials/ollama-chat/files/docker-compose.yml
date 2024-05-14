@@ -33,6 +33,23 @@ services:
     networks:
       - ollama-docker
 
+  java-app:
+    image: bolingcavalry/ollam-tutorial:0.0.1-SNAPSHOT
+    container_name: java-app
+    pull_policy: if_not_present
+    depends_on:
+      - ollama
+    ports:
+      - 18080:8080
+    environment:
+      - 'SPRING_AI_OLlama_BASE_URL=http://ollama:11434'
+      - 'SPRING_AI_OLlama_CHAT_OPTIONS_MODEL=qwen:1.8b'
+      - 'SPRING_AI_OLlama_CHAT_OPTIONS_TEMPERATURE=0.7'
+      - 'SPRING_MAIN_WEB_APPLICATION_TYPE=reactive'
+    restart: always
+    networks:
+      - ollama-docker
+
 networks:
   ollama-docker:
     external: false
