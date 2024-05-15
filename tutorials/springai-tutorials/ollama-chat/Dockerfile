@@ -10,4 +10,4 @@ ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
 COPY target/*.jar /app.jar
 
 # 运行应用
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar --spring.config.location=file:/app/application.properties"]
