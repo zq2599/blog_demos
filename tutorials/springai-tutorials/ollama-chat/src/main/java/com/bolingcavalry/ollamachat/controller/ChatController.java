@@ -19,49 +19,24 @@ import org.springframework.ai.chat.messages.UserMessage;
 
 import reactor.core.publisher.Flux;
 
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
 @RestController
 public class ChatController {
 
     private final OllamaChatClient chatClient;
 
+
     public ChatController(OllamaChatClient chatClient) {
+        // 依赖注入ollama的客户端类
         this.chatClient = chatClient;
-    }
-
-    @GetMapping("/ai/generate")
-    public Map<String,String> generate(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
-        return Map.of("generation", chatClient.call(message));
-    }
-
-    @GetMapping("/ai/generateStream")
-	public Flux<ChatResponse> generateStream(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
-        Prompt prompt = new Prompt(new UserMessage(message));
-        return chatClient.stream(prompt);
-    }
-    @GetMapping("/ai/streamoutput")
-	public String streamOutput(@RequestParam(value = "message", defaultValue = "假设你是秦国的司马错，你如何制定消灭苴国、巴国、蜀国的战略？") String message) throws InterruptedException {
-        Prompt prompt = new Prompt(new UserMessage(message));
-        Flux<ChatResponse> resp = chatClient.stream(prompt);
-        resp.subscribe(new Consumer<ChatResponse>() {
-            @Override
-            public void accept(ChatResponse t) {
-                System.out.print(t.getResult().getOutput().getContent());
-            }
-        });
-
-        Thread.sleep(5000);
-
-        return "ok";
     }
 
     @GetMapping(value = "/ai/streamresp", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<String> streamResp(@RequestParam(value = "message", defaultValue = "Hello!") String message) throws InterruptedException {
+        // 提示词类，包裹了用户发来的问题
         Prompt prompt = new Prompt(new UserMessage(message));
+        // 调用ollama的客户端类的API，将问题发到ollama，并获取流对象，Ollama响应的数据就会通过这个流对象持续输出
         Flux<ChatResponse> chatResp = chatClient.stream(prompt);
+        // ollama客户端返回的数据包含了多个内容，例如system，assistant等，需要做一次变换，取大模型的回答内容返回给前端
         return chatResp.map(chatObj -> chatObj.getResult().getOutput().getContent());
     }
 }
