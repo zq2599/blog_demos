@@ -12,7 +12,7 @@
         <!-- spring版本号 -->
         <spring.version>5.2.24.RELEASE</spring.version>
         <!-- fastjson版本号 -->
-        <fastjson.version>1.2.39</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
     </properties>
     <dependencies>
         <!-- spring核心包 -->
