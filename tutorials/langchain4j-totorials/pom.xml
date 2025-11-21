@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.bolingcavalry</groupId>
+  <artifactId>langchain4j-totorials</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <dependencyManagement>
+    <dependencies>
+      <!-- LangChain4j BOM (Bill of Materials) -->
+      <!-- BOM只负责版本管理，不会实际引入依赖 -->
+      <!-- 子模块需要显式声明所需的依赖，但可以省略版本号 -->
+      <dependency>
+        <groupId>dev.langchain4j</groupId>
+        <artifactId>langchain4j-bom</artifactId>
+        <version>0.26.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- SLF4J 日志门面 -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.36</version>
+      </dependency>
+      <!-- Logback 日志实现 -->
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.2.11</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <!-- 子模块列表 -->
+  <modules>
+    <module>hello-world</module>
+  </modules>
+</project>
