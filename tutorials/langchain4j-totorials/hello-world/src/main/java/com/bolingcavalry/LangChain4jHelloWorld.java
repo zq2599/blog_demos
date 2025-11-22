@@ -23,33 +23,13 @@ public class LangChain4jHelloWorld {
             String apiKey = System.getenv("DASHSCOPE_API_KEY");
             
             if (apiKey == null || apiKey.isEmpty()) {
-                logger.warn("警告：未设置DASHSCOPE_API_KEY环境变量");
-                logger.info("将使用模拟模式进行演示");
-                
-                // 模拟模式：直接输出示例响应
-                simulateChat();
+                logger.warn("警告：未设置DASHSCOPE_API_KEY环境变量，立即结束");
             } else {
-                // 真实模式：使用通义千问API
-                logger.info("将使用通义千问API进行演示");
                 realChat(apiKey);
             }
         } catch (Exception e) {
             logger.error("执行过程中出现错误", e);
-            logger.info("\n切换到模拟模式进行演示:");
-            simulateChat();
         }
-    }
-    
-    /**
-     * 模拟聊天功能，不依赖外部API
-     */
-    private static void simulateChat() {
-        logger.info("\n=== 模拟聊天演示 ===");
-        logger.info("用户: 你好，世界！");
-        logger.info("AI: 你好！我是一个基于LangChain4j的AI助手。很高兴见到你！");
-        logger.info("用户: LangChain4j是什么？");
-        logger.info("AI: LangChain4j是一个Java库，用于构建基于大型语言模型(LLM)的应用程序。它提供了与各种LLM模型交互的统一接口。");
-        logger.info("\n提示：要使用真实的AI功能，请设置DASHSCOPE_API_KEY环境变量。");
     }
     
     /**
