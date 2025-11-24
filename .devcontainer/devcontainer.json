@@ -2,9 +2,9 @@
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",  // Any generic, debian-based image.
     "features": {
       "ghcr.io/devcontainers/features/java:1": {
-        "version": "17",
+        "version": "21",
         "installMaven": true,
-        "mavenVersion": "3.8.6"
+        "mavenVersion": "3.9.11"
       }
     }
 }
