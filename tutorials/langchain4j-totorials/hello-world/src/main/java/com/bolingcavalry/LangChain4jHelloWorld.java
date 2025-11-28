@@ -1,12 +1,10 @@
 package com.bolingcavalry;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.dashscope.QwenChatModel;
+import dev.langchain4j.model.openai.OpenAiChatModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LangChain4j的Hello World示例
  * 这个示例演示了如何使用LangChain4j创建一个简单的对话模型（使用通义千问）
  */
 public class LangChain4jHelloWorld {
@@ -31,21 +29,25 @@ public class LangChain4jHelloWorld {
             logger.error("执行过程中出现错误", e);
         }
     }
-    
+
     /**
      * 使用通义千问API进行真实聊天
      */
     private static void realChat(String apiKey) {
-        // 创建通义千问聊天模型
-        ChatLanguageModel model = QwenChatModel.builder()
+        // 在langchain4j 1.x版本中，直接使用OpenAiChatModel类
+        OpenAiChatModel model = OpenAiChatModel.builder()
                 .apiKey(apiKey)
                 .modelName("qwen3-max")
+                .baseUrl("https://dashscope.aliyuncs.com/compatible-mode/v1")
                 .build();
         
         logger.info("\n=== 真实AI聊天演示 ===");
         
-        // 发送消息并获取响应
-        String response = model.generate("你好，世界！请简要介绍一下你自己，包括详细的版本情况，再带上最新的年月日时分秒。");
+        // 直接发送字符串消息
+        String prompt = "你好，世界！请简要介绍一下你自己，包括详细的版本情况，再带上最新的年月日时分秒。";
+        
+        // 尝试直接使用字符串作为参数
+        String response = model.chat(prompt);
         logger.info("AI响应: {}", response);
     }
 }

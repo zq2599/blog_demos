@@ -19,11 +19,13 @@
       <artifactId>langchain4j-core</artifactId>
     </dependency>
     
-    <!-- 通义千问模型支持 -->
+    <!-- 通义千问模型支持 - 在langchain4j 1.x版本中使用 -->
     <dependency>
       <groupId>dev.langchain4j</groupId>
-      <artifactId>langchain4j-dashscope</artifactId>
+      <artifactId>langchain4j-open-ai</artifactId>
     </dependency>
+    
+    <!-- langchain4j 1.x版本中的服务功能已包含在core模块中 -->
     
     <!-- SLF4J 日志门面 -->
     <dependency>
