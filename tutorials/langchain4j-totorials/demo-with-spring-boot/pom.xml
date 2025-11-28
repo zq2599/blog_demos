@@ -72,6 +72,13 @@
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-open-ai</artifactId>
         </dependency>
+
+        <!-- 官方 langchain4j（包含 AiServices 等服务类） -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+        </dependency>
+
         
         <!-- langchain4j 1.x版本中的服务功能已包含在core模块中 -->
         

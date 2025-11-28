@@ -39,4 +39,12 @@ public class QwenService {
     public String getResponse(String prompt) {
         return openAiChatModel.chat(prompt);
     }
+
+    @Autowired
+    private Assistant assistant;
+
+    public String aiServiceChat(String prompt) {
+        return assistant.chat(prompt) + "[from aiservice]";
+    }
+
 }
