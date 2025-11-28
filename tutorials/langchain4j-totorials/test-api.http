@@ -13,6 +13,15 @@ Accept: application/json
   "prompt": "你好，请介绍一下自己，包括详细的版本信息以及当前的年月日时分秒"
 }
 
+### POST 请求测试 (如果接口支持POST)
+POST http://localhost:8080/api/qwen/aiservicechat
+Content-Type: application/json
+Accept: application/json
+
+{
+  "prompt": "你好，请介绍一下自己，包括详细的版本信息以及当前的年月日时分秒"
+}
+
 ### 测试带参数的 GET 请求
 GET http://localhost:8080/api/qwen?query=你好世界
 Accept: application/json
