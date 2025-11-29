@@ -28,6 +28,7 @@ public class QwenController {
 
     /**
      * 构造函数，通过依赖注入获取QwenService实例
+     * 
      * @param qwenService QwenService实例
      */
     @Autowired
@@ -56,15 +57,30 @@ public class QwenController {
     }
 
     /**
+     * 检查请求体是否有效
+     * 
+     * @param request 包含提示词的请求体
+     * @return 如果有效则返回null，否则返回包含错误信息的ResponseEntity
+     */
+    private ResponseEntity<Response> check(PromptRequest request) {
+        if (request == null || request.getPrompt() == null || request.getPrompt().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(new Response("提示词不能为空"));
+        }
+        return null;
+    }
+
+    /**
      * 处理POST请求，接收提示词并返回模型响应
+     * 
      * @param request 包含提示词的请求体
      * @return 包含模型响应的ResponseEntity
      */
     @PostMapping("/chat")
     public ResponseEntity<Response> chat(@RequestBody PromptRequest request) {
-        // 检查提示词是否为空
-        if (request == null || request.getPrompt() == null || request.getPrompt().trim().isEmpty()) {
-            return ResponseEntity.badRequest().body(new Response("提示词不能为空"));
+        // 检查请求体是否有效
+        ResponseEntity<Response> checkRlt = check(request);
+        if (checkRlt != null) {
+            return checkRlt;
         }
 
         try {
@@ -76,8 +92,9 @@ public class QwenController {
             return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
         }
     }
-    @PostMapping("/aiservicechat")
-    public ResponseEntity<Response> aiServiceChat(@RequestBody PromptRequest request) {
+
+    @PostMapping("/aiservicesimplechat")
+    public ResponseEntity<Response> aiServiceSimpleChat(@RequestBody PromptRequest request) {
         ResponseEntity<Response> checkRlt = check(request);
         if (checkRlt != null) {
             return checkRlt;
@@ -85,7 +102,7 @@ public class QwenController {
 
         try {
             // 调用QwenService获取模型响应
-            String response = qwenService.aiServiceChat(request.getPrompt());
+            String response = qwenService.aiServiceSimpleChat(request.getPrompt());
             return ResponseEntity.ok(new Response(response));
         } catch (Exception e) {
             // 捕获异常并返回错误信息
@@ -93,10 +110,71 @@ public class QwenController {
         }
     }
 
-    private ResponseEntity<Response> check(PromptRequest request) {
-        if (request == null || request.getPrompt() == null || request.getPrompt().trim().isEmpty()) {
-            return ResponseEntity.badRequest().body(new Response("提示词不能为空"));
+    @PostMapping("/aiservicetemplatechat")
+    public ResponseEntity<Response> aiServiceTemplateChat(@RequestBody PromptRequest request) {
+        ResponseEntity<Response> checkRlt = check(request);
+        if (checkRlt != null) {
+            return checkRlt;
         }
-        return null;
+
+        try {
+            // 调用QwenService获取模型响应
+            String response = qwenService.aiServiceTemplateChat(request.getPrompt());
+            return ResponseEntity.ok(new Response(response));
+        } catch (Exception e) {
+            // 捕获异常并返回错误信息
+            return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/aiservicetemplatechatwithsysmsg")
+    public ResponseEntity<Response> aiServiceTemplateChatWithSysMsg(@RequestBody PromptRequest request) {
+        ResponseEntity<Response> checkRlt = check(request);
+        if (checkRlt != null) {
+            return checkRlt;
+        }
+
+        try {
+            // 调用QwenService获取模型响应
+            String response = qwenService.aiServiceTemplateChatWithSysMsg(request.getPrompt());
+            return ResponseEntity.ok(new Response(response));
+        } catch (Exception e) {
+            // 捕获异常并返回错误信息
+            return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/simulatemultiroundchat")
+    public ResponseEntity<Response> simulateMultiRoundChat(@RequestBody PromptRequest request) {
+        ResponseEntity<Response> checkRlt = check(request);
+        if (checkRlt != null) {
+            return checkRlt;
+        }
+
+        try {
+            // 调用QwenService获取模型响应
+            String response = qwenService.simulateMultiRoundChat(request.getPrompt());
+            return ResponseEntity.ok(new Response(response));
+        } catch (Exception e) {
+            // 捕获异常并返回错误信息
+            return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/usechatrequest")
+    public ResponseEntity<Response> useChatRequest(@RequestBody PromptRequest request) {
+        ResponseEntity<Response> checkRlt = check(request);
+        if (checkRlt != null) {
+            return checkRlt;
+        }
+
+        try {
+            // 调用QwenService获取模型响应
+            String response = qwenService.useChatRequest(request.getPrompt());
+            return ResponseEntity.ok(new Response(response));
+        } catch (Exception e) {
+            // 捕获异常并返回错误信息
+            return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
+        }
     }
 }

@@ -14,14 +14,51 @@ Accept: application/json
 }
 
 ### POST 请求测试 (如果接口支持POST)
-POST http://localhost:8080/api/qwen/aiservicechat
+POST http://localhost:8080/api/qwen/aiservicesimplechat
 Content-Type: application/json
 Accept: application/json
 
 {
-  "prompt": "你好，请介绍一下自己，包括详细的版本信息以及当前的年月日时分秒"
+  "prompt": "他打败过哪些对手？"
 }
 
 ### 测试带参数的 GET 请求
 GET http://localhost:8080/api/qwen?query=你好世界
 Accept: application/json
+
+
+### POST 请求测试 (如果接口支持POST)
+POST http://localhost:8080/api/qwen/aiservicetemplatechat
+Content-Type: application/json
+Accept: application/json
+
+{
+  "prompt": "三国演义"
+}
+
+### POST 使用系统消息的模板对话
+POST http://localhost:8080/api/qwen/aiservicetemplatechatwithsysmsg
+Content-Type: application/json
+Accept: application/json
+
+{
+  "prompt": "三国演义"
+}
+
+### POST 模拟多轮对话
+POST http://localhost:8080/api/qwen/simulatemultiroundchat
+Content-Type: application/json
+Accept: application/json
+
+{
+  "prompt": "他打败过哪些对手？"
+}
+
+### POST 使用 ChatRequest 作为入参
+POST http://localhost:8080/api/qwen/usechatrequest
+Content-Type: application/json
+Accept: application/json
+
+{
+  "prompt": "Java最新版本有哪些特性？"
+}
