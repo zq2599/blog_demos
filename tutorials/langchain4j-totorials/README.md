@@ -14,6 +14,7 @@ cd /workspaces/blog_demos/tutorials/langchain4j-totorials/hello-world && DASHSCO
 
 # demo-with-spring-boot
 cd ~/github/blog_demos/tutorials/langchain4j-totorials/demo-with-spring-boot && mvn spring-boot:run
+cd ~/source/blog_demos/tutorials/langchain4j-totorials/demo-with-spring-boot && mvn spring-boot:run
 ```
 
 

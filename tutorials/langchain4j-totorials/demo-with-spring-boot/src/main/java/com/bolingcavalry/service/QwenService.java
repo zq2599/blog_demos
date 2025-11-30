@@ -2,20 +2,29 @@ package com.bolingcavalry.service;
 
 import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.output.Response;
 
-import java.util.ArrayList;
+import java.net.URI;
 import java.util.List;
 
-import dev.langchain4j.service.AiServices;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import dev.langchain4j.data.message.*;
+
+import dev.langchain4j.data.image.Image;
+import com.bolingcavalry.util.ImageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * 通义千问服务类，用于与通义千问模型进行交互
  */
 @Service
 public class QwenService {
+
+    private static final Logger logger = LoggerFactory.getLogger(QwenService.class);
 
     // 注入OpenAiChatModel，用于与通义千问进行交互
     private final OpenAiChatModel openAiChatModel;
@@ -92,7 +101,7 @@ public class QwenService {
 
         AiMessage reply = openAiChatModel.chat(history).aiMessage();
 
-        return reply.text() + "[from aiservice simulateMultiRoundChat]";
+        return reply.text() + "[from simulateMultiRoundChat]";
     }
 
     public String useChatRequest(String prompt) {
@@ -106,6 +115,45 @@ public class QwenService {
                 .maxOutputTokens(100)
                 .build();
 
-        return openAiChatModel.chat(request).aiMessage().text() + "[from aiservice useChatRequest]";
+        return openAiChatModel.chat(request).aiMessage().text() + "[from useChatRequest]";
+    }
+
+    public String useImage(String prompt) {
+        String imageUrl = "https://scpic.chinaz.net/files/pic/pic6/pic1103.jpg";
+        
+        try {
+            logger.info("开始处理图片: {}", imageUrl);
+            
+            // 使用ImageUtils类来创建Image对象，这样可以确保图片数据被正确加载
+            Image image = ImageUtils.createImageFromUrl(imageUrl);
+            
+            // 验证图片是否成功加载（通过检查base64数据是否存在且有一定长度）
+            String base64Data = ImageUtils.getImageBase64(image);
+            if (base64Data == null || base64Data.isEmpty() || base64Data.length() < 10) {
+                logger.error("图片加载失败：Base64数据无效或为空");
+                return "图片加载失败，请检查URL或网络连接[from useImage]";
+            }
+            
+            logger.info("图片成功加载，Base64数据长度: {} 字符", base64Data.length());
+            
+            // 创建图片内容
+            ImageContent imageContent = new ImageContent(image, ImageContent.DetailLevel.HIGH);
+
+            // 用户提问
+            UserMessage messages = UserMessage.from(List.of(
+                TextContent.from(prompt),
+                imageContent
+            ));
+
+            // 调用模型进行处理
+            logger.info("将图片内容发送给模型处理...");
+            String result = openAiChatModel.chat(messages).aiMessage().text();
+            
+            logger.info("模型返回结果: {}", result);
+            return result + "[from useImage]";
+        } catch (Exception e) {
+            logger.error("处理图片时发生错误: {}", e.getMessage(), e);
+            return "处理图片时发生错误: " + e.getMessage() + "[from useImage]";
+        }
     }
 }

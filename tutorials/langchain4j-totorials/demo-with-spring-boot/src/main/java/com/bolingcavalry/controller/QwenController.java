@@ -177,4 +177,27 @@ public class QwenController {
             return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
         }
     }
+
+    /**
+     * 处理POST请求，接收提示词并返回模型响应
+     * 
+     * @param request 包含提示词的请求体
+     * @return 包含模型响应的ResponseEntity
+     */
+    @PostMapping("/useimage")
+    public ResponseEntity<Response> useImage(@RequestBody PromptRequest request) {
+        ResponseEntity<Response> checkRlt = check(request);
+        if (checkRlt != null) {
+            return checkRlt;
+        }
+
+        try {
+            // 调用QwenService获取模型响应
+            String response = qwenService.useImage(request.getPrompt());
+            return ResponseEntity.ok(new Response(response));
+        } catch (Exception e) {
+            // 捕获异常并返回错误信息
+            return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
+        }
+    }
 }

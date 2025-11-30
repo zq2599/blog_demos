@@ -62,3 +62,12 @@ Accept: application/json
 {
   "prompt": "Java最新版本有哪些特性？"
 }
+
+### POST 使用 ChatRequest 作为入参
+POST http://localhost:8080/api/qwen/useimage
+Content-Type: application/json
+Accept: application/json
+
+{
+  "prompt": "图片中有什么？"
+}
