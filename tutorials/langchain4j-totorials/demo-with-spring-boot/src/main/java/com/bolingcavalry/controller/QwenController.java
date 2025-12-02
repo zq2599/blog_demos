@@ -42,6 +42,7 @@ public class QwenController {
     @Data
     static class PromptRequest {
         private String prompt;
+        private String imageUrl;
     }
 
     /**
@@ -193,7 +194,7 @@ public class QwenController {
 
         try {
             // 调用QwenService获取模型响应
-            String response = qwenService.useImage(request.getPrompt());
+            String response = qwenService.useImage(request.getImageUrl(), request.getPrompt());
             return ResponseEntity.ok(new Response(response));
         } catch (Exception e) {
             // 捕获异常并返回错误信息
