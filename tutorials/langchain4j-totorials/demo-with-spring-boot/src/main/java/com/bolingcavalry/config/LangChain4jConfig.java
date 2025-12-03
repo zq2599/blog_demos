@@ -8,7 +8,11 @@
  */
 package com.bolingcavalry.config;
 
+import dev.langchain4j.community.model.dashscope.WanxImageModel;
+import dev.langchain4j.community.model.dashscope.WanxImageSize;
 import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.openai.OpenAiImageModel;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,15 +35,22 @@ public class LangChain4jConfig {
     @Value("${langchain4j.open-ai.chat-model.base-url}")
     private String baseUrl;
 
-    // imageModel配置
-    @Value("${langchain4j.open-ai.chat-model.image-model.api-key}")
-    private String imageModelApiKey;
+    // 图片生成模型的配置
+    @Value("${langchain4j.open-ai.chat-model.image-gen-model.api-key}")
+    private String imageGenModelApiKey;
 
-    @Value("${langchain4j.open-ai.chat-model.image-model.model-name}")
-    private String imageModelName;
+    @Value("${langchain4j.open-ai.chat-model.image-gen-model.model-name}")
+    private String imageGenModelName;
 
-    @Value("${langchain4j.open-ai.chat-model.image-model.base-url}")
-    private String imageModelBaseUrl;
+    // 视觉理解模型的配置
+    @Value("${langchain4j.open-ai.chat-model.image-vl-model.api-key}")
+    private String imageVLModelApiKey;
+
+    @Value("${langchain4j.open-ai.chat-model.image-vl-model.model-name}")
+    private String imageVLModelName;
+
+    @Value("${langchain4j.open-ai.chat-model.image-vl-model.base-url}")
+    private String imageVLModelBaseUrl;
 
     /**
      * 创建并配置OpenAiChatModel实例（使用通义千问的OpenAI兼容接口）
@@ -57,16 +68,30 @@ public class LangChain4jConfig {
     }
 
     /**
-     * 创建并配置用于图像理解的OpenAiChatModel实例
+     * 创建并配置用于图像生成的OpenAiChatModel实例
      * 
-     * @return OpenAiChatModel实例，Bean名称为imageModel
+     * @return OpenAiChatModel实例，Bean名称为imageGenModel
      */
-    @Bean("imageModel")
-    public OpenAiChatModel imageModel() {
+    @Bean("imageGenModel")
+    public WanxImageModel imageGenModel() {
+        return WanxImageModel.builder()
+                .apiKey(imageGenModelApiKey)
+                .modelName(imageGenModelName)
+                .size(WanxImageSize.SIZE_1024_1024)
+                .build();
+    }
+
+    /**
+     * 创建并配置用于视觉理解的OpenAiChatModel实例
+     * 
+     * @return OpenAiChatModel实例，Bean名称为imageVLModel
+     */
+    @Bean("imageVLModel")
+    public OpenAiChatModel imageVLModel() {
         return OpenAiChatModel.builder()
-                .apiKey(imageModelApiKey)
-                .modelName(imageModelName)
-                .baseUrl(imageModelBaseUrl)
+                .apiKey(imageVLModelApiKey)
+                .modelName(imageVLModelName)
+                .baseUrl(imageVLModelBaseUrl)
                 .build();
     }
 

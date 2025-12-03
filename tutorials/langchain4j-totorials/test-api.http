@@ -72,3 +72,13 @@ Accept: application/json
   "imageUrl": "https://img0.baidu.com/it/u=3952212554,1497796012&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=667",
   "prompt": "图片中有什么？"
 }
+
+### POST 使用图像模型生成图片
+POST http://localhost:8080/api/qwen/generateimage
+Content-Type: application/json
+Accept: application/json
+
+{
+  "prompt": "生成一张图片，内容是三顾茅谷",
+  "imageNum": 2
+}

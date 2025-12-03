@@ -2,6 +2,7 @@ package com.bolingcavalry.service;
 
 import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.openai.OpenAiImageModel;
 import dev.langchain4j.model.output.Response;
 
 import java.net.URI;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import dev.langchain4j.data.message.*;
-
+import dev.langchain4j.community.model.dashscope.WanxImageModel;
 import dev.langchain4j.data.image.Image;
 import com.bolingcavalry.util.ImageUtils;
 import org.slf4j.Logger;
@@ -31,17 +32,23 @@ public class QwenService {
     // 注入OpenAiChatModel，用于图像理解任务
     private final OpenAiChatModel imageModel;
 
+    // 注入OpenAiImageModel，用于图像生成任务
+    private final WanxImageModel imageGenModel;
+
     /**
-     * 构造函数，通过依赖注入获取OpenAiChatModel实例
+     * 构造函数，通过依赖注入获取QwenChatModel实例
      * 
-     * @param openAiChatModel OpenAiChatModel实例
-     * @param imageModel      用于图像理解的OpenAiChatModel实例
+     * @param openAiChatModel QwenChatModel实例
+     * @param imageModel      用于图像理解的QwenChatModel实例
+     * @param imageGenModel   用于图像生成的QwenChatModel实例
      */
     @Autowired
     public QwenService(OpenAiChatModel openAiChatModel,
-            @Qualifier("imageModel") OpenAiChatModel imageModel) {
+            @Qualifier("imageVLModel") OpenAiChatModel imageModel,
+            @Qualifier("imageGenModel") WanxImageModel imageGenModel) {
         this.openAiChatModel = openAiChatModel;
         this.imageModel = imageModel;
+        this.imageGenModel = imageGenModel;
     }
 
     /**
@@ -158,6 +165,27 @@ public class QwenService {
         } catch (Exception e) {
             logger.error("处理图片时发生错误: {}", e.getMessage(), e);
             return "处理图片时发生错误: " + e.getMessage() + "[from useImage]";
+        }
+    }
+
+    /**
+     * 使用通义千问qwen3-image-plus模型生成图片
+     * 
+     * @param prompt 图片生成提示词
+     * @return 生成的图片URL或相关信息
+     */
+    public String generateImage(String prompt, int imageNum) {
+        try {
+            logger.info("开始生成图片，提示词: {}", prompt);
+
+            // 使用imageGenModel生成图片
+            Response<List<Image>> result = imageGenModel.generate(prompt, imageNum);
+
+            logger.info("图片生成成功，结果: {}", result);
+            return result + "[from generateImage]";
+        } catch (Exception e) {
+            logger.error("生成图片时发生错误: {}", e.getMessage(), e);
+            return "生成图片时发生错误: " + e.getMessage() + "[from generateImage]";
         }
     }
 }

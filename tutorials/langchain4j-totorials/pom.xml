@@ -36,6 +36,13 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+
+      <!-- langchain4j-community-dashscope-spring-boot-starter不在BOM中，需要显式声明版本 -->
+      <!-- <dependency>
+        <groupId>dev.langchain4j</groupId>
+        <artifactId>langchain4j-community-dashscope-spring-boot-starter</artifactId>
+        <version>1.8.0</version>
+      </dependency> -->
       <!-- 日志依赖由Spring Boot BOM自动管理，无需在此指定版本 -->
     </dependencies>
   </dependencyManagement>

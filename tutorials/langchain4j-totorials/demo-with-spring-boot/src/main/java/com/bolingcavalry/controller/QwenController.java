@@ -42,6 +42,7 @@ public class QwenController {
     @Data
     static class PromptRequest {
         private String prompt;
+        private int imageNum;
         private String imageUrl;
     }
 
@@ -195,6 +196,23 @@ public class QwenController {
         try {
             // 调用QwenService获取模型响应
             String response = qwenService.useImage(request.getImageUrl(), request.getPrompt());
+            return ResponseEntity.ok(new Response(response));
+        } catch (Exception e) {
+            // 捕获异常并返回错误信息
+            return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/generateimage")
+    public ResponseEntity<Response> generateImage(@RequestBody PromptRequest request) {
+        ResponseEntity<Response> checkRlt = check(request);
+        if (checkRlt != null) {
+            return checkRlt;
+        }
+
+        try {
+            // 调用QwenService获取模型响应
+            String response = qwenService.generateImage(request.getPrompt(), request.getImageNum());
             return ResponseEntity.ok(new Response(response));
         } catch (Exception e) {
             // 捕获异常并返回错误信息

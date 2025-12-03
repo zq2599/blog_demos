@@ -79,6 +79,14 @@
             <artifactId>langchain4j</artifactId>
         </dependency>
 
+        <dependency>
+    <groupId>dev.langchain4j</groupId>
+    <artifactId>langchain4j-community-dashscope</artifactId>
+    <version>1.8.0-beta15</version>
+</dependency>
+
+
+
         
         <!-- langchain4j 1.x版本中的服务功能已包含在core模块中 -->
         
