@@ -2,7 +2,6 @@ package com.bolingcavalry.grabpush.camera;
 
 import com.bolingcavalry.grabpush.extend.DetectAndRecognizeService;
 import com.bolingcavalry.grabpush.extend.DetectService;
-import com.bolingcavalry.grabpush.extend.HaarCascadeDetectService;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.Frame;
@@ -71,7 +70,7 @@ public class PreviewCameraWithIdentify extends AbstractCameraApplication {
         String recognizeModelFilePath = "E:\\temp\\202112\\18\\001\\faceRecognizer.xml";
 
         // 这里分类编号的身份的对应关系，和之前训练时候的设定要保持一致
-        Map<Integer, String> kindNameMap = new HashMap();
+        Map<Integer, String> kindNameMap = new HashMap<>();
         kindNameMap.put(1, "Man");
         kindNameMap.put(2, "Woman");
 
