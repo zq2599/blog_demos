@@ -190,12 +190,12 @@
     </dependency>
   </dependencies>
   <properties>
-    <java.version>1.8</java.version>
     <scala.binary.version>2.11</scala.binary.version>
-    <flink.version>1.7.0</flink.version>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <flink.version>1.7.0</flink.version>
   </properties>
 </project>
 

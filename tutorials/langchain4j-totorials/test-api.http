@@ -69,7 +69,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "imageUrl": "https://img0.baidu.com/it/u=3952212554,1497796012&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=667",
+  "imageUrl": "https://dashscope-result-wlcb-acdr-1.oss-cn-wulanchabu-acdr-1.aliyuncs.com/1d/38/20251204/df817e52/531abcea-2223-46e4-b498-e0bcb08ae4d669232545.png?Expires=1764920223&OSSAccessKeyId=LTAI5tKPD3TMqf2Lna1fASuh&Signature=NggZvRG5OcPlpTO6Nop1BwtzMLk%3D",
   "prompt": "图片中有什么？"
 }
 
@@ -79,6 +79,6 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "prompt": "生成一张图片，内容是三顾茅谷",
+  "prompt": "生成一张图片，内容是三国演义中的孔明借东风",
   "imageNum": 2
 }

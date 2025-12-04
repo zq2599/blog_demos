@@ -1,22 +1,20 @@
 package com.bolingcavalry.service;
 
+import com.bolingcavalry.util.ImageUtils;
+import dev.langchain4j.community.model.dashscope.WanxImageModel;
+import dev.langchain4j.data.image.Image;
+import dev.langchain4j.data.message.*;
 import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.openai.OpenAiChatModel;
-import dev.langchain4j.model.openai.OpenAiImageModel;
 import dev.langchain4j.model.output.Response;
-
-import java.net.URI;
 import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import dev.langchain4j.data.message.*;
-import dev.langchain4j.community.model.dashscope.WanxImageModel;
-import dev.langchain4j.data.image.Image;
-import com.bolingcavalry.util.ImageUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
 
 /**
  * 通义千问服务类，用于与通义千问模型进行交互
@@ -30,7 +28,7 @@ public class QwenService {
     private final OpenAiChatModel openAiChatModel;
 
     // 注入OpenAiChatModel，用于图像理解任务
-    private final OpenAiChatModel imageModel;
+    private final OpenAiChatModel imageVLModel;
 
     // 注入OpenAiImageModel，用于图像生成任务
     private final WanxImageModel imageGenModel;
@@ -44,10 +42,10 @@ public class QwenService {
      */
     @Autowired
     public QwenService(OpenAiChatModel openAiChatModel,
-            @Qualifier("imageVLModel") OpenAiChatModel imageModel,
+            @Qualifier("imageVLModel") OpenAiChatModel imageVLModel,
             @Qualifier("imageGenModel") WanxImageModel imageGenModel) {
         this.openAiChatModel = openAiChatModel;
-        this.imageModel = imageModel;
+        this.imageVLModel = imageVLModel;
         this.imageGenModel = imageGenModel;
     }
 
@@ -158,7 +156,7 @@ public class QwenService {
 
             // 调用模型进行处理
             logger.info("将图片内容发送给模型处理...");
-            String result = imageModel.chat(messages).aiMessage().text();
+            String result = imageVLModel.chat(messages).aiMessage().text();
 
             logger.info("模型返回结果: {}", result);
             return result + "[from useImage]";
