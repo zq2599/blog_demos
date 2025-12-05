@@ -11,7 +11,6 @@ package com.bolingcavalry.config;
 import dev.langchain4j.community.model.dashscope.WanxImageModel;
 import dev.langchain4j.community.model.dashscope.WanxImageSize;
 import dev.langchain4j.model.openai.OpenAiChatModel;
-import dev.langchain4j.model.openai.OpenAiImageModel;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +40,16 @@ public class LangChain4jConfig {
 
     @Value("${langchain4j.open-ai.chat-model.image-gen-model.model-name}")
     private String imageGenModelName;
+
+    // 图片编辑模型的配置
+    @Value("${langchain4j.open-ai.chat-model.image-edit-model.api-key}")
+    private String imageEditModelApiKey;
+
+    @Value("${langchain4j.open-ai.chat-model.image-edit-model.model-name}")
+    private String imageEditModelName;
+
+    @Value("${langchain4j.open-ai.chat-model.image-edit-model.base-url}")
+    private String imageEditModelBaseUrl;
 
     // 视觉理解模型的配置
     @Value("${langchain4j.open-ai.chat-model.image-vl-model.api-key}")
@@ -79,6 +88,20 @@ public class LangChain4jConfig {
                 .modelName(imageGenModelName)
                 .size(WanxImageSize.SIZE_1024_1024)
                 .build();
+    }
+
+    /**
+     * 创建数据结构实例，这只是个保管数据的对象，里面包含了图像编辑模型的配置参数
+     * 
+     * @return ImageEditModelParam实例，Bean名称为imageEditModelParam
+     */
+    @Bean("imageEditModelParam")
+    public ImageEditModelParam imageEditModelParam() {
+        ImageEditModelParam param = new ImageEditModelParam();
+        param.setModelName(imageEditModelName);
+        param.setBaseUrl(imageEditModelBaseUrl);
+        param.setApiKey(imageEditModelApiKey);
+        return param;
     }
 
     /**

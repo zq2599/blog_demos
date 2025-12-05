@@ -10,6 +10,9 @@ package com.bolingcavalry.controller;
 
 import com.bolingcavalry.service.QwenService;
 import lombok.Data;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +47,7 @@ public class QwenController {
         private String prompt;
         private int imageNum;
         private String imageUrl;
+        private List<String> imageUrls;
     }
 
     /**
@@ -213,6 +217,23 @@ public class QwenController {
         try {
             // 调用QwenService获取模型响应
             String response = qwenService.generateImage(request.getPrompt(), request.getImageNum());
+            return ResponseEntity.ok(new Response(response));
+        } catch (Exception e) {
+            // 捕获异常并返回错误信息
+            return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/editimage")
+    public ResponseEntity<Response> editImage(@RequestBody PromptRequest request) {
+        ResponseEntity<Response> checkRlt = check(request);
+        if (checkRlt != null) {
+            return checkRlt;
+        }
+
+        try {
+            // 调用QwenService获取模型响应
+            String response = qwenService.editImage(request.getImageUrls(), request.getPrompt());
             return ResponseEntity.ok(new Response(response));
         } catch (Exception e) {
             // 捕获异常并返回错误信息

@@ -1,5 +1,10 @@
 package com.bolingcavalry.service;
 
+import com.alibaba.dashscope.aigc.multimodalconversation.MultiModalConversation;
+import com.alibaba.dashscope.aigc.multimodalconversation.MultiModalConversationParam;
+import com.alibaba.dashscope.aigc.multimodalconversation.MultiModalConversationResult;
+import com.alibaba.dashscope.common.MultiModalMessage;
+import com.bolingcavalry.config.ImageEditModelParam;
 import com.bolingcavalry.util.ImageUtils;
 import dev.langchain4j.community.model.dashscope.WanxImageModel;
 import dev.langchain4j.data.image.Image;
@@ -7,14 +12,19 @@ import dev.langchain4j.data.message.*;
 import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.output.Response;
+import com.alibaba.dashscope.common.Role;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-
 
 /**
  * 通义千问服务类，用于与通义千问模型进行交互
@@ -30,8 +40,11 @@ public class QwenService {
     // 注入OpenAiChatModel，用于图像理解任务
     private final OpenAiChatModel imageVLModel;
 
-    // 注入OpenAiImageModel，用于图像生成任务
+    // 注入WanxImageModel，用于图像生成任务
     private final WanxImageModel imageGenModel;
+
+    // 注入WanxImageModel，用于图像编辑任务
+    private final ImageEditModelParam imageEditModelParam;
 
     /**
      * 构造函数，通过依赖注入获取QwenChatModel实例
@@ -43,10 +56,12 @@ public class QwenService {
     @Autowired
     public QwenService(OpenAiChatModel openAiChatModel,
             @Qualifier("imageVLModel") OpenAiChatModel imageVLModel,
-            @Qualifier("imageGenModel") WanxImageModel imageGenModel) {
+            @Qualifier("imageGenModel") WanxImageModel imageGenModel,
+            @Qualifier("imageEditModelParam") ImageEditModelParam imageEditModelParam) {
         this.openAiChatModel = openAiChatModel;
         this.imageVLModel = imageVLModel;
         this.imageGenModel = imageGenModel;
+        this.imageEditModelParam = imageEditModelParam;
     }
 
     /**
@@ -184,6 +199,44 @@ public class QwenService {
         } catch (Exception e) {
             logger.error("生成图片时发生错误: {}", e.getMessage(), e);
             return "生成图片时发生错误: " + e.getMessage() + "[from generateImage]";
+        }
+    }
+
+    public String editImage(List<String> imageUrls, String prompt) {
+        MultiModalConversation conv = new MultiModalConversation();
+
+        var contents = new ArrayList<Map<String, Object>>();
+        for (String imageUrl : imageUrls) {
+            contents.add(Collections.singletonMap("image", imageUrl));
+        }
+        contents.add(Collections.singletonMap("text", prompt));
+
+        MultiModalMessage userMessage = MultiModalMessage.builder().role(Role.USER.getValue())
+                .content(contents)
+                .build();
+
+        // qwen-image-edit-plus支持输出1-6张图片，此处以两张为例
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("watermark", false);
+        parameters.put("negative_prompt", " ");
+        parameters.put("n", 2);
+        parameters.put("prompt_extend", true);
+        // 仅当输出图像数量n=1时支持设置size参数，否则会报错
+        // parameters.put("size", "1024*2048");
+
+        MultiModalConversationParam param = MultiModalConversationParam.builder()
+                .apiKey(imageEditModelParam.getApiKey())
+                .model(imageEditModelParam.getModelName())
+                .messages(Collections.singletonList(userMessage))
+                .parameters(parameters)
+                .build();
+
+        try {
+            MultiModalConversationResult result = conv.call(param);
+            return result + "[from editImage]";
+        } catch (Exception e) {
+            logger.error("编辑图片时发生错误: {}", e.getMessage(), e);
+            return "编辑图片时发生错误: " + e.getMessage() + "[from editImage]";
         }
     }
 }

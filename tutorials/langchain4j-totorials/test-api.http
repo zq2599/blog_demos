@@ -82,3 +82,17 @@ Accept: application/json
   "prompt": "生成一张图片，内容是三国演义中的孔明借东风",
   "imageNum": 2
 }
+
+### POST 使用图像模型编辑图片
+POST http://localhost:8080/api/qwen/editimage
+Content-Type: application/json
+Accept: application/json
+
+{
+  "prompt": "图1中的女生穿着图2中的黑色裙子按图3的姿势坐下",
+  "imageUrls": [
+    "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/thtclx/input1.png",
+    "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/iclsnx/input2.png",
+    "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250925/gborgw/input3.png"
+  ]
+}
