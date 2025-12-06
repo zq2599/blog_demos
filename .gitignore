@@ -21,3 +21,4 @@ tutorials/langchain4j-totorials/demo-with-spring-boot/target
 tutorials/langchain4j-totorials/.history
 disruptor-tutorials/.gradle/*
 gradlespringbootdemo/.gradle/*
+tutorials/langchain4j-totorials/image-tutorial/target/*

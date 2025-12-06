@@ -13,7 +13,6 @@ import lombok.Data;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +33,6 @@ public class QwenController {
      * 
      * @param qwenService QwenService实例
      */
-    @Autowired
     public QwenController(QwenService qwenService) {
         this.qwenService = qwenService;
     }
@@ -81,9 +79,8 @@ public class QwenController {
      * @param request 包含提示词的请求体
      * @return 包含模型响应的ResponseEntity
      */
-    @PostMapping("/chat")
-    public ResponseEntity<Response> chat(@RequestBody PromptRequest request) {
-        // 检查请求体是否有效
+    @PostMapping("/useimage")
+    public ResponseEntity<Response> useImage(@RequestBody PromptRequest request) {
         ResponseEntity<Response> checkRlt = check(request);
         if (checkRlt != null) {
             return checkRlt;
@@ -91,7 +88,7 @@ public class QwenController {
 
         try {
             // 调用QwenService获取模型响应
-            String response = qwenService.getResponse(request.getPrompt());
+            String response = qwenService.useImage(request.getImageUrl(), request.getPrompt());
             return ResponseEntity.ok(new Response(response));
         } catch (Exception e) {
             // 捕获异常并返回错误信息
@@ -99,8 +96,8 @@ public class QwenController {
         }
     }
 
-    @PostMapping("/aiservicesimplechat")
-    public ResponseEntity<Response> aiServiceSimpleChat(@RequestBody PromptRequest request) {
+    @PostMapping("/generateimage")
+    public ResponseEntity<Response> generateImage(@RequestBody PromptRequest request) {
         ResponseEntity<Response> checkRlt = check(request);
         if (checkRlt != null) {
             return checkRlt;
@@ -108,7 +105,7 @@ public class QwenController {
 
         try {
             // 调用QwenService获取模型响应
-            String response = qwenService.aiServiceSimpleChat(request.getPrompt());
+            String response = qwenService.generateImage(request.getPrompt(), request.getImageNum());
             return ResponseEntity.ok(new Response(response));
         } catch (Exception e) {
             // 捕获异常并返回错误信息
@@ -116,8 +113,8 @@ public class QwenController {
         }
     }
 
-    @PostMapping("/aiservicetemplatechat")
-    public ResponseEntity<Response> aiServiceTemplateChat(@RequestBody PromptRequest request) {
+    @PostMapping("/editimage")
+    public ResponseEntity<Response> editImage(@RequestBody PromptRequest request) {
         ResponseEntity<Response> checkRlt = check(request);
         if (checkRlt != null) {
             return checkRlt;
@@ -125,58 +122,7 @@ public class QwenController {
 
         try {
             // 调用QwenService获取模型响应
-            String response = qwenService.aiServiceTemplateChat(request.getPrompt());
-            return ResponseEntity.ok(new Response(response));
-        } catch (Exception e) {
-            // 捕获异常并返回错误信息
-            return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
-        }
-    }
-
-    @PostMapping("/aiservicetemplatechatwithsysmsg")
-    public ResponseEntity<Response> aiServiceTemplateChatWithSysMsg(@RequestBody PromptRequest request) {
-        ResponseEntity<Response> checkRlt = check(request);
-        if (checkRlt != null) {
-            return checkRlt;
-        }
-
-        try {
-            // 调用QwenService获取模型响应
-            String response = qwenService.aiServiceTemplateChatWithSysMsg(request.getPrompt());
-            return ResponseEntity.ok(new Response(response));
-        } catch (Exception e) {
-            // 捕获异常并返回错误信息
-            return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
-        }
-    }
-
-    @PostMapping("/simulatemultiroundchat")
-    public ResponseEntity<Response> simulateMultiRoundChat(@RequestBody PromptRequest request) {
-        ResponseEntity<Response> checkRlt = check(request);
-        if (checkRlt != null) {
-            return checkRlt;
-        }
-
-        try {
-            // 调用QwenService获取模型响应
-            String response = qwenService.simulateMultiRoundChat(request.getPrompt());
-            return ResponseEntity.ok(new Response(response));
-        } catch (Exception e) {
-            // 捕获异常并返回错误信息
-            return ResponseEntity.status(500).body(new Response("请求处理失败: " + e.getMessage()));
-        }
-    }
-
-    @PostMapping("/usechatrequest")
-    public ResponseEntity<Response> useChatRequest(@RequestBody PromptRequest request) {
-        ResponseEntity<Response> checkRlt = check(request);
-        if (checkRlt != null) {
-            return checkRlt;
-        }
-
-        try {
-            // 调用QwenService获取模型响应
-            String response = qwenService.useChatRequest(request.getPrompt());
+            String response = qwenService.editImage(request.getImageUrls(), request.getPrompt());
             return ResponseEntity.ok(new Response(response));
         } catch (Exception e) {
             // 捕获异常并返回错误信息

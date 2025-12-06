@@ -10,7 +10,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "prompt": "他有哪些主要对手？"
+  "prompt": "简单介绍一下曹操？"
 }
 
 ### POST 请求测试 (如果接口支持POST)
@@ -69,7 +69,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "imageUrl": "https://dashscope-result-wlcb-acdr-1.oss-cn-wulanchabu-acdr-1.aliyuncs.com/1d/38/20251204/df817e52/531abcea-2223-46e4-b498-e0bcb08ae4d669232545.png?Expires=1764920223&OSSAccessKeyId=LTAI5tKPD3TMqf2Lna1fASuh&Signature=NggZvRG5OcPlpTO6Nop1BwtzMLk%3D",
+  "imageUrl": "https://dashscope-result-wlcb-acdr-1.oss-cn-wulanchabu-acdr-1.aliyuncs.com/1d/7f/20251206/df817e52/f42cd78f-346a-45ec-ae0c-fc1035a1ca1b3992033219.png?Expires=1765095769&OSSAccessKeyId=LTAI5tKPD3TMqf2Lna1fASuh&Signature=MSepscl5Pv1%2Bd4eaJXcetSocfKg%3D",
   "prompt": "图片中有什么？"
 }
 
@@ -79,7 +79,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "prompt": "生成一张图片，内容是三国演义中的孔明借东风",
+  "prompt": "生成一张图片，内容是三国演义中的威震逍遥津",
   "imageNum": 2
 }
 

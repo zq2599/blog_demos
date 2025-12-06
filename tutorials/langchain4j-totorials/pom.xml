@@ -13,6 +13,7 @@
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <dashscope.version>1.8.0-beta15</dashscope.version>
   </properties>
   
   <dependencyManagement>
@@ -51,5 +52,6 @@
   <modules>
     <module>hello-world</module>
     <module>demo-with-spring-boot</module>
+    <module>image-tutorial</module>
   </modules>
 </project>
