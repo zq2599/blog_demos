@@ -25,7 +25,7 @@
         <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
         <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
         <fabric8.maven.plugin.version>3.5.37</fabric8.maven.plugin.version>
-        <springcloud.version>2.1.1.RELEASE</springcloud.version>
+        <springcloud.version>2.5.12</springcloud.version>
     </properties>
 
     <dependencyManagement>
